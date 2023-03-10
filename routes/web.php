@@ -22,5 +22,9 @@ Route::group(['prefix' => 'users'], function () {
 Route::group(['prefix' => 'roles'], function () {
     route::get('/', [RoleController::class, 'index']);
     route::get('/create', [RoleController::class, 'create']);
+    route::post('/store', [RoleController::class, 'store'])->name('store.role');
+    route::get('/edit/{id}', [RoleController::class, 'edit'])->name('edit.role');
+    route::patch('/update/{id}', [RoleController::class, 'update'])->name('update.role');
+    route::delete('/destroy/{id}', [RoleController::class, 'destroy'])->name('destroy.role');
 });
 // });

@@ -24,6 +24,10 @@
                             <i class="me-1" data-feather="arrow-left"></i>
                             Back to Role List
                         </a>
+                        <a class="btn btn-sm btn-light text-primary" data-bs-toggle="modal" data-bs-target="#newRoleModal">
+                            <i class="me-1" data-feather="user-plus"></i>
+                            Add New Role
+                        </a>
                     </div>
                 </div>
             </div>
@@ -32,7 +36,10 @@
     <!-- Main page content-->
     <div class="container-xl px-4 mt-4">
         <div class="row">
-            <div class="col-xl-8">
+            <div class="col-xl-12">
+                <x-message />
+            </div>
+            <div class="col-xl-12">
                 <div class="card">
                     <div class="card-body">
                         <table id="datatablesSimple">
@@ -42,57 +49,144 @@
                                     <th>Description</th>
                                     <th>Status</th>
                                     <th>Created At</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach($datas as $data)
                                 <tr>
-                                    <td>Administrator</td>
-                                    <td>administrator all access</td>
-                                    <td>Active</td>
-                                    <td>20 Jun 2021</td>
+                                    <td>{{ $data->permission_role }}</td>
+                                    <td>{{ $data->description}}</td>
+                                    <td>{{ ($data->status == '1') ? 'Active' : 'Not Active'}}</td>
+                                    <td>{{ date('d F Y', strtotime($data->created_at)) }}</td>
+                                    <td>
+                                        <a class="btn btn-purple btn-sm lift lift-sm" href="#!">Permission</a>
+                                        <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" data-bs-toggle="modal" data-bs-target="#editRole{{$data->id}}"><i data-feather="edit"></i></a>
+                                        <a class="btn btn-datatable btn-icon btn-transparent-dark" data-bs-toggle="modal" data-bs-target="#deleteRole{{$data->id}}"><i data-feather="trash-2"></i></a>
+                                    </td>
                                 </tr>
-                                <tr>
-                                    <td>administrator all access</td>
-                                    <td>Active</td>
-                                    <td>20 Jun 2021</td>
-                                </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
-            <div class="col-xl-4">
-                <div class="nav-sticky">
-                    <!-- Account details card-->
-                    <div class="card mb-4">
-                        <div class="card-header">New Role</div>
-                        <div class="card-body">
-                            <form action="" enctype="application/x-www-form-urlencoded" class="nav flex-column" id="stickyNav">
-                                <div class="mb-3">
-                                    <label class="small mb-1">Role</label>
-                                    <input class="form-control" type="email" placeholder="Enter your email address" value="" />
-                                </div>
-                                <div class="mb-3">
-                                    <label class="small mb-1">Description</label>
-                                    <textarea class="form-control" name="description" cols="30" rows="10"></textarea>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="small mb-1">Status</label>
-                                    <select class="form-select" aria-label="Default select example">
-                                        <option selected disabled>Select a role:</option>
-                                        <option value="active">Active</option>
-                                        <option value="not_active">Not Active</option>
-                                    </select>
-                                </div>
-                                <!-- Submit button-->
-                                <button class="btn btn-primary" type="button">Add Role</button>
-                            </form>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="newRoleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">New Role</h5>
+                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{{ route('store.role') }}" method="POST" enctype="application/x-www-form-urlencoded" class="nav flex-column" id="stickyNav">
+                    <div class="modal-body">
+                        @csrf
+                        <div class="mb-3">
+                            <label class="small mb-1">Role</label>
+                            <input class="form-control" name="permission_role" type="text" placeholder="Enter your email address" required />
+                            @error('permission_role')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
+                            <label class="small mb-1">Description</label>
+                            <textarea class="form-control" name="description" cols="30" rows="10"></textarea>
+                            @error('description')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
+                            <label class="small mb-1">Status</label>
+                            <select class="form-select" name="status" aria-label="Default select example" required>
+                                <option selected disabled>Select a role:</option>
+                                <option value="1">Active</option>
+                                <option value="0">Not Active</option>
+                            </select>
+                            @error('status')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
-                </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
+                        <button class="btn btn-primary" type="submit">Save changes</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
+
+    <!-- Modal -->
+    @foreach($datas as $data)
+    <div class="modal fade" id="deleteRole{{$data->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">New Role</h5>
+                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{{ route('destroy.role', $data->id) }}" method="POST" enctype="application/x-www-form-urlencoded" class="nav flex-column" id="stickyNav">
+                    <div class="modal-body">
+                        @csrf
+                        {{ method_field('delete') }}
+                        Are you sure you want to delete this data ({{ $data->permission_role }})?
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">No</button>
+                        <button class="btn btn-primary" type="submit">Yes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    @endforeach
+
+    <!-- Modal -->
+    @foreach($datas as $data)
+    <div class="modal fade" id="editRole{{$data->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Role</h5>
+                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{{ route('update.role', $data->id) }}" method="POST" enctype="application/x-www-form-urlencoded" class="nav flex-column" id="stickyNav">
+                    <div class="modal-body">
+                        @csrf
+                        {{ method_field('patch') }}
+                        <div class="mb-3">
+                            <label class="small mb-1">Role</label>
+                            <input class="form-control" name="permission_role" type="text" value="{{$data->permission_role}}" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="small mb-1">Description</label>
+                            <textarea class="form-control" name="description" cols="30" rows="10">{{ $data->description }}</textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="small mb-1">Status</label>
+                            <select class="form-select" name="status" aria-label="Default select example">
+                                <option value="{{ $data->status }}">{{ $data->status == '1' ? 'Active' : 'Not Active' }}</option>
+                                @if($data->status == 0)
+                                <option value="1">Active</option>
+                                @else
+                                <option value="0">Not Active</option>
+                                @endif
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">No</button>
+                        <button class="btn btn-primary" type="submit">Yes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    @endforeach
 
     @push('scripts')
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
