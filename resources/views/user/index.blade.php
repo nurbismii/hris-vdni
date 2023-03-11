@@ -24,7 +24,7 @@
                             <i class="me-1" data-feather="users"></i>
                             Import New User
                         </a>
-                        <a class="btn btn-sm btn-light text-primary" href="/user/create">
+                        <a class="btn btn-sm btn-light text-primary" href="/users/create">
                             <i class="me-1" data-feather="user-plus"></i>
                             Add New User
                         </a>
@@ -59,7 +59,7 @@
                             <td>Administrator</td>
                             <td>20 Jun 2021</td>
                             <td>
-                                <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="/user/edit"><i data-feather="edit"></i></a>
+                                <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="/users/edit"><i data-feather="edit"></i></a>
                                 <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
                             </td>
                         </tr>

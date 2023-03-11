@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\Role\RoleController;
 use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Route;
@@ -26,5 +27,12 @@ Route::group(['prefix' => 'roles'], function () {
     route::get('/edit/{id}', [RoleController::class, 'edit'])->name('edit.role');
     route::patch('/update/{id}', [RoleController::class, 'update'])->name('update.role');
     route::delete('/destroy/{id}', [RoleController::class, 'destroy'])->name('destroy.role');
+});
+
+Route::group(['prefix' => 'employees'], function () {
+    route::get('/', [EmployeeController::class, 'index']);
+    route::get('/create', [EmployeeController::class, 'create']);
+    route::get('/import', [EmployeeController::class, 'import']);
+    route::get('/download-example', [EmployeeController::class, 'downloadExample'])->name('download.example');
 });
 // });

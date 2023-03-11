@@ -20,7 +20,7 @@
                         </h1>
                     </div>
                     <div class="col-12 col-xl-auto mb-3">
-                        <a class="btn btn-sm btn-light text-primary" href="/user">
+                        <a class="btn btn-sm btn-light text-primary" href="/users">
                             <i class="me-1" data-feather="arrow-left"></i>
                             Back to Users List
                         </a>
@@ -42,7 +42,7 @@
                         <!-- Profile picture help block-->
                         <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
                         <!-- Profile picture upload button-->
-                        <button class="btn btn-primary" type="button">Upload new image</button>
+                        <button class="btn btn-primary btn-sm" type="button">Upload new image</button>
                     </div>
                 </div>
             </div>
@@ -106,7 +106,7 @@
                                 </select>
                             </div>
                             <!-- Submit button-->
-                            <button class="btn btn-primary" type="button">Add user</button>
+                            <button class="btn btn-primary btn-sm" type="button">Add user</button>
                         </form>
                     </div>
                 </div>

@@ -54,8 +54,8 @@
                 </a>
                 <div class="collapse" id="collapseEmployees" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav">
-                        <a class="nav-link" href="account-profile.html">Employee list</a>
-                        <a class="nav-link" href="account-billing.html">Import Employee</a>
+                        <a class="nav-link" href="/employees">Employee list</a>
+                        <a class="nav-link" href="/employees/import">Import Employee</a>
                     </nav>
                 </div>
                 <!-- Sidenav Accordion (Applications)-->
