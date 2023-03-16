@@ -28,7 +28,7 @@ class AppLayout extends Component
             'Home' => '/home'
         ];
 
-        $brand = 'HRIS VDNI';
+        $brand = 'HRIS';
 
         return view('layouts.app', compact('navigations', 'brand'));
     }

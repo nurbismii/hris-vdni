@@ -36,7 +36,7 @@
                     The first line in downloaded sample file should remain as it is. Please do not change the order of columns in file.
                 </p>
                 <p class="col-12 text-justify">
-                    The correct column order is (Fullname, NIK, KTP, Date of Birth, Company, NPWP, BPJS, BPJS TK, Vaccine.
+                    The correct column order is (Fullname, NIK, KTP, Date of Birth, Company, NPWP, BPJS, BPJS TK, Vaccine.)
                 </p>
                 <!-- Fade In Animation -->
                 <div class="timeline timeline-sm">

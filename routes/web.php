@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccountController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmployeeController;
@@ -11,28 +12,33 @@ Route::get('/login', [LoginController::class, 'index']);
 
 // Route::group(['middleware' => 'login'], function () {
 
-Route::get('/', [DashboardController::class, 'index']);
+    Route::get('/', [DashboardController::class, 'index']);
 
-Route::group(['prefix' => 'users'], function () {
-    route::get('/', [UserController::class, 'index']);
-    route::get('/create', [UserController::class, 'create']);
-    route::post('/store', [UserController::class, 'store']);
-    route::get('/edit', [UserController::class, 'edit']);
-});
+    Route::group(['prefix' => 'users'], function () {
+        route::get('/', [UserController::class, 'index']);
+        route::get('/create', [UserController::class, 'create']);
+        route::post('/store', [UserController::class, 'store']);
+        route::get('/edit', [UserController::class, 'edit']);
+    });
 
-Route::group(['prefix' => 'roles'], function () {
-    route::get('/', [RoleController::class, 'index']);
-    route::get('/create', [RoleController::class, 'create']);
-    route::post('/store', [RoleController::class, 'store'])->name('store.role');
-    route::get('/edit/{id}', [RoleController::class, 'edit'])->name('edit.role');
-    route::patch('/update/{id}', [RoleController::class, 'update'])->name('update.role');
-    route::delete('/destroy/{id}', [RoleController::class, 'destroy'])->name('destroy.role');
-});
+    Route::group(['prefix' => 'roles'], function () {
+        route::get('/', [RoleController::class, 'index']);
+        route::get('/create', [RoleController::class, 'create']);
+        route::post('/store', [RoleController::class, 'store'])->name('store.role');
+        route::get('/edit/{id}', [RoleController::class, 'edit'])->name('edit.role');
+        route::patch('/update/{id}', [RoleController::class, 'update'])->name('update.role');
+        route::delete('/destroy/{id}', [RoleController::class, 'destroy'])->name('destroy.role');
+    });
 
-Route::group(['prefix' => 'employees'], function () {
-    route::get('/', [EmployeeController::class, 'index']);
-    route::get('/create', [EmployeeController::class, 'create']);
-    route::get('/import', [EmployeeController::class, 'import']);
-    route::get('/download-example', [EmployeeController::class, 'downloadExample'])->name('download.example');
-});
+    Route::group(['prefix' => 'employees'], function () {
+        route::get('/', [EmployeeController::class, 'index']);
+        route::get('/create', [EmployeeController::class, 'create']);
+        route::get('/import', [EmployeeController::class, 'import']);
+        route::get('/download-example', [EmployeeController::class, 'downloadExample'])->name('download.example');
+    });
+
+    Route::group(['prefix' => 'account'], function (){
+        route::get('/profile', [AccountController::class, 'profile']);
+        route::get('/billing', [AccountController::class, 'billing']);
+    });
 // });
