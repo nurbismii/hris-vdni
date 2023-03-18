@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Exports\UserExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\UserStoreRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class UserController extends Controller
 {
@@ -17,6 +19,11 @@ class UserController extends Controller
     public function create()
     {
         return view('user.create');
+    }
+
+    public function import()
+    {
+        return view('user.import');
     }
 
     public function store(UserStoreRequest $request)
@@ -40,5 +47,10 @@ class UserController extends Controller
         } catch (\Throwable $e) {
             return back()->with('error', 'Something wrong! ' . $e->getMessage());
         }
+    }
+
+    public function downloadExampleUser()
+    {
+        return Excel::download(new UserExport, 'UserExample.xlsx');
     }
 }

@@ -5,51 +5,8 @@
             <div class="small text-gray-800">{{ date('d F Y') }}</div>
             <div class="mx-1"></div>
             <div id="time" class="small text-gray-800"></div>
-            <!-- <div class="fw-500">Documentation</div>
-            <i class="fas fa-chevron-right dropdown-arrow"></i> -->
         </a>
-
-        <!-- <div class="dropdown-menu dropdown-menu-end py-0 me-sm-n15 me-lg-0 o-hidden animated--fade-in-up" aria-labelledby="navbarDropdownDocs">
-            <a class="dropdown-item py-3" href="https://docs.startbootstrap.com/sb-admin-pro" target="_blank">
-                <div class="icon-stack bg-primary-soft text-primary me-4"><i data-feather="book"></i></div>
-                <div>
-                    <div class="small text-gray-500">Documentation</div>
-                    Usage instructions and reference
-                </div>
-            </a>
-            <div class="dropdown-divider m-0"></div>
-            <a class="dropdown-item py-3" href="https://docs.startbootstrap.com/sb-admin-pro/components" target="_blank">
-                <div class="icon-stack bg-primary-soft text-primary me-4"><i data-feather="code"></i></div>
-                <div>
-                    <div class="small text-gray-500">Components</div>
-                    Code snippets and reference
-                </div>
-            </a>
-            <div class="dropdown-divider m-0"></div>
-            <a class="dropdown-item py-3" href="https://docs.startbootstrap.com/sb-admin-pro/changelog" target="_blank">
-                <div class="icon-stack bg-primary-soft text-primary me-4"><i data-feather="file-text"></i></div>
-                <div>
-                    <div class="small text-gray-500">Changelog</div>
-                    Updates and changes
-                </div>
-            </a>
-        </div> -->
     </li>
-    <!-- Navbar Search Dropdown-->
-    <!-- * * Note: * * Visible only below the lg breakpoint-->
-    <li class="nav-item dropdown no-caret me-3 d-lg-none">
-        <a class="btn btn-icon btn-transparent-dark dropdown-toggle" id="searchDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i data-feather="search"></i></a>
-        <!-- Dropdown - Search-->
-        <div class="dropdown-menu dropdown-menu-end p-3 animated--fade-in-up" aria-labelledby="searchDropdown">
-            <form class="form-inline me-auto w-100">
-                <div class="input-group input-group-joined input-group-solid">
-                    <input class="form-control pe-0" type="text" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" />
-                    <div class="input-group-text"><i data-feather="search"></i></div>
-                </div>
-            </form>
-        </div>
-    </li>
-    <!-- Alerts Dropdown-->
     <li class="nav-item dropdown no-caret d-none d-sm-block me-3 dropdown-notifications">
 
         <a class="btn btn-icon btn-transparent-dark dropdown-toggle" id="navbarDropdownAlerts" href="javascript:void(0);" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i data-feather="bell"></i></a>

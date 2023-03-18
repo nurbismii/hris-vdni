@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>{{ $title }} | Development </title>
+    <title>{{ $title }} | VDNI </title>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -11,7 +11,7 @@
     @stack('styles')
 </head>
 
-<body class="bg-primary">
+<body class="bg-auth">
     <div id="layoutAuthentication">
         <div id="layoutAuthentication_content">
             <main>

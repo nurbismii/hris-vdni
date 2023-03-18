@@ -6255,6 +6255,19 @@ textarea.form-control-lg {
   border: 1px solid rgba(33, 40, 50, 0.125);
   border-radius: 0.35rem;
 }
+
+.card-opacation {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color:rgb(0 0 0 / 32%);
+  background-clip: border-box;
+  border: 1px solid rgba(33, 40, 50, 0.125);
+  border-radius: 0.35rem;
+}
+
 .card > hr {
   margin-right: 0;
   margin-left: 0;
@@ -6275,6 +6288,29 @@ textarea.form-control-lg {
 }
 .card > .card-header + .list-group,
 .card > .list-group + .card-footer {
+  border-top: 0;
+}
+
+.card-opacation > hr {
+  margin-right: 0;
+  margin-left: 0;
+}
+.card-opacation > .list-group {
+  border-top: inherit;
+  border-bottom: inherit;
+}
+.card-opacation > .list-group:first-child {
+  border-top-width: 0;
+  border-top-left-radius: 0.35rem;
+  border-top-right-radius: 0.35rem;
+}
+.card-opacation > .list-group:last-child {
+  border-bottom-width: 0;
+  border-bottom-right-radius: 0.35rem;
+  border-bottom-left-radius: 0.35rem;
+}
+.card-opacation > .card-header + .list-group,
+.card-opacation > .list-group + .card-footer {
   border-top: 0;
 }
 
@@ -10968,6 +11004,11 @@ textarea.form-control-lg {
 .bg-primary {
   --bs-bg-opacity: 1;
   background-color: rgba(var(--bs-primary-rgb), var(--bs-bg-opacity)) !important;
+}
+
+.bg-auth {
+  background-image: url("../assets/img/backgrounds/bg-auth-vdni-new-35.png");
+  background-color: #cccccc;
 }
 
 .bg-secondary {

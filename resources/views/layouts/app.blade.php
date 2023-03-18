@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
+    <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/backgrounds/bg-auth-vdni-new.png')}}" />
     @stack('styles')
 </head>
 
@@ -19,16 +20,8 @@
         <!-- * * Tip * * You can use text or an image for your navbar brand.-->
         <!-- * * * * * * When using an image, we recommend the SVG format.-->
         <!-- * * * * * * Dimensions: Maximum height: 32px, maximum width: 240px-->
-        <a class="navbar-brand pe-3 ps-4 ps-lg-3" href="index.html">{{ $brand }}</a>
-        <!-- Navbar Search Input-->
-        <!-- * * Note: * * Visible only on and above the lg breakpoint-->
-        <!-- <form class="form-inline me-auto d-none d-lg-block me-3">
-            <div class="input-group input-group-joined input-group-solid">
-                <input class="form-control pe-0" type="search" placeholder="Search" aria-label="Search" />
-                <div class="input-group-text"><i data-feather="search"></i></div>
-            </div>
-        </form> -->
-        <!-- Navbar Items-->
+        <a class="navbar-brand pe-3 ps-4 ps-lg-3" href="index.html"><img src="{{ asset('assets/img/backgrounds/bg-auth-vdni-new.png') }}" alt="Logo VDNI" style="height: 32px; width: 200px"></a>
+
         <x-navbar />
         <!-- End Navbar Items -->
     </nav>
