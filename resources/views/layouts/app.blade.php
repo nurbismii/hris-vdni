@@ -20,7 +20,7 @@
         <!-- * * Tip * * You can use text or an image for your navbar brand.-->
         <!-- * * * * * * When using an image, we recommend the SVG format.-->
         <!-- * * * * * * Dimensions: Maximum height: 32px, maximum width: 240px-->
-        <a class="navbar-brand pe-3 ps-4 ps-lg-3" href="index.html"><img src="{{ asset('assets/img/backgrounds/bg-auth-vdni-new.png') }}" alt="Logo VDNI" style="height: 32px; width: 200px"></a>
+        <a class="navbar-brand pe-3 ps-4 ps-lg-3" href="index.html"><img src="{{ asset('assets/img/backgrounds/bg-auth-vdni-new.png') }}" alt="Logo VDNI" style="height: 55px; width: 120px"></a>
 
         <x-navbar />
         <!-- End Navbar Items -->

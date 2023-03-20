@@ -16322,6 +16322,7 @@ textarea.form-control-lg {
   }
 }
 html,
+
 body {
   height: 100%;
 }
@@ -16519,6 +16520,11 @@ body {
     opacity: 1;
   }
 }
+
+.VIpgJd-ZVi9od-ORHb-OEVmcd{
+  display: none;
+}
+  
 .animated--fade-in {
   -webkit-animation-name: fadeIn;
           animation-name: fadeIn;
