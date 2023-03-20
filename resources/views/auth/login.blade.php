@@ -14,23 +14,24 @@
                         <h3 class="fw-light my-4 text-light fw-600">Login</h3>
                     </div>
                     <div class="card-body">
-                        <form>
+                        <form action="{{ route('login') }}" method="POST">
+                            @csrf
                             <div class="mb-3">
-                                <label class="small mb-1 text-light fw-600" for="inputEmailAddress">Email</label>
-                                <input class="form-control" id="inputEmailAddress" type="email" placeholder="Enter email address" />
+                                <label class="small mb-1 text-light fw-600">Email</label>
+                                <input class="form-control" type="email" name="email" placeholder="Enter email" />
                             </div>
                             <div class="mb-3">
-                                <label class="small mb-1 text-light fw-600" for="inputPassword">Password</label>
-                                <input class="form-control" id="inputPassword" type="password" placeholder="Enter password" />
+                                <label class="small mb-1 text-light fw-600">Password</label>
+                                <input class="form-control" type="password" name="password" placeholder="Enter password" />
                             </div>
                             <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-                                <a class="small text-light fw-600" href="auth-password-basic.html">Forgot Password?</a>
-                                <a class="btn btn-success btn-sm lift lift-sm text-light fw-600" href="dashboard-1.html">Login</a>
+                                <a class="small text-light fw-600" href="#">Forgot Password?</a>
+                                <button type="submit" class="btn btn-success lift lift-sm text-light fw-600">Login</a>
                             </div>
                         </form>
                     </div>
                     <div class="card-footer text-center">
-                        <div class="small text-light fw-600"><a href="auth-register-basic.html">Need an account? Sign up!</a></div>
+                        <div class="small text-light fw-600"><a href="{{ route('register') }}">Need an account? Sign up!</a></div>
                     </div>
                 </div>
             </div>

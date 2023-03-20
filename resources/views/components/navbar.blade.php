@@ -137,10 +137,14 @@
                 <div class="dropdown-item-icon"><i data-feather="settings"></i></div>
                 Account
             </a>
-            <a class="dropdown-item" href="#!">
+            <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                document.getElementById('logout-form').submit();">
                 <div class="dropdown-item-icon"><i data-feather="log-out"></i></div>
                 Logout
             </a>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                @csrf
+            </form>
         </div>
     </li>
 </ul>

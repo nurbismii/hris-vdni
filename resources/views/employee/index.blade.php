@@ -24,6 +24,14 @@
                             <i class="me-1" data-feather="user-plus"></i>
                             Add New Employee
                         </a>
+                        <a class="btn btn-sm btn-warning text-white" data-bs-toggle="modal" data-bs-target="#modalUpdateEmployee">
+                            <i class="me-1" data-feather="user-plus"></i>
+                            Update Employee
+                        </a>
+                        <a class="btn btn-sm btn-danger text-white" data-bs-toggle="modal" data-bs-target="#modalDeleteEmployee">
+                            <i class="me-1" data-feather="user-plus"></i>
+                            Delete Employee
+                        </a>
                     </div>
                 </div>
             </div>
@@ -62,6 +70,58 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal update emplooye -->
+    <div class="modal fade" id="modalUpdateEmployee" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Upload employee data change</h5>
+                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="" method="POST" enctype="multipart/form-data" class="nav flex-column" id="stickyNav">
+                    <div class="modal-body">
+                        @csrf
+                        <div class="mb-3">
+                            <label class="form-label">Select a file</label>
+                            <input class="form-control" type="file" id="formFile">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
+                        <button class="btn btn-success" type="submit">Send</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Modal update emplooye end -->
+
+    <!-- Modal delete emplooye -->
+    <div class="modal fade" id="modalDeleteEmployee" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Upload delete employee data</h5>
+                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="" method="POST" enctype="multipart/form-data" class="nav flex-column" id="stickyNav">
+                    <div class="modal-body">
+                        @csrf
+                        <div class="mb-3">
+                            <label class="form-label">Select a file</label>
+                            <input class="form-control" type="file" id="formFile">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
+                        <button class="btn btn-success" type="submit">Send</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Modal delete emplooye end -->
 
     @push('scripts')
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>

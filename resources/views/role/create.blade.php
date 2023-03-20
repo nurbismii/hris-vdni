@@ -1,4 +1,4 @@
-<x-app-layout title="Create-Role">
+<x-app-layout title="Create Role">
     @push('styles')
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css" rel="stylesheet" />
@@ -87,7 +87,7 @@
                         @csrf
                         <div class="mb-3">
                             <label class="small mb-1">Role</label>
-                            <input class="form-control" name="permission_role" type="text" placeholder="Enter your email address" required />
+                            <input class="form-control" name="permission_role" type="text" placeholder="Enter role" required />
                             @error('permission_role')
                             <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
