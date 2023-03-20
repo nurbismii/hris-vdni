@@ -11023,8 +11023,10 @@ textarea.form-control-lg {
 }
 
 .bg-auth {
-  background-image: url("../assets/img/backgrounds/bg-auth-vdni-new-35.png");
-  background-color: #cccccc;
+   background-image: url("../assets/img/backgrounds/bg-auth-vdni-new.png");
+   background-position: center;
+   background-repeat: no-repeat;
+   background-size: cover;
 }
 
 .bg-secondary {
@@ -16528,7 +16530,8 @@ body {
 
 .bg-gradient-primary-to-secondary {
   background-color: #0061f2 !important;
-  background-image: linear-gradient(135deg, #bd4046 0%, rgb(82 82 82 / 80%) 100%) !important;
+  background-image: linear-gradient(148deg
+  , #4d40bdd9 0%, rgb(82 82 82 / 80%) 100%) !important;
 }
 
 .bg-transparent-light {

@@ -42,26 +42,6 @@ class UserController extends Controller
         }
     }
 
-    public function register(employee $employee, StoreRegisterRequest $request)
-    {
-        try {
-            $employe_exist = $employee->where('nik', $request->employee_id)->first();
-            if (!$employe_exist)
-                return back()->with('error',  'Emplooye data is not registered in our database');
-            $data_user = array(
-                'employee_id' => $request->employee_id,
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' =>  Hash::make($request->password),
-                'status' => 'NOT ACTIVE',
-            );
-            User::create($data_user);
-            return back()->with('success', 'Successful registration');
-        } catch (\Throwable $e) {
-            return back()->with('error', 'Something wrong!');
-        }
-    }
-
     public function edit()
     {
         try {

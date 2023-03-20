@@ -9,8 +9,7 @@ use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-
-Route::post('/employee-register', [UserController::class, 'register'])->name('register.employee');
+Route::post('/new-register', [RegisterController::class, 'register'])->name('register.employee');
 
 Auth::routes();
 

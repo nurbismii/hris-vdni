@@ -13,7 +13,7 @@ class StoreRegisterRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,8 @@ class StoreRegisterRequest extends FormRequest
     public function rules()
     {
         return [
-            'employee_id' => 'required|unique,employee_id',
+            'employee_id' => 'required',
+            'name' => 'required',
             'email' => 'required',
             'password' => 'required',
             'status' => 'required',
@@ -35,9 +36,10 @@ class StoreRegisterRequest extends FormRequest
     {
         return [
             'employee_id' => 'NIK',
-            'email' => 'Email must be filled',
-            'password' => 'Password must be filled',
-            'status' => 'Status must be filled',
+            'name' => 'Name',
+            'email' => 'Email',
+            'password' => 'Password',
+            'status' => 'Status',
         ];
     }
 
@@ -46,7 +48,6 @@ class StoreRegisterRequest extends FormRequest
         return [
             'required' => ':attribute must be filled',
             'min' => ':attribute',
-            'unique' => ':attribute existing'
         ];
     }
 }

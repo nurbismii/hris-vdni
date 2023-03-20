@@ -1,4 +1,4 @@
-<x-auth-layout title="Login">
+<x-auth-layout title="Register">
     @push('styles')
     <link href="{{ asset('css/styles.css')}}" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/backgrounds/bg-auth-vdni-new.png')}}" />
@@ -17,6 +17,13 @@
                     <div class="card-body">
                         <form action="{{ route('register.employee') }}" method="POST">
                             @csrf
+                            <div class="mb-3">
+                                <label class="small mb-1 text-light fw-600">Name</label>
+                                <input class="form-control" type="text" name="name" placeholder="Enter your name" />
+                                @error('name')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
                             <div class="mb-3">
                                 <label class="small mb-1 text-light fw-600">NIK</label>
                                 <input class="form-control" type="number" name="employee_id" placeholder="Enter your NIK" />
@@ -67,12 +74,12 @@
                                 @enderror
                             </div> -->
                             <div class="text-center d-grid">
-                                <button class="btn btn-success text-light fw-600">Submit</button>
+                                <button type="submit" class="btn btn-success text-light fw-600">Submit</button>
                             </div>
                         </form>
                     </div>
                     <div class="card-footer text-center">
-                        <div class="small text-light fw-600"><a href="/auth/login">Already have an account? Sign in!</a></div>
+                        <div class="small text-light fw-600"><a href="/login">Already have an account? Sign in!</a></div>
                     </div>
                 </div>
             </div>
