@@ -22,7 +22,11 @@
                     <div class="col-12 col-xl-auto mb-3">
                         <a class="btn btn-sm btn-light text-primary" href="/roles/create">
                             <i class="me-1" data-feather="user-plus"></i>
-                            Role
+                            Add New Role
+                        </a>
+                        <a class="btn btn-sm btn-purple text-white" data-bs-toggle="modal" data-bs-target="#addAccess">
+                            <i class="me-1" data-feather="user-plus"></i>
+                            Add User Access
                         </a>
                     </div>
                 </div>
@@ -43,30 +47,59 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach($data_user as $user)
                         <tr>
                             <td>
                                 <div class="d-flex align-items-center">
                                     <div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-1.png" /></div>
-                                    Tiger Nixon
+                                    {{ $user->name }}
                                 </div>
                             </td>
-                            <td>administrator@gmail.com</td>
-                            <td>-</td>
-                            <td>20 Jun 2021</td>
+                            <td>{{ $user->email }}</td>
+                            <td>{{ $user->role->permission_role }}</td>
+                            <td>{{ date('d F Y', strtotime($user->updated_at)) }}</td>
                         </tr>
-                        <tr>
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-2.png" /></div>
-                                    Garrett Winters
-                                </div>
-                            </td>
-                            <td>gwinterse@email.com</td>
-                            <td>Administrator</td>
-                            <td>20 Jun 2021</td>
-                        </tr>
+                        @endforeach
                     </tbody>
                 </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="addAccess" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Role</h5>
+                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{{ route('access') }}" method="POST" class="nav flex-column" id="stickyNav">
+                    <div class="modal-body">
+                        @csrf
+                        <div class="mb-3">
+                            <label class="small mb-1">User</label>
+                            <select name="user_id" class="form-select">
+                                <option disabled selected>Select a user :</option>
+                                @foreach($users as $row)
+                                <option value="{{ $row->id }}">{{ $row->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="small mb-1">Permission Role</label>
+                            <select name="role_id" class="form-select">
+                                <option disabled selected>Select a role :</option>
+                                @foreach($datas as $permit)
+                                <option value="{{ $permit->id }}">{{ $permit->permission_role }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
+                        <button class="btn btn-primary" type="submit">Add</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

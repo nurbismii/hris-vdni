@@ -1,4 +1,4 @@
-<x-app-layout title="Create-User">
+<x-app-layout title="Create User">
     @push('styles')
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css" rel="stylesheet" />
@@ -10,7 +10,7 @@
     @endpush
 
     <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
-        <div class="container-xl px-4">
+        <div class="container-xl px-s4">
             <div class="page-header-content">
                 <div class="row align-items-center justify-content-between pt-3">
                     <div class="col-auto mb-3">

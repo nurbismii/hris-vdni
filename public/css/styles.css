@@ -11023,7 +11023,7 @@ textarea.form-control-lg {
 }
 
 .bg-auth {
-   background-image: url("../assets/img/backgrounds/bg-auth-vdni-new.png");
+   background-image: url("../assets/img/backgrounds/bg-auth-vdni-2.png");
    background-position: center;
    background-repeat: no-repeat;
    background-size: cover;
@@ -16521,9 +16521,10 @@ body {
   }
 }
 
-.VIpgJd-ZVi9od-ORHb-OEVmcd{
+/* Hide google translate bar */
+/* .VIpgJd-ZVi9od-ORHb-OEVmcd{
   display: none;
-}
+} */
   
 .animated--fade-in {
   -webkit-animation-name: fadeIn;

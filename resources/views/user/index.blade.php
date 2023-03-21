@@ -34,6 +34,7 @@
         </div>
     </header>
     <!-- Main page content-->
+    <x-message />
     <div class="container-fluid px-4">
         <div class="card">
             <div class="card-body">
@@ -43,41 +44,38 @@
                             <th>User</th>
                             <th>Email</th>
                             <th>Role</th>
+                            <th>Status</th>
                             <th>Joined Date</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach($datas as $row)
                         <tr>
                             <td>
                                 <div class="d-flex align-items-center">
                                     <div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-1.png" /></div>
-                                    Tiger Nixon
+                                    {{ $row->name }}
                                 </div>
                             </td>
-                            <td>tiger@email.com</td>
-                            <td>Administrator</td>
-                            <td>20 Jun 2021</td>
+                            <td>{{ $row->email }}</td>
+                            <td>{{ $row->role->permission_role }}</td>
+                            <td>{{ $row->status }}</td>
+                            <td>{{ date('d F Y', strtotime($row->created_at)) }}</td>
                             <td>
-                                <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="/users/edit"><i data-feather="edit"></i></a>
-                                <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
+
+                                <form action="{{ route('destroy.user', $row->employee_id) }}" method="POST">
+                                    @csrf
+                                    {{ method_field('delete') }}
+                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="{{ route('edit.user', $row->employee_id) }}"><i data-feather="edit"></i></a>
+                                    <button type="submit" class="btn btn-datatable btn-icon btn-transparent-dark" onclick="return confirm('Are you sure you want to delete ?')">
+                                        <i data-feather="trash-2"></i>
+                                    </button>
+                                </form>
+
                             </td>
                         </tr>
-                        <tr>
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-2.png" /></div>
-                                    Garrett Winters
-                                </div>
-                            </td>
-                            <td>gwinterse@email.com</td>
-                            <td>Administrator</td>
-                            <td>20 Jun 2021</td>
-                            <td>
-                                <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="user-management-edit-user.html"><i data-feather="edit"></i></a>
-                                <a class="btn btn-datatable btn-icon btn-transparent-dark" href="#!"><i data-feather="trash-2"></i></a>
-                            </td>
-                        </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>

@@ -4,7 +4,7 @@
             <div class="nav accordion" id="accordionSidenav">
                 <!-- Sidenav Menu Heading (Account)-->
                 <!-- * * Note: * * Visible only on and above the sm breakpoint-->
-                <div class="sidenav-menu-heading d-sm-none">Language</div>
+                <!-- <div class="sidenav-menu-heading d-sm-none">Language</div>
                 <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseLanguage" aria-expanded="false" aria-controls="collapseLanguage">
                     <div class="nav-link-icon"><i data-feather="globe"></i></div>
                     Language
@@ -16,7 +16,7 @@
                         <a class="nav-link lang-select" data-lang="en" href="#googtrans(en|en)">English</a>
                         <a class="nav-link lang-select" data-lang="zh" href="#googtrans(en|zh-CN)">Chinese</a>
                     </nav>
-                </div>
+                </div> -->
                 <div class="sidenav-menu-heading d-sm-none">Account</div>
                 <!-- Sidenav Link (Alerts)-->
                 <!-- * * Note: * * Visible only on and above the sm breakpoint-->
@@ -152,7 +152,7 @@
                 <!-- Sidanav Accordion (Performance) -->
                 <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapsePerform" aria-expanded="false" aria-controls="collapsePerform">
                     <div class="nav-link-icon"><i data-feather="activity"></i></div>
-                    Performance
+                    Employee Performance
                     <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
                 <div class="collapse" id="collapsePerform" data-bs-parent="#accordionSidenav">

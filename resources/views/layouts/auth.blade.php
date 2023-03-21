@@ -10,7 +10,6 @@
     <meta name="author" content="" />
     @stack('styles')
 </head>
-
 <body class="bg-auth">
     <div id="layoutAuthentication">
         <div id="layoutAuthentication_content">

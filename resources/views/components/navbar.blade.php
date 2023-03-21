@@ -102,14 +102,14 @@
                 <i class="me-2" data-feather="globe"></i>
                 Choose languege
             </h6>
-            <a class="lang-select dropdown-item dropdown-notifications-item" data-lang="id" href="#googtrans(en|id)">
-                <div class="dropdown-notifications-item-content">
-                    <div class="dridopdown-notifications-item-content-text">Indonesia</div>
-                </div>
-            </a>
             <a class="lang-select dropdown-item dropdown-notifications-item" data-lang="en" href="#googtrans(en|en)">
                 <div class="dropdown-notifications-item-content">
                     <div class="dridopdown-notifications-item-content-text">English</div>
+                </div>
+            </a>
+            <a class="lang-select dropdown-item dropdown-notifications-item" data-lang="id" href="#googtrans(en|id)">
+                <div class="dropdown-notifications-item-content">
+                    <div class="dridopdown-notifications-item-content-text">Indonesia</div>
                 </div>
             </a>
             <a class="lang-select dropdown-item dropdown-notifications-item" data-lang="zh" href="#googtrans(en|zh-CN)">

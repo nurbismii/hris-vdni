@@ -16,7 +16,8 @@ class UserController extends Controller
 {
     public function index()
     {
-        return view('user.index');
+        $datas = User::where('role_id', '!=', NULL)->orderBy('name', 'ASC')->get();
+        return view('user.index', compact('datas'));
     }
 
     public function create()
@@ -42,13 +43,23 @@ class UserController extends Controller
         }
     }
 
-    public function edit()
+    public function edit($id)
     {
         try {
-            // $user = User::findorFail($id);
-            return view('user.edit');
+            $data = User::where('employee_id', $id)->first();
+            return view('user.edit', compact('data'));
         } catch (\Throwable $e) {
             return back()->with('error', 'Something wrong! ' . $e->getMessage());
+        }
+    }
+
+    public function destroy($id)
+    {
+        try {
+            User::where('employee_id', $id)->delete();
+            return back()->with('success', 'Successfully deleted data');
+        } catch (\Throwable $e) {
+            return back()->with('error', 'Something wrong!' . $e->getMessage());
         }
     }
 
