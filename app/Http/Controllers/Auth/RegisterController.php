@@ -41,33 +41,33 @@ class RegisterController extends Controller
         ]);
     }
 
-    public function register(Request $request)
+    public function register(StoreRegisterRequest $request)
     {
-        $user = User::where('email', $request->email)->first();
-        if ($user) {
-            return back()->with('error', 'Email registered');
-        }
-
-        $employe_exist = employee::where('nik', $request->employee_id)->first();
-        if (!$employe_exist) {
-            return back()->with('error',  'Emplooye data is not registered in our database');
-        }
-
-        $user_exist = User::where('employee_id', $request->employee_id)->first();
-        if ($user_exist == 'null') {
-            return back()->with('error', 'User registered');
-        }
-
-        $data_user = array(
-            'employee_id' => $request->employee_id,
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'status' => 'NOT ACTIVE',
-        );
-        User::create($data_user);
-        return back()->with('success', 'Successful registration');
         try {
+            $user = User::where('email', $request->email)->first();
+            if ($user) {
+                return back()->with('error', 'Email registered');
+            }
+
+            $employe_exist = employee::where('nik', $request->employee_id)->first();
+            if (!$employe_exist) {
+                return back()->with('error',  'Emplooye data is not registered in our database');
+            }
+
+            $user_exist = User::where('employee_id', $request->employee_id)->first();
+            if ($user_exist == 'null') {
+                return back()->with('error', 'User registered');
+            }
+
+            $data_user = array(
+                'employee_id' => $request->employee_id,
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'status' => 'NOT ACTIVE',
+            );
+            User::create($data_user);
+            return back()->with('success', 'Successful registration');
         } catch (\Throwable $e) {
             return back()->with('error', 'Something wrong!');
         }

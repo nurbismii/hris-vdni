@@ -9,8 +9,8 @@
     <div class="container-xl px-4">
         <div class="row justify-content-center">
             <div class="col-lg-5">
-                <x-message />
                 <div class="card-opacation shadow-lg border-0 rounded-lg mt-5">
+                    <x-message />
                     <div class="card-header justify-content-center">
                         <h3 class="fw-light my-4 text-light fw-600">Register</h3>
                     </div>
@@ -19,51 +19,51 @@
                             @csrf
                             <div class="mb-3">
                                 <label class="small mb-1 text-light fw-600">Name</label>
-                                <input class="form-control" type="text" name="name" placeholder="Enter your name" />
+                                <input class="form-control @error('name') is-invalid @enderror" type="text" name="name" placeholder="Enter your name" />
                                 @error('name')
-                                <div class="alert alert-danger">{{ $message }}</div>
+                                <span class="invalid-feedback">{{ $message }}</span>
                                 @enderror
                             </div>
                             <div class="mb-3">
                                 <label class="small mb-1 text-light fw-600">NIK</label>
-                                <input class="form-control" type="number" name="employee_id" placeholder="Enter your NIK" />
+                                <input class="form-control @error('employee_id') is-invalid @enderror" type="number" name="employee_id" placeholder="Enter your NIK" />
                                 @error('employee_id')
-                                <div class="alert alert-danger">{{ $message }}</div>
+                                <span class="invalid-feedback">{{ $message }}</span>
                                 @enderror
                             </div>
                             <div class="mb-3">
-                                <label class="small mb-1 text-light fw-600">NO KTP</label>
-                                <input class="form-control" type="number" name="no_ktp" placeholder="Enter your No KTP" />
+                                <label class="small mb-1 text-light fw-600">No KTP</label>
+                                <input class="form-control @error('no_ktp') is-invalid @enderror" type="number" name="no_ktp" placeholder="Enter your No KTP" />
                                 @error('no_ktp')
-                                <div class="alert alert-danger">{{ $message }}</div>
+                                <span class="invalid-feedback">{{ $message }}</span>
                                 @enderror
                             </div>
                             <div class="mb-3">
-                                <label class="small mb-1 text-light fw-600">NO NPWP</label>
-                                <input class="form-control" type="number" name="no_npwp" placeholder="Enter your No NPWP" />
+                                <label class="small mb-1 text-light fw-600">No NPWP</label>
+                                <input class="form-control @error('no_npwp') is-invalid @enderror" type="number" name="no_npwp" placeholder="Enter your No NPWP" />
                                 @error('no_npwp')
-                                <div class="alert alert-danger">{{ $message }}</div>
+                                <span class="invalid-feedback">{{ $message }}</span>
                                 @enderror
                             </div>
                             <div class="mb-3">
-                                <label class="small mb-1 text-light fw-600">EMAIL</label>
-                                <input class="form-control" type="email" name="email" placeholder="Enter your email" />
+                                <label class="small mb-1 text-light fw-600">Email</label>
+                                <input class="form-control @error('email') is-invalid @enderror" type="email" name="email" placeholder="Enter your email" />
                                 @error('email')
-                                <div class="alert alert-danger">{{ $message }}</div>
+                                <span class="invalid-feedback">{{ $message }}</span>
                                 @enderror
                             </div>
                             <div class="mb-3">
-                                <label class="small mb-1 text-light fw-600">DATE OF BIRTH</label>
-                                <input class="form-control" type="date" name="date_of_birth" placeholder="Enter your birthday" />
+                                <label class="small mb-1 text-light fw-600">Date of Birth</label>
+                                <input class="form-control @error('date_of_birth') is-invalid @enderror" type="date" name="date_of_birth" placeholder="Enter your birthday" />
                                 @error('date_of_birth')
-                                <div class="alert alert-danger">{{ $message }}</div>
+                                <span class="invalid-feedback">{{ $message }}</span>
                                 @enderror
                             </div>
                             <div class="mb-3">
-                                <label class="small mb-1 text-light fw-600">PASSWORD</label>
-                                <input class="form-control" type="password" name="password" placeholder="Enter password" />
+                                <label class="small mb-1 text-light fw-600">Password</label>
+                                <input class="form-control @error('password') is-invalid @enderror" type="password" name="password" placeholder="Enter password" />
                                 @error('password')
-                                <div class="alert alert-danger">{{ $message }}</div>
+                                <span class="invalid-feedback">{{ $message }}</span>
                                 @enderror
                             </div>
                             <!-- <div class="mb-3">

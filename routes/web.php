@@ -42,8 +42,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['prefix' => 'employees'], function () {
         route::get('/', [EmployeeController::class, 'index']);
         route::get('/create', [EmployeeController::class, 'create']);
+        route::post('/store', [EmployeeController::class, 'store'])->name('store.employee');
         route::get('/import', [EmployeeController::class, 'import']);
         route::get('/download-example', [EmployeeController::class, 'downloadExample'])->name('download.example');
+        route::post('/import-employee', [EmployeeController::class, 'importEmployee'])->name('import.employee');
     });
 
     Route::group(['prefix' => 'account'], function () {

@@ -45,7 +45,7 @@
 @if ($errors->any())
 
 <div class="alert alert-danger alert-dismissible fade show" role="alert">
-  <h6 class="alert-heading">Error</h6>
+  <h6 class="alert-heading">Something wrong!</h6>
   {{ $message }}
   <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>

@@ -36,7 +36,7 @@
         <div class="card mb-4">
           <div class="card-header">Add Employee</div>
           <div class="card-body">
-            <form action="" enctype="application/x-www-form-urlencoded" method="POST">
+            <form action="{{ route('store.employee') }}" enctype="application/x-www-form-urlencoded" method="POST">
               @csrf
               <div class="row gx-3 mb-3">
                 <div class="col-md-6">
@@ -48,9 +48,15 @@
                   <input class="form-control" name="no_ktp" type="text" placeholder="Enter your KTP" />
                 </div>
               </div>
-              <div class="mb-3">
-                <label class="small mb-1">Full Name</label>
-                <input class="form-control" name="name" type="text" placeholder="Enter your full name" />
+              <div class="row gx-3 mb-3">
+                <div class="col-md-6">
+                  <label class="small mb-1">Full Name</label>
+                  <input class="form-control" name="name" type="text" placeholder="Enter your full name" />
+                </div>
+                <div class="col-md-6">
+                  <label class="small mb-1">Date of Birthday</label>
+                  <input class="form-control" name="date_of_birth" type="date" />
+                </div>
               </div>
               <div class="row gx-3 mb-3">
                 <div class="col-md-6">
@@ -58,8 +64,8 @@
                   <input class="form-control" name="company_name" type="text" placeholder="Enter your company name" />
                 </div>
                 <div class="col-md-6">
-                  <label class="small mb-1">Date of Birthday</label>
-                  <input class="form-control" name="date" type="date" />
+                  <label class="small mb-1">Entry Date</label>
+                  <input class="form-control" name="entry_date" type="date" />
                 </div>
               </div>
               <div class="row gx-3 mb-3">
@@ -69,7 +75,7 @@
                 </div>
                 <div class="col-md-6">
                   <label class="small mb-1">BPJS Kesehatan</label>
-                  <input class="form-control" name="bpjs" type="text" placeholder="Enter your BPJS" />
+                  <input class="form-control" name="bpjs_ket" type="text" placeholder="Enter your BPJS" />
                 </div>
               </div>
               <div class="row gx-3 mb-3">
@@ -89,7 +95,7 @@
                 </div>
               </div>
               <!-- Submit button-->
-              <button class="btn btn-primary" type="button">Add Employee</button>
+              <button class="btn btn-primary" type="sbumit">Add Employee</button>
             </form>
           </div>
         </div>

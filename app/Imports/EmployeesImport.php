@@ -3,28 +3,38 @@
 namespace App\Imports;
 
 use App\Models\employee;
-use Illuminate\Support\Collection;
+use Carbon\Carbon;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
 class EmployeesImport implements ToModel, WithHeadingRow
 {
-    /**
-     * @param Collection $collection
-     */
     public function model(array $row)
     {
         return new employee([
-            'employee_nik' => $row['Nik'],
-            'no_ktp' => $row['No_KTP'],
-            'name' => $row['Nama'],
-            'npwp' => $row['No_NPWP'],
-            'no_ktp' => $row['Tanggal_lahir'],
-            'company_name' => $row['Nm_perusahaan'],
-            'vaccine' => $row['Vaksin'],
-            'bpjs_tk' => $row['NO_BPJS_TK'],
-            'bpjs_ket' => $row['NO_BPJS_KES'],
-            'entry_date' => $row['Tanggal_join'],
+            'nik' => $row['nik'],
+            'no_ktp' => $row['no_ktp'],
+            'name' => $row['name'],
+            'company_name' => $row['company_name'],
+            'date_of_birth' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['date_of_birth'])),
+            'npwp' => $row['npwp'],
+            'bpjs_ket' => $row['bpjs_kes'],
+            'bpjs_tk' => $row['bpjs_tk'],
+            'vaccine' => $row['vaccine'],
+            'entry_date' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['entry_date']))
         ]);
+    }
+
+    public function rules(): array
+    {
+        return [
+            '*.nik' => ['required', 'unique:employee,nik'],
+            '*.no_ktp' => ['required', 'unique:employee,no_ktp'],
+            'company_name' => function ($attribute, $value, $onFailure) {
+                if($value != 'VDNI' or $value != 'FHNI'){
+                    $onFailure('Company is not VDNI or FHNI');
+                }
+            }
+        ];
     }
 }
