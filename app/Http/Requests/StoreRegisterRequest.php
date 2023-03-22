@@ -28,6 +28,7 @@ class StoreRegisterRequest extends FormRequest
             'name' => 'required',
             'email' => 'required',
             'password' => 'required',
+            'password_confirm' => 'required|same:password',
             'status' => 'required',
         ];
     }
@@ -39,6 +40,7 @@ class StoreRegisterRequest extends FormRequest
             'name' => 'Name',
             'email' => 'Email',
             'password' => 'Password',
+            'password_confirm' => 'Password Confirmattion',
             'status' => 'Status',
         ];
     }
@@ -48,6 +50,7 @@ class StoreRegisterRequest extends FormRequest
         return [
             'required' => ':attribute must be filled',
             'min' => ':attribute',
+            'same' => ':attribute does not match'
         ];
     }
 }

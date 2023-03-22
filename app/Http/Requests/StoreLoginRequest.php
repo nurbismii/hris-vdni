@@ -32,7 +32,7 @@ class StoreLoginRequest extends FormRequest
     public function attributes()
     {
         return [
-            'email' => 'Email or Password',
+            'email' => 'Email',
             'password' => 'Password'
         ];
     }

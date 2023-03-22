@@ -6,8 +6,9 @@ use App\Models\employee;
 use Carbon\Carbon;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Maatwebsite\Excel\Concerns\WithValidation;
 
-class EmployeesImport implements ToModel, WithHeadingRow
+class EmployeesImport implements ToModel, WithHeadingRow, WithValidation
 {
     public function model(array $row)
     {
@@ -28,13 +29,21 @@ class EmployeesImport implements ToModel, WithHeadingRow
     public function rules(): array
     {
         return [
-            '*.nik' => ['required', 'unique:employee,nik'],
-            '*.no_ktp' => ['required', 'unique:employee,no_ktp'],
-            'company_name' => function ($attribute, $value, $onFailure) {
-                if($value != 'VDNI' or $value != 'FHNI'){
-                    $onFailure('Company is not VDNI or FHNI');
-                }
-            }
+            'nik' => 'required|unique:employees,nik',
+            'no_ktp' => 'required|unique:employees,no_ktp',
+            // 'npwp' => ['unique:employees,npwp'],
+            // 'bpjs_ket' => ['unique:employees,bpjs_ket'],
+            // 'bpjs_tk' => ['unique:employees,bpjs_tk'],
+        ];
+    }
+
+    public function customValidationMessages()
+    {
+        return [
+            'nik.unique' => 'NIK has been registered',
+            'nik.required' => 'NIK must be filled',
+            'no_ktp.unique' => 'KTP has been registered',
+            'no_ktp.required' => 'KTP must be filled',
         ];
     }
 }

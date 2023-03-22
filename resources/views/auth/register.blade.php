@@ -10,7 +10,6 @@
         <div class="row justify-content-center">
             <div class="col-lg-5">
                 <div class="card-opacation shadow-lg border-0 rounded-lg mt-5">
-                    <x-message />
                     <div class="card-header justify-content-center">
                         <h3 class="fw-light my-4 text-light fw-600">Register</h3>
                     </div>
@@ -66,13 +65,13 @@
                                 <span class="invalid-feedback">{{ $message }}</span>
                                 @enderror
                             </div>
-                            <!-- <div class="mb-3">
-                                <label class="small mb-1 text-light fw-600">PASSWORD CONFIRM</label>
-                                <input class="form-control" type="password" placeholder="Enter your password confirm" />
+                            <div class="mb-3">
+                                <label class="small mb-1 text-light fw-600">Password Confirm</label>
+                                <input class="form-control @error('password_confirm') is-invalid @enderror" name="password_confirm" type="password" placeholder="Enter your password confirm" />
                                 @error('password_confirm')
-                                <div class="alert alert-danger">{{ $message }}</div>
+                                <span class="invalid-feedback">{{ $message }}</span>
                                 @enderror
-                            </div> -->
+                            </div>
                             <div class="text-center d-grid">
                                 <button type="submit" class="btn btn-success text-light fw-600">Submit</button>
                             </div>

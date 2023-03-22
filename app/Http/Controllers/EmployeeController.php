@@ -14,7 +14,8 @@ class EmployeeController extends Controller
 {
     public function index()
     {
-        return view('employee.index');
+        $datas = employee::orderBy('id', 'DESC')->get();
+        return view('employee.index', compact('datas'));
     }
 
     public function create()
@@ -61,15 +62,17 @@ class EmployeeController extends Controller
     public function importEmployee(Request $request)
     {
         Excel::import(new EmployeesImport, $request->file('file'));
-
         return back()->with('success', 'All good!');
-        // if ($request->hasFile('file')) {
-        //     $file = $request->file('file');
-        //     $file_name = $file->getClientOriginalName();
-        //     $file->move('import/employee', $file_name);
-        //     $import = new EmployeesImport;
-        //     Excel::import($import, public_path('import/employee/' . $file_name));
-        //     return back()->with('success', 'All good!');
-        // }
+        try {
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            $failures = $e->failures();
+
+            foreach ($failures as $failure) {
+                $failure->row(); // row that went wrong
+                $failure->attribute(); // either heading key (if using heading row concern) or column index
+                $failure->errors(); // Actual error messages from Laravel validator
+                $failure->values(); // The values of the row that has failed.
+            }
+        }
     }
 }

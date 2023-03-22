@@ -30,8 +30,7 @@ class RoleStoreRequest extends FormRequest
     public function messages()
     {
         return [
-            'permission_role' => ':attribute',
-            'status' => ':attribute'
+            'required' => ':attribute',
         ];
     }
 }

@@ -20,9 +20,9 @@ class CreateEmployeesTable extends Migration
             $table->string('name');
             $table->date('date_of_birth');
             $table->string('company_name');
-            $table->string('npwp', 64);
-            $table->string('bpjs_ket', 64);
-            $table->string('bpjs_tk', 64);
+            $table->string('npwp', 64)->nullable();
+            $table->string('bpjs_ket', 64)->nullable();
+            $table->string('bpjs_tk', 64)->nullable();
             $table->enum('vaccine', array('0', '1', '2', '3'))->default('0');
             $table->date('entry_date')->nullable();
             $table->timestamps();

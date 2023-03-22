@@ -32,22 +32,20 @@
 
 
 @if ($message = Session::get('info'))
-
 <div class="alert alert-info alert-dismissible fade show" role="alert">
   <h6 class="alert-heading">Information</h6>
   {{ $message }}
   <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
-
 @endif
 
 
-@if ($errors->any())
-
+@if (count($errors) > 0)
 <div class="alert alert-danger alert-dismissible fade show" role="alert">
   <h6 class="alert-heading">Something wrong!</h6>
-  {{ $message }}
+  @foreach($errors->all() as $error)
+  {{ $error }} <br>
+  @endforeach
   <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
-
 @endif

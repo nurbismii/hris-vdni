@@ -51,20 +51,25 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach($datas as $row)
                         <tr>
                             <td>
                                 <div class="d-flex align-items-center">
                                     <div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-1.png" /></div>
-                                    Tiger Nixon
+                                    {{ $row->name }} ( {{ $row->nik }} ) <br>
+                                    Vaccine : {{ $row->vaccine == 3 ? 'Booster' : ($row->vaccine == 2 ? 'Vaccine 2' : ($row->vaccine == 1 ? 'Vaccine 1' : 'Not Vaccine')) }} <br>
+                                    BPJS Kesehatan : {{ $row->bpjs_ket }} <br>
+                                    BPJS TK : {{ $row->bpjs_tk }}
                                 </div>
                             </td>
-                            <td>administrator@gmail.com</td>
-                            <td>-</td>
+                            <td>{{ $row->company_name }}</td>
+                            <td>{{ $row->entry_date }}</td>
                             <td>
                                 <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" data-bs-toggle="modal" data-bs-target="#editRole"><i data-feather="edit"></i></a>
                                 <a class="btn btn-datatable btn-icon btn-transparent-dark" data-bs-toggle="modal" data-bs-target="#deleteRole"><i data-feather="trash-2"></i></a>
                             </td>
                         </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>

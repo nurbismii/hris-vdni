@@ -9,7 +9,6 @@
         <div class="row justify-content-center">
             <div class="col-lg-5">
                 <div class="card-opacation shadow-lg border-0 rounded-lg mt-5">
-                    <x-message />
                     <div class="card-header justify-content-center">
                         <h3 class="fw-light my-4 text-light fw-600">Login</h3>
                     </div>
@@ -18,11 +17,21 @@
                             @csrf
                             <div class="mb-3">
                                 <label class="small mb-1 text-light fw-600">Email</label>
-                                <input class="form-control" type="email" name="email" placeholder="Enter email" />
+                                <input class="form-control @error('email') is-invalid @enderror" type="email" name="email" placeholder="Enter email" />
+                                @if ($errors->has('email'))
+                                <span class="invalid-feedback">
+                                    <strong>{{ $errors->first('email') }}</strong>
+                                </span>
+                                @endif
                             </div>
                             <div class="mb-3">
                                 <label class="small mb-1 text-light fw-600">Password</label>
-                                <input class="form-control" type="password" name="password" placeholder="Enter password" />
+                                <input class="form-control @error('password') is-invalid @enderror" type="password" name="password" placeholder="Enter password" />
+                                @if ($errors->has('password'))
+                                <span class="invalid-feedback">
+                                    <strong>{{ $errors->first('password') }}</strong>
+                                </span>
+                                @endif
                             </div>
                             <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
                                 <a class="small text-light fw-600" href="#">Forgot Password?</a>

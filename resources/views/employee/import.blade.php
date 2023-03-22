@@ -46,14 +46,14 @@
                             <div class="timeline-item-marker-text">First</div>
                             <div class="timeline-item-marker-indicator"><i data-feather="check"></i></div>
                         </div>
-                        <div class="timeline-item-content">Date format should be (Example YYYY-MM-DD)</div>
+                        <div class="timeline-item-content">Date format should be (DD/MM/YYYY)</div>
                     </div>
                     <div class="timeline-item">
                         <div class="timeline-item-marker">
                             <div class="timeline-item-marker-text">Second.</div>
                             <div class="timeline-item-marker-indicator"><i data-feather="check"></i></div>
                         </div>
-                        <div class="timeline-item-content">Company Name must be VDNI</div>
+                        <div class="timeline-item-content">Company Name must be VDNI or FHNI</div>
                     </div>
                     <div class="timeline-item mb-3">
                         <div class="timeline-item-marker">
