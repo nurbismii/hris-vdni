@@ -4,7 +4,7 @@ namespace App\Http\Requests\User;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserStoreRequest extends FormRequest
+class UsertUpdaterRequest extends FormRequest
 {
     public function authorize()
     {
@@ -14,9 +14,9 @@ class UserStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'employee_id' => 'required|unique:employees,employee_id',
+            'employee_id' => 'required',
             'name' => 'required',
-            'email' => 'required|unique:employees,email',
+            'email' => 'required',
             'status' => 'required',
         ];
     }
@@ -34,7 +34,6 @@ class UserStoreRequest extends FormRequest
     public function messages()
     {
         return [
-            'unique' => ':attribute NIK has been registered',
             'required' => ':attribute must be filled',
         ];
     }

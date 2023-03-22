@@ -34,8 +34,8 @@
         </div>
     </header>
     <!-- Main page content-->
-    <x-message />
     <div class="container-fluid px-4">
+        <x-message />
         <div class="card">
             <div class="card-body">
                 <table id="datatablesSimple">
@@ -68,9 +68,8 @@
                                     @csrf
                                     {{ method_field('delete') }}
                                     <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="{{ route('edit.user', $row->employee_id) }}"><i data-feather="edit"></i></a>
-                                    <button type="submit" class="btn btn-datatable btn-icon btn-transparent-dark" onclick="return confirm('Are you sure you want to delete ?')">
-                                        <i data-feather="trash-2"></i>
-                                    </button>
+                                    <a type="submit" class="btn btn-datatable btn-icon btn-transparent-dark" data-bs-toggle="modal" data-bs-target="#deleteUser{{$row->employee_id}}"><i data-feather="trash-2"></i>
+                                    </a>
                                 </form>
 
                             </td>
@@ -81,6 +80,31 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal delete user -->
+    @foreach($datas as $data)
+    <div class="modal fade" id="deleteUser{{$data->employee_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">New Role</h5>
+                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{{ route('destroy.user', $data->employee_id) }}" method="POST" enctype="application/x-www-form-urlencoded" class="nav flex-column" id="stickyNav">
+                    <div class="modal-body">
+                        @csrf
+                        {{ method_field('delete') }}
+                        Are you sure you want to delete this data ({{ $data->name }})?
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">No</button>
+                        <button class="btn btn-primary" type="submit">Yes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    @endforeach
 
     @push('scripts')
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>

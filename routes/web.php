@@ -26,6 +26,7 @@ Route::group(['middleware' => 'auth'], function () {
         route::get('/download-example-user', [UserController::class, 'downloadExampleUser'])->name('download.exampleUser');
         route::post('/store', [UserController::class, 'store']);
         route::get('/edit/{id}', [UserController::class, 'edit'])->name('edit.user');
+        route::patch('/update/{id}', [UserController::class, 'update'])->name('update.user');
         route::delete('/destroy/{id}', [UserController::class, 'destroy'])->name('destroy.user');
     });
 
@@ -46,6 +47,8 @@ Route::group(['middleware' => 'auth'], function () {
         route::get('/import', [EmployeeController::class, 'import']);
         route::get('/download-example', [EmployeeController::class, 'downloadExample'])->name('download.example');
         route::post('/import-employee', [EmployeeController::class, 'importEmployee'])->name('import.employee');
+        route::post('/update-import-employee', [EmployeeController::class, 'updateImportEmployee'])->name('updateImport.employee');
+        route::post('/destroy-import-employee', [EmployeeController::class, 'destroyImportEmployee'])->name('destroyImport.employee');
     });
 
     Route::group(['prefix' => 'account'], function () {

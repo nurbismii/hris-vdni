@@ -39,12 +39,14 @@
     </header>
     <!-- Main page content-->
     <div class="container-fluid px-4">
+        <x-message />
         <div class="card">
             <div class="card-body">
                 <table id="datatablesSimple">
                     <thead>
                         <tr>
                             <th>Employee</th>
+                            <th>NIK</th>
                             <th>Company</th>
                             <th>Join Date</th>
                             <th>Action</th>
@@ -56,17 +58,26 @@
                             <td>
                                 <div class="d-flex align-items-center">
                                     <div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-1.png" /></div>
-                                    {{ $row->name }} ( {{ $row->nik }} ) <br>
-                                    Vaccine : {{ $row->vaccine == 3 ? 'Booster' : ($row->vaccine == 2 ? 'Vaccine 2' : ($row->vaccine == 1 ? 'Vaccine 1' : 'Not Vaccine')) }} <br>
+                                    {{ $row->name }} <br>
+                                    @if($row->bpjs_ket)
                                     BPJS Kesehatan : {{ $row->bpjs_ket }} <br>
-                                    BPJS TK : {{ $row->bpjs_tk }}
+                                    @endif
+                                    @if($row->bpjs_tk)
+                                    BPJS TK : {{ $row->bpjs_tk }} <br>
+                                    @endif
+                                    @if($row->vaccine)
+                                    Vaccine : {{ $row->vaccine == 3 ? 'Booster' : ($row->vaccine == 2 ? 'Vaccine 2' : ($row->vaccine == 1 ? 'Vaccine 1' : 'Not Vaccine')) }} <br>
+                                    @endif
                                 </div>
                             </td>
+                            <td>{{ $row->nik }}</td>
                             <td>{{ $row->company_name }}</td>
                             <td>{{ $row->entry_date }}</td>
                             <td>
-                                <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" data-bs-toggle="modal" data-bs-target="#editRole"><i data-feather="edit"></i></a>
-                                <a class="btn btn-datatable btn-icon btn-transparent-dark" data-bs-toggle="modal" data-bs-target="#deleteRole"><i data-feather="trash-2"></i></a>
+                                <form action="" method="POST">
+                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" data-bs-toggle="modal" data-bs-target="#editRole"><i data-feather="edit"></i></a>
+                                    <a class="btn btn-datatable btn-icon btn-transparent-dark" data-bs-toggle="modal" data-bs-target="#deleteRole"><i data-feather="trash-2"></i></a>
+                                </form>
                             </td>
                         </tr>
                         @endforeach
@@ -84,12 +95,12 @@
                     <h5 class="modal-title" id="exampleModalLabel">Upload employee data change</h5>
                     <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="" method="POST" enctype="multipart/form-data" class="nav flex-column" id="stickyNav">
+                <form action="{{ route('updateImport.employee') }}" method="POST" enctype="multipart/form-data" class="nav flex-column" id="stickyNav">
                     <div class="modal-body">
                         @csrf
                         <div class="mb-3">
                             <label class="form-label">Select a file</label>
-                            <input class="form-control" type="file" id="formFile">
+                            <input class="form-control" type="file" name="file" id="formFile">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -110,12 +121,12 @@
                     <h5 class="modal-title" id="exampleModalLabel">Upload delete employee data</h5>
                     <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="" method="POST" enctype="multipart/form-data" class="nav flex-column" id="stickyNav">
+                <form action="{{ route('destroyImport.employee') }}" method="POST" enctype="multipart/form-data" class="nav flex-column" id="stickyNav">
                     <div class="modal-body">
                         @csrf
                         <div class="mb-3">
                             <label class="form-label">Select a file</label>
-                            <input class="form-control" type="file" id="formFile">
+                            <input class="form-control" name="file" type="file" id="formFile">
                         </div>
                     </div>
                     <div class="modal-footer">

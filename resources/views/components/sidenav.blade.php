@@ -4,19 +4,6 @@
             <div class="nav accordion" id="accordionSidenav">
                 <!-- Sidenav Menu Heading (Account)-->
                 <!-- * * Note: * * Visible only on and above the sm breakpoint-->
-                <!-- <div class="sidenav-menu-heading d-sm-none">Language</div>
-                <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseLanguage" aria-expanded="false" aria-controls="collapseLanguage">
-                    <div class="nav-link-icon"><i data-feather="globe"></i></div>
-                    Language
-                    <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                </a>
-                <div class="collapse" id="collapseLanguage" data-bs-parent="#accordionSidenav">
-                    <nav class="sidenav-menu-nested nav">
-                        <a class="nav-link lang-select" data-lang="id" href="#googtrans(en|id)">Indonesia</a>
-                        <a class="nav-link lang-select" data-lang="en" href="#googtrans(en|en)">English</a>
-                        <a class="nav-link lang-select" data-lang="zh" href="#googtrans(en|zh-CN)">Chinese</a>
-                    </nav>
-                </div> -->
                 <div class="sidenav-menu-heading d-sm-none">Account</div>
                 <!-- Sidenav Link (Alerts)-->
                 <!-- * * Note: * * Visible only on and above the sm breakpoint-->

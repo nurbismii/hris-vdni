@@ -4,12 +4,11 @@ namespace App\Http\Controllers\User;
 
 use App\Exports\UserExport;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreRegisterRequest;
 use App\Http\Requests\User\UserStoreRequest;
-use App\Models\employee;
+use App\Http\Requests\User\UsertUpdaterRequest;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
 
 class UserController extends Controller
@@ -36,10 +35,10 @@ class UserController extends Controller
             DB::beginTransaction();
             User::create($request->all());
             DB::commit();
-            return back()->with('success', 'Successfully');
+            return back()->with('success', 'User has been added');
         } catch (\Throwable $e) {
             DB::rollBack();
-            return back()->with('error', 'Something wrong! ' . $e->getMessage());
+            return back()->with('error', 'Something wrong!');
         }
     }
 
@@ -49,7 +48,22 @@ class UserController extends Controller
             $data = User::where('employee_id', $id)->first();
             return view('user.edit', compact('data'));
         } catch (\Throwable $e) {
-            return back()->with('error', 'Something wrong! ' . $e->getMessage());
+            return back()->with('error', 'Something wrong! ');
+        }
+    }
+
+    public function update(UsertUpdaterRequest $request, $id)
+    {
+        try {
+            User::where('employee_id', $id)->update([
+                'employee_id' => $request->employee_id,
+                'name' => $request->name,
+                'email' => $request->email,
+                'status' => $request->status
+            ]);
+            return redirect('users')->with('success', 'User has been updated');
+        } catch (\Throwable $e) {
+            return redirect('users')->with('error', 'Something wrong!');
         }
     }
 
@@ -57,7 +71,7 @@ class UserController extends Controller
     {
         try {
             User::where('employee_id', $id)->delete();
-            return back()->with('success', 'Successfully deleted data');
+            return back()->with('success', 'User has been deleted');
         } catch (\Throwable $e) {
             return back()->with('error', 'Something wrong!' . $e->getMessage());
         }

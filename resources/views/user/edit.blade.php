@@ -51,42 +51,46 @@
                 <div class="card mb-4">
                     <div class="card-header">Account Details</div>
                     <div class="card-body">
-                        <form>
-                            <!-- Form Row-->
+                        <form action="{{ route('update.user', $data->employee_id) }}" method="POST">
+                            @csrf
+                            {{ method_field('patch') }}
                             <div class="row gx-3 mb-3">
-                                <!-- Form Group (first name)-->
                                 <div class="col-md-6">
                                     <label class="small mb-1">Employee Id</label>
-                                    <input class="form-control" name="employee_id" type="text" value="{{ $data->employee_id }}" />
+                                    <input class="form-control @error('employee_id') is-invalid @enderror" name="employee_id" type="text" value="{{ $data->employee_id }}" />
+                                    @error('employee_id')
+                                    <span class="invalid-feedback">{{ $message }}</span>
+                                    @enderror
                                 </div>
-                                <!-- Form Group (last name)-->
                                 <div class="col-md-6">
                                     <label class="small mb-1">Name</label>
-                                    <input class="form-control" name="name" type="text" value="{{ $data->name }}" />
+                                    <input class="form-control @error('name') is-invalid @enderror" name="name" type="text" value="{{ $data->name }}" />
+                                    @error('name')
+                                    <span class="invalid-feedback">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
-                            <!-- Form Group (email address)-->
                             <div class="mb-3">
                                 <label class="small mb-1">Email</label>
-                                <input class="form-control" name="email" type="email" value="{{ $data->email }}" />
+                                <input class="form-control @error('email') is-invalid @enderror" name="email" type="email" value="{{ $data->email }}" />
+                                @error('email')
+                                <span class="invalid-feedback">{{ $message }}</span>
+                                @enderror
                             </div>
-                            <!-- Form Group (Roles)-->
                             <div class="row gx-3 mb-3">
-                                <!-- Form Group (first name)-->
                                 <div class="col-md-6">
                                     <label class="small mb-1">Status</label>
                                     <select name="status" class="form-select">
-                                        <option value="{{ $data->status }}">{{ $data->status }}</option>
+                                        <option value="{{ $data->status }}" selected>{{ ucfirst($data->status) }}</option>
+                                        @if($data->status == 'NOT ACTIVE')
+                                        <option value="ACTIVE">ACTIVE</option>
+                                        @else
+                                        <option value="NOT ACTIVE">NOT ACTIVE</option>
+                                        @endif
                                     </select>
                                 </div>
-                                <!-- Form Group (last name)-->
-                                <div class="col-md-6">
-                                    <label class="small mb-1">Role</label>
-                                    <input class="form-control" name="role_id" type="text" value="{{ $data->role->permission_role }}" readonly />
-                                </div>
                             </div>
-                            <!-- Submit button-->
-                            <button class="btn btn-success btn-sm lift lift-sm" type="button">Submit</button>
+                            <button class="btn btn-success btn-sm lift lift-sm" type="submit">Submit</button>
                         </form>
                     </div>
                 </div>
