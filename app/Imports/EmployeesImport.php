@@ -4,26 +4,36 @@ namespace App\Imports;
 
 use App\Models\employee;
 use Carbon\Carbon;
+use Illuminate\Support\Collection;
+use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
 
-class EmployeesImport implements ToModel, WithHeadingRow, WithValidation
+class EmployeesImport implements ToCollection, WithHeadingRow, WithValidation
 {
-    public function model(array $row)
+    public function collection(Collection $collection)
     {
-        return new employee([
-            'nik' => $row['nik'],
-            'no_ktp' => $row['no_ktp'],
-            'name' => $row['name'],
-            'company_name' => $row['company_name'],
-            'date_of_birth' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['date_of_birth'])),
-            'npwp' => $row['npwp'],
-            'bpjs_ket' => $row['bpjs_kes'],
-            'bpjs_tk' => $row['bpjs_tk'],
-            'vaccine' => $row['vaccine'],
-            'entry_date' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['entry_date']))
-        ]);
+        $datas = array();
+        foreach ($collection as $collect) {
+            $datas[] = array(
+                'nik' => $collect['nik'],
+                'no_ktp' => $collect['no_ktp'],
+                'name' => $collect['name'],
+                'company_name' => $collect['company_name'],
+                'date_of_birth' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($collect['date_of_birth'])),
+                'npwp' => $collect['npwp'],
+                'bpjs_ket' => $collect['bpjs_kes'],
+                'bpjs_tk' => $collect['bpjs_tk'],
+                'vaccine' => $collect['vaccine'],
+                'entry_date' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($collect['entry_date']))
+            );
+        }
+
+        $chunks = array_chunk($datas, 5000);
+        foreach ($chunks as $chunk) {
+            employee::insert($chunk);
+        }
     }
 
     public function rules(): array
@@ -31,9 +41,7 @@ class EmployeesImport implements ToModel, WithHeadingRow, WithValidation
         return [
             'nik' => 'required|unique:employees,nik',
             'no_ktp' => 'required|unique:employees,no_ktp',
-            // 'npwp' => ['unique:employees,npwp'],
-            // 'bpjs_ket' => ['unique:employees,bpjs_ket'],
-            // 'bpjs_tk' => ['unique:employees,bpjs_tk'],
+            'company_name' => 'required|in:VDNI,VDNIP'
         ];
     }
 
@@ -44,6 +52,8 @@ class EmployeesImport implements ToModel, WithHeadingRow, WithValidation
             'nik.required' => 'NIK must be filled',
             'no_ktp.unique' => 'KTP has been registered',
             'no_ktp.required' => 'KTP must be filled',
+            'company_name.required' => 'Company name must be filled',
+            'company_name.in' => 'Company name must be filled VDNI or VDNIP'
         ];
     }
 }

@@ -1,4 +1,4 @@
-<x-app-layout title="Import-Employee">
+<x-app-layout title="Import Employee">
     @push('styles')
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css" rel="stylesheet" />
@@ -53,7 +53,7 @@
                             <div class="timeline-item-marker-text">Second.</div>
                             <div class="timeline-item-marker-indicator"><i data-feather="check"></i></div>
                         </div>
-                        <div class="timeline-item-content">Company Name must be VDNI or FHNI</div>
+                        <div class="timeline-item-content">Company Name must be VDNI or VDNIP</div>
                     </div>
                     <div class="timeline-item mb-3">
                         <div class="timeline-item-marker">

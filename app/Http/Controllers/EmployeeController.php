@@ -27,7 +27,7 @@ class EmployeeController extends Controller
     public function store(StoreEmployeeRequest $request)
     {
         employee::create($request->all());
-        return back()->with('success', 'Succesfully added employee');
+        return back()->with('success', 'Employee has been added');
     }
 
     public function show($id)
@@ -42,12 +42,23 @@ class EmployeeController extends Controller
 
     public function edit($id)
     {
-        
+        try {
+            $data = employee::where('nik', $id)->first();
+            return view('employee.edit' . compact('data'));
+        } catch (\Throwable  $e) {
+            return back()->with('error', 'Something wrong!');
+        }
     }
 
     public function update(Request $request, $id)
     {
-        
+        try {
+            $data = employee::where('nik', $id)->first();
+            $data->update($request->all());
+            return back()->with('error', 'Employee has been updated');
+        } catch (\Throwable $e) {
+            return redirect('employees', 'Something wrong');
+        }
     }
 
     public function destroy($id)
@@ -72,49 +83,19 @@ class EmployeeController extends Controller
 
     public function importEmployee(Request $request)
     {
-        try {
-            Excel::import(new EmployeesImport, $request->file('file'));
-            return back()->with('success', 'All good!');
-        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
-            $failures = $e->failures();
-            foreach ($failures as $failure) {
-                $failure->row(); // row that went wrong
-                $failure->attribute(); // either heading key (if using heading row concern) or column index
-                $failure->errors(); // Actual error messages from Laravel validator
-                $failure->values(); // The values of the row that has failed.
-            }
-        }
+        Excel::import(new EmployeesImport, $request->file('file'));
+        return back()->with('success', 'All good!');
     }
 
     public function updateImportEmployee(Request $request)
     {
-        try {
-            Excel::import(new EmployeesUpdateImport, $request->file('file'));
-            return back()->with('success', 'All good!');
-        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
-            $failures = $e->failures();
-            foreach ($failures as $failure) {
-                $failure->row(); // row that went wrong
-                $failure->attribute(); // either heading key (if using heading row concern) or column index
-                $failure->errors(); // Actual error messages from Laravel validator
-                $failure->values(); // The values of the row that has failed.
-            }
-        }
+        Excel::import(new EmployeesUpdateImport, $request->file('file'));
+        return back()->with('success', 'All good!');
     }
 
     public function destroyImportEmployee(Request $request)
     {
-        try {
-            Excel::import(new EmployeesDeleteImport, $request->file('file'));
-            return back()->with('success', 'All good!');
-        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
-            $failures = $e->failures();
-            foreach ($failures as $failure) {
-                $failure->row(); // row that went wrong
-                $failure->attribute(); // either heading key (if using heading row concern) or column index
-                $failure->errors(); // Actual error messages from Laravel validator
-                $failure->values(); // The values of the row that has failed.
-            }
-        }
+        Excel::import(new EmployeesDeleteImport, $request->file('file'));
+        return back()->with('success', 'All good!');
     }
 }

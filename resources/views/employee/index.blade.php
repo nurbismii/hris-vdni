@@ -75,8 +75,8 @@
                             <td>{{ $row->entry_date }}</td>
                             <td>
                                 <form action="" method="POST">
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" data-bs-toggle="modal" data-bs-target="#editRole"><i data-feather="edit"></i></a>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark" data-bs-toggle="modal" data-bs-target="#deleteRole"><i data-feather="trash-2"></i></a>
+                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" data-bs-toggle="modal" data-bs-target="#editEmployee{{$row->nik}}"><i data-feather="edit"></i></a>
+                                    <a class="btn btn-datatable btn-icon btn-transparent-dark" data-bs-toggle="modal" data-bs-target="#deleteEmployee{{$row->nik}}"><i data-feather="trash-2"></i></a>
                                 </form>
                             </td>
                         </tr>
@@ -87,7 +87,79 @@
         </div>
     </div>
 
-    <!-- Modal update emplooye -->
+    @foreach($datas as $row)
+    <div class="modal fade" id="editEmployee{{$row->nik}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Upload employee data change</h5>
+                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{{ route('update.employee',  $row->nik) }}" method="POST" enctype="multipart/form-data" class="nav flex-column" id="stickyNav">
+                    <div class="modal-body">
+                        @csrf
+                        {{ method_field('patch') }}
+                        <div class="mb-3">
+                            <label class="small mb-1">Name</label>
+                            <input class="form-control" name="permission_role" type="text" placeholder="Enter role" required />
+                            @error('name')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
+                            <label class="small mb-1">Description</label>
+                            <textarea class="form-control" name="description" cols="30" rows="10"></textarea>
+                            @error('description')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
+                            <label class="small mb-1">Status</label>
+                            <select class="form-select" name="status" aria-label="Default select example" required>
+                                <option selected disabled>Select a role:</option>
+                                <option value="1">Active</option>
+                                <option value="0">Not Active</option>
+                            </select>
+                            @error('status')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
+                        <button class="btn btn-success" type="submit">Send</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    @endforeach
+
+    @foreach($datas as $row)
+    <div class="modal fade" id="editEmployee{$row->nik}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Upload employee data change</h5>
+                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{{ route('update.employee',  $row->nik) }}" method="POST" enctype="multipart/form-data" class="nav flex-column" id="stickyNav">
+                    <div class="modal-body">
+                        @csrf
+                        {{ method_field('patch') }}
+
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
+                        <button class="btn btn-success" type="submit">Send</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    @endforeach
+
+    <!-- Modal update employee maatwebsite -->
     <div class="modal fade" id="modalUpdateEmployee" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -111,9 +183,9 @@
             </div>
         </div>
     </div>
-    <!-- Modal update emplooye end -->
+    <!-- Modal update emplooye maatwebsite end -->
 
-    <!-- Modal delete emplooye -->
+    <!-- Modal delete emplooye maatwebsite -->
     <div class="modal fade" id="modalDeleteEmployee" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -137,7 +209,7 @@
             </div>
         </div>
     </div>
-    <!-- Modal delete emplooye end -->
+    <!-- Modal delete emplooye maatwebsite end -->
 
     @push('scripts')
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>

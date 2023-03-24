@@ -55,7 +55,8 @@
                 <div class="collapse" id="collapseEmployees" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav">
                         <a class="nav-link" href="/employees">Employee list</a>
-                        <a class="nav-link" href="/employees/import">Import Employee</a>
+                        <a class="nav-link" href="/employees/import">Employee Import</a>
+                        <a class="nav-link" href="/#">Employee Assessment</a>
                     </nav>
                 </div>
                 <!-- Sidenav Accordion (Applications)-->
@@ -66,14 +67,7 @@
                 </a>
                 <div class="collapse" id="collapseApps" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav">
-                        <a class="nav-link" href="account-profile.html">Roles and Access</a>
-                        <a class="nav-link" href="account-billing.html">General Setting</a>
                         <a class="nav-link" href="account-billing.html">Mail Setting</a>
-                        <a class="nav-link" href="account-billing.html">Language Setting</a>
-                        <a class="nav-link" href="account-billing.html">Variable Type</a>
-                        <a class="nav-link" href="account-billing.html">Variable Method</a>
-                        <a class="nav-link" href="account-billing.html">IP Setting</a>
-                    </nav>
                 </div>
                 <!-- Sidenav Accordion (Flows)-->
                 <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseFlows" aria-expanded="false" aria-controls="collapseFlows">
@@ -91,22 +85,6 @@
                         <a class="nav-link" href="wizard.html">Complaints</a>
                         <a class="nav-link" href="wizard.html">Warnings</a>
                         <a class="nav-link" href="wizard.html">Terminations</a>
-                    </nav>
-                </div>
-                <!-- Sidenav Accordion (organization) -->
-                <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseOrganization" aria-expanded="false" aria-controls="collapseOrganization">
-                    <div class="nav-link-icon"><i data-feather="hexagon"></i></div>
-                    Organization
-                    <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                </a>
-                <div class="collapse" id="collapseOrganization" data-bs-parent="#accordionSidenav">
-                    <nav class="sidenav-menu-nested nav">
-                        <a class="nav-link" href="multi-tenant-select.html">Company</a>
-                        <a class="nav-link" href="wizard.html">Department</a>
-                        <a class="nav-link" href="wizard.html">Location</a>
-                        <a class="nav-link" href="wizard.html">Designation</a>
-                        <a class="nav-link" href="wizard.html">Announcements</a>
-                        <a class="nav-link" href="wizard.html">Company Police</a>
                     </nav>
                 </div>
                 <!-- Sidenav Accordion (Timesheets) -->

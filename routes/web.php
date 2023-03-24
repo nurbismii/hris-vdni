@@ -44,11 +44,16 @@ Route::group(['middleware' => 'auth'], function () {
         route::get('/', [EmployeeController::class, 'index']);
         route::get('/create', [EmployeeController::class, 'create']);
         route::post('/store', [EmployeeController::class, 'store'])->name('store.employee');
+        route::get('/edit/{id}', [EmployeeController::class, 'edit'])->name('edit.employee');
+        route::patch('update/{id}', [EmployeeController::class, 'update'])->name('update.employee');
+        route::delete('/destroy/{id}', [EmployeeController::class, 'destroy'])->name('destroy.employee');
+        // Maatwebsite excel 
         route::get('/import', [EmployeeController::class, 'import']);
         route::get('/download-example', [EmployeeController::class, 'downloadExample'])->name('download.example');
         route::post('/import-employee', [EmployeeController::class, 'importEmployee'])->name('import.employee');
         route::post('/update-import-employee', [EmployeeController::class, 'updateImportEmployee'])->name('updateImport.employee');
         route::post('/destroy-import-employee', [EmployeeController::class, 'destroyImportEmployee'])->name('destroyImport.employee');
+        // Maatwebsite excel end 
     });
 
     Route::group(['prefix' => 'account'], function () {
