@@ -11,6 +11,7 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Ramsey\Uuid\Uuid;
 
 class RegisterController extends Controller
 {
@@ -44,30 +45,19 @@ class RegisterController extends Controller
     public function register(StoreRegisterRequest $request)
     {
         try {
-            $user = User::where('email', $request->email)->first();
-            if ($user) {
-                return back()->with('error', 'Email registered');
+            $employee = employee::where('nik', $request->employee_id)->first();
+            if ($request->password == $request->password_confirm) {
+                $data_user = array(
+                    'id' => Uuid::uuid4()->getHex(),
+                    'employee_id' => $request->employee_id,
+                    'name' => $employee->name,
+                    'email' => $request->email,
+                    'password' => Hash::make($request->password),
+                    'status' => 'Not Active',
+                );
+                User::create($data_user);
+                return back()->with('success', 'Successful registration, ');
             }
-
-            $employe_exist = employee::where('nik', $request->employee_id)->first();
-            if (!$employe_exist) {
-                return back()->with('error',  'Emplooye data is not registered in our database');
-            }
-
-            $user_exist = User::where('employee_id', $request->employee_id)->first();
-            if ($user_exist == 'null') {
-                return back()->with('error', 'User registered');
-            }
-
-            $data_user = array(
-                'employee_id' => $request->employee_id,
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-                'status' => 'NOT ACTIVE',
-            );
-            User::create($data_user);
-            return back()->with('success', 'Successful registration');
         } catch (\Throwable $e) {
             return back()->with('error', 'Something wrong!');
         }

@@ -15,7 +15,7 @@ class EmployeeController extends Controller
 {
     public function index()
     {
-        $datas = employee::orderBy('id', 'DESC')->get();
+        $datas = employee::orderBy('created_at', 'DESC')->get();
         return view('employee.index', compact('datas'));
     }
 

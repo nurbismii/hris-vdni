@@ -16522,9 +16522,9 @@ body {
 }
 
 /* Hide google translate bar */
-/* .VIpgJd-ZVi9od-ORHb-OEVmcd{
+.VIpgJd-ZVi9od-ORHb-OEVmcd{
   display: none;
-} */
+} 
   
 .animated--fade-in {
   -webkit-animation-name: fadeIn;

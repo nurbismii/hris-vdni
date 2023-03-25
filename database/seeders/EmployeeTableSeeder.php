@@ -15,7 +15,7 @@ class EmployeeTableSeeder extends Seeder
     public function run()
     {
         employee::Create([
-            'nik' => '15110391',
+            'nik' => '73737411311960004',
             'no_ktp' => '7402211501930002',
             'name' => 'Dummy Employee',
             'date_of_birth' => '1993-01-15',

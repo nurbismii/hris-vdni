@@ -43,7 +43,7 @@
                     <nav class="sidenav-menu-nested nav">
                         <a class="nav-link" href="/users">User List</a>
                         <a class="nav-link" href="/roles">Assign Role</a>
-                        <a class="nav-link" href="account-security.html">User Last Login</a>
+                        <a class="nav-link" href="/users/last-login">User Last Login</a>
                     </nav>
                 </div>
                 <!-- Sidenav Accordion (Employees)-->
@@ -53,10 +53,20 @@
                     <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
                 <div class="collapse" id="collapseEmployees" data-bs-parent="#accordionSidenav">
-                    <nav class="sidenav-menu-nested nav">
+                    <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavemployee">
                         <a class="nav-link" href="/employees">Employee list</a>
                         <a class="nav-link" href="/employees/import">Employee Import</a>
-                        <a class="nav-link" href="/#">Employee Assessment</a>
+                        <!-- <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#pagesCollapseEmployee" aria-expanded="false" aria-controls="pagesCollapseEmployee">
+                            Employee Assessment
+                            <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="pagesCollapseEmployee" data-bs-parent="#accordionSidenavemployee">
+                            <nav class="sidenav-menu-nested nav">
+                                <a class="nav-link" href="account-profile.html">Evaluation of work perform and Achievements</a>
+                                <a class="nav-link" href="account-billing.html">Performance and Achievement</a>
+                                <a class="nav-link" href="account-security.html">Evaluation Result</a>
+                            </nav>
+                        </div> -->
                     </nav>
                 </div>
                 <!-- Sidenav Accordion (Applications)-->

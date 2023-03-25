@@ -9,7 +9,7 @@ use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::post('/new-register', [RegisterController::class, 'register'])->name('register.employee');
+Route::post('/new-register', [RegisterController::class, 'register'])->name('register.employee')->middleware('employee.registered');
 
 Auth::routes();
 
@@ -28,6 +28,7 @@ Route::group(['middleware' => 'auth'], function () {
         route::get('/edit/{id}', [UserController::class, 'edit'])->name('edit.user');
         route::patch('/update/{id}', [UserController::class, 'update'])->name('update.user');
         route::delete('/destroy/{id}', [UserController::class, 'destroy'])->name('destroy.user');
+        route::get('/last-login', [UserController::class, 'lastLogin'])->name('last.login');
     });
 
     Route::group(['prefix' => 'roles'], function () {

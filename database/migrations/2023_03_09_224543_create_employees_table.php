@@ -14,8 +14,7 @@ class CreateEmployeesTable extends Migration
     public function up()
     {
         Schema::create('employees', function (Blueprint $table) {
-            $table->id();
-            $table->string('nik', 32);
+            $table->string('nik')->primary();
             $table->string('no_ktp', 16);
             $table->string('name');
             $table->date('date_of_birth');
@@ -23,7 +22,7 @@ class CreateEmployeesTable extends Migration
             $table->string('npwp', 64)->nullable();
             $table->string('bpjs_ket', 64)->nullable();
             $table->string('bpjs_tk', 64)->nullable();
-            $table->enum('vaccine', array('0', '1', '2', '3'))->default('0');
+            $table->enum('vaccine', array('0', '1', '2', '3', '4'))->default('0');
             $table->date('entry_date')->nullable();
             $table->timestamps();
         });

@@ -24,12 +24,10 @@ class StoreRegisterRequest extends FormRequest
     public function rules()
     {
         return [
-            'employee_id' => 'required',
-            'name' => 'required',
-            'email' => 'required',
+            'employee_id' => 'required|unique:users,employee_id',
+            'email' => 'required:unique:users,email',
             'password' => 'required',
             'password_confirm' => 'required|same:password',
-            'status' => 'required',
         ];
     }
 
@@ -37,17 +35,16 @@ class StoreRegisterRequest extends FormRequest
     {
         return [
             'employee_id' => 'NIK',
-            'name' => 'Name',
             'email' => 'Email',
             'password' => 'Password',
             'password_confirm' => 'Password Confirmattion',
-            'status' => 'Status',
         ];
     }
 
     public function messages()
     {
         return [
+            'unique' => ':attribute has been registered',
             'required' => ':attribute must be filled',
             'min' => ':attribute',
             'same' => ':attribute does not match'

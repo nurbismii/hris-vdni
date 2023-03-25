@@ -77,6 +77,16 @@ class UserController extends Controller
         }
     }
 
+    public function lastLogin(Request $request)
+    {
+        try {
+            $datas = User::where('last_login', '!=', null)->get();
+            return view('user.lastlogin', compact('datas'));
+        } catch (\Throwable $e) {
+            return back()->with('error', 'Something wrong!');
+        }
+    }
+
     public function downloadExampleUser()
     {
         return Excel::download(new UserExport, 'UserExample.xlsx');
