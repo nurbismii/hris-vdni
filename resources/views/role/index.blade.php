@@ -35,13 +35,14 @@
     </header>
     <!-- Main page content-->
     <div class="container-fluid px-4">
+        <x-message />
         <div class="card">
             <div class="card-body">
                 <table id="datatablesSimple">
                     <thead>
                         <tr>
-                            <th>Image</th>
-                            <th>Username</th>
+                            <th>Name</th>
+                            <th>Email</th>
                             <th>Permission Role</th>
                             <th>Assign Role</th>
                         </tr>
@@ -78,10 +79,10 @@
                         @csrf
                         <div class="mb-3">
                             <label class="small mb-1">User</label>
-                            <select name="user_id" class="form-select">
+                            <select name="employee_id" class="form-select">
                                 <option disabled selected>Select a user :</option>
                                 @foreach($users as $row)
-                                <option value="{{ $row->id }}">{{ $row->name }}</option>
+                                <option value="{{ $row->employee_id }}">{{ $row->name }}</option>
                                 @endforeach
                             </select>
                         </div>

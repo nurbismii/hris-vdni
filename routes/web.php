@@ -9,15 +9,21 @@ use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::post('/new-register', [RegisterController::class, 'register'])->name('register.employee')->middleware('employee.registered');
+
 
 Auth::routes();
-
 Route::get('/', [DashboardController::class, 'index']);
 
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => ['auth', 'audit.trails']], function () {
 
+    Route::post('/new-register', [RegisterController::class, 'register'])->name('register.employee')->middleware('employee.registered');
     Route::get('/dashboard', [DashboardController::class, 'index']);
+    Route::get('/audit-trails', [DashboardController::class, 'auditTrails']);
+
+    Route::group(['prefix' => 'setting'], function () {
+        route::get('/dashboard', [DashboardController::class, 'settingDashboard']);
+        route::post('/store', [DashboardController::class, 'store'])->name('store.dashboard');
+    });
 
     Route::group(['prefix' => 'users'], function () {
         route::get('/', [UserController::class, 'index']);

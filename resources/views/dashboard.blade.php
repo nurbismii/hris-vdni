@@ -16,9 +16,10 @@
                     <div class="col-auto mt-4">
                         <h1 class="page-header-title">
                             <div class="page-header-icon"><i data-feather="activity"></i></div>
-                            Dashboard
+                            {{ $data->title }}
                         </h1>
-                        <div class="page-header-subtitle">Example dashboard overview and content summary</div>
+                        <div class="page-header-subtitle fw-bold">{{ $data->subtitle }}</div>
+                        <div class="">{{ $data->description }}</div>
                     </div>
                     <div class="col-12 col-xl-auto mt-4">
                         <div class="input-group input-group-joined border-0" style="width: 16.5rem">

@@ -22,12 +22,12 @@
                 <!-- Sidenav Menu Heading (Core)-->
                 <div class="sidenav-menu-heading">Core</div>
                 <!-- Sidenav Accordion (Dashboard)-->
-                <a class="nav-link" href="/">
+                <a class="nav-link" href="/dashboard">
                     <div class="nav-link-icon"><i data-feather="activity"></i></div>
                     Dashboard
                 </a>
                 <!-- Sidenav Audit Trails (Audit) -->
-                <a class="nav-link" href="/">
+                <a class="nav-link" href="/audit-trails">
                     <div class="nav-link-icon"><i data-feather="clipboard"></i></div>
                     Audit Trails
                 </a>
@@ -56,17 +56,6 @@
                     <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavemployee">
                         <a class="nav-link" href="/employees">Employee list</a>
                         <a class="nav-link" href="/employees/import">Employee Import</a>
-                        <!-- <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#pagesCollapseEmployee" aria-expanded="false" aria-controls="pagesCollapseEmployee">
-                            Employee Assessment
-                            <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                        </a>
-                        <div class="collapse" id="pagesCollapseEmployee" data-bs-parent="#accordionSidenavemployee">
-                            <nav class="sidenav-menu-nested nav">
-                                <a class="nav-link" href="account-profile.html">Evaluation of work perform and Achievements</a>
-                                <a class="nav-link" href="account-billing.html">Performance and Achievement</a>
-                                <a class="nav-link" href="account-security.html">Evaluation Result</a>
-                            </nav>
-                        </div> -->
                     </nav>
                 </div>
                 <!-- Sidenav Accordion (Applications)-->
@@ -77,6 +66,7 @@
                 </a>
                 <div class="collapse" id="collapseApps" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav">
+                        <a class="nav-link" href="/setting/dashboard">Dashboard Content</a>
                         <a class="nav-link" href="account-billing.html">Mail Setting</a>
                 </div>
                 <!-- Sidenav Accordion (Flows)-->
