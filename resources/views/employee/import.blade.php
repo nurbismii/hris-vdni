@@ -27,7 +27,7 @@
     <div class="container-xl px-4 mt-n10">
         <x-message />
         <div class="card">
-            <div class="card-header">Import Excel/CSV File Only</div>
+            <div class="card-header">Import Excel File Only</div>
             <div class="card-body">
                 <!-- Button with lift -->
                 <a class="btn btn-indigo  btn-sm lift mb-3" href="{{ route('download.example') }}">

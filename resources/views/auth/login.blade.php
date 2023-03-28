@@ -8,7 +8,7 @@
     <div class="container-xl px-4">
         <div class="row justify-content-center">
             <div class="col-lg-5">
-                <div class="card-opacation shadow-lg border-0 rounded-lg mt-15">
+                <div class="card-opacation shadow-lg border-0 rounded-lg mt-5">
                     <div class="card-header justify-content-center">
                         <h3 class="fw-light my-4 text-light text-center">Login</h3>
                     </div>

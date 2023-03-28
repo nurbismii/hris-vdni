@@ -5,10 +5,10 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\Role\RoleController;
+use App\Http\Controllers\SalaryController;
 use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 Auth::routes();
 Route::get('/', [DashboardController::class, 'index']);
@@ -70,5 +70,11 @@ Route::group(['middleware' => ['auth', 'audit.trails']], function () {
     Route::group(['prefix' => 'account'], function () {
         route::get('/profile', [AccountController::class, 'profile']);
         route::get('/billing', [AccountController::class, 'billing']);
+    });
+
+    Route::group(['prefix' => 'salary'], function () {
+        route::get('/', [SalaryController::class, 'index']);
+        route::get('/history', [SalaryController::class, 'history']);
+        route::post('/import-salarys', [SalaryController::class, 'importSalary'])->name('import.salary');
     });
 });

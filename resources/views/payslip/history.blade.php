@@ -16,7 +16,7 @@
           <div class="col-auto mb-3">
             <h1 class="page-header-title">
               <div class="page-header-icon"><i data-feather="user"></i></div>
-              Audit List
+              History Payslip
             </h1>
           </div>
         </div>
@@ -31,23 +31,19 @@
         <table id="datatablesSimple">
           <thead>
             <tr>
-              <th>ID</th>
-              <th>Url</th>
-              <th>Method</th>
-              <th>IP</th>
-              <th>Agent</th>
+              <th>Number</th>
+              <th>Path</th>
+              <th>Author</th>
               <th>Created at</th>
             </tr>
           </thead>
           <tbody>
             @foreach($datas as $row)
             <tr>
-              <td>#{{ strtoupper(substr($row->id, 0, 4)) }}</td>
-              <td>{{ $row->url }}</td>
-              <td>{{ $row->method}}</td>
-              <td>{{ $row->ip }}</td>
-              <td>{{ $row->agent }}</td>
-              <td>{{ $row->created_at }}</td>
+              <td>{{ ++$no }}</td>
+              <td><a href="{{ url($row->path) }}" target="_blank" rel="noopener noreferrer">{{ $row->path }}</a></td>
+              <td>{{ $row->user->name }}</td>
+              <td>{{ date('d F Y', strtotime($row->created_at)) }}</td>
             </tr>
             @endforeach
           </tbody>

@@ -17,7 +17,7 @@
           <div class="col-auto mb-3">
             <h1 class="page-header-title">
               <div class="page-header-icon"><i data-feather="user"></i></div>
-              Account Settings - Billing
+              Account Settings - Salary
             </h1>
           </div>
         </div>
@@ -47,7 +47,7 @@
         <!-- Billing card 2-->
         <div class="card h-100 border-start-lg border-start-secondary">
           <div class="card-body">
-            <div class="small text-muted">Next payment due</div>
+            <div class="small text-muted">Next salary</div>
             <div class="h3">July 15</div>
             <a class="text-arrow-icon small text-secondary" href="#!">
               Detail
@@ -72,7 +72,7 @@
     </div>
     <!-- Billing history card-->
     <div class="card mb-4">
-      <div class="card-header">Billing History</div>
+      <div class="card-header">Salary History</div>
       <div class="card-body p-0">
         <!-- Billing history table-->
         <div class="table-responsive table-billing-history">

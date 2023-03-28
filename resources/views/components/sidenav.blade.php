@@ -42,7 +42,6 @@
                 <div class="collapse" id="collapseUsers" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav">
                         <a class="nav-link" href="/users">User List</a>
-                        <a class="nav-link" href="/roles">Assign Role</a>
                         <a class="nav-link" href="/users/last-login">User Last Login</a>
                     </nav>
                 </div>
@@ -55,6 +54,7 @@
                 <div class="collapse" id="collapseEmployees" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavemployee">
                         <a class="nav-link" href="/employees">Employee list</a>
+                        <a class="nav-link" href="/roles">Employee job</a>
                         <a class="nav-link" href="/employees/import">Employee Import</a>
                     </nav>
                 </div>
@@ -102,16 +102,16 @@
                         <a class="nav-link" href="wizard.html">Manage Leaves</a>
                     </nav>
                 </div>
-                <!-- Sidenav Accordion (Payroll) -->
+                <!-- Sidenav Accordion (Payslip) -->
                 <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapsePayroll" aria-expanded="false" aria-controls="collapsePayroll">
                     <div class="nav-link-icon"><i data-feather="credit-card"></i></div>
-                    Payroll
+                    Payslip
                     <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
                 <div class="collapse" id="collapsePayroll" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav">
-                        <a class="nav-link" href="multi-tenant-select.html">New Payment</a>
-                        <a class="nav-link" href="wizard.html">Payment Histroy</a>
+                        <a class="nav-link" href="/salary">New Payment</a>
+                        <a class="nav-link" href="/salary/history">Payment Histroy</a>
                     </nav>
                 </div>
                 <!-- Sidanav Accordion (Performance) -->
