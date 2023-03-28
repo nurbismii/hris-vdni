@@ -3,12 +3,15 @@
 namespace App\Imports;
 
 use App\Models\employee;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
+use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
 
-class EmployeesDeleteImport implements ToCollection, WithHeadingRow, WithValidation
+class EmployeesDeleteImport implements ToModel, WithHeadingRow, WithValidation
 {
     protected $employee;
 
@@ -17,17 +20,15 @@ class EmployeesDeleteImport implements ToCollection, WithHeadingRow, WithValidat
         $this->employee = employee::select('nik', 'no_ktp')->get();
     }
 
-    public function collection(Collection $collection)
+    public function model(array $row)
     {
-        foreach ($collection as $collect) {
-
-            $data = $this->employee->where('nik', $collect['nik'])->first();
-
-            if ($data) :
-                $data->where('nik', $collect['nik'])->delete();
-            endif;
-        }
+        employee::where('nik', $row['nik'])->chunkById(1000, function ($employees) {
+            foreach ($employees as $employee) {
+                $employee->delete();
+            }
+        });
     }
+
 
     public function rules(): array
     {

@@ -2375,6 +2375,24 @@ progress {
   color: #a7aeb8;
 }
 
+.form-control-login, .dataTable-input {
+  display: block;
+  width: 100%;
+  padding: 0.875rem 1.125rem;
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1;
+  color: #69707a;
+  background-color: #ffffff1f;
+  background-clip: padding-box;
+  border: 1px solid #c5ccd6;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  border-radius: 0.35rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
 .form-control, .dataTable-input {
   display: block;
   width: 100%;
@@ -6278,7 +6296,7 @@ textarea.form-control-lg {
   flex-direction: column;
   min-width: 0;
   word-wrap: break-word;
-  background-color:rgb(144 153 143 / 54%);
+  background-color:rgb(255 255 255 / 4%);
   background-clip: border-box;
   border: 1px solid rgba(33, 40, 50, 0.125);
   border-radius: 0.35rem;
@@ -11023,7 +11041,7 @@ textarea.form-control-lg {
 }
 
 .bg-auth {
-   background-image: url("../assets/img/backgrounds/bg-pattern-shapes.png");
+   background-image: url("../assets/img/backgrounds/bg-auth-1.jpeg");
    background-position: center;
    background-repeat: no-repeat;
    background-size: cover;

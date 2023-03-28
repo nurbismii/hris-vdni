@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/backgrounds/bg-auth-vdni-new.png')}}" />
+    <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/backgrounds/icon.png') }}" />
     @stack('styles')
 </head>
 
@@ -22,7 +22,7 @@
         <!-- * * Tip * * You can use text or an image for your navbar brand.-->
         <!-- * * * * * * When using an image, we recommend the SVG format.-->
         <!-- * * * * * * Dimensions: Maximum height: 32px, maximum width: 240px-->
-        <a class="navbar-brand pe-3 ps-4 ps-lg-3" href="/"><img src="{{ asset('assets/img/backgrounds/bg-auth-vdni-new.png') }}" alt="Logo VDNI" style="height: 55px; width: 120px"></a>
+        <a class="navbar-brand pe-3 ps-4 ps-lg-3" href="/"><img src="{{ asset('assets/img/backgrounds/vdni-ikon.png') }}" alt="Logo VDNI" style="height: 55px; width: 90px"></a>
 
         <x-navbar />
         <!-- End Navbar Items -->

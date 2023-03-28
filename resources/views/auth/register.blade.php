@@ -10,7 +10,7 @@
         <div class="row justify-content-center">
             <div class="col-lg-5">
                 <x-message />
-                <div class="card-opacation shadow-lg border-0 rounded-lg mt-5">
+                <div class="card-opacation shadow-lg border-0 rounded-lg mt-15">
                     <div class="card-header justify-content-center">
                         <h3 class="fw-light my-4 text-light">Register</h3>
                     </div>
@@ -19,28 +19,28 @@
                             @csrf
                             <div class="mb-3">
                                 <label class="small mb-1 text-light">NIK</label>
-                                <input class="form-control @error('employee_id') is-invalid @enderror" type="number" name="employee_id" placeholder="Enter your NIK" />
+                                <input class="form-control-login @error('employee_id') is-invalid @enderror" type="number" name="employee_id" placeholder="Enter your NIK" />
                                 @error('employee_id')
                                 <span class="invalid-feedback">{{ $message }}</span>
                                 @enderror
                             </div>
                             <div class="mb-3">
                                 <label class="small mb-1 text-light">Email</label>
-                                <input class="form-control @error('email') is-invalid @enderror" type="email" name="email" placeholder="Enter your email" />
+                                <input class="form-control-login @error('email') is-invalid @enderror" type="email" name="email" placeholder="Enter your email" />
                                 @error('email')
                                 <span class="invalid-feedback">{{ $message }}</span>
                                 @enderror
                             </div>
                             <div class="mb-3">
                                 <label class="small mb-1 text-light">Password</label>
-                                <input class="form-control @error('password') is-invalid @enderror" type="password" name="password" placeholder="Enter password" />
+                                <input class="form-control-login @error('password') is-invalid @enderror" type="password" name="password" placeholder="Enter password" />
                                 @error('password')
                                 <span class="invalid-feedback">{{ $message }}</span>
                                 @enderror
                             </div>
                             <div class="mb-3">
                                 <label class="small mb-1 text-light">Password Confirm</label>
-                                <input class="form-control @error('password_confirm') is-invalid @enderror" name="password_confirm" type="password" placeholder="Enter your password confirm" />
+                                <input class="form-control-login @error('password_confirm') is-invalid @enderror" name="password_confirm" type="password" placeholder="Enter your password confirm" />
                                 @error('password_confirm')
                                 <span class="invalid-feedback">{{ $message }}</span>
                                 @enderror
@@ -51,7 +51,7 @@
                         </form>
                     </div>
                     <div class="card-footer text-center">
-                        <div class="small text-light"><a href="/login">Already have an account? Sign in!</a></div>
+                        <div class="small text-light"><a class="text-light" href="/login">Already have an account? Sign in!</a></div>
                     </div>
                 </div>
             </div>

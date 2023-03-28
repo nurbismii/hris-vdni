@@ -8,7 +8,7 @@
     <div class="container-xl px-4">
         <div class="row justify-content-center">
             <div class="col-lg-5">
-                <div class="card-opacation shadow-lg border-0 rounded-lg mt-5">
+                <div class="card-opacation shadow-lg border-0 rounded-lg mt-15">
                     <div class="card-header justify-content-center">
                         <h3 class="fw-light my-4 text-light text-center">Login</h3>
                     </div>
@@ -17,7 +17,7 @@
                             @csrf
                             <div class="mb-3">
                                 <label class="small mb-1 text-light">Email</label>
-                                <input class="form-control @error('email') is-invalid @enderror" type="email" name="email" placeholder="Enter email" />
+                                <input class="form-control-login @error('email') is-invalid @enderror" type="email" name="email" placeholder="Enter email" />
                                 @if ($errors->has('email'))
                                 <span class="invalid-feedback">
                                     <strong>{{ $errors->first('email') }}</strong>
@@ -26,7 +26,7 @@
                             </div>
                             <div class="mb-3">
                                 <label class="small mb-1 text-light">Password</label>
-                                <input class="form-control @error('password') is-invalid @enderror" type="password" name="password" placeholder="Enter password" />
+                                <input class="form-control-login @error('password') is-invalid @enderror" type="password" name="password" placeholder="Enter password" />
                                 @if ($errors->has('password'))
                                 <span class="invalid-feedback">
                                     <strong>{{ $errors->first('password') }}</strong>
@@ -40,7 +40,7 @@
                         </form>
                     </div>
                     <div class="card-footer text-center">
-                        <div class="small text-light"><a href="{{ route('register') }}">Need an account? Sign up!</a></div>
+                        <div class="small text-light"><a class="text-light" href="{{ route('register') }}">Need an account? Sign up!</a></div>
                     </div>
                 </div>
             </div>

@@ -29,9 +29,7 @@ class EmployeesImport implements ToCollection, WithHeadingRow, WithValidation
                 'entry_date' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($collect['entry_date']))
             );
         }
-
-        $chunks = array_chunk($datas, 5000);
-        foreach ($chunks as $chunk) {
+        foreach (array_chunk($datas, 1000) as $chunk) {
             employee::insert($chunk);
         }
     }

@@ -8,8 +8,7 @@ use App\Http\Controllers\Role\RoleController;
 use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-
-
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 Auth::routes();
 Route::get('/', [DashboardController::class, 'index']);
@@ -21,8 +20,12 @@ Route::group(['middleware' => ['auth', 'audit.trails']], function () {
     Route::get('/audit-trails', [DashboardController::class, 'auditTrails']);
 
     Route::group(['prefix' => 'setting'], function () {
+
         route::get('/dashboard', [DashboardController::class, 'settingDashboard']);
         route::post('/store', [DashboardController::class, 'store'])->name('store.dashboard');
+        route::get('/edit/{id}', [DashboardController::class, 'edit'])->name('edit.dashboard');
+        route::patch('/update/{id}', [DashboardController::class, 'update'])->name('update.dashboard');
+        route::delete('/destroy/{id}', [DashboardController::class, 'destroy'])->name('destroy.dashboard');
     });
 
     Route::group(['prefix' => 'users'], function () {
@@ -49,6 +52,7 @@ Route::group(['middleware' => ['auth', 'audit.trails']], function () {
 
     Route::group(['prefix' => 'employees'], function () {
         route::get('/', [EmployeeController::class, 'index']);
+        route::post('/filter', [EmployeeController::class, 'filter']);
         route::get('/create', [EmployeeController::class, 'create']);
         route::post('/store', [EmployeeController::class, 'store'])->name('store.employee');
         route::get('/edit/{id}', [EmployeeController::class, 'edit'])->name('edit.employee');

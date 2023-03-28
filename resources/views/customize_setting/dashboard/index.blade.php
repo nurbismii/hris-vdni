@@ -31,6 +31,7 @@
   </header>
   <!-- Main page content-->
   <div class="container-fluid px-4">
+    <x-message />
     <div class="card">
       <div class="card-body">
         <table id="datatablesSimple">
@@ -51,13 +52,9 @@
               <td>{{ $data->description }}</td>
               <td>{{ $data->status == '1' ? 'Active' : 'Not Active' }}</td>
               <td>
-                <form action="#" method="POST">
-                  @csrf
-                  {{ method_field('delete') }}
-                  <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" data-bs-toggle="modal" data-bs-target="#editContent{{$data->id}}"><i data-feather="edit"></i></a>
-                  <a type="submit" class="btn btn-datatable btn-icon btn-transparent-dark" data-bs-toggle="modal" data-bs-target="#deleteContent{{$data->id}}"><i data-feather="trash-2"></i>
-                  </a>
-                </form>
+                <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" data-bs-toggle="modal" data-bs-target="#editContent{{$data->id}}"><i data-feather="edit"></i></a>
+                <a type="submit" class="btn btn-datatable btn-icon btn-transparent-dark" data-bs-toggle="modal" data-bs-target="#deleteContent{{$data->id}}"><i data-feather="trash-2"></i>
+                </a>
               </td>
             </tr>
             @endforeach
@@ -105,6 +102,76 @@
       </div>
     </div>
   </div>
+
+  @foreach($datas as $data)
+  <div class="modal fade" id="deleteContent{{$data->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Delete Content</h5>
+          <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form action="{{ route('destroy.dashboard', $data->id) }}" method="POST" class="nav flex-column" id="stickyNav">
+          <div class="modal-body">
+            @csrf
+            {{ method_field('delete') }}
+            Are you sure you want to delete this data ({{ $data->title }})?
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
+            <button class="btn btn-primary" type="submit">Add</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  @endforeach
+
+  @foreach($datas as $data)
+  <div class="modal fade" id="editContent{{$data->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Form Content</h5>
+          <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form action="{{ route('update.dashboard', $data->id) }}" method="POST" class="nav flex-column" id="stickyNav">
+          @csrf
+          {{ method_field('patch') }}
+          <div class="modal-body">
+            <div class="mb-3">
+              <label class="small mb-1">Title</label>
+              <input type="text" name="title" class="form-control" value="{{ $data->title }}">
+            </div>
+            <div class="mb-3">
+              <label class="small mb-1">Subtitle</label>
+              <input type="text" name="subtitle" class="form-control" value="{{ $data->subtitle }}">
+            </div>
+            <div class="mb-3">
+              <label class="small mb-1">Description</label>
+              <textarea name="description" class="form-control" cols="30" rows="10">{{ $data->description }}</textarea>
+            </div>
+            <div class="mb-3">
+              <label class="small mb-1">Status</label>
+              <select name="status" class="form-select">
+                <option value="{{ $data->status }}">{{ $data->status == '1' ? 'Active' : 'Not Active' }}</option>
+                @if($data->status == '1')
+                <option value="0">Not Active</option>
+                @else
+                <option value="1">Active</option>
+                @endif
+              </select>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
+            <button class="btn btn-primary" type="submit">Add</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  @endforeach
 
   @push('scripts')
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>

@@ -13,10 +13,37 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class EmployeeController extends Controller
 {
+    protected $default;
+
+    public function __construct($default = 100)
+    {
+        $this->default = $default;
+    }
+
     public function index()
     {
-        $datas = employee::orderBy('created_at', 'DESC')->get();
+        $datas = employee::orderBy('nik', 'DESC')->limit($this->default)->get();
         return view('employee.index', compact('datas'));
+    }
+
+    public function filter(Request $request)
+    {
+        $datas = employee::select('*');
+        if (count($datas->get()) > 0) {
+            if ($request->nik != '' && $request->nik) {
+                $filter = $datas->where('nik', 'like', '%' . $request->nik . '%')->get();
+                return view('employee.index', ['datas' => $filter]);
+            }
+        }
+        if (count($datas->get()) > 0) {
+            if (($request->entry_date_start !=  '')  && ($request->entry_date_end != '')) {
+                $start_date = $request->entry_date_start;
+                $end_date = $request->entry_date_end;
+
+                $filter = employee::whereBetween('entry_date', [$start_date, $end_date])->get();
+                return view('employee.index', ['datas' => $filter]);
+            }
+        }
     }
 
     public function create()

@@ -42,7 +42,7 @@
           <tbody>
             @foreach($datas as $row)
             <tr>
-              <td>{{ substr($row->id, 0, 2) }}</td>
+              <td>{{ substr($row->id, 0, 8) }}</td>
               <td>{{ $row->url }}</td>
               <td>{{ $row->method}}</td>
               <td>{{ $row->ip }}</td>

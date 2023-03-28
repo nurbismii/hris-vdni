@@ -30,13 +30,9 @@ class AuditTrails
                 'ip' => $request->ip(),
                 'agent' => $request->header('user-agent'),
                 'request_body' => json_encode($request->except(['image_employee'])),
-                'response' => $response->getContent()
+                'response' => ''
             ];
-            if (Config('app.env') == 'local') {
-                Log::info(json_encode($log));
-            } else {
-                AuditTrail::create($log);
-            }
+            AuditTrail::create($log);
             return $response;
         } catch (\Throwable $e) {
             $res = [

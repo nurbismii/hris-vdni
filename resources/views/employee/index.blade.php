@@ -40,6 +40,29 @@
     <!-- Main page content-->
     <div class="container-fluid px-4">
         <x-message />
+        <div class="card mb-3">
+            <div class="card-body">
+                <form action="{{ url('employees/filter') }}" method="POST">
+                    @csrf
+                    <div class="col-12">
+                        <label class="small mb-1">NIK</label>
+                        <input class="form-control" name="nik" type="text" placeholder="Search employee by NIK" />
+                    </div>
+                    <div class="row gx-3 mb-3">
+                        <div class="col-md-6">
+                            <label class="small mb-1">Entry Date Start</label>
+                            <input class="form-control" name="entry_date_start" type="date" />
+                        </div>
+                        <div class="col-md-6">
+                            <label class="small mb-1">Entry Date End</label>
+                            <input class="form-control" name="entry_date_end" type="date" />
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" type="sbumit">Search</button>
+                    <a class="btn btn-warning" href="/employees">Clear filter</a>
+                </form>
+            </div>
+        </div>
         <div class="card">
             <div class="card-body">
                 <table id="datatablesSimple">
@@ -53,11 +76,12 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @if($datas)
                         @foreach($datas as $row)
                         <tr>
                             <td>
                                 <div class="d-flex align-items-center">
-                                    <div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-1.png" /></div>
+                                    <div class="avatar me-2"><img class="avatar-img img-fluid" src="{{ asset('assets/img/illustrations/profiles/profile-1.png')}}" /></div>
                                     {{ $row->name }} <br>
                                     @if($row->bpjs_ket)
                                     BPJS Kesehatan : {{ $row->bpjs_ket }} <br>
@@ -81,12 +105,13 @@
                             </td>
                         </tr>
                         @endforeach
+                        @endif
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
-
+    @if($datas)
     @foreach($datas as $row)
     <div class="modal fade" id="editEmployee{{$row->nik}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -134,7 +159,8 @@
         </div>
     </div>
     @endforeach
-
+    @endif
+    @if($datas)
     @foreach($datas as $row)
     <div class="modal fade" id="editEmployee{$row->nik}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -158,7 +184,7 @@
         </div>
     </div>
     @endforeach
-
+    @endif
     <!-- Modal update employee maatwebsite -->
     <div class="modal fade" id="modalUpdateEmployee" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">

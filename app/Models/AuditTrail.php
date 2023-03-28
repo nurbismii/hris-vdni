@@ -11,4 +11,8 @@ class AuditTrail extends Model
 
     protected $table = 'audit_trails';
     protected $guarded = [];
+
+    protected $casts = [
+        'id' => 'string'
+    ];
 }
