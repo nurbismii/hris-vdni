@@ -46,7 +46,7 @@
                             <div class="timeline-item-marker-text">First</div>
                             <div class="timeline-item-marker-indicator"><i data-feather="check"></i></div>
                         </div>
-                        <div class="timeline-item-content">Date format should be (DD/MM/YYYY)</div>
+                        <div class="timeline-item-content">Date format should be match (general setting)</div>
                     </div>
                     <div class="timeline-item">
                         <div class="timeline-item-marker">

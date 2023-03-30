@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\salary;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AccountController extends Controller
 {
@@ -18,7 +20,8 @@ class AccountController extends Controller
 
     public function billing()
     {
-        return view('account.billing');
+        $datas = salary::where('employee_id', Auth::user()->employee_id)->get();
+        return view('account.billing', compact('datas'));
     }
 
     /**
@@ -50,7 +53,8 @@ class AccountController extends Controller
      */
     public function show($id)
     {
-        //
+        $data = salary::where('id', $id)->first();
+        return view('account.invoice', compact('data'));
     }
 
     /**

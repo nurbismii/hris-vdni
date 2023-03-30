@@ -86,30 +86,14 @@
               </tr>
             </thead>
             <tbody>
+              @foreach($datas as $data)
               <tr>
-                <td>#39201</td>
-                <td>06/15/2021</td>
-                <td>$29.99</td>
-                <td><span class="badge bg-light text-dark">Pending</span></td>
+                <td><a href="{{ route('invoice', $data->id) }}" target="_blank">#{{ strtoupper(substr($data->id, 0, 4)) }} </a></td>
+                <td>{{ date('d F Y', strtotime($data->created_at)) }}</td>
+                <td>{{ $data->total_diterima }}</td>
+                <td><span class="badge bg-success">Success</span></td>
               </tr>
-              <tr>
-                <td>#38594</td>
-                <td>05/15/2021</td>
-                <td>$29.99</td>
-                <td><span class="badge bg-success">Paid</span></td>
-              </tr>
-              <tr>
-                <td>#38223</td>
-                <td>04/15/2021</td>
-                <td>$29.99</td>
-                <td><span class="badge bg-success">Paid</span></td>
-              </tr>
-              <tr>
-                <td>#38125</td>
-                <td>03/15/2021</td>
-                <td>$29.99</td>
-                <td><span class="badge bg-success">Paid</span></td>
-              </tr>
+              @endforeach
             </tbody>
           </table>
         </div>

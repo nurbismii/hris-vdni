@@ -10,7 +10,6 @@ class salary extends Model
     use HasFactory;
 
     protected $table = 'salaries';
-    protected $primaryKey = 'id';
     protected $guarded = [];
 
     protected $casts = [

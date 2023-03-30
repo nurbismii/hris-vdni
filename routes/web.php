@@ -10,12 +10,12 @@ use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
+Route::post('/new-register', [RegisterController::class, 'register'])->name('register.employee')->middleware('employee.registered');
 Auth::routes();
 Route::get('/', [DashboardController::class, 'index']);
 
 Route::group(['middleware' => ['auth', 'audit.trails']], function () {
 
-    Route::post('/new-register', [RegisterController::class, 'register'])->name('register.employee')->middleware('employee.registered');
     Route::get('/dashboard', [DashboardController::class, 'index']);
     Route::get('/audit-trails', [DashboardController::class, 'auditTrails']);
 
@@ -70,6 +70,7 @@ Route::group(['middleware' => ['auth', 'audit.trails']], function () {
     Route::group(['prefix' => 'account'], function () {
         route::get('/profile', [AccountController::class, 'profile']);
         route::get('/billing', [AccountController::class, 'billing']);
+        route::get('/invoice/{id}', [AccountController::class, 'show'])->name('invoice');
     });
 
     Route::group(['prefix' => 'salary'], function () {
