@@ -31,7 +31,7 @@
         <table id="datatablesSimple">
           <thead>
             <tr>
-              <th>Number</th>
+              <th>No</th>
               <th>Path</th>
               <th>Author</th>
               <th>Created at</th>

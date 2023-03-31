@@ -5,6 +5,7 @@ namespace App\Imports;
 use App\Models\salary;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
@@ -49,9 +50,12 @@ class ImportSalaries implements ToCollection, WithHeadingRow, WithValidation
                 'bank' => $collect['bank_name'],
                 'periode' => $collect['periode'],
                 'deduction_pph21' => $collect['deduction_pph21'],
-                'thr' => $collect['thr']
+                'thr' => $collect['thr'],
+                'created_by' => Auth::user()->employee_id
             ];
         }
+
+
 
         foreach (array_chunk($datas, 1000) as $chunk) {
             salary::insert($chunk);

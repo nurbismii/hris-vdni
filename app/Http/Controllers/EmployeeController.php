@@ -29,12 +29,14 @@ class EmployeeController extends Controller
     public function filter(Request $request)
     {
         $datas = employee::select('*');
+
         if (count($datas->get()) > 0) {
             if ($request->nik != '' && $request->nik) {
                 $filter = $datas->where('nik', 'like', '%' . $request->nik . '%')->get();
                 return view('employee.index', ['datas' => $filter]);
             }
         }
+
         if (count($datas->get()) > 0) {
             if (($request->entry_date_start !=  '')  && ($request->entry_date_end != '')) {
                 $start_date = $request->entry_date_start;

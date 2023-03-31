@@ -56,7 +56,7 @@ class RegisterController extends Controller
                     'status' => 'Not Active',
                 );
                 User::create($data_user);
-                return back()->with('success', 'Successful registration, ');
+                return redirect('login')->with('success', 'Successful registration, ');
             }
         } catch (\Throwable $e) {
             return back()->with('error', 'Something wrong!');

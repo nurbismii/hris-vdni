@@ -37,7 +37,7 @@
     <div class="container-fluid px-4">
         <x-message />
         <div class="card">
-            <div class="card-body">
+            <div class="card-body" style="overflow-x: auto;">
                 <table id="datatablesSimple">
                     <thead>
                         <tr>
@@ -59,7 +59,7 @@
                                 </div>
                             </td>
                             <td>{{ $row->email }}</td>
-                            <td>{{ $row->role->permission_role }}</td>
+                            <td>{{ $row->role->permission_role ?? 'User' }}</td>
                             <td>{{ $row->status }}</td>
                             <td>{{ date('d F Y', strtotime($row->created_at)) }}</td>
                             <td>

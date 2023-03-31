@@ -50,17 +50,17 @@
                 </div>
                 <div class="col-md-6">
                   <label class="small mb-1">NIK</label>
-                  <input class="form-control" id="inputLastName" type="text" value="{{ Auth::user()->employee_id }}" />
+                  <input class="form-control" id="inputLastName" type="text" value="{{ Auth::user()->employee_id }}" disabled/>
                 </div>
               </div>
               <div class="row gx-3 mb-3">
                 <div class="col-md-6">
                   <label class="small mb-1">Job</label>
-                  <input class="form-control" type="text" value="{{ Auth::user()->job->permission_role }}" />
+                  <input class="form-control" type="text" value="{{ Auth::user()->job->permission_role ?? 'Not registered' }}" disabled/>
                 </div>
                 <div class="col-md-6">
                   <label class="small mb-1" for="inputLocation">Status</label>
-                  <input class="form-control" id="inputLocation" type="text" value="{{ Auth::user()->status == '1' ? 'Active' : 'Not Active' }}" />
+                  <input class="form-control" id="inputLocation" type="text" value="{{ Auth::user()->status == '1' ? 'Active' : 'Not Active' }}" disabled/>
                 </div>
               </div>
               <div class="mb-3">

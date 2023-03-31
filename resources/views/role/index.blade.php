@@ -37,7 +37,7 @@
     <div class="container-fluid px-4">
         <x-message />
         <div class="card">
-            <div class="card-body">
+            <div class="card-body" style="overflow-x: auto;">
                 <table id="datatablesSimple">
                     <thead>
                         <tr>

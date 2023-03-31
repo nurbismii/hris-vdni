@@ -69,7 +69,7 @@ Route::group(['middleware' => ['auth', 'audit.trails']], function () {
 
     Route::group(['prefix' => 'account'], function () {
         route::get('/profile', [AccountController::class, 'profile']);
-        route::get('/billing', [AccountController::class, 'billing']);
+        route::get('/information', [AccountController::class, 'billing']);
         route::get('/invoice/{id}', [AccountController::class, 'show'])->name('invoice');
     });
 

@@ -40,27 +40,22 @@
     <!-- Main page content-->
     <div class="container-fluid px-4">
         <x-message />
-        <div class="row">
-            <div class="col-xl-5">
-                <div class="card mb-3" style="padding: 0.12rem !important;">
-                    <div class="card-body">
-                        <form action="{{ url('employees/filter') }}" method="POST">
-                            @csrf
+        <form action="{{ url('employees/filter') }}" method="POST">
+            @csrf
+            <div class="row">
+                <div class="col-xl-5">
+                    <div class="card mb-3" style="padding: 0.12rem !important;">
+                        <div class="card-body">
                             <div class="col-12 mb-3">
                                 <label class="small mb-1">NIK</label>
                                 <input class="form-control" name="nik" type="text" placeholder="Search employee by NIK" />
                             </div>
-                            <a class="btn btn-warning btn-sm" href="/employees">Clear filter</a>
-                            <button class="btn btn-primary btn-sm" type="submit">Search employee</button>
-                        </form>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-xl-7">
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <form action="{{ url('employees/filter') }}" method="POST">
-                            @csrf
+                <div class="col-xl-7">
+                    <div class="card mb-3">
+                        <div class="card-body">
                             <div class="row gx-3 mb-3">
                                 <div class="col-md-6">
                                     <label class="small mb-1">Entry Date Start</label>
@@ -71,15 +66,23 @@
                                     <input class="form-control" name="entry_date_end" type="date" />
                                 </div>
                             </div>
-                            <a class="btn btn-warning btn-sm" href="/employees">Clear filter</a>
-                            <button class="btn btn-primary btn-sm" type="submit">Filter</button>
-                        </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-12">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <div class="text-center d-grid">
+                                <button class="btn btn-primary btn-sm btn-block mb-1" type="submit">Filter</button>
+                                <a class="btn btn-warning btn-sm btn-block" href="/employees">Clear filter</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </form>
         <div class="card">
-            <div class="card-body">
+            <div class="card-body" style="overflow-x:auto;">
                 <table id="datatablesSimple">
                     <thead>
                         <tr>

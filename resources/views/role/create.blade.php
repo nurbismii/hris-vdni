@@ -41,8 +41,8 @@
             </div>
             <div class="col-xl-12">
                 <div class="card">
-                    <div class="card-body">
-                        <table id="datatablesSimple">
+                    <div class="card-body" style="overflow-x: auto;">
+                        <table id="datatablesSimple" class="table">
                             <thead>
                                 <tr>
                                     <th>Permission Role</th>

@@ -16,7 +16,8 @@ class CreateSalariesTable extends Migration
         Schema::create('salaries', function (Blueprint $table) {
             $table->string('id', 32)->primary();
             $table->unsignedBigInteger('employee_id');
-            $table->date('durasi_sp');
+            $table->unsignedBigInteger('created_by');
+            $table->date('durasi_sp')->nullable();
             $table->string('jumlah_hari_kerja', 4)->nullable();
             $table->string('jumlah_hour_machine', 8)->nullable();
             $table->string('gaji_pokok', 64)->nullable();
@@ -32,7 +33,7 @@ class CreateSalariesTable extends Migration
             $table->string('tunjangan_lap', 128)->nullable();
             $table->string('jht', 128)->nullable();
             $table->string('jp', 128)->nullable();
-            $table->string('bpjs_kesahatan', 128)->nullable();
+            $table->string('bpjs_kesehatan', 128)->nullable();
             $table->string('unpaid_leave', 128)->nullable();
             $table->string('deduction', 128)->nullable();
             $table->string('total_diterima', 128)->nullable();
@@ -46,6 +47,7 @@ class CreateSalariesTable extends Migration
             $table->string('thr', 128)->nullable();
             $table->string('bonus', 128)->nullable();
             $table->string('deduction_pph21', 128)->nullable();
+            $table->text('note')->nullable();
             $table->timestamps();
         });
     }

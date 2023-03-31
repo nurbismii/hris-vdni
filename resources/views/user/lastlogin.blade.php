@@ -27,8 +27,8 @@
   <div class="container-fluid px-4">
     <x-message />
     <div class="card">
-      <div class="card-body">
-        <table id="datatablesSimple">
+      <div class="card-body" style="overflow-x: auto;">
+        <table id="datatablesSimple" class="table">
           <thead>
             <tr>
               <th>User</th>

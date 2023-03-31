@@ -20,7 +20,7 @@ class CreateAuditTrailsTable extends Migration
             $table->string('ip')->nullable();
             $table->string('agent')->nullable();
             $table->longText('request_body')->nullable();
-            $table->longText('response')->nullable;
+            $table->longText('response')->nullable();
             $table->timestamps();
         });
     }

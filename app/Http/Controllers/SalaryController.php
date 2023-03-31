@@ -51,26 +51,21 @@ class SalaryController extends Controller
 
     public function importSalary(Request $request)
     {
-        try {
-            if ($request->hasFile('file')) {
-                $current_time = date('Y-m-d', strtotime(Carbon::now()));
-                $file = $request->file('file');
-                $file_name = 'KOMPONEN GAJI (' . $current_time . ')' . '.' . $file->getClientOriginalExtension();
-                $file->move('salaries', $file_name);
-                $path = 'public/salaries/' . $file_name;
+        if ($request->hasFile('file')) {
+            $current_time = date('Y-m-d', strtotime(Carbon::now()));
+            $file = $request->file('file');
+            $file_name = 'KOMPONEN GAJI (' . $current_time . ')' . '.' . $file->getClientOriginalExtension();
+            $file->move('salaries', $file_name);
+            $path = 'public/salaries/' . $file_name;
 
-                DB::beginTransaction();
-                fileSalary::create([
-                    'user_id' => Auth::user()->employee_id,
-                    'path' => $path
-                ]);
-                Excel::import(new ImportSalaries, public_path('/salaries/' . $file_name));
-                DB::commit();
-                return back()->with('success', 'Salaries has been uploaded');
-            }
-        } catch (\Throwable $e) {
-            DB::rollBack();
-            return back()->with('error', 'Something wrong!');
+            DB::beginTransaction();
+            fileSalary::create([
+                'user_id' => Auth::user()->employee_id,
+                'path' => $path
+            ]);
+            Excel::import(new ImportSalaries, public_path('/salaries/' . $file_name));
+            DB::commit();
+            return back()->with('success', 'Salaries has been uploaded');
         }
     }
 }

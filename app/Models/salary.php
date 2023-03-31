@@ -15,4 +15,9 @@ class salary extends Model
     protected $casts = [
         'id' => 'string'
     ];
+
+    public function employee()
+    {
+        return $this->hasOne(employee::class, 'nik', 'created_by');
+    }
 }
