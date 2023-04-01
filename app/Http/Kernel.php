@@ -66,5 +66,6 @@ class Kernel extends HttpKernel
         'login' => \App\Http\Middleware\Login::class,
         'employee.registered' => \App\Http\Middleware\EmployeesRegistered::class,
         'audit.trails' => \App\Http\Middleware\AuditTrails::class,
+        'ngrok' => \App\Http\Middleware\NgrokMiddleware::class,
     ];
 }
