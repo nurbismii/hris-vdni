@@ -67,7 +67,7 @@
                 <div class="collapse" id="collapseApps" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav">
                         <a class="nav-link" href="/setting/dashboard">Dashboard Content</a>
-                        <a class="nav-link" href="account-billing.html">Mail Setting</a>
+                        <a class="nav-link" href="/pengembangan">Mail Setting</a>
                 </div>
                 <!-- Sidenav Accordion (Flows)-->
                 <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseFlows" aria-expanded="false" aria-controls="collapseFlows">
@@ -77,14 +77,13 @@
                 </a>
                 <div class="collapse" id="collapseFlows" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav">
-                        <a class="nav-link" href="multi-tenant-select.html">Promotion</a>
-                        <a class="nav-link" href="wizard.html">Award</a>
-                        <a class="nav-link" href="wizard.html">Travel</a>
-                        <a class="nav-link" href="wizard.html">Transfer</a>
-                        <a class="nav-link" href="wizard.html">Resignations</a>
-                        <a class="nav-link" href="wizard.html">Complaints</a>
-                        <a class="nav-link" href="wizard.html">Warnings</a>
-                        <a class="nav-link" href="wizard.html">Terminations</a>
+                        <a class="nav-link" href="/contract">Contract</a>
+                        <a class="nav-link" href="/pengembangan">Travel</a>
+                        <a class="nav-link" href="/pengembangan">Transfer</a>
+                        <a class="nav-link" href="/pengembangan">Resignations</a>
+                        <a class="nav-link" href="/pengembangan">Complaints</a>
+                        <a class="nav-link" href="/pengembangan">Warnings</a>
+                        <a class="nav-link" href="/pengembangan">Terminations</a>
                     </nav>
                 </div>
                 <!-- Sidenav Accordion (Timesheets) -->
@@ -96,10 +95,10 @@
                 <div class="collapse" id="collapseTimesheets" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav">
                         <a class="nav-link" href="multi-tenant-select.html">Add | Update Attedances</a>
-                        <a class="nav-link" href="wizard.html">Import Attendances</a>
-                        <a class="nav-link" href="wizard.html">Office Shift</a>
-                        <a class="nav-link" href="wizard.html">Manage Holiday</a>
-                        <a class="nav-link" href="wizard.html">Manage Leaves</a>
+                        <a class="nav-link" href="/pengembangan">Import Attendances</a>
+                        <a class="nav-link" href="/pengembangan">Office Shift</a>
+                        <a class="nav-link" href="/pengembangan">Manage Holiday</a>
+                        <a class="nav-link" href="/pengembangan">Manage Leaves</a>
                     </nav>
                 </div>
                 <!-- Sidenav Accordion (Payslip) -->
@@ -122,10 +121,10 @@
                 </a>
                 <div class="collapse" id="collapsePerform" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav">
-                        <a class="nav-link" href="multi-tenant-select.html">Goal Type</a>
-                        <a class="nav-link" href="wizard.html">Goal Tracking</a>
-                        <a class="nav-link" href="wizard.html">Indicator</a>
-                        <a class="nav-link" href="wizard.html">Apraisal</a>
+                        <a class="nav-link" href="/pengembangan">Goal Type</a>
+                        <a class="nav-link" href="/pengembangan">Goal Tracking</a>
+                        <a class="nav-link" href="/pengembangan">Indicator</a>
+                        <a class="nav-link" href="/pengembangan">Apraisal</a>
                     </nav>
                 </div>
                 <!-- Sidenav Accordion (Calendar) -->
@@ -141,10 +140,10 @@
                 </a>
                 <div class="collapse" id="collapseRecruitment" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav">
-                        <a class="nav-link" href="multi-tenant-select.html">Job Post</a>
-                        <a class="nav-link" href="wizard.html">Job Candidates</a>
-                        <a class="nav-link" href="wizard.html">Job Interview</a>
-                        <a class="nav-link" href="wizard.html">CMS</a>
+                        <a class="nav-link" href="/pengembangan">Job Post</a>
+                        <a class="nav-link" href="/pengembangan">Job Candidates</a>
+                        <a class="nav-link" href="/pengembangan">Job Interview</a>
+                        <a class="nav-link" href="/pengembangan">CMS</a>
                     </nav>
                 </div>
                 <!-- Sidanav Accordion (Training list) -->
@@ -155,9 +154,9 @@
                 </a>
                 <div class="collapse" id="collapseTraining" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav">
-                        <a class="nav-link" href="multi-tenant-select.html">Training List</a>
-                        <a class="nav-link" href="wizard.html">Training Type</a>
-                        <a class="nav-link" href="wizard.html">Trainers</a>
+                        <a class="nav-link" href="/pengembangan">Training List</a>
+                        <a class="nav-link" href="/pengembangan">Training Type</a>
+                        <a class="nav-link" href="/pengembangan">Trainers</a>
                     </nav>
                 </div>
                 <!-- Sidanav Accordion (Event Meeting) -->
@@ -168,8 +167,8 @@
                 </a>
                 <div class="collapse" id="collapseMeeting" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav">
-                        <a class="nav-link" href="multi-tenant-select.html">Events</a>
-                        <a class="nav-link" href="wizard.html">Meetings</a>
+                        <a class="nav-link" href="/pengembangan">Events</a>
+                        <a class="nav-link" href="/pengembangan">Meetings</a>
                     </nav>
                 </div>
                 <!-- Sidanav Accordion (Event Meeting) -->
@@ -180,11 +179,11 @@
                 </a>
                 <div class="collapse" id="collapseProjectManagement" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav">
-                        <a class="nav-link" href="multi-tenant-select.html">Project</a>
-                        <a class="nav-link" href="wizard.html">Tasks</a>
-                        <a class="nav-link" href="wizard.html">Client</a>
-                        <a class="nav-link" href="wizard.html">Invoice</a>
-                        <a class="nav-link" href="wizard.html">Tax Type</a>
+                        <a class="nav-link" href="/pengembangan">Project</a>
+                        <a class="nav-link" href="/pengembangan">Tasks</a>
+                        <a class="nav-link" href="/pengembangan">Client</a>
+                        <a class="nav-link" href="/pengembangan">Invoice</a>
+                        <a class="nav-link" href="/pengembangan">Tax Type</a>
                     </nav>
                 </div>
                 <!-- Sidenav Accordion (Calendar) -->
@@ -200,14 +199,14 @@
                 </a>
                 <div class="collapse" id="collapseFinance" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav">
-                        <a class="nav-link" href="multi-tenant-select.html">Account List</a>
-                        <a class="nav-link" href="wizard.html">Account Balances</a>
-                        <a class="nav-link" href="wizard.html">Payee</a>
-                        <a class="nav-link" href="wizard.html">Payer</a>
-                        <a class="nav-link" href="wizard.html">Deposit</a>
-                        <a class="nav-link" href="wizard.html">Expense</a>
-                        <a class="nav-link" href="wizard.html">Transaction</a>
-                        <a class="nav-link" href="wizard.html">Transfer</a>
+                        <a class="nav-link" href="/pengembangan">Account List</a>
+                        <a class="nav-link" href="/pengembangan">Account Balances</a>
+                        <a class="nav-link" href="/pengembangan">Payee</a>
+                        <a class="nav-link" href="/pengembangan">Payer</a>
+                        <a class="nav-link" href="/pengembangan">Deposit</a>
+                        <a class="nav-link" href="/pengembangan">Expense</a>
+                        <a class="nav-link" href="/pengembangan">Transaction</a>
+                        <a class="nav-link" href="/pengembangan">Transfer</a>
                     </nav>
                 </div>
                 <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseAssets" aria-expanded="false" aria-controls="collapseAssets">
@@ -217,8 +216,8 @@
                 </a>
                 <div class="collapse" id="collapseAssets" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav">
-                        <a class="nav-link" href="multi-tenant-select.html">Category</a>
-                        <a class="nav-link" href="wizard.html">Assets</a>
+                        <a class="nav-link" href="/pengembangan">Category</a>
+                        <a class="nav-link" href="/pengembangan">Assets</a>
                     </nav>
                 </div>
                 <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseFileManager" aria-expanded="false" aria-controls="collapseFileManager">
@@ -228,8 +227,8 @@
                 </a>
                 <div class="collapse" id="collapseFileManager" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav">
-                        <a class="nav-link" href="multi-tenant-select.html">Category</a>
-                        <a class="nav-link" href="wizard.html">Assets</a>
+                        <a class="nav-link" href="/pengembangan">Category</a>
+                        <a class="nav-link" href="/pengembangan">Assets</a>
                     </nav>
                 </div>
             </div>

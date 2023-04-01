@@ -1,4 +1,4 @@
-<x-app-layout title="Billing">
+<x-app-layout title="Information">
 
   @push('styles')
   <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />

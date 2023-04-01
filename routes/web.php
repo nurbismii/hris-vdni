@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\ContractController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\Role\RoleController;
@@ -20,7 +21,6 @@ Route::group(['middleware' => ['auth', 'audit.trails']], function () {
     Route::get('/audit-trails', [DashboardController::class, 'auditTrails']);
 
     Route::group(['prefix' => 'setting'], function () {
-
         route::get('/dashboard', [DashboardController::class, 'settingDashboard']);
         route::post('/store', [DashboardController::class, 'store'])->name('store.dashboard');
         route::get('/edit/{id}', [DashboardController::class, 'edit'])->name('edit.dashboard');
@@ -77,5 +77,9 @@ Route::group(['middleware' => ['auth', 'audit.trails']], function () {
         route::get('/', [SalaryController::class, 'index']);
         route::get('/history', [SalaryController::class, 'history']);
         route::post('/import-salarys', [SalaryController::class, 'importSalary'])->name('import.salary');
+    });
+
+    Route::group(['prefix' => 'contract'], function (){
+        route::get('/', [ContractController::class, 'index']);
     });
 });
