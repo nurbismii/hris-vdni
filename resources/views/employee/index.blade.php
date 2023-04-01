@@ -129,6 +129,7 @@
             </div>
         </div>
     </div>
+
     @if($datas)
     @foreach($datas as $row)
     <div class="modal fade" id="editEmployee{{$row->nik}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -143,25 +144,72 @@
                         @csrf
                         {{ method_field('patch') }}
                         <div class="mb-3">
-                            <label class="small mb-1">Name</label>
-                            <input class="form-control" name="permission_role" type="text" placeholder="Enter role" required />
+                            <label class="small mb-1">NIK</label>
+                            <input class="form-control" name="nik" type="text" value="{{ $row->nik }}" readonly />
                             @error('name')
                             <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="mb-3">
-                            <label class="small mb-1">Description</label>
-                            <textarea class="form-control" name="description" cols="30" rows="10"></textarea>
+                            <label class="small mb-1">Name</label>
+                            <input class="form-control" name="name" type="text" value="{{ $row->name }}" required />
+                            @error('name')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
+                            <label class="small mb-1">No KTP</label>
+                            <input type="text" name="no_ktp" class="form-control" value="{{ $row->no_ktp }}" required>
                             @error('description')
                             <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="mb-3">
-                            <label class="small mb-1">Status</label>
-                            <select class="form-select" name="status" aria-label="Default select example" required>
-                                <option selected disabled>Select a role:</option>
-                                <option value="1">Active</option>
-                                <option value="0">Not Active</option>
+                            <label class="small mb-1">Date of Birth</label>
+                            <input type="date" name="date_of_birth" class="form-control" value="{{ $row->date_of_birth }}" required>
+                            @error('description')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
+                            <label class="small mb-1">Company Name</label>
+                            <input type="text" name="company_name" class="form-control" value="{{ $row->company_name }}" required>
+                            @error('description')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
+                            <label class="small mb-1">NPWP</label>
+                            <input type="text" name="npwp" class="form-control" value="{{ $row->npwp }}" required>
+                            @error('description')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
+                            <label class="small mb-1">BPJS KES</label>
+                            <input type="text" name="bpjs_ket" class="form-control" value="{{ $row->bpjs_kesehatan }}" required>
+                            @error('description')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
+                            <label class="small mb-1">BPJS TK</label>
+                            <input type="text" name="bpjs_tk" class="form-control" value="{{ $row->bpjs_tk }}" required>
+                            @error('description')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
+                            <label class="small mb-1">Entry Date</label>
+                            <input type="text" name="entry_date" class="form-control" value="{{ date('d F Y', strtotime($row->entry_date)) }}" readonly>
+                            @error('description')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="mb-3">
+                            <label class="small mb-1">Vaccine</label>
+                            <select class="form-select" name="vaccine" aria-label="Default select example" required>
+                                <option value="{{ $row->vaccine }}">{{ $row->vaccine }}</option>
                             </select>
                             @error('status')
                             <div class="alert alert-danger">{{ $message }}</div>
@@ -178,20 +226,21 @@
     </div>
     @endforeach
     @endif
+
     @if($datas)
     @foreach($datas as $row)
-    <div class="modal fade" id="editEmployee{$row->nik}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="deleteEmployee{{$row->nik}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Upload employee data change</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Delete Data</h5>
                     <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('update.employee',  $row->nik) }}" method="POST" enctype="multipart/form-data" class="nav flex-column" id="stickyNav">
+                <form action="{{ route('destroy.employee',  $row->nik) }}" method="POST" enctype="multipart/form-data" class="nav flex-column" id="stickyNav">
                     <div class="modal-body">
                         @csrf
-                        {{ method_field('patch') }}
-
+                        {{ method_field('delete') }}
+                        Are you sure you want to delete this data ({{ $row->name }})?
                     </div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
@@ -203,6 +252,7 @@
     </div>
     @endforeach
     @endif
+
     <!-- Modal update employee maatwebsite -->
     <div class="modal fade" id="modalUpdateEmployee" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">

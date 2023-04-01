@@ -81,12 +81,23 @@ class EmployeeController extends Controller
 
     public function update(Request $request, $id)
     {
+        $data = employee::where('nik', $id)->first();
+        $data->update([
+            'nik' => $request->nik,
+            'no_ktp' => $request->no_ktp,
+            'name' => $request->name,
+            'date_of_birth' => $request->date_of_birth,
+            'company_name' => $request->company_name,
+            'npwp' => $request->npwp,
+            'bpjs_ket' => $request->bpjs_ket,
+            'bpjs_tk' => $request->bpjs_tk,
+            'vaccine' => $request->vaccine,
+            'entry_date' => date('Y-m-d', strtotime($request->entry_date)),
+        ]);
+        return back()->with('success', 'Employee has been updated');
         try {
-            $data = employee::where('nik', $id)->first();
-            $data->update($request->all());
-            return back()->with('error', 'Employee has been updated');
         } catch (\Throwable $e) {
-            return redirect('employees', 'Something wrong');
+            return back()->with('error', 'Something wrong!');
         }
     }
 

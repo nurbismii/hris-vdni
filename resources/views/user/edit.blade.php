@@ -32,7 +32,7 @@
     <!-- Main page content-->
     <div class="container-fluid px-4">
         <div class="row">
-            <div class="col-xl-6">
+            <div class="col-xl-8">
                 <!-- Account details card-->
                 <div class="card mb-4">
                     <div class="card-header">Account Details</div>
@@ -42,8 +42,8 @@
                             {{ method_field('patch') }}
                             <div class="row gx-3 mb-3">
                                 <div class="col-md-6">
-                                    <label class="small mb-1">Employee Id</label>
-                                    <input class="form-control @error('employee_id') is-invalid @enderror" name="employee_id" type="text" value="{{ $data->employee_id }}" />
+                                    <label class="small mb-1">NIK</label>
+                                    <input class="form-control @error('employee_id') is-invalid @enderror" name="employee_id" type="text" value="{{ $data->employee_id }}" readonly/>
                                     @error('employee_id')
                                     <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
@@ -77,6 +77,7 @@
                                 </div>
                             </div>
                             <button class="btn btn-success btn-sm lift lift-sm" type="submit">Submit</button>
+                            <a class="btn btn-warning btn-sm lift lift-sm" href="/users">Back</a>
                         </form>
                     </div>
                 </div>
