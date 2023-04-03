@@ -1,12 +1,15 @@
 <x-app-layout title="Employee">
     @push('styles')
-    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
-    <link href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css" rel="stylesheet" />
     <link href="{{ asset('css/styles.css')}}" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/favicon.png')}}" />
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css" rel="stylesheet" />
     <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/datetime/1.4.0/css/dataTables.dateTime.min.css" rel="stylesheet" />
     @endpush
 
     <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
@@ -40,218 +43,40 @@
     <!-- Main page content-->
     <div class="container-fluid px-4">
         <x-message />
-        <form action="{{ url('employees/filter') }}" method="POST">
-            @csrf
-            <div class="row">
-                <div class="col-xl-5">
-                    <div class="card mb-3" style="padding: 0.12rem !important;">
-                        <div class="card-body">
-                            <div class="col-12 mb-3">
-                                <label class="small mb-1">NIK</label>
-                                <input class="form-control" name="nik" type="text" placeholder="Search employee by NIK" />
-                            </div>
+        <div class="col-xl-12">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <div class="row gx-3 mb-3">
+                        <div class="col-md-6">
+                            <label class="small mb-1">Entry Date Start</label>
+                            <input class="form-control" id="min" name="min" type="text" />
                         </div>
-                    </div>
-                </div>
-                <div class="col-xl-7">
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <div class="row gx-3 mb-3">
-                                <div class="col-md-6">
-                                    <label class="small mb-1">Entry Date Start</label>
-                                    <input class="form-control" name="entry_date_start" type="date" />
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="small mb-1">Entry Date End</label>
-                                    <input class="form-control" name="entry_date_end" type="date" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-12">
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <div class="text-center d-grid">
-                                <button class="btn btn-primary btn-sm btn-block mb-1" type="submit">Filter</button>
-                                <a class="btn btn-warning btn-sm btn-block" href="/employees">Clear filter</a>
-                            </div>
+                        <div class="col-md-6">
+                            <label class="small mb-1">Entry Date End</label>
+                            <input class="form-control" id="max" name="max" type="text" />
                         </div>
                     </div>
                 </div>
             </div>
-        </form>
+        </div>
         <div class="card">
             <div class="card-body" style="overflow-x:auto;">
-                <table id="datatablesSimple">
+                <table id="data-employee" class="table table-hover" style="width: 100%;">
                     <thead>
                         <tr>
-                            <th>Employee</th>
                             <th>NIK</th>
+                            <th>BPJS Kesehatan</th>
+                            <th>BPJS TK</th>
+                            <th>Employee</th>
                             <th>Company</th>
                             <th>Join Date</th>
-                            <th>Action</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        @if($datas)
-                        @foreach($datas as $row)
-                        <tr>
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <div class="avatar me-2"><img class="avatar-img img-fluid" src="{{ asset('assets/img/illustrations/profiles/profile-1.png')}}" /></div>
-                                    {{ $row->name }} <br>
-                                    @if($row->bpjs_ket)
-                                    BPJS Kesehatan : {{ $row->bpjs_ket }} <br>
-                                    @endif
-                                    @if($row->bpjs_tk)
-                                    BPJS TK : {{ $row->bpjs_tk }} <br>
-                                    @endif
-                                    @if($row->vaccine)
-                                    Vaccine : {{ $row->vaccine == 3 ? 'Booster' : ($row->vaccine == 2 ? 'Vaccine 2' : ($row->vaccine == 1 ? 'Vaccine 1' : 'Not Vaccine')) }} <br>
-                                    @endif
-                                </div>
-                            </td>
-                            <td>{{ $row->nik }}</td>
-                            <td>{{ $row->company_name }}</td>
-                            <td>{{ $row->entry_date }}</td>
-                            <td>
-                                <form action="" method="POST">
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" data-bs-toggle="modal" data-bs-target="#editEmployee{{$row->nik}}"><i data-feather="edit"></i></a>
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark" data-bs-toggle="modal" data-bs-target="#deleteEmployee{{$row->nik}}"><i data-feather="trash-2"></i></a>
-                                </form>
-                            </td>
-                        </tr>
-                        @endforeach
-                        @endif
-                    </tbody>
+                    <tbody> </tbody>
                 </table>
             </div>
         </div>
     </div>
-
-    @if($datas)
-    @foreach($datas as $row)
-    <div class="modal fade" id="editEmployee{{$row->nik}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Upload employee data change</h5>
-                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form action="{{ route('update.employee',  $row->nik) }}" method="POST" enctype="multipart/form-data" class="nav flex-column" id="stickyNav">
-                    <div class="modal-body">
-                        @csrf
-                        {{ method_field('patch') }}
-                        <div class="mb-3">
-                            <label class="small mb-1">NIK</label>
-                            <input class="form-control" name="nik" type="text" value="{{ $row->nik }}" readonly />
-                            @error('name')
-                            <div class="alert alert-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="mb-3">
-                            <label class="small mb-1">Name</label>
-                            <input class="form-control" name="name" type="text" value="{{ $row->name }}" required />
-                            @error('name')
-                            <div class="alert alert-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="mb-3">
-                            <label class="small mb-1">No KTP</label>
-                            <input type="text" name="no_ktp" class="form-control" value="{{ $row->no_ktp }}" required>
-                            @error('description')
-                            <div class="alert alert-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="mb-3">
-                            <label class="small mb-1">Date of Birth</label>
-                            <input type="date" name="date_of_birth" class="form-control" value="{{ $row->date_of_birth }}" required>
-                            @error('description')
-                            <div class="alert alert-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="mb-3">
-                            <label class="small mb-1">Company Name</label>
-                            <input type="text" name="company_name" class="form-control" value="{{ $row->company_name }}" required>
-                            @error('description')
-                            <div class="alert alert-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="mb-3">
-                            <label class="small mb-1">NPWP</label>
-                            <input type="text" name="npwp" class="form-control" value="{{ $row->npwp }}" required>
-                            @error('description')
-                            <div class="alert alert-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="mb-3">
-                            <label class="small mb-1">BPJS KES</label>
-                            <input type="text" name="bpjs_ket" class="form-control" value="{{ $row->bpjs_kesehatan }}" required>
-                            @error('description')
-                            <div class="alert alert-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="mb-3">
-                            <label class="small mb-1">BPJS TK</label>
-                            <input type="text" name="bpjs_tk" class="form-control" value="{{ $row->bpjs_tk }}" required>
-                            @error('description')
-                            <div class="alert alert-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="mb-3">
-                            <label class="small mb-1">Entry Date</label>
-                            <input type="text" name="entry_date" class="form-control" value="{{ date('d F Y', strtotime($row->entry_date)) }}" readonly>
-                            @error('description')
-                            <div class="alert alert-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="mb-3">
-                            <label class="small mb-1">Vaccine</label>
-                            <select class="form-select" name="vaccine" aria-label="Default select example" required>
-                                <option value="{{ $row->vaccine }}">{{ $row->vaccine }}</option>
-                            </select>
-                            @error('status')
-                            <div class="alert alert-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
-                        <button class="btn btn-success" type="submit">Send</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    @endforeach
-    @endif
-
-    @if($datas)
-    @foreach($datas as $row)
-    <div class="modal fade" id="deleteEmployee{{$row->nik}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Delete Data</h5>
-                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form action="{{ route('destroy.employee',  $row->nik) }}" method="POST" enctype="multipart/form-data" class="nav flex-column" id="stickyNav">
-                    <div class="modal-body">
-                        @csrf
-                        {{ method_field('delete') }}
-                        Are you sure you want to delete this data ({{ $row->name }})?
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
-                        <button class="btn btn-success" type="submit">Send</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    @endforeach
-    @endif
 
     <!-- Modal update employee maatwebsite -->
     <div class="modal fade" id="modalUpdateEmployee" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -306,13 +131,87 @@
     <!-- Modal delete emplooye maatwebsite end -->
 
     @push('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-    <script src="{{ asset('js/scripts.js')}}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+    <script src="{{ asset('js/scripts.js') }}"></script>
+    <script src="{{ asset('js/chart.min.js') }}" crossorigin="anonymous"></script>
     <script src="{{ asset('js/datatables/datatables-simple-demo.js')}}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/bundle.js" crossorigin="anonymous"></script>
     <script src="{{ asset('js/litepicker.js')}}"></script>
     <script src="{{ asset('js/app.js')}}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/bundle.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.2/moment.min.js"></script>
+    <script src="https://cdn.datatables.net/datetime/1.4.0/js/dataTables.dateTime.min.js"></script>
+
+    <script>
+        var minDate, maxDate;
+        
+        $.fn.dataTable.ext.search.push(
+            function(settings, data, dataIndex) {
+                var min = minDate.val();
+                var max = maxDate.val();
+                var date = new Date(data[5]);
+
+                if (
+                    (min === null && max === null) ||
+                    (min === null && date <= max) ||
+                    (min <= date && max === null) ||
+                    (min <= date && date <= max)
+                ) {
+                    return true;
+                }
+                return false;
+            }
+        );
+
+        $(function() {
+
+            minDate = new DateTime($('#min'), {
+                format: 'MMMM Do YYYY'
+            });
+            maxDate = new DateTime($('#max'), {
+                format: 'MMMM Do YYYY'
+            });
+
+            var table = $('#data-employee').DataTable({
+
+                processing: true,
+                serverSide: true,
+                searching: true,
+                ajax: "/employees/server-side",
+                columns: [{
+                        data: 'nik',
+                        name: 'nik'
+                    },
+                    {
+                        data: 'name',
+                        name: 'name'
+                    },
+                    {
+                        data: 'bpjs_ket',
+                        name: 'bpjs_ket',
+                    },
+                    {
+                        data: 'bpjs_tk',
+                        name: 'bpjs_tk',
+                    },
+                    {
+                        data: 'company_name',
+                        name: 'company_name'
+                    },
+                    {
+                        data: 'entry_date',
+                        name: 'entry_date'
+                    }
+                ]
+            });
+
+            $('#min, #max').on('change', function() {
+                table.draw();
+            });
+        });
+    </script>
     @endpush
 </x-app-layout>

@@ -10,13 +10,23 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
+use Yajra\DataTables\DataTables;
 
 class UserController extends Controller
 {
     public function index()
     {
-        $datas = User::orderBy('name', 'ASC')->get();
-        return view('user.index', compact('datas'));
+        return view('user.index');
+    }
+
+    public function serverSide()
+    {
+        return DataTables::of(User::orderBy('employee_id', 'DESC'))->addColumn('action', function ($row) {
+            $actionBtn =
+                '<a href="javascript:void(0)" class="edit btn btn-success btn-sm">Edit</a> <a href="javascript:void(0)" class="delete btn btn-danger btn-sm">Delete</a>';
+
+            return $actionBtn;
+        })->rawColumns(['action'])->make(true);
     }
 
     public function create()

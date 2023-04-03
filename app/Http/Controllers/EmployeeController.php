@@ -10,42 +10,25 @@ use App\Imports\EmployeesUpdateImport;
 use App\Models\employee;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
+use Yajra\DataTables\DataTables;
 
 class EmployeeController extends Controller
 {
     protected $default;
 
-    public function __construct($default = 100)
+    public function __construct($default = 10000)
     {
         $this->default = $default;
     }
 
     public function index()
     {
-        $datas = employee::orderBy('nik', 'DESC')->limit($this->default)->get();
-        return view('employee.index', compact('datas'));
+        return view('employee.index');
     }
 
-    public function filter(Request $request)
+    public function serverSideEmployee()
     {
-        $datas = employee::select('*');
-
-        if (count($datas->get()) > 0) {
-            if ($request->nik != '' && $request->nik) {
-                $filter = $datas->where('nik', 'like', '%' . $request->nik . '%')->get();
-                return view('employee.index', ['datas' => $filter]);
-            }
-        }
-
-        if (count($datas->get()) > 0) {
-            if (($request->entry_date_start !=  '')  && ($request->entry_date_end != '')) {
-                $start_date = $request->entry_date_start;
-                $end_date = $request->entry_date_end;
-
-                $filter = employee::whereBetween('entry_date', [$start_date, $end_date])->get();
-                return view('employee.index', ['datas' => $filter]);
-            }
-        }
+        return DataTables::of(employee::orderBy('nik', 'DESC')->limit(10000))->make(true);
     }
 
     public function create()

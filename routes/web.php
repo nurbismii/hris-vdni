@@ -15,7 +15,7 @@ Route::post('/new-register', [RegisterController::class, 'register'])->name('reg
 Auth::routes();
 Route::get('/', [DashboardController::class, 'index']);
 
-Route::group(['middleware' => ['auth', 'audit.trails']], function () {
+Route::group(['middleware' => ['auth']], function () {
 
     Route::get('/dashboard', [DashboardController::class, 'index']);
     Route::get('/audit-trails', [DashboardController::class, 'auditTrails']);
@@ -31,13 +31,15 @@ Route::group(['middleware' => ['auth', 'audit.trails']], function () {
     Route::group(['prefix' => 'users'], function () {
         route::get('/', [UserController::class, 'index']);
         route::get('/create', [UserController::class, 'create']);
-        route::get('/import', [UserController::class, 'import']);
-        route::get('/download-example-user', [UserController::class, 'downloadExampleUser'])->name('download.exampleUser');
         route::post('/store', [UserController::class, 'store']);
         route::get('/edit/{id}', [UserController::class, 'edit'])->name('edit.user');
         route::patch('/update/{id}', [UserController::class, 'update'])->name('update.user');
         route::delete('/destroy/{id}', [UserController::class, 'destroy'])->name('destroy.user');
+        
+        route::get('/download-example-user', [UserController::class, 'downloadExampleUser'])->name('download.exampleUser');
+        route::get('/import', [UserController::class, 'import']);
         route::get('/last-login', [UserController::class, 'lastLogin'])->name('last.login');
+        route::get('/server-side', [UserController::class, 'serverSide']);
     });
 
     Route::group(['prefix' => 'roles'], function () {
@@ -52,12 +54,12 @@ Route::group(['middleware' => ['auth', 'audit.trails']], function () {
 
     Route::group(['prefix' => 'employees'], function () {
         route::get('/', [EmployeeController::class, 'index']);
-        route::post('/filter', [EmployeeController::class, 'filter']);
         route::get('/create', [EmployeeController::class, 'create']);
         route::post('/store', [EmployeeController::class, 'store'])->name('store.employee');
         route::get('/edit/{id}', [EmployeeController::class, 'edit'])->name('edit.employee');
         route::patch('update/{id}', [EmployeeController::class, 'update'])->name('update.employee');
         route::delete('/destroy/{id}', [EmployeeController::class, 'destroy'])->name('destroy.employee');
+        route::get('/server-side', [EmployeeController::class, 'serverSideEmployee']);
         // Maatwebsite excel 
         route::get('/import', [EmployeeController::class, 'import']);
         route::get('/download-example', [EmployeeController::class, 'downloadExample'])->name('download.example');
@@ -79,7 +81,7 @@ Route::group(['middleware' => ['auth', 'audit.trails']], function () {
         route::post('/import-salarys', [SalaryController::class, 'importSalary'])->name('import.salary');
     });
 
-    Route::group(['prefix' => 'contract'], function (){
+    Route::group(['prefix' => 'contract'], function () {
         route::get('/', [ContractController::class, 'index']);
     });
 });

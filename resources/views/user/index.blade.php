@@ -7,6 +7,9 @@
     <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/datetime/1.4.0/css/dataTables.dateTime.min.css" rel="stylesheet" />
     @endpush
 
     <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
@@ -38,7 +41,7 @@
         <x-message />
         <div class="card">
             <div class="card-body" style="overflow-x: auto;">
-                <table id="datatablesSimple">
+                <table id="data-user" class="table table-hover">
                     <thead>
                         <tr>
                             <th>User</th>
@@ -46,65 +49,14 @@
                             <th>Role</th>
                             <th>Status</th>
                             <th>Joined Date</th>
-                            <th>Actions</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        @foreach($datas as $row)
-                        <tr>
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-1.png" /></div>
-                                    {{ $row->name }}
-                                </div>
-                            </td>
-                            <td>{{ $row->email }}</td>
-                            <td>{{ $row->role->permission_role ?? 'User' }}</td>
-                            <td>{{ $row->status }}</td>
-                            <td>{{ date('d F Y', strtotime($row->created_at)) }}</td>
-                            <td>
-
-                                <form action="{{ route('destroy.user', $row->employee_id) }}" method="POST">
-                                    @csrf
-                                    {{ method_field('delete') }}
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="{{ route('edit.user', $row->employee_id) }}"><i data-feather="edit"></i></a>
-                                    <a type="submit" class="btn btn-datatable btn-icon btn-transparent-dark" data-bs-toggle="modal" data-bs-target="#deleteUser{{$row->employee_id}}"><i data-feather="trash-2"></i>
-                                    </a>
-                                </form>
-
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
+                    <tbody></tbody>
                 </table>
             </div>
         </div>
     </div>
-
-    <!-- Modal delete user -->
-    @foreach($datas as $data)
-    <div class="modal fade" id="deleteUser{{$data->employee_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">New Role</h5>
-                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form action="{{ route('destroy.user', $data->employee_id) }}" method="POST" enctype="application/x-www-form-urlencoded" class="nav flex-column" id="stickyNav">
-                    <div class="modal-body">
-                        @csrf
-                        {{ method_field('delete') }}
-                        Are you sure you want to delete this data ({{ $data->name }})?
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">No</button>
-                        <button class="btn btn-primary" type="submit">Yes</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    @endforeach
 
     @push('scripts')
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
@@ -115,5 +67,81 @@
     <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/bundle.js" crossorigin="anonymous"></script>
     <script src="{{ asset('js/litepicker.js')}}"></script>
     <script src="{{ asset('js/app.js')}}"></script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.2/moment.min.js"></script>
+    <script src="https://cdn.datatables.net/datetime/1.4.0/js/dataTables.dateTime.min.js"></script>
+
+    <script>
+        var minDate, maxDate;
+
+        $.fn.dataTable.ext.search.push(
+            function(settings, data, dataIndex) {
+                var min = minDate.val();
+                var max = maxDate.val();
+                var date = new Date(data[5]);
+
+                if (
+                    (min === null && max === null) ||
+                    (min === null && date <= max) ||
+                    (min <= date && max === null) ||
+                    (min <= date && date <= max)
+                ) {
+                    return true;
+                }
+                return false;
+            }
+        );
+
+        $(function() {
+
+            minDate = new DateTime($('#min'), {
+                format: 'MMMM Do YYYY'
+            });
+            maxDate = new DateTime($('#max'), {
+                format: 'MMMM Do YYYY'
+            });
+
+            var table = $('#data-user').DataTable({
+
+                processing: true,
+                serverSide: true,
+                searching: true,
+                ajax: "/users/server-side",
+                columns: [{
+                        data: 'name',
+                        name: 'name'
+                    },
+                    {
+                        data: 'email',
+                        name: 'email'
+                    },
+                    {
+                        data: 'role_id',
+                        name: 'role_id',
+                    },
+                    {
+                        data: 'status',
+                        name: 'status',
+                    },
+                    {
+                        data: 'created_at',
+                        name: 'created_at'
+                    },
+                    {
+                        data: 'action',
+                        name: 'action',
+                        orderable: true,
+                        searchable: true
+                    },
+                ]
+            });
+
+            $('#min, #max').on('change', function() {
+                table.draw();
+            });
+        });
+    </script>
     @endpush
 </x-app-layout>
