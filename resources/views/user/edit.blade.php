@@ -68,10 +68,10 @@
                                     <label class="small mb-1">Status</label>
                                     <select name="status" class="form-select">
                                         <option value="{{ $data->status }}" selected>{{ ucfirst($data->status) }}</option>
-                                        @if($data->status == 'NOT ACTIVE')
-                                        <option value="ACTIVE">ACTIVE</option>
+                                        @if(strtolower($data->status) == 'not active')
+                                        <option value="Active">Active</option>
                                         @else
-                                        <option value="NOT ACTIVE">NOT ACTIVE</option>
+                                        <option value="Not Active">Not Active</option>
                                         @endif
                                     </select>
                                 </div>

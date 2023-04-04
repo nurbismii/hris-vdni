@@ -6,24 +6,30 @@ use App\Exports\UserExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\UserStoreRequest;
 use App\Http\Requests\User\UsertUpdaterRequest;
+use App\Imports\UsersImport;
+use App\Models\role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
+use Ramsey\Uuid\Uuid;
 use Yajra\DataTables\DataTables;
 
 class UserController extends Controller
 {
     public function index()
     {
-        return view('user.index');
+        $datas = User::orderBy('employee_id', 'DESC')->take(1000)->get();
+        return view('user.index', compact('datas'));
     }
 
     public function serverSide()
     {
-        return DataTables::of(User::orderBy('employee_id', 'DESC'))->addColumn('action', function ($row) {
+        return DataTables::of(User::with('role'))->addColumn('action', function ($row) {
             $actionBtn =
-                '<a href="javascript:void(0)" class="edit btn btn-success btn-sm">Edit</a> <a href="javascript:void(0)" class="delete btn btn-danger btn-sm">Delete</a>';
+                '<a href="javascript:void(0)" class="edit btn btn-success btn-sm">Edit</a> 
+                <a href="javascript:void(0)" class="delete btn btn-danger btn-sm">Delete</a>';
 
             return $actionBtn;
         })->rawColumns(['action'])->make(true);
@@ -31,7 +37,8 @@ class UserController extends Controller
 
     public function create()
     {
-        return view('user.create');
+        $roles = role::all();
+        return view('user.create', compact('roles'));
     }
 
     public function import()
@@ -39,12 +46,18 @@ class UserController extends Controller
         return view('user.import');
     }
 
-    public function store(UserStoreRequest $request)
+    public function store(Request $request)
     {
         try {
-            DB::beginTransaction();
-            User::create($request->all());
-            DB::commit();
+            User::create([
+                'id' => Uuid::uuid4()->getHex(),
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'status' => $request->status,
+                'employee_id' => $request->employee_id,
+                'role_id' => $request->role_id ?? '',
+            ]);
             return back()->with('success', 'User has been added');
         } catch (\Throwable $e) {
             DB::rollBack();
@@ -100,5 +113,11 @@ class UserController extends Controller
     public function downloadExampleUser()
     {
         return Excel::download(new UserExport, 'User-Tempalate.xlsx');
+    }
+
+    public function importUser(Request $request)
+    {
+        Excel::import(new UsersImport, $request->file('file'));
+        return back()->with('success', 'All good!');
     }
 }

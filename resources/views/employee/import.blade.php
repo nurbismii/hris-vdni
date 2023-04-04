@@ -73,7 +73,6 @@
                             <button class="btn btn-primary" type="submit">Send file</button>
                         </div>
                     </div>
-
                 </form>
             </div>
         </div>

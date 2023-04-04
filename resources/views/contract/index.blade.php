@@ -28,11 +28,11 @@
                             Add New Contract
                         </a>
                         <a class="btn btn-sm btn-warning text-white" data-bs-toggle="modal" data-bs-target="#modalUpdateEmployee">
-                            <i class="me-1" data-feather="user-plus"></i>
+                            <i class="me-1" data-feather="edit-3"></i>
                             Update Contract
                         </a>
                         <a class="btn btn-sm btn-danger text-white" data-bs-toggle="modal" data-bs-target="#modalDeleteEmployee">
-                            <i class="me-1" data-feather="user-plus"></i>
+                            <i class="me-1" data-feather="trash"></i>
                             Delete Contract
                         </a>
                     </div>

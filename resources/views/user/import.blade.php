@@ -25,6 +25,7 @@
   </header>
   <!-- Main page content-->
   <div class="container-xl px-4 mt-n10">
+    <x-message />
     <div class="card">
       <div class="card-header">Import Excel/CSV File Only
         <a href="/users" class="btn btn-danger btn-sm lift lift-sm float-end">Back</a>
@@ -39,10 +40,17 @@
         <p class="col-12 text-justify">
           The correct column order is (Name, email, password, level, status and employee NIK.)
         </p>
-        <div class="mb-3 col-4">
-          <label class="form-label">Upload file</label>
-          <input class="form-control" type="file" id="formFile">
-        </div>
+        <form action="{{ route('import.user') }}" method="POST" enctype="multipart/form-data">
+          @csrf
+          <div class="row gx-3 mb-3">
+            <div class="mb-3 col-4">
+              <input class="form-control" name="file" type="file" id="formFile" required>
+            </div>
+            <div class="mb-3 col-3">
+              <button class="btn btn-primary" type="submit">Send file</button>
+            </div>
+          </div>
+        </form>
       </div>
     </div>
   </div>

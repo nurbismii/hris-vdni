@@ -28,11 +28,11 @@
                             Add New Employee
                         </a>
                         <a class="btn btn-sm btn-warning text-white" data-bs-toggle="modal" data-bs-target="#modalUpdateEmployee">
-                            <i class="me-1" data-feather="user-plus"></i>
+                            <i class="me-1" data-feather="edit-3"></i>
                             Update Employee
                         </a>
                         <a class="btn btn-sm btn-danger text-white" data-bs-toggle="modal" data-bs-target="#modalDeleteEmployee">
-                            <i class="me-1" data-feather="user-plus"></i>
+                            <i class="me-1" data-feather="trash"></i>
                             Delete Employee
                         </a>
                     </div>
@@ -65,9 +65,9 @@
                     <thead>
                         <tr>
                             <th>NIK</th>
+                            <th>Name</th>
                             <th>BPJS Kesehatan</th>
                             <th>BPJS TK</th>
-                            <th>Employee</th>
                             <th>Company</th>
                             <th>Join Date</th>
                         </tr>

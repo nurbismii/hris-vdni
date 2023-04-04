@@ -33,63 +33,58 @@
     <div class="container-xl px-4 mt-4">
         <div class="row">
             <div class="col-xl-12">
-                <!-- Account details card-->
+                <x-message />
                 <div class="card mb-4">
                     <div class="card-header">New Account</div>
                     <div class="card-body">
-                        <form>
-                            <!-- Form Row-->
+                        <form action="/users/store" method="POST">
+                            @csrf
                             <div class="row gx-3 mb-3">
-                                <!-- Form Group (first name)-->
                                 <div class="col-md-6">
                                     <label class="small mb-1">Name</label>
-                                    <input class="form-control" type="text" placeholder="Enter your first name" value="" />
+                                    <input class="form-control" type="text" name="name" placeholder="Enter your first name" />
                                 </div>
                                 <!-- Form Group (last name)-->
                                 <div class="col-md-6">
-                                    <label class="small mb-1" for="inputLastName">Email</label>
-                                    <input class="form-control" type="email" placeholder="Enter your email" value="" />
+                                    <label class="small mb-1">Email</label>
+                                    <input class="form-control" name="email" type="email" placeholder="Enter your email" />
                                 </div>
-                            </div>
-                            <!-- Form Group (email address)-->
-                            <div class="mb-3">
-                                <label class="small mb-1">Email address</label>
-                                <input class="form-control" type="email" placeholder="Enter your email address" value="" />
                             </div>
                             <div class="mb-3">
                                 <label class="small mb-1">Password</label>
-                                <input class="form-control" type="password" placeholder="Enter your password" value="" />
+                                <input class="form-control" name="password" type="password" placeholder="Enter your password" />
                             </div>
                             <!-- Form Row-->
                             <div class="row gx-3 mb-3">
                                 <!-- Form Group (first name)-->
                                 <div class="col-md-6">
                                     <label class="small mb-1">Status</label>
-                                    <select class="form-select" name="" id="">
+                                    <select class="form-select" name="status">
                                         <option selected disabled>Select a status : </option>
-                                        <option value="1">Active</option>
-                                        <option value="0">Not Active</option>
+                                        <option value="Active">Active</option>
+                                        <option value="Not Active">Not Active</option>
                                     </select>
                                 </div>
                                 <!-- Form Group (last name)-->
                                 <div class="col-md-6">
-                                    <label class="small mb-1" for="inputLastName">Employee Id (NIK)</label>
-                                    <input class="form-control" type="number" placeholder="Enter your NIK" value="" />
+                                    <label class="small mb-1">Employee Id (NIK)</label>
+                                    <input class="form-control" type="number" name="employee_id" placeholder="Enter your NIK" />
                                 </div>
                             </div>
                             <!-- Form Group (Roles)-->
                             <div class="mb-3">
                                 <label class="small mb-1">Role</label>
-                                <select class="form-select" aria-label="Default select example">
+                                <select class="form-select" name="role_id" aria-label="Default select example">
                                     <option selected disabled>Select a role :</option>
-                                    <option value="administrator">Administrator</option>
-                                    <option value="registered">Registered</option>
-                                    <option value="edtior">Editor</option>
-                                    <option value="guest">Guest</option>
+                                    @foreach($roles as $role)
+                                    <option value="{{ $role->id }}">{{ $role->permission_role }}</option>
+                                    @endforeach
+                                    <option value="">User</option>
                                 </select>
                             </div>
                             <!-- Submit button-->
-                            <button class="btn btn-primary btn-sm" type="button">Add user</button>
+                            <button class="btn btn-primary btn-sm" type="submit">Add user</button>
+                            <a href="/users" class="btn btn-danger btn-sm">Back</a>
                         </form>
                     </div>
                 </div>

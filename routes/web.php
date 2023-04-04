@@ -38,6 +38,7 @@ Route::group(['middleware' => ['auth']], function () {
 
         route::get('/download-example-user', [UserController::class, 'downloadExampleUser'])->name('download.exampleUser');
         route::get('/import', [UserController::class, 'import']);
+        route::post('/import-user', [UserController::class, 'importUser'])->name('import.user');
         route::get('/last-login', [UserController::class, 'lastLogin'])->name('last.login');
         route::get('/server-side', [UserController::class, 'serverSide']);
     });

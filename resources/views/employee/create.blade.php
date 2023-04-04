@@ -95,7 +95,7 @@
                 </div>
               </div>
               <!-- Submit button-->
-              <button class="btn btn-primary" type="sbumit">Add Employee</button>
+              <button class="btn btn-primary btn-sm" type="submit">Add Employee</button>
             </form>
           </div>
         </div>
