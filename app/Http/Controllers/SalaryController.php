@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\ExportSalaries;
 use App\Imports\ImportSalaries;
 use App\Models\fileSalary;
 use App\Models\salary;
@@ -18,35 +19,10 @@ class SalaryController extends Controller
         return view('payslip.index');
     }
 
-    public function create()
-    {
-        //
-    }
-
-    public function store(Request $request)
-    {
-        //
-    }
-
     public function history()
     {
         $datas = fileSalary::orderBy('id', 'DESC')->limit(100)->get();
         return view('payslip.history', compact('datas'))->with('no');
-    }
-
-    public function edit(salary $salary)
-    {
-        //
-    }
-
-    public function update(Request $request, salary $salary)
-    {
-        //
-    }
-
-    public function destroy(salary $salary)
-    {
-        //
     }
 
     public function importSalary(Request $request)
@@ -67,5 +43,10 @@ class SalaryController extends Controller
             DB::commit();
             return back()->with('success', 'Salaries has been uploaded');
         }
+    }
+
+    public function exportSalary(Request $request)
+    {
+        return Excel::download(new ExportSalaries, 'Salary-Template.xlsx');
     }
 }

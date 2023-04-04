@@ -35,7 +35,7 @@ Route::group(['middleware' => ['auth']], function () {
         route::get('/edit/{id}', [UserController::class, 'edit'])->name('edit.user');
         route::patch('/update/{id}', [UserController::class, 'update'])->name('update.user');
         route::delete('/destroy/{id}', [UserController::class, 'destroy'])->name('destroy.user');
-        
+
         route::get('/download-example-user', [UserController::class, 'downloadExampleUser'])->name('download.exampleUser');
         route::get('/import', [UserController::class, 'import']);
         route::get('/last-login', [UserController::class, 'lastLogin'])->name('last.login');
@@ -78,10 +78,12 @@ Route::group(['middleware' => ['auth']], function () {
     Route::group(['prefix' => 'salary'], function () {
         route::get('/', [SalaryController::class, 'index']);
         route::get('/history', [SalaryController::class, 'history']);
+        route::get('/export-template', [SalaryController::class, 'exportSalary'])->name('export.salary');
         route::post('/import-salarys', [SalaryController::class, 'importSalary'])->name('import.salary');
     });
 
     Route::group(['prefix' => 'contract'], function () {
         route::get('/', [ContractController::class, 'index']);
+        route::get('/server-side', [ContractController::class, 'serverSide']);
     });
 });

@@ -99,6 +99,6 @@ class UserController extends Controller
 
     public function downloadExampleUser()
     {
-        return Excel::download(new UserExport, 'UserExample.xlsx');
+        return Excel::download(new UserExport, 'User-Tempalate.xlsx');
     }
 }

@@ -2,84 +2,48 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\ContractExport;
+use App\Imports\ContractDestroyImport;
+use App\Imports\ContractImport;
+use App\Imports\ContractUpdateImport;
 use App\Models\Contract;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Excel;
+use Yajra\DataTables\DataTables;
 
 class ContractController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         return view('contract.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function downloadExample()
     {
-        //
+        return Excel::download(new ContractExport, 'EmployeeExample.xlsx');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function importEmployee(Request $request)
     {
-        //
+        Excel::import(new ContractImport, $request->file('file'));
+        return back()->with('success', 'All good!');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Contract  $contract
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Contract $contract)
+    public function updateImportEmployee(Request $request)
     {
-        //
+        Excel::import(new ContractUpdateImport, $request->file('file'));
+        return back()->with('success', 'All good!');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Contract  $contract
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Contract $contract)
+    public function destroyImportEmployee(Request $request)
     {
-        //
+        Excel::import(new ContractDestroyImport, $request->file('file'));
+        return back()->with('success', 'All good!');
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Contract  $contract
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Contract $contract)
+    public function serverSide()
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Contract  $contract
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Contract $contract)
-    {
-        //
+        return DataTables::of(Contract::orderBy('no_pkwt', 'DESC')->limit(10000))->make(true);
     }
 }

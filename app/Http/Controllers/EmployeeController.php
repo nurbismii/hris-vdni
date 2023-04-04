@@ -101,7 +101,7 @@ class EmployeeController extends Controller
 
     public function downloadExample()
     {
-        return Excel::download(new EmployeeExport, 'EmployeeExample.xlsx');
+        return Excel::download(new EmployeeExport, 'Employee-Template.xlsx');
     }
 
     public function importEmployee(Request $request)

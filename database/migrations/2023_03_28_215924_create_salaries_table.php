@@ -39,7 +39,8 @@ class CreateSalariesTable extends Migration
             $table->string('total_diterima', 128)->nullable();
             $table->string('bank', 128)->nullable();
             $table->string('account_number', 128)->nullable();
-            $table->string('periode', 128)->nullable();
+            $table->date('mulai_periode', 64)->nullable();
+            $table->date('akhir_periode', 64)->nullable();
             $table->string('departemen', 128)->nullable();
             $table->string('divisi', 128)->nullable();
             $table->string('posisi', 128)->nullable();

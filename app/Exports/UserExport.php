@@ -9,11 +9,11 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 class UserExport implements FromCollection, WithHeadings
 {
     /**
-    * @return \Illuminate\Support\Collection
-    */
+     * @return \Illuminate\Support\Collection
+     */
     public function collection()
     {
-        return User::all();
+        return User::select('name', 'email', 'password', 'status', 'employee_id')->take(0)->get();
     }
 
     public function headings(): array
@@ -22,9 +22,8 @@ class UserExport implements FromCollection, WithHeadings
             'NAME',
             'EMAIL',
             'PASSWORD',
-            'LEVEL',
             'STATUS',
-            'EMPLOYEE_ID',
+            'NIK',
         );
     }
 }

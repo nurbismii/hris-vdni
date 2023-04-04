@@ -30,7 +30,7 @@
       <div class="card-header">Import Excel File Only</div>
       <div class="card-body">
         <!-- Button with lift -->
-        <a class="btn btn-indigo  btn-sm lift mb-3" href="#">
+        <a class="btn btn-indigo  btn-sm lift mb-3" href="{{ route('export.salary') }}">
           <i>Download sample file</i>
         </a>
         <p class="col-12">

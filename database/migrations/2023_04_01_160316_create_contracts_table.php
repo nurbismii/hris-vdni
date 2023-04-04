@@ -24,14 +24,13 @@ class CreateContractsTable extends Migration
             $table->string('lama_kontrak')->nullable();
             $table->string('status_perkawinan')->nullable();
             $table->date('tanggal_mulai_kontrak');
-            $table->text('ket')->nullable();
-            $table->date('tanggal_masuk_penilaian')->nullable();
-            $table->string('gj')->nullable();
-            $table->string('uang_makan')->nullable();
             $table->string('lama_kontrak_terakhir')->nullable();
-            $table->integer('day')->nullable();
-            $table->integer('month')->nullable();
-            $table->integer('year')->nullable();
+            $table->string('gaji')->nullable();
+            $table->string('uang_makan')->nullable();
+            $table->string('hm')->nullable();
+            $table->string('tunjangan_jabatan');
+            $table->string('keterangan_kontrak');
+            $table->string('status')->nullable();
             $table->timestamps();
         });
     }

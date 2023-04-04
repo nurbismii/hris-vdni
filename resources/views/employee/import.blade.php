@@ -1,4 +1,4 @@
-<x-app-layout title="Import Employee">
+<x-app-layout title="Salary">
     @push('styles')
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css" rel="stylesheet" />
@@ -30,7 +30,7 @@
             <div class="card-header">Import Excel File Only</div>
             <div class="card-body">
                 <!-- Button with lift -->
-                <a class="btn btn-indigo  btn-sm lift mb-3" href="{{ route('download.example') }}">
+                <a class="btn btn-indigo  btn-sm lift mb-3" href="{{ route('export.salary') }}">
                     <i>Download sample file</i>
                 </a>
                 <p class="col-12">
