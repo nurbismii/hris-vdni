@@ -69,24 +69,30 @@
                         <a class="nav-link" href="/setting/dashboard">Dashboard Content</a>
                         <a class="nav-link" href="/pengembangan">Mail Setting</a>
                 </div>
-                <!-- Sidenav Accordion (Flows)-->
-                <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseFlows" aria-expanded="false" aria-controls="collapseFlows">
+
+                <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseCoreHr" aria-expanded="false" aria-controls="collapseCoreHr">
                     <div class="nav-link-icon"><i data-feather="cpu"></i></div>
                     Core HR
                     <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
-                <div class="collapse" id="collapseFlows" data-bs-parent="#accordionSidenav">
-                    <nav class="sidenav-menu-nested nav">
-                        <a class="nav-link" href="/contract">Contract</a>
+                <div class="collapse" id="collapseCoreHr" data-bs-parent="#accordionSidenav">
+                    <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPagesMenu">
+                        <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#pagesCollapseCoreHr" aria-expanded="false" aria-controls="pagesCollapseCoreHr">
+                            Contract
+                            <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="pagesCollapseCoreHr" data-bs-parent="#accordionSidenavPagesMenu">
+                            <nav class="sidenav-menu-nested nav">
+                                <a class="nav-link" href="/contract">PKWT 2 Month</a>
+                                <a class="nav-link" href="/contract">Next PKWT</a>
+                            </nav>
+                        </div>
                         <a class="nav-link" href="/pengembangan">Travel</a>
                         <a class="nav-link" href="/pengembangan">Transfer</a>
                         <a class="nav-link" href="/pengembangan">Resignations</a>
-                        <a class="nav-link" href="/pengembangan">Complaints</a>
-                        <a class="nav-link" href="/pengembangan">Warnings</a>
-                        <a class="nav-link" href="/pengembangan">Terminations</a>
                     </nav>
                 </div>
-                <!-- Sidenav Accordion (Timesheets) -->
+
                 <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseTimesheets" aria-expanded="false" aria-controls="collapseTimesheets">
                     <div class="nav-link-icon"><i data-feather="clock"></i></div>
                     Timesheets
