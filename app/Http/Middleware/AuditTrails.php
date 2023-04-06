@@ -25,7 +25,7 @@ class AuditTrails
         try {
             $log = [
                 'id' => Uuid::uuid4()->getHex(),
-                'url' => $request->getUri(),
+                'url' => $request->segment(2) == 'server-side' ? 'server-side' : $request->getUri(),
                 'method' => $request->getMethod(),
                 'ip' => $request->ip(),
                 'agent' => $request->header('user-agent'),

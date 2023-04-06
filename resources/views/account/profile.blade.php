@@ -20,6 +20,12 @@
               Account Settings - Profile
             </h1>
           </div>
+          <div class="col-12 col-xl-auto mb-3">
+            <a class="btn btn-sm btn-danger text-white" href="/">
+              <i class="me-1" data-feather="x"></i>
+              Close
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -28,13 +34,14 @@
     <x-nav-account />
     <hr class="mt-0 mb-4" />
     <div class="row">
+      <x-message />
       <div class="col-xl-4">
         <div class="card mb-4 mb-xl-0">
           <div class="card-header">Profile Picture</div>
           <div class="card-body text-center">
             <img class="img-account-profile rounded-circle mb-2" src="{{ asset('assets/img/illustrations/profiles/profile-1.png')}}" alt="" />
             <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
-            <button class="btn btn-primary" type="button">Upload new image</button>
+            <button class="btn btn-primary btn-sm" type="button">Upload new image</button>
           </div>
         </div>
       </div>
@@ -42,32 +49,49 @@
         <div class="card mb-4">
           <div class="card-header">Account Details</div>
           <div class="card-body">
-            <form>
+            <form action="{{ route('account.update', Auth::user()->employee_id) }}" method="POST">
+              @csrf
+              {{ method_field('patch') }}
+              <div class="row gx-3 mb-3">
+                <div class="col-md-6">
+                  <label class="small mb-1">NIK</label>
+                  <input class="form-control" type="text" value="{{ Auth::user()->employee_id }}" disabled />
+                </div>
+                <div class="col-md-6">
+                  <label class="small mb-1">Job</label>
+                  <input class="form-control" type="text" value="{{ Auth::user()->job->permission_role ?? 'User' }}" disabled />
+                </div>
+              </div>
               <div class="row gx-3 mb-3">
                 <div class="col-md-6">
                   <label class="small mb-1">Name</label>
-                  <input class="form-control" id="inputFirstName" type="text" value="{{ Auth::user()->name }}" />
+                  <input class="form-control" name="name" type="text" value="{{ Auth::user()->name }}" />
                 </div>
                 <div class="col-md-6">
-                  <label class="small mb-1">NIK</label>
-                  <input class="form-control" id="inputLastName" type="text" value="{{ Auth::user()->employee_id }}" disabled/>
+                  <label class="small mb-1">Email address</label>
+                  <input class="form-control" name="email" type="email" value="{{ Auth::user()->email }}" />
                 </div>
               </div>
-              <div class="row gx-3 mb-3">
-                <div class="col-md-6">
-                  <label class="small mb-1">Job</label>
-                  <input class="form-control" type="text" value="{{ Auth::user()->job->permission_role ?? 'Not registered' }}" disabled/>
-                </div>
-                <div class="col-md-6">
-                  <label class="small mb-1" for="inputLocation">Status</label>
-                  <input class="form-control" id="inputLocation" type="text" value="{{ Auth::user()->status == '1' ? 'Active' : 'Not Active' }}" disabled/>
-                </div>
+              <div class="col-lg-6 mb-3">
+                <tbody>
+                  @if(strtoupper(Auth::user()->status == 'active'))
+                  <tr>
+                    <td><label class="small mb-1">Status</label></td>
+                    <td>:</td>
+                    <td><span class="badge bg-success">Active</span></td>
+                  </tr>
+                  @else
+                  <tr>
+                    <td><label class="small mb-1">Status</label></td>
+                    <td>:</td>
+                    <td><span class="badge bg-danger">Not Active</span></td>
+                  </tr>
+                  @endif
+                </tbody>
               </div>
-              <div class="mb-3">
-                <label class="small mb-1" for="inputEmailAddress">Email address</label>
-                <input class="form-control" id="inputEmailAddress" type="email" value="{{ Auth::user()->email }}" />
+              <div class="text-center">
+                <button class="btn btn-primary btn-sm text-center" type="submit">Save changes</button>
               </div>
-              <button class="btn btn-primary" type="button">Save changes</button>
             </form>
           </div>
         </div>

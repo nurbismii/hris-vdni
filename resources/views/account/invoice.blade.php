@@ -22,7 +22,7 @@
                         <div class="h2 text-white mb-0">{{ Auth::user()->name }} </div>
                         {{ Auth::user()->employee_id}} <br />
                         {{ $data->departemen  }} <br />
-                        {{ $data->divisi}} - {{ $data->posisi }} <br />
+                        {{ $data->divisi }} - {{ $data->posisi }} <br />
                     </div>
                     <div class="col-12 col-lg-auto text-center text-lg-end">
                         <!-- Invoice details-->
@@ -31,7 +31,7 @@
                         <br />
                         SLIP GAJI FEBRUARY
                         <br />
-                        ( Periode 18 January - 17 February )
+                        ( Periode {{ date('d F', strtotime($data->mulai_periode)) }} - {{ date('d F', strtotime($data->akhir_periode)) }} )
                     </div>
                 </div>
             </div>
@@ -230,7 +230,7 @@
                     <div class="col-lg-6">
                         <!-- Invoice - additional notes-->
                         <div class="small text-muted text-uppercase fw-700 mb-2">Note</div>
-                        <div class="small mb-0">Payment is due 15 days after receipt of this invoice. Please make checks or money orders out to Company Name, and include the invoice number in the memo. We appreciate your business, and hope to be working with you again very soon!</div>
+                        <div class="small mb-0">{{ $data->note }}</div>
                     </div>
                 </div>
             </div>

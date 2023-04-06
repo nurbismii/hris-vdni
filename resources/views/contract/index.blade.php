@@ -1,4 +1,4 @@
-<x-app-layout title="Contract">
+<x-app-layout title="PKWT">
     @push('styles')
     <link href="{{ asset('css/styles.css')}}" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/favicon.png')}}" />
@@ -19,11 +19,11 @@
                     <div class="col-auto mb-3">
                         <h1 class="page-header-title">
                             <div class="page-header-icon"><i data-feather="user"></i></div>
-                            Salary List
+                            PKWT 2 Month list
                         </h1>
                     </div>
                     <div class="col-12 col-xl-auto mb-3">
-                        <a class="btn btn-sm btn-light text-primary" href="/employees/create">
+                        <a class="btn btn-sm btn-light text-primary" data-bs-toggle="modal" data-bs-target="#modalContract">
                             <i class="me-1" data-feather="user-plus"></i>
                             Add New Contract
                         </a>
@@ -68,7 +68,6 @@
                             <th>Sex</th>
                             <th>NIK</th>
                             <th>Name</th>
-                            <th>Address</th>
                             <th>No KTP</th>
                             <th>Position</th>
                         </tr>
@@ -84,10 +83,10 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Upload employee data change</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Upload PKWT Step 1</h5>
                     <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="" method="POST" enctype="multipart/form-data" class="nav flex-column" id="stickyNav">
+                <form action="{{ url('contract/import-pkwt') }}" method="POST" enctype="multipart/form-data" class="nav flex-column" id="stickyNav">
                     <div class="modal-body">
                         @csrf
                         <div class="mb-3">
@@ -96,8 +95,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
-                        <button class="btn btn-success" type="submit">Send</button>
+                        <button class="btn btn-secondary btn-sm" type="button" data-bs-dismiss="modal">Close</button>
+                        <button class="btn btn-success btn-sm" type="submit">Send</button>
                     </div>
                 </form>
             </div>
@@ -110,7 +109,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Upload employee data change</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Update employee data</h5>
                     <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form action="{{ route('updateImport.employee') }}" method="POST" enctype="multipart/form-data" class="nav flex-column" id="stickyNav">
@@ -122,8 +121,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
-                        <button class="btn btn-success" type="submit">Send</button>
+                        <button class="btn btn-secondary btn-sm" type="button" data-bs-dismiss="modal">Close</button>
+                        <button class="btn btn-success btn-sm" type="submit">Send</button>
                     </div>
                 </form>
             </div>
@@ -136,7 +135,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Upload delete employee data</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Delete employee data</h5>
                     <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form action="{{ route('destroyImport.employee') }}" method="POST" enctype="multipart/form-data" class="nav flex-column" id="stickyNav">
@@ -148,8 +147,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
-                        <button class="btn btn-success" type="submit">Send</button>
+                        <button class="btn btn-secondary btn-sm" type="button" data-bs-dismiss="modal">Close</button>
+                        <button class="btn btn-success btn-sm" type="submit">Send</button>
                     </div>
                 </form>
             </div>
@@ -221,10 +220,6 @@
                         name: 'nik',
                     },
                     {
-                        data: 'bpjs_tk',
-                        name: 'bpjs_tk',
-                    },
-                    {
                         data: 'nama',
                         name: 'nama'
                     },
@@ -233,8 +228,8 @@
                         name: 'no_ktp'
                     },
                     {
-                        data: 'position',
-                        name: 'position'
+                        data: 'jabatan',
+                        name: 'jabatan'
                     },
                 ]
             });

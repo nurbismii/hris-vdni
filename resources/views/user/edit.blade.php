@@ -43,7 +43,7 @@
                             <div class="row gx-3 mb-3">
                                 <div class="col-md-6">
                                     <label class="small mb-1">NIK</label>
-                                    <input class="form-control @error('employee_id') is-invalid @enderror" name="employee_id" type="text" value="{{ $data->employee_id }}" readonly/>
+                                    <input class="form-control @error('employee_id') is-invalid @enderror" name="employee_id" type="text" value="{{ $data->employee_id }}" readonly />
                                     @error('employee_id')
                                     <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
@@ -56,14 +56,14 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="mb-3">
-                                <label class="small mb-1">Email</label>
-                                <input class="form-control @error('email') is-invalid @enderror" name="email" type="email" value="{{ $data->email }}" />
-                                @error('email')
-                                <span class="invalid-feedback">{{ $message }}</span>
-                                @enderror
-                            </div>
                             <div class="row gx-3 mb-3">
+                                <div class="col-md-6">
+                                    <label class="small mb-1">Email</label>
+                                    <input class="form-control @error('email') is-invalid @enderror" name="email" type="email" value="{{ $data->email }}" />
+                                    @error('email')
+                                    <span class="invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </div>
                                 <div class="col-md-6">
                                     <label class="small mb-1">Status</label>
                                     <select name="status" class="form-select">

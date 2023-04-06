@@ -41,22 +41,25 @@
                             @csrf
                             <div class="row gx-3 mb-3">
                                 <div class="col-md-6">
-                                    <label class="small mb-1">Name</label>
+                                    <label class="small mb-1">NIK</label>
                                     <input class="form-control" type="text" name="name" placeholder="Enter your first name" />
                                 </div>
-                                <!-- Form Group (last name)-->
                                 <div class="col-md-6">
                                     <label class="small mb-1">Email</label>
                                     <input class="form-control" name="email" type="email" placeholder="Enter your email" />
                                 </div>
                             </div>
-                            <div class="mb-3">
-                                <label class="small mb-1">Password</label>
-                                <input class="form-control" name="password" type="password" placeholder="Enter your password" />
-                            </div>
-                            <!-- Form Row-->
                             <div class="row gx-3 mb-3">
-                                <!-- Form Group (first name)-->
+                                <div class="col-md-6">
+                                    <label class="small mb-1">Password</label>
+                                    <input class="form-control" name="password" type="password" placeholder="Enter your password" />
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="small mb-1">Password Confirm</label>
+                                    <input class="form-control" name="password_confirm" type="password" placeholder="Enter your password" />
+                                </div>
+                            </div>
+                            <div class="row gx-3 mb-3">
                                 <div class="col-md-6">
                                     <label class="small mb-1">Status</label>
                                     <select class="form-select" name="status">
@@ -65,24 +68,17 @@
                                         <option value="Not Active">Not Active</option>
                                     </select>
                                 </div>
-                                <!-- Form Group (last name)-->
                                 <div class="col-md-6">
-                                    <label class="small mb-1">Employee Id (NIK)</label>
-                                    <input class="form-control" type="number" name="employee_id" placeholder="Enter your NIK" />
+                                    <label class="small mb-1">Role</label>
+                                    <select class="form-select" name="role_id" aria-label="Default select example">
+                                        <option selected disabled>Select a role :</option>
+                                        @foreach($roles as $role)
+                                        <option value="{{ $role->id }}">{{ $role->permission_role }}</option>
+                                        @endforeach
+                                        <option value="">User</option>
+                                    </select>
                                 </div>
                             </div>
-                            <!-- Form Group (Roles)-->
-                            <div class="mb-3">
-                                <label class="small mb-1">Role</label>
-                                <select class="form-select" name="role_id" aria-label="Default select example">
-                                    <option selected disabled>Select a role :</option>
-                                    @foreach($roles as $role)
-                                    <option value="{{ $role->id }}">{{ $role->permission_role }}</option>
-                                    @endforeach
-                                    <option value="">User</option>
-                                </select>
-                            </div>
-                            <!-- Submit button-->
                             <button class="btn btn-primary btn-sm" type="submit">Add user</button>
                             <a href="/users" class="btn btn-danger btn-sm">Back</a>
                         </form>

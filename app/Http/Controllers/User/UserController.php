@@ -4,7 +4,6 @@ namespace App\Http\Controllers\User;
 
 use App\Exports\UserExport;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\User\UserStoreRequest;
 use App\Http\Requests\User\UsertUpdaterRequest;
 use App\Imports\UsersImport;
 use App\Models\role;
@@ -12,7 +11,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Validator;
+use Maatwebsite\Excel\Excel;
 use Ramsey\Uuid\Uuid;
 use Yajra\DataTables\DataTables;
 
@@ -49,6 +49,15 @@ class UserController extends Controller
     public function store(Request $request)
     {
         try {
+            $validator = Validator::make($request->all(), [
+                'email' => 'required|unique:users,email',
+                'employee_id' => 'required|unique:users,employee_id'
+            ]);
+
+            if ($validator->fails()) {
+                return back()->with('error', 'Please check your form!');
+            }
+
             User::create([
                 'id' => Uuid::uuid4()->getHex(),
                 'name' => $request->name,

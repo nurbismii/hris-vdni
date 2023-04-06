@@ -20,6 +20,12 @@
               Account Settings - Salary
             </h1>
           </div>
+          <div class="col-12 col-xl-auto mb-3">
+            <a class="btn btn-sm btn-danger text-white" href="/">
+              <i class="me-1" data-feather="x"></i>
+              Close
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -35,7 +41,7 @@
         <div class="card h-100 border-start-lg border-start-primary">
           <div class="card-body">
             <div class="small text-muted">Current months salary</div>
-            <div class="h3">$20.00</div>
+            <div class="h3">Rp10.000.000</div>
             <a class="text-arrow-icon small" href="#!">
               Detail
               <i data-feather="arrow-right"></i>
@@ -48,7 +54,7 @@
         <div class="card h-100 border-start-lg border-start-secondary">
           <div class="card-body">
             <div class="small text-muted">Next salary</div>
-            <div class="h3">July 15</div>
+            <div class="h3">April 30</div>
             <a class="text-arrow-icon small text-secondary" href="#!">
               Detail
               <i data-feather="arrow-right"></i>

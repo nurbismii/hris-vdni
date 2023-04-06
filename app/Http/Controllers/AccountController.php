@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AccountUpdateRequest;
 use App\Models\salary;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class AccountController extends Controller
 {
@@ -24,68 +27,29 @@ class AccountController extends Controller
         return view('account.billing', compact('datas'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         $data = salary::where('id', $id)->first();
         return view('account.invoice', compact('data'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function update(AccountUpdateRequest $request, $id)
     {
-        //
+        try {
+            $email_exist = User::where('email', $request->email)->first();
+            if ($email_exist) {
+                return back()->with('error', 'Email has been used');
+            }
+            User::where('employee_id', $id)->update([
+                'name' => $request->name,
+                'email' => $request->email
+            ]);
+            return back()->with('success', 'Your account has been updated');
+        } catch (\Throwable $e) {
+            return back()->with('error', 'Something wrong!');
+        }
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         //

@@ -16,15 +16,15 @@ class CreateContractsTable extends Migration
         Schema::create('contracts', function (Blueprint $table) {
             $table->string('no_pkwt', 128)->primary();
             $table->enum('jenis_kelamin', ['Laki-Laki', 'Perempuan']);
-            $table->string('nik', 16)->default('0');
+            $table->string('nik', 128)->default('0');
             $table->string('nama');
-            $table->text('alamat');
+            $table->text('alamat')->nullable();
             $table->string('no_ktp', 20);
             $table->string('jabatan');
             $table->string('lama_kontrak')->nullable();
             $table->string('status_perkawinan')->nullable();
             $table->date('tanggal_mulai_kontrak');
-            $table->string('lama_kontrak_terakhir')->nullable();
+            $table->date('tanggal_berakhir_kontrak')->nullable();
             $table->string('gaji')->nullable();
             $table->string('uang_makan')->nullable();
             $table->string('hm')->nullable();

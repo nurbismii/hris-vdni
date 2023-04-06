@@ -43,7 +43,7 @@
             @foreach($datas as $row)
             <tr>
               <td>#{{ strtoupper(substr($row->id, 0, 4)) }}</td>
-              <td>{{ $row->url }}</td>
+              <td>{{ substr($row->url, 0, 32) }}</td>
               <td>{{ $row->method}}</td>
               <td>{{ $row->ip }}</td>
               <td>{{ $row->agent }}</td>

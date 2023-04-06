@@ -15,7 +15,7 @@ Route::post('/new-register', [RegisterController::class, 'register'])->name('reg
 Auth::routes();
 Route::get('/', [DashboardController::class, 'index']);
 
-Route::group(['middleware' => ['auth']], function () {
+Route::group(['middleware' => ['auth', 'audit.trails']], function () {
 
     Route::get('/dashboard', [DashboardController::class, 'index']);
     Route::get('/audit-trails', [DashboardController::class, 'auditTrails']);
@@ -74,6 +74,7 @@ Route::group(['middleware' => ['auth']], function () {
         route::get('/profile', [AccountController::class, 'profile']);
         route::get('/information', [AccountController::class, 'billing']);
         route::get('/invoice/{id}', [AccountController::class, 'show'])->name('invoice');
+        route::patch('/update/{id}', [AccountController::class, 'update'])->name('account.update');
     });
 
     Route::group(['prefix' => 'salary'], function () {
@@ -86,5 +87,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::group(['prefix' => 'contract'], function () {
         route::get('/', [ContractController::class, 'index']);
         route::get('/server-side', [ContractController::class, 'serverSide']);
+        route::post('/import-pkwt', [ContractController::class, 'importContract']);
     });
 });

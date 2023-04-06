@@ -88,7 +88,7 @@ class DashboardController extends Controller
     public function auditTrails()
     {
         try {
-            $datas = AuditTrail::orderBy('created_at', 'DESC')->get();
+            $datas = AuditTrail::latest()->take(100)->get();
             return view('AuditTrails', compact('datas'));
         } catch (\Throwable $e) {
             return back()->with('error', 'Something Wrong!');
