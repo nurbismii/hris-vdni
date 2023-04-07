@@ -18,6 +18,6 @@ class salary extends Model
 
     public function employee()
     {
-        return $this->hasOne(employee::class, 'nik', 'created_by');
+        return $this->hasOne(employee::class, 'nik', 'employee_id');
     }
 }

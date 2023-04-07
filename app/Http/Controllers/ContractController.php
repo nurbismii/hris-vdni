@@ -19,9 +19,23 @@ class ContractController extends Controller
         return view('contract.index');
     }
 
+    public function show($no_pwkt)
+    {
+        $data = Contract::where('no_pkwt', $no_pwkt)->first();
+        return view('contract.show', compact($data));
+    }
+
     public function serverSide()
     {
-        return DataTables::of(Contract::orderBy('no_pkwt', 'DESC')->limit(10000))->make(true);
+        $contract = Contract::query();
+        return DataTables::of($contract)
+            ->addColumn('action', function ($contract) {
+                $btn = '<a href="/contract/show/' . $contract->no_pkwt . '" data-toggle="tooltip"  data-id="' . $contract->no_pkwt . '" data-original-title="Show" class="contract btn btn-outline-purple btn-sm showContract">Show</a>';
+                return $btn;
+            })
+            ->rawColumns([
+                'action',
+            ])->make(true);
     }
 
     public function downloadExample()

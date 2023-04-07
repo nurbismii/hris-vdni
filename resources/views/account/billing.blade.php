@@ -80,8 +80,7 @@
     <div class="card mb-4">
       <div class="card-header">Salary History</div>
       <div class="card-body p-0">
-        <!-- Billing history table-->
-        <div class="table-responsive table-billing-history">
+        <div class="table-responsive table-billing-history" style="overflow-x:auto;">
           <table class="table mb-0">
             <thead>
               <tr>

@@ -223,7 +223,7 @@
                     <div class="col-md-6 col-lg-3 mb-4 mb-lg-0">
                         <!-- Invoice - sent from info-->
                         <div class="small text-muted text-uppercase fw-700 mb-2">Created By : </div>
-                        <div class="h6 mb-1">  </div>
+                        <div class="h6 mb-1"> </div>
                         <div class="small">PT. VDNI</div>
                         <div class="small">Payroll</div>
                     </div>

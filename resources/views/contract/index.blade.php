@@ -65,11 +65,11 @@
                     <thead>
                         <tr>
                             <th>No PKWT</th>
-                            <th>Sex</th>
                             <th>NIK</th>
                             <th>Name</th>
                             <th>No KTP</th>
                             <th>Position</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody> </tbody>
@@ -212,10 +212,6 @@
                         name: 'no_pkwt'
                     },
                     {
-                        data: 'jenis_kelamin',
-                        name: 'jenis_kelamin'
-                    },
-                    {
                         data: 'nik',
                         name: 'nik',
                     },
@@ -231,6 +227,10 @@
                         data: 'jabatan',
                         name: 'jabatan'
                     },
+                    {
+                        data: 'action',
+                        name: 'action'
+                    }
                 ]
             });
 
