@@ -43,7 +43,7 @@
     <!-- Main page content-->
     <div class="container-fluid px-4">
         <x-message />
-        <div class="col-xl-12">
+        <!-- <div class="col-xl-12">
             <div class="card mb-3">
                 <div class="card-body">
                     <div class="row gx-3 mb-3">
@@ -58,7 +58,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
         <div class="card">
             <div class="card-body" style="overflow-x:auto;">
                 <table id="data-contract" class="table table-hover" style="width: 100%;">
@@ -77,6 +77,31 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal showw employee -->
+    <div class="modal fade" id="showContract" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Detail Contract</h5>
+                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="javascript:void(0)" method="POST" enctype="multipart/form-data" class="nav flex-column" id="stickyNav">
+                    <div class="modal-body">
+                        @csrf
+                        <div class="mb-3">
+                            <label class="form-label">No PKWT</label>
+                            <input class="form-control" type="text" name="no_pkwt" id="no_pkwt" value="no_pkwt">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary btn-sm d-grid" type="button" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Modal show emplooye end -->
 
     <!-- Modal update employee maatwebsite -->
     <div class="modal fade" id="modalContract" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -172,33 +197,12 @@
     <script src="https://cdn.datatables.net/datetime/1.4.0/js/dataTables.dateTime.min.js"></script>
 
     <script>
-        var minDate, maxDate;
-
-        $.fn.dataTable.ext.search.push(
-            function(settings, data, dataIndex) {
-                var min = minDate.val();
-                var max = maxDate.val();
-                var date = new Date(data[5]);
-
-                if (
-                    (min === null && max === null) ||
-                    (min === null && date <= max) ||
-                    (min <= date && max === null) ||
-                    (min <= date && date <= max)
-                ) {
-                    return true;
-                }
-                return false;
-            }
-        );
-
         $(function() {
 
-            minDate = new DateTime($('#min'), {
-                format: 'MMMM Do YYYY'
-            });
-            maxDate = new DateTime($('#max'), {
-                format: 'MMMM Do YYYY'
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
             });
 
             var table = $('#data-contract').DataTable({
@@ -229,14 +233,34 @@
                     },
                     {
                         data: 'action',
-                        name: 'action'
+                        name: 'action',
+                        orderable: false
                     }
+                ],
+                order: [
+                    [0, 'desc']
                 ]
             });
+        });
 
-            $('#min, #max').on('change', function() {
-                table.draw();
+        $('body').on('click', '.showContract', function() {
+            event.preventDefault();
+
+            var me = $(this),
+                url = me.attr('href'),
+                title = me.attr('title');
+
+            $('#modal-title').text(title);
+
+            $.ajax({
+                url: url,
+                dataType: 'html',
+                success: function(response) {
+                    $('modal-body').html(response)
+                }
             });
+
+            $('modal').modal('show');
         });
     </script>
     @endpush

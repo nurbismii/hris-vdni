@@ -7,6 +7,7 @@ use App\Imports\ContractDestroyImport;
 use App\Imports\ContractImport;
 use App\Imports\ContractUpdateImport;
 use App\Models\Contract;
+use App\Models\employee;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\DataTables;
@@ -19,23 +20,22 @@ class ContractController extends Controller
         return view('contract.index');
     }
 
-    public function show($no_pwkt)
+    public function show($nik)
     {
-        $data = Contract::where('no_pkwt', $no_pwkt)->first();
-        return view('contract.show', compact($data));
+        $contract  = Contract::where('nik', $nik)->first();
+        return view('contract.show', compact('contract'));
     }
 
     public function serverSide()
     {
-        $contract = Contract::query();
+        $contract = Contract::where('nik', '!=', 0)->get();
         return DataTables::of($contract)
             ->addColumn('action', function ($contract) {
-                $btn = '<a href="/contract/show/' . $contract->no_pkwt . '" data-toggle="tooltip"  data-id="' . $contract->no_pkwt . '" data-original-title="Show" class="contract btn btn-outline-purple btn-sm showContract">Show</a>';
-                return $btn;
-            })
-            ->rawColumns([
-                'action',
-            ])->make(true);
+                return view('contract._action', [
+                    'contract' => $contract,
+                    'url_show' => route('contract.show', $contract->nik)
+                ]);
+            })->addIndexColumn()->rawColumns(['action'])->make(true);
     }
 
     public function downloadExample()

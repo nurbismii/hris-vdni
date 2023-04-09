@@ -88,6 +88,6 @@ Route::group(['middleware' => ['auth', 'audit.trails']], function () {
         route::get('/', [ContractController::class, 'index']);
         route::get('/server-side', [ContractController::class, 'serverSide']);
         route::post('/import-pkwt', [ContractController::class, 'importContract']);
-        route::get('/show/{no_pkwt}', [ContractController::class, 'show'])->name('contract.show');
+        route::get('/show/{nik}', [ContractController::class, 'show'])->name('contract.show');
     });
 });

@@ -1,0 +1,1 @@
+<a href="{{ $url_show }}" title="{{ $contract->nama }}" class="btn btn-outline-purple btn-sm btn-lift me-2"><i data-feather="edit">Detail</i></a>

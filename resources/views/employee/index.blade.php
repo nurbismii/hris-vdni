@@ -43,7 +43,7 @@
     <!-- Main page content-->
     <div class="container-fluid px-4">
         <x-message />
-        <div class="col-xl-12">
+        <!-- <div class="col-xl-12">
             <div class="card mb-3">
                 <div class="card-body">
                     <div class="row gx-3 mb-3">
@@ -58,7 +58,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
         <div class="card">
             <div class="card-body" style="overflow-x:auto;">
                 <table id="data-employee" class="table table-hover" style="width: 100%;">
