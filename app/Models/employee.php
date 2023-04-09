@@ -13,4 +13,8 @@ class employee extends Model
     protected $primaryKey = 'nik';
     protected $guarded = [];
 
+    public function user()
+    {
+        return $this->hasOne(user::class, 'employee_id', 'nik');
+    }
 }

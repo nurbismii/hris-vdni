@@ -56,9 +56,10 @@ Route::group(['middleware' => ['auth', 'audit.trails']], function () {
     Route::group(['prefix' => 'employees'], function () {
         route::get('/', [EmployeeController::class, 'index']);
         route::get('/create', [EmployeeController::class, 'create']);
-        route::post('/store', [EmployeeController::class, 'store'])->name('store.employee');
-        route::get('/edit/{id}', [EmployeeController::class, 'edit'])->name('edit.employee');
-        route::patch('update/{id}', [EmployeeController::class, 'update'])->name('update.employee');
+        // route::post('/store', [EmployeeController::class, 'store'])->name('store.employee');
+        // route::get('/edit/{id}', [EmployeeController::class, 'edit'])->name('edit.employee');
+        // route::patch('update/{id}', [EmployeeController::class, 'update'])->name('update.employee');
+        route::get('/show/{nik}', [EmployeeController::class, 'show'])->name('employee.show');
         route::delete('/destroy/{id}', [EmployeeController::class, 'destroy'])->name('destroy.employee');
         route::get('/server-side', [EmployeeController::class, 'serverSideEmployee']);
         // Maatwebsite excel 

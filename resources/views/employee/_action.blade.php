@@ -1,0 +1,1 @@
+<a href="{{ $url_show }}" title="{{ $data->name }}" class="btn btn-outline-success btn-icon btn-xs"><i class="fas fa-eye"></i></a>

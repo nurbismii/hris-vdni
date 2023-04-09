@@ -28,7 +28,13 @@ class EmployeeController extends Controller
 
     public function serverSideEmployee()
     {
-        return DataTables::of(employee::orderBy('nik', 'DESC')->limit(10000))->make(true);
+        $data = employee::query();
+        return DataTables::of($data)->addColumn('action', function ($data) {
+            return view('employee._action', [
+                'data' => $data,
+                'url_show' => route('employee.show', $data->nik),
+            ]);
+        })->addIndexColumn()->rawColumns(['action'])->make(true);
     }
 
     public function create()
@@ -42,10 +48,10 @@ class EmployeeController extends Controller
         return back()->with('success', 'Employee has been added');
     }
 
-    public function show($id)
+    public function show($nik)
     {
         try {
-            $data = employee::where('nik', $id)->first();
+            $data = employee::where('nik', $nik)->first();
             return view('employee.show', compact('data'));
         } catch (\Throwable $e) {
             return back()->with('error', 'Something wrong!');

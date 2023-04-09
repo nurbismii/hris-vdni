@@ -64,6 +64,7 @@
                 <table id="data-employee" class="table table-hover" style="width: 100%;">
                     <thead>
                         <tr>
+                            <th></th>
                             <th>NIK</th>
                             <th>Name</th>
                             <th>BPJS Kesehatan</th>
@@ -146,34 +147,7 @@
     <script src="https://cdn.datatables.net/datetime/1.4.0/js/dataTables.dateTime.min.js"></script>
 
     <script>
-        var minDate, maxDate;
-        
-        $.fn.dataTable.ext.search.push(
-            function(settings, data, dataIndex) {
-                var min = minDate.val();
-                var max = maxDate.val();
-                var date = new Date(data[5]);
-
-                if (
-                    (min === null && max === null) ||
-                    (min === null && date <= max) ||
-                    (min <= date && max === null) ||
-                    (min <= date && date <= max)
-                ) {
-                    return true;
-                }
-                return false;
-            }
-        );
-
         $(function() {
-
-            minDate = new DateTime($('#min'), {
-                format: 'MMMM Do YYYY'
-            });
-            maxDate = new DateTime($('#max'), {
-                format: 'MMMM Do YYYY'
-            });
 
             var table = $('#data-employee').DataTable({
 
@@ -182,6 +156,11 @@
                 searching: true,
                 ajax: "/employees/server-side",
                 columns: [{
+                        data: 'action',
+                        name: 'action',
+                        orderable: false
+                    },
+                    {
                         data: 'nik',
                         name: 'nik'
                     },
@@ -204,12 +183,11 @@
                     {
                         data: 'entry_date',
                         name: 'entry_date'
-                    }
+                    },
+                ],
+                order: [
+                    [0, 'desc']
                 ]
-            });
-
-            $('#min, #max').on('change', function() {
-                table.draw();
             });
         });
     </script>
