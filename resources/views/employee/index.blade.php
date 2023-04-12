@@ -19,21 +19,21 @@
                     <div class="col-auto mb-3">
                         <h1 class="page-header-title">
                             <div class="page-header-icon"><i data-feather="user"></i></div>
-                            Employee List
+                            Data Karyawan
                         </h1>
                     </div>
                     <div class="col-12 col-xl-auto mb-3">
-                        <a class="btn btn-sm btn-light text-primary" href="/employees/create">
+                        <!-- <a class="btn btn-sm btn-light text-primary" href="/employees/create">
                             <i class="me-1" data-feather="user-plus"></i>
-                            Add New Employee
-                        </a>
+                            Karyawan Baru
+                        </a> -->
                         <a class="btn btn-sm btn-warning text-white" data-bs-toggle="modal" data-bs-target="#modalUpdateEmployee">
                             <i class="me-1" data-feather="edit-3"></i>
-                            Update Employee
+                            Perbarui Karyawan
                         </a>
                         <a class="btn btn-sm btn-danger text-white" data-bs-toggle="modal" data-bs-target="#modalDeleteEmployee">
                             <i class="me-1" data-feather="trash"></i>
-                            Delete Employee
+                            Hapus Karyawan
                         </a>
                     </div>
                 </div>
@@ -66,11 +66,11 @@
                         <tr>
                             <th></th>
                             <th>NIK</th>
-                            <th>Name</th>
+                            <th>Nama</th>
                             <th>BPJS Kesehatan</th>
                             <th>BPJS TK</th>
-                            <th>Company</th>
-                            <th>Join Date</th>
+                            <th>Perusahaan</th>
+                            <th>Tanggal Join</th>
                         </tr>
                     </thead>
                     <tbody> </tbody>
@@ -150,7 +150,7 @@
         $(function() {
 
             var table = $('#data-employee').DataTable({
-
+                pageLength: 25,
                 processing: true,
                 serverSide: true,
                 searching: true,

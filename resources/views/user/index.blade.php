@@ -16,17 +16,17 @@
                     <div class="col-auto mb-3">
                         <h1 class="page-header-title">
                             <div class="page-header-icon"><i data-feather="user"></i></div>
-                            Users List
+                            Data User
                         </h1>
                     </div>
                     <div class="col-12 col-xl-auto mb-3">
                         <a class="btn btn-sm btn-light text-primary" href="/users/import">
                             <i class="me-1" data-feather="users"></i>
-                            Import New User
+                            Impor Pengguna
                         </a>
                         <a class="btn btn-sm btn-light text-primary" href="/users/create">
                             <i class="me-1" data-feather="user-plus"></i>
-                            Add New User
+                            Tambah Pengguna
                         </a>
                     </div>
                 </div>
@@ -41,11 +41,11 @@
                 <table id="datatablesSimple">
                     <thead>
                         <tr>
-                            <th>User</th>
-                            <th>Role</th>
+                            <th>Pengguna</th>
+                            <th>Jabatan</th>
                             <th>Status</th>
-                            <th>Joined Date</th>
-                            <th>Actions</th>
+                            <th>Tanggal Join</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -93,7 +93,7 @@
                     <div class="modal-body">
                         @csrf
                         {{ method_field('delete') }}
-                        Are you sure you want to delete this data ({{ $data->name }})?
+                        Yakin ingin menghapus pengguna ini ({{ $data->name }})?
                     </div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">No</button>

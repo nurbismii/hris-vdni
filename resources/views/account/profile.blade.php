@@ -17,13 +17,13 @@
           <div class="col-auto mb-3">
             <h1 class="page-header-title">
               <div class="page-header-icon"><i data-feather="user"></i></div>
-              Account Settings - Profile
+              Pengaturan Akun - Profil
             </h1>
           </div>
           <div class="col-12 col-xl-auto mb-3">
             <a class="btn btn-sm btn-danger text-white" href="/">
               <i class="me-1" data-feather="x"></i>
-              Close
+              Tutup
             </a>
           </div>
         </div>
@@ -37,11 +37,11 @@
       <x-message />
       <div class="col-xl-4">
         <div class="card mb-4 mb-xl-0">
-          <div class="card-header">Profile Picture</div>
+          <div class="card-header">Foto Profil</div>
           <div class="card-body text-center">
             <img class="img-account-profile rounded-circle mb-2" src="{{ asset('assets/img/illustrations/profiles/profile-1.png')}}" alt="" />
-            <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
-            <button class="btn btn-primary btn-sm" type="button">Upload new image</button>
+            <div class="small font-italic text-muted mb-4">JPG atau PNG tidak lebih dari 5MB</div>
+            <button class="btn btn-primary btn-sm" type="button">Unggah foto profil</button>
           </div>
         </div>
       </div>

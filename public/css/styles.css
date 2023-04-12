@@ -2382,8 +2382,8 @@ progress {
   font-size: 0.875rem;
   font-weight: 400;
   line-height: 1;
-  color: #ffffff;
-  background-color: #19273275;
+  color: #000000;
+  background-color: #ffffff75;
   background-clip: padding-box;
   border: 1px solid #c5ccd6;
   -webkit-appearance: none;
@@ -20407,8 +20407,8 @@ body {
   width: 5rem;
 }
 .invoice .table tbody tr td, .invoice .dataTable-table tbody tr td {
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem;
+  padding-top: 0.5rem;
+  padding-bottom: 1rem;
 }
 
 @media (min-width: 992px) {

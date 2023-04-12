@@ -9,7 +9,7 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/backgrounds/icon.png') }}" />
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <!-- <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> -->
     @stack('styles')
 </head>
 

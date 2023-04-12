@@ -17,13 +17,13 @@
           <div class="col-auto mb-3">
             <h1 class="page-header-title">
               <div class="page-header-icon"><i data-feather="user"></i></div>
-              Account Settings - Salary
+              Pengaturan Akun - Gaji
             </h1>
           </div>
           <div class="col-12 col-xl-auto mb-3">
             <a class="btn btn-sm btn-danger text-white" href="/">
               <i class="me-1" data-feather="x"></i>
-              Close
+              Tutup
             </a>
           </div>
         </div>
@@ -40,7 +40,7 @@
         <!-- Billing card 1-->
         <div class="card h-100 border-start-lg border-start-primary">
           <div class="card-body">
-            <div class="small text-muted">Current months salary</div>
+            <div class="small text-muted">Gaji bulan berjalan</div>
             <div class="h3">Rp10.000.000</div>
             <a class="text-arrow-icon small" href="#!">
               Detail
@@ -53,7 +53,7 @@
         <!-- Billing card 2-->
         <div class="card h-100 border-start-lg border-start-secondary">
           <div class="card-body">
-            <div class="small text-muted">Next salary</div>
+            <div class="small text-muted">Gaji Selanjutnya</div>
             <div class="h3">April 30</div>
             <a class="text-arrow-icon small text-secondary" href="#!">
               Detail
@@ -66,7 +66,7 @@
         <!-- Billing card 3-->
         <div class="card h-100 border-start-lg border-start-success">
           <div class="card-body">
-            <div class="small text-muted">End of Contract</div>
+            <div class="small text-muted">Kontrak Berakhir</div>
             <div class="h3">July 15</div>
             <a class="text-arrow-icon small text-success" href="#!">
               Detail
@@ -78,24 +78,24 @@
     </div>
     <!-- Billing history card-->
     <div class="card mb-4">
-      <div class="card-header">Salary History</div>
+      <div class="card-header">Riwayat Gaji</div>
       <div class="card-body p-0">
         <div class="table-responsive table-billing-history" style="overflow-x:auto;">
           <table class="table mb-0">
             <thead>
               <tr>
-                <th class="border-gray-200" scope="col">Transaction ID</th>
-                <th class="border-gray-200" scope="col">Date</th>
-                <th class="border-gray-200" scope="col">Amount</th>
+                <th class="border-gray-200" scope="col">ID Transaksi</th>
+                <th class="border-gray-200" scope="col">Tanggal</th>
+                <th class="border-gray-200" scope="col">Jumlah</th>
                 <th class="border-gray-200" scope="col">Status</th>
               </tr>
             </thead>
             <tbody>
               @foreach($datas as $data)
               <tr>
-                <td><a href="{{ route('invoice', $data->id) }}" target="_blank">#{{ strtoupper(substr($data->id, 0, 4)) }} </a></td>
+                <td><a href="{{ route('invoice', $data->id) }}">#{{ strtoupper(substr($data->id, 0, 4)) }} </a></td>
                 <td>{{ date('d F Y', strtotime($data->created_at)) }}</td>
-                <td>{{ $data->total_diterima }}</td>
+                <td>Rp.{{ number_format($data->total_diterima) }}</td>
                 <td><span class="badge bg-success">Success</span></td>
               </tr>
               @endforeach

@@ -10,45 +10,55 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     @endpush
 
-    <!-- Main page content-->
+    <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
+        <div class="container-fluid px-s4">
+            <div class="page-header-content">
+                <div class="row align-items-center justify-content-between pt-3">
+                    <div class="col-auto mb-3">
+                        <h1 class="page-header-title">
+                            <div class="page-header-icon"><i data-feather="user"></i></div>
+                            Detail PKWT Langkah ke-1
+                        </h1>
+                    </div>
+                    <div class="col-12 col-xl-auto mb-3">
+                        <a class="btn btn-sm btn-primary text-white" href="/employees">
+                            <i class="me-1" data-feather="user-plus"></i>
+                            Kembali
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
     <div class="container-xl px-4 mt-4">
-        <!-- Invoice-->
         <div class="card invoice">
             <div class="card-header p-4 p-md-5 border-bottom-0 bg-gradient-primary-to-secondary text-white-50">
                 <div class="row justify-content-between align-items-center">
                     <div class="col-12 col-lg-auto mb-5 mb-lg-0 text-center text-lg-start">
-                        <!-- Invoice branding-->
                         <img class="invoice-brand-img rounded mb-4" src="{{ asset('assets/img/backgrounds/vdni-ikon.png')}}" alt="" />
                         <div class="h2 text-white mb-0">{{ $contract->no_pkwt }}</div>
                         {{ $contract->nama }}
                     </div>
                     <div class="col-12 col-lg-auto text-center text-lg-end">
-                        <!-- Invoice details-->
                         <div class="h3 text-white">{{ $contract->jabatan }}</div>
-                        <table>
+                        <table class="table table-bordeless">
                             <tbody>
                                 <tr>
                                     <td>NIK</td>
-                                    <td></td>
                                     <td>:</td>
-                                    <td></td>
                                     <td>{{ $contract->nik }}</td>
                                 </tr>
                                 <tr>
                                     <td>No KTP</td>
-                                    <td></td>
                                     <td>:</td>
-                                    <td></td>
                                     <td>{{ $contract->no_ktp }}</td>
                                 </tr>
                                 <tr>
                                     <td>Durasi Kontrak</td>
-                                    <td></td>
                                     <td>:</td>
-                                    <td></td>
                                     <td>{{ $contract->lama_kontrak }}</td>
                                 </tr>
-
                             </tbody>
                         </table>
                     </div>
@@ -161,7 +171,7 @@
                         <div class="col-lg-6">
                             <!-- Invoice - additional notes-->
                             <div class="small text-muted text-uppercase fw-700 mb-2">Note</div>
-                            <div class="small mb-0">Payment is due 15 days after receipt of this invoice. Please make checks or money orders out to Company Name, and include the invoice number in the memo. We appreciate your business, and hope to be working with you again very soon!</div>
+                            <div class="small mb-0"></div>
                         </div>
                     </div>
                 </div>
@@ -169,14 +179,14 @@
         </div>
 
         @push('scripts')
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="{{ asset('js/scripts.js')}}"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="{{ asset('js/datatables/datatables-simple-demo.js')}}"></script>
-        <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/bundle.js" crossorigin="anonymous"></script>
         <script src="{{ asset('js/litepicker.js')}}"></script>
+        <script src="{{ asset('js/scripts.js')}}"></script>
         <script src="{{ asset('js/app.js')}}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/bundle.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         @endpush
 
 </x-app-layout>

@@ -10,7 +10,7 @@
     @endpush
 
     <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
-        <div class="container-xl px-s4">
+        <div class="container-fluid px-4">
             <div class="page-header-content">
                 <div class="row align-items-center justify-content-between pt-3">
                     <div class="col-auto mb-3">
@@ -29,6 +29,7 @@
             </div>
         </div>
     </header>
+
     <!-- Main page content-->
     <div class="container-fluid px-4">
         <div class="row">
@@ -76,8 +77,8 @@
                                     </select>
                                 </div>
                             </div>
-                            <button class="btn btn-success btn-sm lift lift-sm" type="submit">Submit</button>
-                            <a class="btn btn-warning btn-sm lift lift-sm" href="/users">Back</a>
+                            <button class="btn btn-success btn-sm lift lift-sm" type="submit">Perbarui</button>
+                            <a class="btn btn-warning btn-sm lift lift-sm" href="/users">Kembali</a>
                         </form>
                     </div>
                 </div>

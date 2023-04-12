@@ -25,15 +25,15 @@
                     <div class="col-12 col-xl-auto mb-3">
                         <a class="btn btn-sm btn-light text-primary" data-bs-toggle="modal" data-bs-target="#modalContract">
                             <i class="me-1" data-feather="user-plus"></i>
-                            Add New Contract
+                            Kontrak Baru
                         </a>
                         <a class="btn btn-sm btn-warning text-white" data-bs-toggle="modal" data-bs-target="#modalUpdateEmployee">
                             <i class="me-1" data-feather="edit-3"></i>
-                            Update Contract
+                            Update Kontrak
                         </a>
                         <a class="btn btn-sm btn-danger text-white" data-bs-toggle="modal" data-bs-target="#modalDeleteEmployee">
                             <i class="me-1" data-feather="trash"></i>
-                            Delete Contract
+                            Hapus Kontrak
                         </a>
                     </div>
                 </div>
@@ -61,15 +61,15 @@
         </div> -->
         <div class="card">
             <div class="card-body" style="overflow-x:auto;">
-                <table id="data-contract" class="table table-hover" style="width: 100%;">
+                <table id="data-contract" class="table table-hover">
                     <thead>
                         <tr>
+                            <th></th>
                             <th>No PKWT</th>
                             <th>NIK</th>
                             <th>Name</th>
                             <th>No KTP</th>
                             <th>Position</th>
-                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody> </tbody>
@@ -206,12 +206,18 @@
             });
 
             var table = $('#data-contract').DataTable({
-
+                pageLength: 25,
                 processing: true,
                 serverSide: true,
                 searching: true,
+                responsive: true,
                 ajax: "/contract/server-side",
                 columns: [{
+                        data: 'action',
+                        name: 'action',
+                        orderable: false
+                    },
+                    {
                         data: 'no_pkwt',
                         name: 'no_pkwt'
                     },
@@ -231,11 +237,6 @@
                         data: 'jabatan',
                         name: 'jabatan'
                     },
-                    {
-                        data: 'action',
-                        name: 'action',
-                        orderable: false
-                    }
                 ],
                 order: [
                     [0, 'desc']

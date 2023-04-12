@@ -9,9 +9,10 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/backgrounds/icon.png') }}" />
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <!-- <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> -->
     @stack('styles')
 </head>
+
 <body class="bg-auth">
     <div id="layoutAuthentication">
         <div id="layoutAuthentication_content">
@@ -20,7 +21,7 @@
             </main>
         </div>
         <div id="layoutAuthentication_footer">
-            
+
         </div>
     </div>
     @stack('scripts')

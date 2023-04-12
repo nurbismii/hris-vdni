@@ -10,6 +10,27 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     @endpush
 
+    <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
+        <div class="container-xl px-4">
+            <div class="page-header-content">
+                <div class="row align-items-center justify-content-between pt-3">
+                    <div class="col-auto mb-3">
+                        <h1 class="page-header-title">
+                            <div class="page-header-icon"><i data-feather="credit-card"></i></div>
+                            Detail Gaji
+                        </h1>
+                    </div>
+                    <div class="col-12 col-xl-auto mb-3">
+                        <a class="btn btn-sm btn-danger text-white" href="/account/information">
+                            <i class="me-1" data-feather="x"></i>
+                            Tutup
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
     <!-- Main page content-->
     <div class="container-xl px-4 mt-4">
         <!-- Invoice-->
@@ -223,7 +244,7 @@
                     <div class="col-md-6 col-lg-3 mb-4 mb-lg-0">
                         <!-- Invoice - sent from info-->
                         <div class="small text-muted text-uppercase fw-700 mb-2">Created By : </div>
-                        <div class="h6 mb-1">  </div>
+                        <div class="h6 mb-1"> </div>
                         <div class="small">PT. VDNI</div>
                         <div class="small">Payroll</div>
                     </div>
