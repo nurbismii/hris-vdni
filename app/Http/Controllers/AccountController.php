@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AccountUpdateRequest;
+use App\Models\Contract;
 use App\Models\salary;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -24,7 +25,9 @@ class AccountController extends Controller
     public function billing()
     {
         $datas = salary::where('employee_id', Auth::user()->employee_id)->get();
-        return view('account.billing', compact('datas'));
+        $total_diterima = salary::where('employee_id', Auth::user()->employee_id)->latest()->first('total_diterima');
+        $contract = Contract::where('nik', Auth::user()->employee_id)->latest()->first('tanggal_berakhir_kontrak');
+        return view('account.billing', compact('datas', 'total_diterima', 'contract'));
     }
 
     public function show($id)
@@ -50,8 +53,16 @@ class AccountController extends Controller
         }
     }
 
-    public function destroy($id)
+    public function contract()
     {
-        //
+        try {
+            $contract = Contract::where('nik', Auth::user()->employee_id)->first();
+            if (!$contract) {
+                return back()->with('error', 'Kamu tidak memiliki kontrak saat ini');
+            }
+            return view('account.contract', compact('contract'));
+        } catch (\Throwable $e) {
+            return back()->with('error', 'Something wrong!');
+        }
     }
 }

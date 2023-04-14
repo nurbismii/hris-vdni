@@ -17,7 +17,7 @@
           <div class="col-auto mb-3">
             <h1 class="page-header-title">
               <div class="page-header-icon"><i data-feather="user"></i></div>
-              Pengaturan Akun - Gaji
+              Informasi
             </h1>
           </div>
           <div class="col-12 col-xl-auto mb-3">
@@ -34,14 +34,16 @@
   <div class="container-xl px-4 mt-4">
     <!-- Account page navigation-->
     <x-nav-account />
+
     <hr class="mt-0 mb-4" />
+    <x-message />
     <div class="row">
-      <div class="col-lg-4 mb-4">
+      <div class="col-lg-6 mb-4">
         <!-- Billing card 1-->
         <div class="card h-100 border-start-lg border-start-primary">
           <div class="card-body">
-            <div class="small text-muted">Gaji bulan berjalan</div>
-            <div class="h3">Rp10.000.000</div>
+            <div class="small text-muted">Gaji saat ini</div>
+            <div class="h3">Rp.{{ number_format($total_diterima->total_diterima) ?? 'Tidak diketahui'}}</div>
             <a class="text-arrow-icon small" href="#!">
               Detail
               <i data-feather="arrow-right"></i>
@@ -49,26 +51,13 @@
           </div>
         </div>
       </div>
-      <div class="col-lg-4 mb-4">
-        <!-- Billing card 2-->
-        <div class="card h-100 border-start-lg border-start-secondary">
-          <div class="card-body">
-            <div class="small text-muted">Gaji Selanjutnya</div>
-            <div class="h3">April 30</div>
-            <a class="text-arrow-icon small text-secondary" href="#!">
-              Detail
-              <i data-feather="arrow-right"></i>
-            </a>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-4 mb-4">
+      <div class="col-lg-6 mb-4">
         <!-- Billing card 3-->
         <div class="card h-100 border-start-lg border-start-success">
           <div class="card-body">
             <div class="small text-muted">Kontrak Berakhir</div>
-            <div class="h3">July 15</div>
-            <a class="text-arrow-icon small text-success" href="#!">
+            <div class="h3">{{ date('d F Y', strtotime($contract->tanggal_berakhir_kontrak)) ?? 'Belum di proses' }}</div>
+            <a class="text-arrow-icon small text-success" href="{{ route('contract') }}">
               Detail
               <i data-feather="arrow-right"></i>
             </a>

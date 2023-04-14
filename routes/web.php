@@ -76,6 +76,7 @@ Route::group(['middleware' => ['auth', 'audit.trails']], function () {
         route::get('/information', [AccountController::class, 'billing']);
         route::get('/invoice/{id}', [AccountController::class, 'show'])->name('invoice');
         route::patch('/update/{id}', [AccountController::class, 'update'])->name('account.update');
+        route::get('/contract', [AccountController::class, 'contract'])->name('contract');
     });
 
     Route::group(['prefix' => 'salary'], function () {
@@ -89,6 +90,7 @@ Route::group(['middleware' => ['auth', 'audit.trails']], function () {
         route::get('/', [ContractController::class, 'index']);
         route::get('/server-side', [ContractController::class, 'serverSide']);
         route::post('/import-pkwt', [ContractController::class, 'importContract']);
+        route::post('/destroy-import-pkwt', [ContractController::class, 'destroyImportContract'])->name('destroyImport.contract');
         route::get('/show/{nik}', [ContractController::class, 'show'])->name('contract.show');
     });
 });

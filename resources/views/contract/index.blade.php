@@ -137,7 +137,7 @@
                     <h5 class="modal-title" id="exampleModalLabel">Update employee data</h5>
                     <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('updateImport.employee') }}" method="POST" enctype="multipart/form-data" class="nav flex-column" id="stickyNav">
+                <form action="#" method="POST" enctype="multipart/form-data" class="nav flex-column" id="stickyNav">
                     <div class="modal-body">
                         @csrf
                         <div class="mb-3">
@@ -155,7 +155,7 @@
     </div>
     <!-- Modal update emplooye maatwebsite end -->
 
-    <!-- Modal delete emplooye maatwebsite -->
+    <!-- Modal delete Contract maatwebsite -->
     <div class="modal fade" id="modalDeleteEmployee" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -163,7 +163,7 @@
                     <h5 class="modal-title" id="exampleModalLabel">Delete employee data</h5>
                     <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('destroyImport.employee') }}" method="POST" enctype="multipart/form-data" class="nav flex-column" id="stickyNav">
+                <form action="{{ route('destroyImport.contract') }}" method="POST" enctype="multipart/form-data" class="nav flex-column" id="stickyNav">
                     <div class="modal-body">
                         @csrf
                         <div class="mb-3">
@@ -179,7 +179,7 @@
             </div>
         </div>
     </div>
-    <!-- Modal delete emplooye maatwebsite end -->
+    <!-- Modal delete contract maatwebsite end -->
 
     @push('scripts')
     <script src="{{ asset('js/scripts.js') }}"></script>

@@ -15,11 +15,11 @@ class EmployeesRegistered
         $user_exist = User::where('employee_id', $request->employee_id)->first();
 
         if ($user_exist) {
-            return back()->with('error', 'User registered');
+            return back()->with('error', 'NIK Karyawan telah digunakan');
         }
 
         if (!$employe_exist) {
-            return back()->with('error',  'Emplooye data is not registered in our database');
+            return back()->with('error',  'NIK Karyawan tidak ditemukan di database kami, silahkan laporkan ini ke HRD');
         }
         return $next($request);
     }

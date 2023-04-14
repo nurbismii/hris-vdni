@@ -28,7 +28,7 @@ class ContractController extends Controller
 
     public function serverSide()
     {
-        $contract = Contract::where('nik', '!=', 0)->get();
+        $contract = Contract::where('nik', '!=', NULL)->get();
         return DataTables::of($contract)
             ->addColumn('action', function ($contract) {
                 return view('contract._action', [
