@@ -16,7 +16,7 @@
           <div class="col-auto mt-4">
             <h3 class="page-header-title">
               <div class="page-header-icon"><i data-feather="file"></i></div>
-              Import User
+              Impor Pengguna
             </h3>
           </div>
         </div>
@@ -27,18 +27,21 @@
   <div class="container-xl px-4 mt-n10">
     <x-message />
     <div class="card">
-      <div class="card-header">Import Excel/CSV File Only
-        <a href="/users" class="btn btn-danger btn-sm lift lift-sm float-end">Back</a>
+      <div class="card-header">Impor Excel
+        <a class="btn btn-sm btn-light text-primary float-end" href="/users">
+          <i class="me-1" data-feather="arrow-left"></i>
+          Kembali
+        </a>
       </div>
       <div class="card-body">
         <a class="btn btn-indigo  btn-sm lift mb-3" href="{{ route('download.exampleUser') }}">
-          <i>Download sample file</i>
+          <i>Unduh Template</i>
         </a>
         <p class="col-12">
-          The first line in downloaded sample file should remain as it is. Please do not change the order of columns in file.
+          Pertama silahkan unduh template / format file yang disediakan dan jangan mengubah isi filenya.
         </p>
         <p class="col-12 text-justify">
-          The correct column order is (Name, email, password, level, status and employee NIK.)
+          Kolom yang wajib di isi (Name, email, password, level, status and employee NIK.)
         </p>
         <form action="{{ route('import.user') }}" method="POST" enctype="multipart/form-data">
           @csrf
@@ -47,7 +50,7 @@
               <input class="form-control" name="file" type="file" id="formFile" required>
             </div>
             <div class="mb-3 col-3">
-              <button class="btn btn-primary" type="submit">Send file</button>
+              <button class="btn btn-primary" type="submit">Kirim berkas</button>
             </div>
           </div>
         </form>

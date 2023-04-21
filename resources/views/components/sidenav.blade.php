@@ -29,7 +29,7 @@
                 <!-- Sidenav Audit Trails (Audit) -->
                 <a class="nav-link" href="/audit-trails">
                     <div class="nav-link-icon"><i data-feather="clipboard"></i></div>
-                    Jejak Audit
+                    Riwayat Audit
                 </a>
                 <!-- Sidenav Heading (Master Menu)-->
                 <div class="sidenav-menu-heading">Master Menu</div>
@@ -42,7 +42,7 @@
                 <div class="collapse" id="collapseUsers" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav">
                         <a class="nav-link" href="/users">Data Pengguna</a>
-                        <a class="nav-link" href="/users/last-login">Pengguna jejak login</a>
+                        <a class="nav-link" href="/users/last-login">Riwayat Login</a>
                     </nav>
                 </div>
                 <!-- Sidenav Accordion (Employees)-->
@@ -124,7 +124,7 @@
                 <div class="collapse" id="collapsePayroll" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav">
                         <a class="nav-link" href="/salary">Impor Payslip</a>
-                        <a class="nav-link" href="/salary/history">Jejak impor</a>
+                        <a class="nav-link" href="/salary/history">Riwayat impor</a>
                     </nav>
                 </div>
                 <!-- Sidanav Accordion (Performance) -->

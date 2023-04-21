@@ -16,13 +16,13 @@
                     <div class="col-auto mb-3">
                         <h1 class="page-header-title">
                             <div class="page-header-icon"><i data-feather="user-plus"></i></div>
-                            Edit User
+                            Ubah Data
                         </h1>
                     </div>
                     <div class="col-12 col-xl-auto mb-3">
                         <a class="btn btn-sm btn-light text-primary" href="/users">
                             <i class="me-1" data-feather="arrow-left"></i>
-                            Back to Users List
+                            Kembali
                         </a>
                     </div>
                 </div>
@@ -36,7 +36,7 @@
             <div class="col-xl-8">
                 <!-- Account details card-->
                 <div class="card mb-4">
-                    <div class="card-header">Account Details</div>
+                    <div class="card-header">Data Pengguna</div>
                     <div class="card-body">
                         <form action="{{ route('update.user', $data->employee_id) }}" method="POST">
                             @csrf
@@ -78,7 +78,7 @@
                                 </div>
                             </div>
                             <button class="btn btn-success btn-sm lift lift-sm" type="submit">Perbarui</button>
-                            <a class="btn btn-warning btn-sm lift lift-sm" href="/users">Kembali</a>
+                            <a class="btn btn-light btn-sm lift lift-sm" href="/users">Kembali</a>
                         </form>
                     </div>
                 </div>

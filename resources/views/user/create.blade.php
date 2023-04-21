@@ -16,13 +16,13 @@
                     <div class="col-auto mb-3">
                         <h1 class="page-header-title">
                             <div class="page-header-icon"><i data-feather="user-plus"></i></div>
-                            Add User
+                            Tambah Pengguna
                         </h1>
                     </div>
                     <div class="col-12 col-xl-auto mb-3">
                         <a class="btn btn-sm btn-light text-primary" href="/users">
                             <i class="me-1" data-feather="arrow-left"></i>
-                            Back to Users List
+                            Kembali
                         </a>
                     </div>
                 </div>
@@ -35,7 +35,7 @@
             <div class="col-xl-12">
                 <x-message />
                 <div class="card mb-4">
-                    <div class="card-header">New Account</div>
+                    <div class="card-header">Akun Baru</div>
                     <div class="card-body">
                         <form action="/users/store" method="POST">
                             @csrf
@@ -79,8 +79,8 @@
                                     </select>
                                 </div>
                             </div>
-                            <button class="btn btn-primary btn-sm" type="submit">Add user</button>
-                            <a href="/users" class="btn btn-danger btn-sm">Back</a>
+                            <button class="btn btn-primary btn-sm" type="submit">Tambah Pengguna</button>
+                            <a href="/users" class="btn btn-danger btn-sm">Tutup</a>
                         </form>
                     </div>
                 </div>
