@@ -53,7 +53,7 @@
                 </a>
                 <div class="collapse" id="collapseEmployees" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavemployee">
-                        <a class="nav-link" href="/employees">Daftar Karyawan</a>
+                        <a class="nav-link" href="/employees">Data Karyawan</a>
                         <a class="nav-link" href="/roles">Jabatan Karyawan</a>
                         <a class="nav-link" href="/employees/import">Impor Karyawan</a>
                     </nav>
@@ -93,9 +93,9 @@
                         </a>
                         <div class="collapse" id="pagesCollapseTraining" data-bs-parent="#accordionSidenavPagesMenu">
                             <nav class="sidenav-menu-nested nav">
-                                <a class="nav-link" href="/pengembangan">Training List</a>
-                                <a class="nav-link" href="/pengembangan">Training Type</a>
-                                <a class="nav-link" href="/pengembangan">Trainers</a>
+                                <a class="nav-link" href="/pengembangan">Data Pelatihan</a>
+                                <a class="nav-link" href="/pengembangan">Tipe Pelatihan</a>
+                                <a class="nav-link" href="/pengembangan">Data Pelatih</a>
                             </nav>
                         </div>
                     </nav>
@@ -108,11 +108,11 @@
                 </a>
                 <div class="collapse" id="collapseTimesheets" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav">
-                        <a class="nav-link" href="multi-tenant-select.html">Add | Update Attedances</a>
-                        <a class="nav-link" href="/pengembangan">Import Attendances</a>
-                        <a class="nav-link" href="/pengembangan">Office Shift</a>
-                        <a class="nav-link" href="/pengembangan">Manage Holiday</a>
-                        <a class="nav-link" href="/pengembangan">Manage Leaves</a>
+                        <a class="nav-link" href="multi-tenant-select.html">Data Kehadiran</a>
+                        <a class="nav-link" href="/pengembangan">Impor Kehadiran</a>
+                        <a class="nav-link" href="/pengembangan">Shift Kantor</a>
+                        <a class="nav-link" href="/pengembangan">Libur</a>
+                        <a class="nav-link" href="/pengembangan">Cuti</a>
                     </nav>
                 </div>
                 <!-- Sidenav Accordion (Payslip) -->
@@ -199,8 +199,8 @@
                 </a>
                 <div class="collapse" id="collapseFileManager" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav">
-                        <a class="nav-link" href="/pengembangan">Category</a>
-                        <a class="nav-link" href="/pengembangan">Assets</a>
+                        <a class="nav-link" href="/pengembangan">Kategori</a>
+                        <a class="nav-link" href="/pengembangan">Aset</a>
                     </nav>
                 </div>
             </div>

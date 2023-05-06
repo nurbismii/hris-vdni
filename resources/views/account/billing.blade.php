@@ -56,7 +56,9 @@
         <div class="card h-100 border-start-lg border-start-success">
           <div class="card-body">
             <div class="small text-muted">Kontrak Berakhir</div>
+            @if($contract)
             <div class="h3">{{ date('d F Y', strtotime($contract->tanggal_berakhir_kontrak)) ?? 'Belum di proses' }}</div>
+            @endif
             <a class="text-arrow-icon small text-success" href="{{ route('contract') }}">
               Detail
               <i data-feather="arrow-right"></i>

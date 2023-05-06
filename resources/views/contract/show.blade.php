@@ -128,7 +128,7 @@
                             </tr>
                             <tr class="border-bottom">
                                 <td>
-                                    <div class="fw-bold">Tunjangan Jabatan</div>
+                                    <div class="fw-bold">Keterangan Kontrak</div>
                                 </td>
                                 <td class="text-end fw-bold"></td>
                                 <td class="text-end fw-bold">:</td>

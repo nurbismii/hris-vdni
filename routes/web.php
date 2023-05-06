@@ -77,6 +77,7 @@ Route::group(['middleware' => ['auth', 'audit.trails']], function () {
         route::get('/invoice/{id}', [AccountController::class, 'show'])->name('invoice');
         route::patch('/update/{id}', [AccountController::class, 'update'])->name('account.update');
         route::get('/contract', [AccountController::class, 'contract'])->name('contract');
+        route::get('/slip-gaji/{employee_id}', [AccountController::class, 'cetak_pdf'])->name('slipgaji');
     });
 
     Route::group(['prefix' => 'salary'], function () {
