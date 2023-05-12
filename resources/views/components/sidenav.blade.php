@@ -83,12 +83,12 @@
                         </a>
                         <div class="collapse" id="pagesCollapseCoreHr" data-bs-parent="#accordionSidenavPagesMenu">
                             <nav class="sidenav-menu-nested nav">
-                                <a class="nav-link" href="/contract">PKWT Langkah ke-1</a>
+                                <a class="nav-link" href="/contract">PKWT 2 Bulan</a>
                                 <a class="nav-link" href="/contract">PKWT Lanjutan</a>
                             </nav>
                         </div>
                         <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#pagesCollapseTraining" aria-expanded="false" aria-controls="pagesCollapseTraining">
-                            Training
+                            Pelatihan
                             <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
                         <div class="collapse" id="pagesCollapseTraining" data-bs-parent="#accordionSidenavPagesMenu">
@@ -123,8 +123,9 @@
                 </a>
                 <div class="collapse" id="collapsePayroll" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav">
-                        <a class="nav-link" href="/salary">Impor Payslip</a>
-                        <a class="nav-link" href="/salary/history">Riwayat impor</a>
+                        <a class="nav-link" href="/">Data Slip Gaji</a>
+                        <a class="nav-link" href="/salary">Impor Slip Gaji</a>
+                        <a class="nav-link" href="/salary/history">Riwayat Impor</a>
                     </nav>
                 </div>
                 <!-- Sidanav Accordion (Performance) -->
@@ -135,10 +136,10 @@
                 </a>
                 <div class="collapse" id="collapsePerform" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav">
-                        <a class="nav-link" href="/pengembangan">Goal Type</a>
+                        <!-- <a class="nav-link" href="/pengembangan">Goal Type</a>
                         <a class="nav-link" href="/pengembangan">Goal Tracking</a>
                         <a class="nav-link" href="/pengembangan">Indicator</a>
-                        <a class="nav-link" href="/pengembangan">Apraisal</a>
+                        <a class="nav-link" href="/pengembangan">Apraisal</a> -->
                     </nav>
                 </div>
                 <!-- Sidenav Accordion (Calendar) -->
@@ -154,10 +155,9 @@
                 </a>
                 <div class="collapse" id="collapseRecruitment" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav">
-                        <a class="nav-link" href="/pengembangan">Job Post</a>
-                        <a class="nav-link" href="/pengembangan">Job Candidates</a>
-                        <a class="nav-link" href="/pengembangan">Job Interview</a>
-                        <a class="nav-link" href="/pengembangan">CMS</a>
+                        <a class="nav-link" href="/pengembangan">Posting Lowongan</a>
+                        <a class="nav-link" href="/pengembangan">Lowongan Kandidat</a>
+                        <a class="nav-link" href="/pengembangan">Interview Kandidat</a>
                     </nav>
                 </div>
                 <!-- Sidanav Accordion (Event Meeting) -->

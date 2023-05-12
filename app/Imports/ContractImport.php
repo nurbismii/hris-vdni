@@ -25,8 +25,8 @@ class ContractImport implements ToCollection, WithHeadingRow, WithValidation
                 'jabatan' => $collect['jabatan'],
                 'lama_kontrak' => $collect['lama_kontrak'],
                 'status_perkawinan' => $collect['status_permenikahan'],
-                'tanggal_mulai_kontrak' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($collect['tanggal_mulai_kontrak'])),
-                'tanggal_berakhir_kontrak' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($collect['tanggal_berakhir_kontrak'])),
+                'tanggal_mulai_kontrak' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(intVal($collect['tanggal_mulai_kontrak']))),
+                'tanggal_berakhir_kontrak' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(intVal($collect['tanggal_berakhir_kontrak']))),
                 'gaji' => $collect['gaji'],
                 'uang_makan' => $collect['uang_makan'],
                 'tunjangan_jabatan' => $collect['tunjangan_jabatan'],
@@ -35,7 +35,7 @@ class ContractImport implements ToCollection, WithHeadingRow, WithValidation
             ];
         }
         foreach (array_chunk($datas, 1000) as $contract) {
-            Contract::insert($contract);
+            Contract::insertOrIgnore($contract);
         }
     }
 

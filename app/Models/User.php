@@ -40,4 +40,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(role::class, 'id', 'role_id');
     }
+
+    public function salary()
+    {
+        return $this->hasOne(salary::class);
+    }
 }

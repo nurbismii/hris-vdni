@@ -18,15 +18,18 @@ class AccountController extends Controller
      */
     public function profile()
     {
-        return view('account.profile');
+        $salary = salary::where('employee_id', Auth::user()->employee_id)->latest()->first();
+        $contract = contract::where('nik', Auth::user()->employee_id)->latest()->first();
+
+        return view('account.profile', compact('salary', 'contract'));
     }
 
     public function billing()
     {
         $datas = salary::where('employee_id', Auth::user()->employee_id)->get();
-        $total_diterima = salary::where('employee_id', Auth::user()->employee_id)->latest()->first('total_diterima');
+        $salary = salary::where('employee_id', Auth::user()->employee_id)->latest()->first('gaji_pokok');
         $contract = Contract::where('nik', Auth::user()->employee_id)->latest()->first('tanggal_berakhir_kontrak');
-        return view('account.billing', compact('datas', 'total_diterima', 'contract'));
+        return view('account.billing', compact('datas', 'salary', 'contract'));
     }
 
     public function show($id)

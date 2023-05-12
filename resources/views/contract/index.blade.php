@@ -67,9 +67,9 @@
                             <th></th>
                             <th>No PKWT</th>
                             <th>NIK</th>
-                            <th>Name</th>
+                            <th>Nama</th>
                             <th>No KTP</th>
-                            <th>Position</th>
+                            <th>Posisi</th>
                         </tr>
                     </thead>
                     <tbody> </tbody>

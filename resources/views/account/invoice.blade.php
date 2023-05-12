@@ -25,7 +25,7 @@
                             <i class="me-1" data-feather="printer"></i>
                             Print
                         </a>
-                        <a class="btn btn-sm btn-danger text-white" href="/account/information">
+                        <a class="btn btn-sm btn-light text-blue" href="/account/information">
                             <i class="me-1" data-feather="x"></i>
                             Tutup
                         </a>

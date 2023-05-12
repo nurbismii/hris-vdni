@@ -21,7 +21,7 @@
             </h1>
           </div>
           <div class="col-12 col-xl-auto mb-3">
-            <a class="btn btn-sm btn-danger text-white" href="/">
+            <a class="btn btn-sm btn-light text-blue" href="/">
               <i class="me-1" data-feather="x"></i>
               Tutup
             </a>
@@ -47,18 +47,18 @@
       </div>
       <div class="col-xl-8">
         <div class="card mb-4">
-          <div class="card-header">Account Details</div>
+          <div class="card-header">Detail akun</div>
           <div class="card-body">
             <form action="{{ route('account.update', Auth::user()->employee_id) }}" method="POST">
               @csrf
               {{ method_field('patch') }}
               <div class="row gx-3 mb-3">
                 <div class="col-md-6">
-                  <label class="small mb-1">NIK</label>
+                  <label class="small mb-1">Karyawan (NIK)</label>
                   <input class="form-control" type="text" value="{{ Auth::user()->employee_id }}" disabled />
                 </div>
                 <div class="col-md-6">
-                  <label class="small mb-1">Job</label>
+                  <label class="small mb-1">Posisi</label>
                   <input class="form-control" type="text" value="{{ Auth::user()->job->permission_role ?? 'User' }}" disabled />
                 </div>
               </div>
@@ -70,6 +70,26 @@
                 <div class="col-md-6">
                   <label class="small mb-1">Email address</label>
                   <input class="form-control" name="email" type="email" value="{{ Auth::user()->email }}" />
+                </div>
+              </div>
+              <div class="row gx-3 mb-3">
+                <div class="col-md-6">
+                  <label class="small mb-1">Departemen</label>
+                  <input class="form-control" value="{{ $salary->departemen ?? '-' }}" disabled />
+                </div>
+                <div class="col-md-6">
+                  <label class="small mb-1">Divisi</label>
+                  <input class="form-control" value="{{ $salary->divisi ?? '-' }}" disabled />
+                </div>
+              </div>
+              <div class="row gx-3 mb-3">
+                <div class="col-md-6">
+                  <label class="small mb-1">Durasi Kontrak</label>
+                  <input class="form-control" value="{{ $contract->lama_kontrak ?? '-' }}" disabled />
+                </div>
+                <div class="col-md-6">
+                  <label class="small mb-1">Kontrak Berakhir</label>
+                  <input class="form-control" value="{{ date('d F Y', strtotime($contract->tanggal_berakhir_kontrak)) ?? '-' }}" disabled />
                 </div>
               </div>
               <div class="col-lg-6 mb-3">
@@ -90,7 +110,7 @@
                 </tbody>
               </div>
               <div class="text-center">
-                <button class="btn btn-primary btn-sm text-center" type="submit">Save changes</button>
+                <button class="btn btn-primary btn-sm text-center" type="submit">Simpan Perubahan</button>
               </div>
             </form>
           </div>

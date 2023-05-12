@@ -21,7 +21,7 @@
             </h1>
           </div>
           <div class="col-12 col-xl-auto mb-3">
-            <a class="btn btn-sm btn-danger text-white" href="/">
+            <a class="btn btn-sm btn-light text-blue" href="/account/profile">
               <i class="me-1" data-feather="x"></i>
               Tutup
             </a>
@@ -43,7 +43,7 @@
         <div class="card h-100 border-start-lg border-start-primary">
           <div class="card-body">
             <div class="small text-muted">Gaji saat ini</div>
-            <div class="h3">Rp.{{ number_format($total_diterima->total_diterima) ?? 'Tidak diketahui'}}</div>
+            <div class="h3">Rp.{{ number_format($salary->gaji_pokok) ?? 'Tidak diketahui'}}</div>
             <a class="text-arrow-icon small" href="#!">
               Detail
               <i data-feather="arrow-right"></i>
