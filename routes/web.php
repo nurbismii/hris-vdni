@@ -4,10 +4,12 @@ use App\Http\Controllers\AccountController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\ContractController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DepartemenController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\Role\RoleController;
 use App\Http\Controllers\SalaryController;
 use App\Http\Controllers\User\UserController;
+use App\Models\Departemen;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -58,7 +60,7 @@ Route::group(['middleware' => ['auth', 'audit.trails']], function () {
         route::get('/create', [EmployeeController::class, 'create']);
         // route::post('/store', [EmployeeController::class, 'store'])->name('store.employee');
         // route::get('/edit/{id}', [EmployeeController::class, 'edit'])->name('edit.employee');
-        // route::patch('update/{id}', [EmployeeController::class, 'update'])->name('update.employee');
+        route::patch('update/{id}', [EmployeeController::class, 'update'])->name('update.employee');
         route::get('/show/{nik}', [EmployeeController::class, 'show'])->name('employee.show');
         route::delete('/destroy/{id}', [EmployeeController::class, 'destroy'])->name('destroy.employee');
         route::get('/server-side', [EmployeeController::class, 'serverSideEmployee']);
@@ -93,5 +95,13 @@ Route::group(['middleware' => ['auth', 'audit.trails']], function () {
         route::post('/import-pkwt', [ContractController::class, 'importContract']);
         route::post('/destroy-import-pkwt', [ContractController::class, 'destroyImportContract'])->name('destroyImport.contract');
         route::get('/show/{nik}', [ContractController::class, 'show'])->name('contract.show');
+    });
+
+    Route::group(['prefix' => 'departemen'], function () {
+        route::get('/', [DepartemenController::class, 'index']);
+        route::post('/store', [DepartemenController::class, 'store'])->name('departemen.store');
+        route::patch('/update/{id}', [DepartemenController::class, 'update'])->name('departemen.update');
+        route::delete('/destroy/{id}', [DepartemenController::class, 'destroy'])->name('departemen.destroy');
+        route::get('/{id}/divisi', [DepartemenController::class, 'divisi'])->name('departemen.divisi');
     });
 });

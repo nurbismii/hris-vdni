@@ -13,13 +13,13 @@ class UserExport implements FromCollection, WithHeadings
      */
     public function collection()
     {
-        return User::select('name', 'email', 'password', 'status', 'employee_id')->take(0)->get();
+        return User::select('nik_karyawan', 'email', 'password', 'status')->take(0)->get();
     }
 
     public function headings(): array
     {
         return array(
-            'NAME',
+            'NIK',
             'EMAIL',
             'PASSWORD',
             'STATUS',

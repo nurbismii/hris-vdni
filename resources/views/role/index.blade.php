@@ -16,17 +16,17 @@
                     <div class="col-auto mb-3">
                         <h1 class="page-header-title">
                             <div class="page-header-icon"><i data-feather="user"></i></div>
-                            Role List
+                            Daftar akses
                         </h1>
                     </div>
                     <div class="col-12 col-xl-auto mb-3">
                         <a class="btn btn-sm btn-light text-primary" href="/roles/create">
                             <i class="me-1" data-feather="user-plus"></i>
-                            Add New Role
+                            Tambahkan akses baru
                         </a>
                         <a class="btn btn-sm btn-purple text-white" data-bs-toggle="modal" data-bs-target="#addAccess">
                             <i class="me-1" data-feather="user-plus"></i>
-                            Add User Access
+                            Berikan akses
                         </a>
                     </div>
                 </div>
@@ -41,10 +41,10 @@
                 <table id="datatablesSimple">
                     <thead>
                         <tr>
-                            <th>Name</th>
+                            <th>Nama</th>
                             <th>Email</th>
-                            <th>Permission Role</th>
-                            <th>Assign Role</th>
+                            <th>Izin</th>
+                            <th>Posisi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -53,11 +53,11 @@
                             <td>
                                 <div class="d-flex align-items-center">
                                     <div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-1.png" /></div>
-                                    {{ $user->name }}
+                                    {{ $user->employee->nama_karyawan }}
                                 </div>
                             </td>
                             <td>{{ $user->email }}</td>
-                            <td>{{ $user->role->permission_role }}</td>
+                            <td>{{ $user->job->permission_role }}</td>
                             <td>{{ date('d F Y', strtotime($user->updated_at)) }}</td>
                         </tr>
                         @endforeach
@@ -78,18 +78,18 @@
                     <div class="modal-body">
                         @csrf
                         <div class="mb-3">
-                            <label class="small mb-1">User</label>
-                            <select name="employee_id" class="form-select">
-                                <option disabled selected>Select a user :</option>
+                            <label class="small mb-1">Pengguna</label>
+                            <select name="nik_karyawan" class="form-select">
+                                <option disabled selected>Kepada pengguna :</option>
                                 @foreach($users as $row)
-                                <option value="{{ $row->employee_id }}">{{ $row->name }}</option>
+                                <option value="{{ $row->nik_karyawan }}">{{ $row->employee->nama_karyawan }}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label class="small mb-1">Permission Role</label>
+                            <label class="small mb-1">Posisi</label>
                             <select name="role_id" class="form-select">
-                                <option disabled selected>Select a role :</option>
+                                <option disabled selected>Izin yang diberikan : </option>
                                 @foreach($datas as $permit)
                                 <option value="{{ $permit->id }}">{{ $permit->permission_role }}</option>
                                 @endforeach
@@ -97,8 +97,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
-                        <button class="btn btn-primary" type="submit">Add</button>
+                        <button class="btn btn-light btn-sm" type="button" data-bs-dismiss="modal">Tutup</button>
+                        <button class="btn btn-primary btn-sm" type="submit">Simpan</button>
                     </div>
                 </form>
             </div>

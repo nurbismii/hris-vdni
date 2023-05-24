@@ -6,8 +6,10 @@ use App\Exports\UserExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\UsertUpdaterRequest;
 use App\Imports\UsersImport;
+use App\Models\employee;
 use App\Models\role;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -20,7 +22,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        $datas = User::orderBy('employee_id', 'DESC')->take(1000)->get();
+        $datas = User::orderBy('nik_karyawan', 'DESC')->take(1000)->get();
         return view('user.index', compact('datas'));
     }
 
@@ -51,49 +53,73 @@ class UserController extends Controller
         try {
             $validator = Validator::make($request->all(), [
                 'email' => 'required|unique:users,email',
-                'employee_id' => 'required|unique:users,employee_id'
+                'nik_karyawan' => 'required|unique:users,nik_karyawan'
             ]);
 
             if ($validator->fails()) {
-                return back()->with('error', 'Please check your form!');
+                return back()->with('error', 'NIK atau Email telah terdaftar!');
+            }
+
+            $cek_karyawan = employee::where('nik', $request->nik_karyawan)->first();
+
+            if (!$cek_karyawan) {
+                return back()->with('error', 'NIK yang didaftarkan belum terdaftar sebagai karyawan PT. VDNI');
             }
 
             User::create([
                 'id' => Uuid::uuid4()->getHex(),
-                'name' => $request->name,
+                'nik_karyawan' => $request->nik_karyawan,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
                 'status' => $request->status,
-                'employee_id' => $request->employee_id,
                 'role_id' => $request->role_id ?? '',
             ]);
-            return back()->with('success', 'User has been added');
+            return back()->with('success', 'Pengguna baru berhasil ditambahkan');
         } catch (\Throwable $e) {
             DB::rollBack();
-            return back()->with('error', 'Something wrong!');
+            return back()->with('error', 'Terjadi kesalahan!');
         }
     }
 
     public function edit($id)
     {
+
         try {
-            $data = User::where('employee_id', $id)->first();
-            return view('user.edit', compact('data'));
+            $data = User::with('employee')->where('nik_karyawan', $id)->first();
+
+            $level_vaksin = $data->employee->vaksin == '0' ? 'Belum Vaksin' : ($data->employee->vaksin == '1' ? 'Vaksin 1' : ($data->employee->vaksin == '2' ? 'Vaksin 2' : ($data->employee->vaksin == '3' ? 'Booster 1' : ($data->employee->vaksin == '4' ? 'Booster 2' : 'Tidak diketahui'))));
+
+            $status_perkawinan = '';
+            if ($data->employee->status_perkawinan == 'Belum Kawin') {
+                $status_perkawinan = $data->employee->status_perkawinan;
+            }
+
+            return view('user.edit', compact('data', 'level_vaksin'));
         } catch (\Throwable $e) {
-            return back()->with('error', 'Something wrong! ');
+            return back()->with('error', 'Terjadi kesalahan!');
         }
     }
 
-    public function update(UsertUpdaterRequest $request, $id)
+    public function update(Request $request, $id)
     {
-        try {
-            User::where('employee_id', $id)->update([
-                'employee_id' => $request->employee_id,
-                'name' => $request->name,
+        if ($request->password == $request->konfirmasi_password) {
+            $password_baru = $request->password;
+            User::where('nik_karyawan', $id)->update([
                 'email' => $request->email,
-                'status' => $request->status
+                'status' => $request->status,
+                'password' => Hash::make($password_baru),
             ]);
-            return redirect('users')->with('success', 'User has been updated');
+            return redirect('users')->with('success', 'Pengguna berhasil diperbarui');
+        }
+        if ($request->password != $request->konfirmasi_password) {
+            return back()->with('error', 'Password konfirmasi tidak sesuai');
+        }
+        User::where('nik_karyawan', $id)->update([
+            'email' => $request->email,
+            'status' => $request->status,
+        ]);
+        return redirect('users')->with('success', 'Pengguna berhasil diperbarui');
+        try {
         } catch (\Throwable $e) {
             return redirect('users')->with('error', 'Something wrong!');
         }
@@ -102,20 +128,20 @@ class UserController extends Controller
     public function destroy($id)
     {
         try {
-            User::where('employee_id', $id)->delete();
-            return back()->with('success', 'User has been deleted');
+            User::where('nik_karyawan', $id)->delete();
+            return back()->with('success', 'Pengguna berhasil dihapus');
         } catch (\Throwable $e) {
-            return back()->with('error', 'Something wrong!' . $e->getMessage());
+            return back()->with('error', 'Terjadi kesalahan!' . $e->getMessage());
         }
     }
 
     public function lastLogin(Request $request)
     {
         try {
-            $datas = User::where('last_login', '!=', null)->get();
+            $datas = User::where('terakhir_login', '!=', null)->get();
             return view('user.lastlogin', compact('datas'));
         } catch (\Throwable $e) {
-            return back()->with('error', 'Something wrong!');
+            return back()->with('error', 'Terjadi kesalahan!');
         }
     }
 
@@ -127,6 +153,6 @@ class UserController extends Controller
     public function importUser(Request $request)
     {
         Excel::import(new UsersImport, $request->file('file'));
-        return back()->with('success', 'All good!');
+        return back()->with('success', 'Impor pengguna berhasil');
     }
 }

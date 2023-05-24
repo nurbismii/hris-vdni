@@ -165,20 +165,20 @@
                         name: 'nik'
                     },
                     {
-                        data: 'name',
-                        name: 'name'
+                        data: 'nama_karyawan',
+                        name: 'nama_karyawan'
                     },
                     {
-                        data: 'bpjs_ket',
-                        name: 'bpjs_ket',
+                        data: 'bpjs_kesehatan',
+                        name: 'bpjs_kesehatan',
                     },
                     {
                         data: 'bpjs_tk',
                         name: 'bpjs_tk',
                     },
                     {
-                        data: 'company_name',
-                        name: 'company_name'
+                        data: 'area_kerja',
+                        name: 'area_kerja'
                     },
                     {
                         data: 'entry_date',

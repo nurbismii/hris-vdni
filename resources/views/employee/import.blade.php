@@ -16,7 +16,7 @@
                     <div class="col-auto mt-4">
                         <h3 class="page-header-title">
                             <div class="page-header-icon"><i data-feather="file"></i></div>
-                            Import Employee
+                            Import Karyawan
                         </h3>
                     </div>
                 </div>
@@ -27,11 +27,11 @@
     <div class="container-xl px-4 mt-n10">
         <x-message />
         <div class="card">
-            <div class="card-header">Import Excel File Only</div>
+            <div class="card-header">Impor file excel</div>
             <div class="card-body">
                 <!-- Button with lift -->
-                <a class="btn btn-indigo  btn-sm lift mb-3" href="{{ route('export.salary') }}">
-                    <i>Download sample file</i>
+                <a class="btn btn-indigo  btn-sm lift mb-3" href="{{ route('download.example') }}">
+                    <i>Download Template Karyawan</i>
                 </a>
                 <p class="col-12">
                     The first line in downloaded sample file should remain as it is. Please do not change the order of columns in file.
@@ -70,7 +70,7 @@
                             <input class="form-control" name="file" type="file" id="formFile" required>
                         </div>
                         <div class="mb-3 col-3">
-                            <button class="btn btn-primary" type="submit">Send file</button>
+                            <button class="btn btn-primary" type="submit">Kirim file</button>
                         </div>
                     </div>
                 </form>

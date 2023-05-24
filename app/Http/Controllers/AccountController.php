@@ -18,10 +18,8 @@ class AccountController extends Controller
      */
     public function profile()
     {
-        $salary = salary::where('employee_id', Auth::user()->employee_id)->latest()->first();
-        $contract = contract::where('nik', Auth::user()->employee_id)->latest()->first();
 
-        return view('account.profile', compact('salary', 'contract'));
+        return view('account.profile');
     }
 
     public function billing()

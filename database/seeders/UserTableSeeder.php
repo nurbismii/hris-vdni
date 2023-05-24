@@ -13,11 +13,10 @@ class UserTableSeeder extends Seeder
     {
         user::create([
             'id' => Uuid::uuid4()->getHex(),
-            'name' =>  'Administrator',
-            'employee_id' => '123123123',
+            'nik_karyawan' =>  '15040001',
             'email' => 'hrdevelopment@vdni.com',
-            'password' => Hash::make('vdni@200303!'),
-            'status' => 'ACTIVE',
+            'password' => Hash::make('vdni678910'),
+            'status' => 'aktif',
         ]);
     }
 }

@@ -58,6 +58,11 @@
                         <a class="nav-link" href="/employees/import">Impor Karyawan</a>
                     </nav>
                 </div>
+
+                <a class="nav-link" href="/departemen">
+                    <div class="nav-link-icon"><i data-feather="codepen"></i></div>
+                    Departemen
+                </a>
                 <!-- Sidenav Accordion (Applications)-->
                 <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseApps" aria-expanded="false" aria-controls="collapseApps">
                     <div class="nav-link-icon"><i data-feather="sliders"></i></div>

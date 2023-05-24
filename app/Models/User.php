@@ -14,11 +14,11 @@ class User extends Authenticatable
 
     protected $fillable = [
         'id',
-        'name',
-        'employee_id',
+        'nik_karyawan',
         'email',
         'password',
         'status',
+        'terakhir_login'
     ];
 
     protected $hidden = [
@@ -31,9 +31,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function role()
+    public function employee()
     {
-        return $this->belongsTo(role::class);
+        return $this->hasOne(employee::class, 'nik', 'nik_karyawan');
     }
 
     public function job()

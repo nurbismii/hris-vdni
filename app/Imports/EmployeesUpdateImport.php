@@ -26,16 +26,26 @@ class EmployeesUpdateImport implements ToCollection, WithHeadingRow, WithValidat
             $data = $this->employee->where('nik', $collect['nik'])->first();
 
             $data->where('nik', $collect['nik'])->update([
-                'nik' => $collect['nik'],
+                'no_sk_pkwtt' => $collect['no_sk_pkwtt'],
+                'nama_karyawan' => $collect['nama_karyawan'],
+                'nama_ibu_kandung' => $collect['nama_ibu_kandung'],
+                'agama' => $collect['agama'],
                 'no_ktp' => $collect['no_ktp'],
-                'name' => $collect['name'],
-                'company_name' => $collect['company_name'],
-                'date_of_birth' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($collect['date_of_birth'])),
+                'no_kk' => $collect['no_kk'],
+                'jenis_kelamin' => $collect['jenis_kelamin'],
+                'status_perkawinan' => $collect['status_perkawinan'],
+                'status_karyawan' => $collect['status_karyawan'],
+                'status_resign' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(intVal($collect['status_resign']))) ?? '',
+                'no_telp' => $collect['no_telp'],
+                'tgl_lahir' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(intVal($collect['tgl_lahir']))),
+                'area_kerja' => $collect['area_kerja'],
+                'golongan_darah' => $collect['golongan_darah'],
+                'entry_date' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(intVal($collect['entry_date']))),
                 'npwp' => $collect['npwp'],
-                'bpjs_ket' => $collect['bpjs_kes'],
+                'bpjs_kesehatan' => $collect['bpjs_kesehatan'],
                 'bpjs_tk' => $collect['bpjs_tk'],
-                'vaccine' => $collect['vaccine'],
-                'entry_date' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($collect['entry_date']))
+                'vaksin' => $collect['vaksin'],
+                'jam_kerja' => $collect['jam_kerja'],
             ]);
         }
     }

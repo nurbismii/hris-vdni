@@ -24,11 +24,10 @@ class UsersImport implements ToCollection, WithHeadingRow, WithValidation
         foreach ($collection as $collect) {
             $datas[] = array(
                 'id' => Uuid::uuid4()->getHex(),
-                'name' => $collect['name'],
+                'nik_karyawan' => $collect['nik'],
                 'email' => $collect['email'],
                 'password' => Hash::make($collect['password']),
                 'status' => $collect['status'],
-                'employee_id' => $collect['nik'],
             );
         }
         foreach (array_chunk($datas, 1000) as $chunk) {

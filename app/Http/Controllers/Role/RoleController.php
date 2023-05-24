@@ -13,8 +13,8 @@ class RoleController extends Controller
     public function index()
     {
         $datas = Role::all();
-        $users = User::select('id', 'name', 'employee_id')->orderBy('name', 'ASC')->get();
-        $data_user = User::where('role_id', '!=', NULL)->orderBy('name', 'ASC')->get();
+        $users = User::select('id', 'nik_karyawan')->orderBy('nik_karyawan', 'ASC')->get();
+        $data_user = User::where('role_id', '!=', NULL)->orderBy('nik_karyawan', 'ASC')->get();
         return view('role.index', compact('datas', 'users', 'data_user'));
     }
 
@@ -28,7 +28,7 @@ class RoleController extends Controller
     {
         try {
             role::create($request->all());
-            return back()->with('success', 'Role has been added');
+            return back()->with('success', 'Posisi berhasil ditambahkan');
         } catch (\Throwable $e) {
             return back()->with('error', 'Failed to add role' . $e->getMessage());
         }
@@ -38,7 +38,7 @@ class RoleController extends Controller
     {
         try {
             $role->find($id)->update($request->all());
-            return back()->with('success', 'Successfully updated role');
+            return back()->with('success', 'Posisi berhasil diperbarui');
         } catch (\Throwable $e) {
             return back()->with('error', 'Failed to update role' . $e->getMessage());
         }
@@ -48,7 +48,7 @@ class RoleController extends Controller
     {
         try {
             $role->find($id)->delete();
-            return back()->with('success', 'Successfully deleted role');
+            return back()->with('success', 'Berhasil menghapus posisi');
         } catch (\Throwable $e) {
             return back()->with('error', 'Failed to delete role' . $e->getMessage());
         }
@@ -57,12 +57,12 @@ class RoleController extends Controller
     public function accessUser(Request $request)
     {
         try {
-            User::where('employee_id', $request->employee_id)->update([
+            User::where('nik_karyawan', $request->nik_karyawan)->update([
                 'role_id' => $request->role_id
             ]);
-            return back()->with('success', 'Successfully added');
+            return back()->with('success', 'Berhasil menambahkan akses');
         } catch (\Throwable $e) {
-            return back()->with('error', 'Something wrong!');
+            return back()->with('error', 'Terjadi kesalahan!');
         }
     }
 }

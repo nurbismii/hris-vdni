@@ -13,22 +13,13 @@ class EmployeeExport implements FromCollection, WithHeadings
      */
     public function collection()
     {
-        return employee::select('nik', 'no_ktp', 'name', 'date_of_birth', 'company_name', 'npwp', 'bpjs_ket', 'bpjs_tk', 'vaccine', 'entry_date')->take(0)->get();
+        return employee::select('nik', 'no_sk_pkwtt', 'nama_karyawan', 'nama_ibu_kandung', 'agama', 'no_ktp', 'no_kk', 'jenis_kelamin', 'status_perkawinan', 'status_karyawan', 'tgl_resign', 'no_telp', 'tgl_lahir', 'area_kerja', 'golongan_darah', 'foto_karyawan', 'entry_date', 'npwp', 'bpjs_kesehatan', 'bpjs_tk', 'vaksin', 'jam_kerja', 'status_resign')->take(0)->get();
     }
 
     public function headings(): array
     {
         return array(
-            'Nik',
-            'No_ktp',
-            'Name',
-            'Date_of_birth',
-            'Company_name',
-            'Npwp',
-            'Bpjs_kes',
-            'Bpjs_tk',
-            'Vaccine',
-            'Entry_date'
+            'NIK', 'NO_SK_PKWTT', 'NAMA_KARYAWAN', 'NAMA_IBU_KANDUNG', 'AGAMA', 'NO_KTP', 'NO_KK', 'JENIS_KELAMIN', 'STATUS_PERKAWINAN', 'STATUS_KARYAWAN', 'TGL_RESIGN', 'NO_TELP', 'TGL_LAHIR', 'AREA_KERJA', 'GOLONGAN_DARAH', 'FOTO_KARYAWAN', 'ENTRY_DATE', 'NPWP', 'BPJS_KESEHATAN', 'BPJS_TK', 'VAKSIN', 'JAM_KERJA', 'STATUS_RESIGN'
         );
     }
 }

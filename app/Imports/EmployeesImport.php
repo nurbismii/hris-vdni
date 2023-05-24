@@ -18,15 +18,27 @@ class EmployeesImport implements ToCollection, WithHeadingRow, WithValidation
         foreach ($collection as $collect) {
             $datas[] = array(
                 'nik' => $collect['nik'],
+                'no_sk_pkwtt' => $collect['no_sk_pkwtt'],
+                'nama_karyawan' => $collect['nama_karyawan'],
+                'nama_ibu_kandung' => $collect['nama_ibu_kandung'],
+                'agama' => $collect['agama'],
                 'no_ktp' => $collect['no_ktp'],
-                'name' => $collect['name'],
-                'company_name' => $collect['company_name'],
-                'date_of_birth' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($collect['date_of_birth'])),
+                'no_kk' => $collect['no_kk'],
+                'jenis_kelamin' => $collect['jenis_kelamin'],
+                'status_perkawinan' => $collect['status_perkawinan'],
+                'status_karyawan' => $collect['status_karyawan'],
+                'tgl_resign' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(intVal($collect['tgl_resign']))) ?? null,
+                'no_telp' => $collect['no_telp'],
+                'tgl_lahir' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(intVal($collect['tgl_lahir']))),
+                'area_kerja' => $collect['area_kerja'],
+                'golongan_darah' => $collect['golongan_darah'],
+                'entry_date' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(intVal($collect['entry_date']))),
                 'npwp' => $collect['npwp'],
-                'bpjs_ket' => $collect['bpjs_kes'],
+                'bpjs_kesehatan' => $collect['bpjs_kesehatan'],
                 'bpjs_tk' => $collect['bpjs_tk'],
-                'vaccine' => $collect['vaccine'],
-                'entry_date' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($collect['entry_date']))
+                'vaksin' => $collect['vaksin'],
+                'jam_kerja' => $collect['jam_kerja'],
+                'status_resign' => $collect['status_resign']
             );
         }
         foreach (array_chunk($datas, 1000) as $chunk) {
@@ -39,19 +51,19 @@ class EmployeesImport implements ToCollection, WithHeadingRow, WithValidation
         return [
             'nik' => 'required|unique:employees,nik',
             'no_ktp' => 'required|unique:employees,no_ktp',
-            'company_name' => 'required|in:VDNI,VDNIP'
+            'area_kerja' => 'required|in:VDNI,VDNIP'
         ];
     }
 
     public function customValidationMessages()
     {
         return [
-            'nik.unique' => 'NIK has been registered',
-            'nik.required' => 'NIK must be filled',
-            'no_ktp.unique' => 'KTP has been registered',
-            'no_ktp.required' => 'KTP must be filled',
-            'company_name.required' => 'Company name must be filled',
-            'company_name.in' => 'Company name must be filled VDNI or VDNIP'
+            'nik.unique' => 'NIK Karyawan telah digunakan',
+            'nik.required' => 'NIK karyawan harus diisi',
+            'no_ktp.unique' => 'No KTP telah digunakan',
+            'no_ktp.required' => 'No KTP harus diisi',
+            'area_kerja.required' => 'Area Kerja harus diisi',
+            'area_kerja.in' => 'Area Kerja hanya bisa diisi VDNI atau VDNIP'
         ];
     }
 }

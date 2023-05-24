@@ -46,7 +46,7 @@
                 </div>
               </td>
               <td>{{ $row->email }}</td>
-              <td>{{ date('Y-m-d H:i:s', strtotime($row->last_login)) }}</td>
+              <td>{{ date('d F Y, H:i:s', strtotime($row->terakhir_login)) }}</td>
             </tr>
             @endforeach
           </tbody>

@@ -15,6 +15,6 @@ class employee extends Model
 
     public function user()
     {
-        return $this->hasOne(user::class, 'employee_id', 'nik');
+        return $this->hasOne(user::class, 'nik_karyawan', 'nik');
     }
 }

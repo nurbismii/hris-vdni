@@ -38,20 +38,20 @@
                 <div class="card mb-4">
                     <div class="card-header">Data Pengguna</div>
                     <div class="card-body">
-                        <form action="{{ route('update.user', $data->employee_id) }}" method="POST">
+                        <form action="{{ route('update.user', $data->nik_karyawan) }}" method="POST">
                             @csrf
                             {{ method_field('patch') }}
                             <div class="row gx-3 mb-3">
                                 <div class="col-md-6">
-                                    <label class="small mb-1">NIK</label>
-                                    <input class="form-control @error('employee_id') is-invalid @enderror" name="employee_id" type="text" value="{{ $data->employee_id }}" readonly />
-                                    @error('employee_id')
+                                    <label class="small mb-1">NIK Karyawan</label>
+                                    <input class="form-control @error('nik_karyawan') is-invalid @enderror" type="text" value="{{ $data->nik_karyawan }}" readonly />
+                                    @error('nik_karyawan')
                                     <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="small mb-1">Name</label>
-                                    <input class="form-control @error('name') is-invalid @enderror" name="name" type="text" value="{{ $data->name }}" />
+                                    <label class="small mb-1">Nama Karyawan</label>
+                                    <input class="form-control @error('name') is-invalid @enderror" type="text" value="{{ $data->employee->nama_karyawan }}" readonly />
                                     @error('name')
                                     <span class="invalid-feedback">{{ $message }}</span>
                                     @enderror
@@ -69,12 +69,28 @@
                                     <label class="small mb-1">Status</label>
                                     <select name="status" class="form-select">
                                         <option value="{{ $data->status }}" selected>{{ ucfirst($data->status) }}</option>
-                                        @if(strtolower($data->status) == 'not active')
-                                        <option value="Active">Active</option>
+                                        @if(strtolower($data->status) == 'tidak aktif')
+                                        <option value="aktif">Aktif</option>
                                         @else
-                                        <option value="Not Active">Not Active</option>
+                                        <option value="tidak aktif">Tidak Aktif</option>
                                         @endif
                                     </select>
+                                </div>
+                            </div>
+                            <div class="row gx-3 mb-3">
+                                <div class="col-md-6">
+                                    <label class="small mb-1">Password Baru</label>
+                                    <input class="form-control @error('password') is-invalid @enderror" name="password" type="password" placeholder="*****"/>
+                                    @error('password')
+                                    <span class="invalid-feedback">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="small mb-1">Konfirmasi Password</label>
+                                    <input class="form-control @error('konfirmasi_password') is-invalid @enderror" name="konfirmasi_password" type="password" placeholder="*****"/>
+                                    @error('konfirmasi_password')
+                                    <span class="invalid-feedback">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                             <button class="btn btn-success btn-sm lift lift-sm" type="submit">Perbarui</button>

@@ -16540,6 +16540,14 @@ body {
 }
 
 /* Hide google translate bar */
+.goog-te-banner-frame.skiptranslate {
+  display: none !important;
+}
+body {
+  top: 0px !important;
+}
+
+/* Hide google translate bar */
 .VIpgJd-ZVi9od-ORHb-OEVmcd{
   display: none;
 } 

@@ -15,16 +15,26 @@ class EmployeeTableSeeder extends Seeder
     public function run()
     {
         employee::Create([
-            'nik' => '73737411311960004',
+            'nik' => '15040001',
+            'no_sk_pkwtt' => '',
+            'nama_karyawan' => 'Karyawan Dummy',
+            'nama_ibu_kandung' => 'Ibu Karyawan Dummy',
+            'agama' => 'Islam',
             'no_ktp' => '7402211501930002',
-            'name' => 'Dummy Employee',
-            'date_of_birth' => '1993-01-15',
-            'company_name' =>  'VDNI',
+            'no_kk' => '7402211501930022',
+            'jenis_kelamin' => 'L',
+            'status_perkawinan' => 'Belum Kawin',
+            'status_karyawan' => 'PWKT',
+            'no_telp' => '085282810040',
+            'tgl_lahir' => '1993-01-15',
+            'area_kerja' => 'VDNI',
+            'golongan_darah' => 'AB',
+            'entry_date' => '2015-09-16',
             'npwp' => '760777268811000',
-            'bpjs_ket' => '0002302217392',
+            'bpjs_kesehatan' => '0002302217392',
             'bpjs_tk' => '15030419160',
-            'vaccine' => '3',
-            'entry_date' => '2015-09-16'
+            'vaksin' => '3',
+            'jam_kerja' => '08.00 - 17.00',
         ]);
     }
 }

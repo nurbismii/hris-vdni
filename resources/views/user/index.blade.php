@@ -20,7 +20,7 @@
                         </h1>
                     </div>
                     <div class="col-12 col-xl-auto mb-3">
-                        <a class="btn btn-sm btn-success text-white" href="/users/import">
+                        <a class="btn btn-sm btn-purple text-white" href="/users/import">
                             <i class="me-1" data-feather="users"></i>
                             Impor Pengguna
                         </a>
@@ -54,20 +54,20 @@
                             <td>
                                 <div class="d-flex align-items-center">
                                     <div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-1.png" /></div>
-                                    {{ $row->name }} <br />
+                                    {{ $row->employee->nama_karyawan }} <br />
                                     {{ $row->email }}
                                 </div>
                             </td>
                             <td>{{ $row->role->permission_role ?? 'User' }}</td>
-                            <td>{{ $row->status }}</td>
-                            <td>{{ date('d F Y', strtotime($row->created_at)) }}</td>
+                            <td>{{ ucfirst($row->status) }}</td>
+                            <td>{{ date('d F Y', strtotime($row->employee->entry_date)) }}</td>
                             <td>
 
-                                <form action="{{ route('destroy.user', $row->employee_id) }}" method="POST">
+                                <form action="{{ route('destroy.user', $row->nik_karyawan) }}" method="POST">
                                     @csrf
                                     {{ method_field('delete') }}
-                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="{{ route('edit.user', $row->employee_id) }}"><i data-feather="edit"></i></a>
-                                    <a type="submit" class="btn btn-datatable btn-icon btn-transparent-dark" data-bs-toggle="modal" data-bs-target="#deleteUser{{$row->employee_id}}"><i data-feather="trash-2"></i>
+                                    <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="{{ route('edit.user', $row->nik_karyawan) }}"><i data-feather="edit"></i></a>
+                                    <a type="submit" class="btn btn-datatable btn-icon btn-transparent-dark" data-bs-toggle="modal" data-bs-target="#deleteUser{{$row->nik_karyawan}}"><i data-feather="trash-2"></i>
                                     </a>
                                 </form>
 
@@ -82,18 +82,18 @@
 
     <!-- Modal delete user -->
     @foreach($datas as $data)
-    <div class="modal fade" id="deleteUser{{$data->employee_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="deleteUser{{$data->nik_karyawan}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">New Role</h5>
                     <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('destroy.user', $data->employee_id) }}" method="POST" enctype="application/x-www-form-urlencoded" class="nav flex-column" id="stickyNav">
+                <form action="{{ route('destroy.user', $data->nik_karyawan) }}" method="POST" enctype="application/x-www-form-urlencoded" class="nav flex-column" id="stickyNav">
                     <div class="modal-body">
                         @csrf
                         {{ method_field('delete') }}
-                        Yakin ingin menghapus pengguna ini ({{ $data->name }})?
+                        Yakin ingin menghapus pengguna ini ({{ $data->nama_karyawan }})?
                     </div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">No</button>

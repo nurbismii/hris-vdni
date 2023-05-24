@@ -52,7 +52,8 @@ class EmployeeController extends Controller
     {
         try {
             $data = employee::where('nik', $nik)->first();
-            return view('employee.show', compact('data'));
+            $level_vaksin = $data->vaksin == '0' ? 'Belum Vaksin' : ($data->vaksin == '1' ? 'Vaksin 1' : ($data->vaksin == '2' ? 'Vaksin 2' : ($data->vaksin == '3' ? 'Booster 1' : ($data->vaksin == '4' ? 'Booster 2' : 'Tidak diketahui'))));
+            return view('employee.show', compact('data', 'level_vaksin'));
         } catch (\Throwable $e) {
             return back()->with('error', 'Something wrong!');
         }
@@ -70,23 +71,32 @@ class EmployeeController extends Controller
 
     public function update(Request $request, $id)
     {
-        $data = employee::where('nik', $id)->first();
-        $data->update([
-            'nik' => $request->nik,
-            'no_ktp' => $request->no_ktp,
-            'name' => $request->name,
-            'date_of_birth' => $request->date_of_birth,
-            'company_name' => $request->company_name,
-            'npwp' => $request->npwp,
-            'bpjs_ket' => $request->bpjs_ket,
-            'bpjs_tk' => $request->bpjs_tk,
-            'vaccine' => $request->vaccine,
-            'entry_date' => date('Y-m-d', strtotime($request->entry_date)),
-        ]);
-        return back()->with('success', 'Employee has been updated');
         try {
+            employee::where('nik', $id)->update([
+                'no_sk_pkwtt' => $request->no_sk_pkwtt,
+                'nama_karyawan' => $request->nama_karyawan,
+                'nama_ibu_kandung' => $request->nama_ibu_kandung,
+                'agama' => $request->agama,
+                'no_ktp' => $request->no_ktp,
+                'no_kk' => $request->no_kk,
+                'jenis_kelamin' => $request->jenis_kelamin,
+                'status_perkawinan' => $request->status_perkawinan,
+                'status_karyawan' => $request->status_karyawan,
+                'status_resign' => $request->status_resign,
+                'no_telp' => $request->no_telp,
+                'tgl_lahir' => $request->tgl_lahir,
+                'area_kerja' => $request->area_kerja,
+                'golongan_darah' => $request->golongan_darah,
+                'entry_date' => $request->entry_date,
+                'npwp' => $request->npwp,
+                'bpjs_kesehatan' => $request->bpjs_kesehatan,
+                'bpjs_tk' => $request->bpjs_tk,
+                'vaksin' => $request->vaksin,
+                'jam_kerja' => $request->jam_kerja,
+            ]);
+            return redirect('employees')->with('success', 'Data karyawan berhasil diperbarui');
         } catch (\Throwable $e) {
-            return back()->with('error', 'Something wrong!');
+            return redirect('employees')->with('error', 'Terjadi kesalahan!');
         }
     }
 
@@ -107,7 +117,7 @@ class EmployeeController extends Controller
 
     public function downloadExample()
     {
-        return Excel::download(new EmployeeExport, 'Employee-Template.xlsx');
+        return Excel::download(new EmployeeExport, 'Template Karyawan.xlsx');
     }
 
     public function importEmployee(Request $request)

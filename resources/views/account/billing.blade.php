@@ -86,7 +86,7 @@
               <tr>
                 <td><a href="{{ route('invoice', $data->id) }}">#{{ strtoupper(substr($data->id, 0, 4)) }} </a></td>
                 <td>{{ date('d F Y', strtotime($data->created_at)) }}</td>
-                <td>Rp.{{ number_format($data->total_diterima) }}</td>
+                <td>Rp.{{ number_format($salary->gaji_pokok) ?? '#####'}}</td>
                 <td><span class="badge bg-success">Success</span></td>
               </tr>
               @endforeach

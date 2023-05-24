@@ -42,7 +42,7 @@
                             <div class="row gx-3 mb-3">
                                 <div class="col-md-6">
                                     <label class="small mb-1">NIK</label>
-                                    <input class="form-control" type="text" name="name" placeholder="Enter your first name" />
+                                    <input class="form-control" type="text" name="nik_karyawan" placeholder="NIK Karyawan" />
                                 </div>
                                 <div class="col-md-6">
                                     <label class="small mb-1">Email</label>
@@ -63,9 +63,9 @@
                                 <div class="col-md-6">
                                     <label class="small mb-1">Status</label>
                                     <select class="form-select" name="status">
-                                        <option selected disabled>Select a status : </option>
-                                        <option value="Active">Active</option>
-                                        <option value="Not Active">Not Active</option>
+                                        <option selected disabled>Pilih status : </option>
+                                        <option value="aktif">Aktif</option>
+                                        <option value="tidak aktif">Tidak Aktif</option>
                                     </select>
                                 </div>
                                 <div class="col-md-6">
