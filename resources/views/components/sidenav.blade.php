@@ -63,22 +63,11 @@
                     <div class="nav-link-icon"><i data-feather="codepen"></i></div>
                     Departemen
                 </a>
-                <!-- Sidenav Accordion (Applications)-->
-                <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseApps" aria-expanded="false" aria-controls="collapseApps">
-                    <div class="nav-link-icon"><i data-feather="sliders"></i></div>
-                    Menyesuaikan pengaturan
-                    <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                </a>
-                <div class="collapse" id="collapseApps" data-bs-parent="#accordionSidenav">
-                    <nav class="sidenav-menu-nested nav">
-                        <a class="nav-link" href="/setting/dashboard">Konten Dashboard</a>
-                        <a class="nav-link" href="">Pengaturan Lokasi</a></a>
-                        <a class="nav-link" href="/pengembangan">Pengaturan Email</a>
-                </div>
+
 
                 <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseCoreHr" aria-expanded="false" aria-controls="collapseCoreHr">
                     <div class="nav-link-icon"><i data-feather="cpu"></i></div>
-                    HR
+                    SDM
                     <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
                 <div class="collapse" id="collapseCoreHr" data-bs-parent="#accordionSidenav">
@@ -106,25 +95,10 @@
                         </div>
                     </nav>
                 </div>
-
-                <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseTimesheets" aria-expanded="false" aria-controls="collapseTimesheets">
-                    <div class="nav-link-icon"><i data-feather="clock"></i></div>
-                    Timesheets
-                    <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                </a>
-                <div class="collapse" id="collapseTimesheets" data-bs-parent="#accordionSidenav">
-                    <nav class="sidenav-menu-nested nav">
-                        <a class="nav-link" href="multi-tenant-select.html">Data Kehadiran</a>
-                        <a class="nav-link" href="/pengembangan">Impor Kehadiran</a>
-                        <a class="nav-link" href="/pengembangan">Shift Kantor</a>
-                        <a class="nav-link" href="/pengembangan">Libur</a>
-                        <a class="nav-link" href="/pengembangan">Cuti</a>
-                    </nav>
-                </div>
                 <!-- Sidenav Accordion (Payslip) -->
                 <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapsePayroll" aria-expanded="false" aria-controls="collapsePayroll">
                     <div class="nav-link-icon"><i data-feather="credit-card"></i></div>
-                    Payslip
+                    Slip Gaji
                     <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
                 <div class="collapse" id="collapsePayroll" data-bs-parent="#accordionSidenav">
@@ -134,25 +108,6 @@
                         <a class="nav-link" href="/salary/history">Riwayat Impor</a>
                     </nav>
                 </div>
-                <!-- Sidanav Accordion (Performance) -->
-                <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapsePerform" aria-expanded="false" aria-controls="collapsePerform">
-                    <div class="nav-link-icon"><i data-feather="activity"></i></div>
-                    Kinerja Karyawan
-                    <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                </a>
-                <div class="collapse" id="collapsePerform" data-bs-parent="#accordionSidenav">
-                    <nav class="sidenav-menu-nested nav">
-                        <!-- <a class="nav-link" href="/pengembangan">Goal Type</a>
-                        <a class="nav-link" href="/pengembangan">Goal Tracking</a>
-                        <a class="nav-link" href="/pengembangan">Indicator</a>
-                        <a class="nav-link" href="/pengembangan">Apraisal</a> -->
-                    </nav>
-                </div>
-                <!-- Sidenav Accordion (Calendar) -->
-                <a class="nav-link" href="charts.html">
-                    <div class="nav-link-icon"><i data-feather="calendar"></i></div>
-                    HR Kalender
-                </a>
                 <!-- Sidanav Accordion (Recruitment) -->
                 <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseRecruitment" aria-expanded="false" aria-controls="collapseRecruitment">
                     <div class="nav-link-icon"><i data-feather="user-plus"></i></div>
@@ -166,56 +121,28 @@
                         <a class="nav-link" href="/pengembangan">Interview Kandidat</a>
                     </nav>
                 </div>
-                <!-- Sidanav Accordion (Event Meeting) -->
-                <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseMeeting" aria-expanded="false" aria-controls="collapseMeeting">
-                    <div class="nav-link-icon"><i data-feather="monitor"></i></div>
-                    Agenda Meeting
+
+                <div class="sidenav-menu-heading">Pengaturan</div>
+                <!-- Sidenav Accordion (Applications)-->
+                <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseApps" aria-expanded="false" aria-controls="collapseApps">
+                    <div class="nav-link-icon"><i data-feather="sliders"></i></div>
+                    Sesuaikan Pengaturan
                     <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
-                <div class="collapse" id="collapseMeeting" data-bs-parent="#accordionSidenav">
+                <div class="collapse" id="collapseApps" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav">
-                        <a class="nav-link" href="/pengembangan">Events</a>
-                        <a class="nav-link" href="/pengembangan">Meetings</a>
-                    </nav>
-                </div>
-                <!-- Sidanav Accordion (Event Meeting) -->
-                <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseProjectManagement" aria-expanded="false" aria-controls="collapseProjectManagement">
-                    <div class="nav-link-icon"><i data-feather="list"></i></div>
-                    Project Management
-                    <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                </a>
-                <div class="collapse" id="collapseProjectManagement" data-bs-parent="#accordionSidenav">
-                    <nav class="sidenav-menu-nested nav">
-                        <a class="nav-link" href="/pengembangan">Project</a>
-                        <a class="nav-link" href="/pengembangan">Tasks</a>
-                        <a class="nav-link" href="/pengembangan">Client</a>
-                        <a class="nav-link" href="/pengembangan">Invoice</a>
-                        <a class="nav-link" href="/pengembangan">Tax Type</a>
-                    </nav>
-                </div>
-                <!-- Sidenav Accordion (Calendar) -->
-                <a class="nav-link" href="charts.html">
-                    <div class="nav-link-icon"><i data-feather="printer"></i></div>
-                    Support Tickets
-                </a>
-                <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseFileManager" aria-expanded="false" aria-controls="collapseFileManager">
-                    <div class="nav-link-icon"><i data-feather="file"></i></div>
-                    File Manager
-                    <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                </a>
-                <div class="collapse" id="collapseFileManager" data-bs-parent="#accordionSidenav">
-                    <nav class="sidenav-menu-nested nav">
-                        <a class="nav-link" href="/pengembangan">Kategori</a>
-                        <a class="nav-link" href="/pengembangan">Aset</a>
-                    </nav>
+                        <a class="nav-link" href="/setting/dashboard">Judul Dashboard</a>
+                        <a class="nav-link" href="/">Lokasi Absen</a></a>
+                        <a class="nav-link" href="/setting/waktu-absen">Waktu Kerja</a>
                 </div>
             </div>
+
         </div>
         <!-- Sidenav Footer-->
         <div class="sidenav-footer">
             <div class="sidenav-footer-content">
                 <div class="sidenav-footer-subtitle">Logged in as:</div>
-                <div class="sidenav-footer-title">{{ Auth::user()->name }}</div>
+                <div class="sidenav-footer-title">{{ Auth::user()->employee->nama_karyawan }}</div>
             </div>
         </div>
     </nav>

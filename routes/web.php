@@ -10,6 +10,7 @@ use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\Role\RoleController;
 use App\Http\Controllers\SalaryController;
 use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\WaktuAbsenController;
 use App\Models\Departemen;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -29,6 +30,10 @@ Route::group(['middleware' => ['auth', 'audit.trails']], function () {
         route::get('/edit/{id}', [DashboardController::class, 'edit'])->name('edit.dashboard');
         route::patch('/update/{id}', [DashboardController::class, 'update'])->name('update.dashboard');
         route::delete('/destroy/{id}', [DashboardController::class, 'destroy'])->name('destroy.dashboard');
+
+        route::get('/waktu-absen', [WaktuAbsenController::class, 'index']);
+        route::post('/store/waktu-absen', [WaktuAbsenController::class, 'storeWaktuAbsen'])->name('store.waktu_absen');
+        route::patch('/update/waktu-absen/{id}', [WaktuAbsenController::class, 'update'])->name('update.waktu_absen');
     });
 
     Route::group(['prefix' => 'users'], function () {
