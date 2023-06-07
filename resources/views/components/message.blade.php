@@ -32,8 +32,8 @@
 
 
 @if (count($errors) > 0)
-<div class="alert alert-warning alert-dismissible fade show" role="alert">
-  <strong>Something wrong!</strong> {{ $errors->first() }}
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+  <strong>Terjadi kesalahan </strong> {{ $errors->first() }}
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 @endif

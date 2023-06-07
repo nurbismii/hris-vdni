@@ -72,6 +72,7 @@
                 <div class="collapse" id="collapseApps" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav">
                         <a class="nav-link" href="/setting/dashboard">Konten Dashboard</a>
+                        <a class="nav-link" href="">Pengaturan Lokasi</a></a>
                         <a class="nav-link" href="/pengembangan">Pengaturan Email</a>
                 </div>
 
@@ -88,7 +89,7 @@
                         </a>
                         <div class="collapse" id="pagesCollapseCoreHr" data-bs-parent="#accordionSidenavPagesMenu">
                             <nav class="sidenav-menu-nested nav">
-                                <a class="nav-link" href="/contract">PKWT 2 Bulan</a>
+                                <a class="nav-link" href="/contract">PKWT 1</a>
                                 <a class="nav-link" href="/contract">PKWT Lanjutan</a>
                             </nav>
                         </div>
@@ -128,7 +129,7 @@
                 </a>
                 <div class="collapse" id="collapsePayroll" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav">
-                        <a class="nav-link" href="/">Data Slip Gaji</a>
+                        <a class="nav-link" href="/salary/slip-gaji">Data Slip Gaji</a>
                         <a class="nav-link" href="/salary">Impor Slip Gaji</a>
                         <a class="nav-link" href="/salary/history">Riwayat Impor</a>
                     </nav>

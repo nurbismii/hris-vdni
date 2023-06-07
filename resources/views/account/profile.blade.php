@@ -33,8 +33,8 @@
   <div class="container-xl px-4 mt-4">
     <x-nav-account />
     <hr class="mt-0 mb-4" />
+    <x-message />
     <div class="row">
-      <x-message />
       <div class="col-xl-4">
         <div class="card mb-4 mb-xl-0">
           <div class="card-header">Foto Profil</div>
@@ -64,31 +64,51 @@
             <div class="row gx-3 mb-3">
               <div class="col-md-6">
                 <label class="small mb-1">Name</label>
-                <input class="form-control" name="name" type="text" value="{{ Auth::user()->employee->nama_karyawan }}" />
+                <input class="form-control" name="name" type="text" value="{{ Auth::user()->employee->nama_karyawan }}" disabled />
               </div>
               <div class="col-md-6">
                 <label class="small mb-1">Email address</label>
-                <input class="form-control" name="email" type="email" value="{{ Auth::user()->email }}" />
+                <input class="form-control" name="email" type="email" value="{{ Auth::user()->email }}" disabled />
               </div>
             </div>
             <div class="row gx-3 mb-3">
               <div class="col-md-6">
                 <label class="small mb-1">Departemen</label>
-                <input class="form-control" value="" disabled />
+                <input class="form-control" value="{{ Auth::user()->employee->divisi->departemen->departemen }}" disabled />
               </div>
               <div class="col-md-6">
                 <label class="small mb-1">Divisi</label>
-                <input class="form-control" value="" disabled />
+                <input class="form-control" value="{{ Auth::user()->employee->divisi->nama_divisi }}" disabled />
               </div>
             </div>
             <div class="row gx-3 mb-3">
               <div class="col-md-6">
-                <label class="small mb-1">Durasi Kontrak</label>
-                <input class="form-control" value="" disabled />
+                <label class="small mb-1">Jabatan</label>
+                <input class="form-control" value="{{ Auth::user()->employee->jabatan }}" disabled />
               </div>
               <div class="col-md-6">
-                <label class="small mb-1">Kontrak Berakhir</label>
-                <input class="form-control" value="" disabled />
+                <label class="small mb-1">Posisi</label>
+                <input class="form-control" value="{{ Auth::user()->employee->posisi }}" disabled />
+              </div>
+            </div>
+            <div class="row gx-3 mb-3">
+              <div class="col-md-6">
+                <label class="small mb-1">Status Karyawan</label>
+                <input class="form-control" value="{{ Auth::user()->employee->status_karyawan }}" disabled />
+              </div>
+              <div class="col-md-6">
+                <label class="small mb-1">Durasi Kontrak</label>
+                <input class="form-control" value="{{ Auth::user()->contract->lama_kontrak ?? '-' }}" disabled />
+              </div>
+            </div>
+            <div class="row gx-3 mb-3">
+              <div class="col-md-6">
+                <label class="small mb-1">Mulai Kontrak</label>
+                <input class="form-control" value="{{ Auth::user()->contract->tanggal_mulai_kontrak ?? '-' }}" disabled />
+              </div>
+              <div class="col-md-6">
+                <label class="small mb-1">Akhir Kontrak</label>
+                <input class="form-control" value="{{ Auth::user()->contract->tanggal_berakhir_kontrak ?? '-' }}" disabled />
               </div>
             </div>
             <div class="col-lg-6 mb-3">

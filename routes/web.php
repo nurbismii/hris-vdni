@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\ContractController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DepartemenController;
+use App\Http\Controllers\DivisiController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\Role\RoleController;
 use App\Http\Controllers\SalaryController;
@@ -79,14 +80,17 @@ Route::group(['middleware' => ['auth', 'audit.trails']], function () {
         route::get('/invoice/{id}', [AccountController::class, 'show'])->name('invoice');
         route::patch('/update/{id}', [AccountController::class, 'update'])->name('account.update');
         route::get('/contract', [AccountController::class, 'contract'])->name('contract');
-        route::get('/slip-gaji/{employee_id}', [AccountController::class, 'cetak_pdf'])->name('slipgaji');
+        route::get('/slip-gaji/{id}', [AccountController::class, 'cetak_pdf'])->name('slipgaji');
     });
 
     Route::group(['prefix' => 'salary'], function () {
         route::get('/', [SalaryController::class, 'index']);
         route::get('/history', [SalaryController::class, 'history']);
         route::get('/export-template', [SalaryController::class, 'exportSalary'])->name('export.salary');
+        route::get('/slip-gaji', [SalaryController::class, 'slipgaji'])->name('salary.slipgaji');
         route::post('/import-salarys', [SalaryController::class, 'importSalary'])->name('import.salary');
+        route::get('/server-side', [SalaryController::class, 'sideServer']);
+        route::get('/show/{id}', [SalaryController::class, 'show'])->name('payslip.show');
     });
 
     Route::group(['prefix' => 'contract'], function () {
@@ -103,5 +107,12 @@ Route::group(['middleware' => ['auth', 'audit.trails']], function () {
         route::patch('/update/{id}', [DepartemenController::class, 'update'])->name('departemen.update');
         route::delete('/destroy/{id}', [DepartemenController::class, 'destroy'])->name('departemen.destroy');
         route::get('/{id}/divisi', [DepartemenController::class, 'divisi'])->name('departemen.divisi');
+    });
+
+    Route::group(['prefix' => 'divisi'], function () {
+        route::post('/store', [DivisiController::class, 'store'])->name('store.divisi');
+        route::delete('/destroy/{id}', [DivisiController::class, 'destroy'])->name('destroy.divisi');
+        route::patch('/update/{id}', [DivisiController::class, 'update'])->name('update.divisi');
+        route::get('/export-divisi', [DivisiController::class, 'exportDivisi'])->name('export.div');
     });
 });

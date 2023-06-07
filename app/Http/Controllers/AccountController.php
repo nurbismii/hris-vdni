@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AccountUpdateRequest;
 use App\Models\Contract;
+use App\Models\employee;
 use App\Models\salary;
 use App\Models\User;
+use Exception;
 use PDF;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,26 +20,29 @@ class AccountController extends Controller
      */
     public function profile()
     {
-
         return view('account.profile');
     }
 
     public function billing()
     {
-        $datas = salary::where('employee_id', Auth::user()->employee_id)->get();
-        $salary = salary::where('employee_id', Auth::user()->employee_id)->latest()->first('gaji_pokok');
-        $contract = Contract::where('nik', Auth::user()->employee_id)->latest()->first('tanggal_berakhir_kontrak');
-        return view('account.billing', compact('datas', 'salary', 'contract'));
+        try {
+            $datas = salary::orderBy('akhir_periode', 'DESC')->where('employee_id', Auth::user()->nik_karyawan)->get();
+            $salary = salary::orderBy('akhir_periode', 'DESC')->where('employee_id', Auth::user()->nik_karyawan)->latest()->first('gaji_pokok');
+            if (!$salary) {
+                return back()->with('info', 'Informasi yang kamu minta belum tersedia');
+            }
+            $contract = Contract::where('nik', Auth::user()->nik_karyawan)->latest()->first('tanggal_berakhir_kontrak');
+            return view('account.billing', compact('datas', 'salary', 'contract'));
+        } catch (\Throwable $e) {
+            return back()->with('error', 'Terjadi kesalahan');
+        }
     }
 
     public function show($id)
     {
         $data = salary::where('id', $id)->first();
-
         $total_deduction = $data->jht + $data->jp + $data->bpjs_kesehatan + $data->deduction_unpaid_leave + $data->deduction_php21;
-
         $total_diterima = ($data->gaji_pokok + $data->tunjangan_umum + $data->tunjangan_pengawas + $data->tunjangan_transport + $data->tunjangan_mk + $data->tunjangan_koefisien + $data->rapel + $data->insentif + $data->tunjangan_lap);
-
         $gaji_bersih = ($total_diterima - $total_deduction);
 
         return view('account.invoice', compact('data', 'total_diterima', 'total_deduction', 'gaji_bersih'));
@@ -50,7 +55,7 @@ class AccountController extends Controller
             if ($email_exist) {
                 return back()->with('error', 'Email has been used');
             }
-            User::where('employee_id', $id)->update([
+            User::where('nik_karyawan', $id)->update([
                 'name' => $request->name,
                 'email' => $request->email
             ]);
@@ -73,21 +78,15 @@ class AccountController extends Controller
         }
     }
 
-    public function cetak_pdf($employe_id)
+    public function cetak_pdf($id)
     {
-        $data = salary::where('employee_id', $employe_id)->first();
-
+        $data = salary::where('id', $id)->first();
+        $karyawan = employee::where('nik', $data->employee_id)->first();
         $total_deduction = $data->jht + $data->jp + $data->bpjs_kesehatan + $data->deduction_unpaid_leave + $data->deduction_php21;
-
         $total_diterima = ($data->gaji_pokok + $data->tunjangan_umum + $data->tunjangan_pengawas + $data->tunjangan_transport + $data->tunjangan_mk + $data->tunjangan_koefisien + $data->rapel + $data->insentif + $data->tunjangan_lap);
-
         $gaji_bersih = ($total_diterima - $total_deduction);
 
-        $pdf = PDF::loadView('account.invoice_pdf', compact('data', 'gaji_bersih', 'total_diterima', 'total_deduction'));
-        return $pdf->download('slip-gaji' . $data->mulai_periode . ' ' . $data->akhir_periode . '.pdf');
-        try {
-        } catch (\Throwable $e) {
-            return back()->with('error', 'Something wrong!');
-        }
+        $pdf = PDF::loadView('account.invoice_pdf', compact('data', 'gaji_bersih', 'total_diterima', 'total_deduction', 'karyawan'))->setPaper('a4', 'landscape');
+        return $pdf->stream();
     }
 }

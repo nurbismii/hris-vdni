@@ -22,7 +22,7 @@ class CreatePenilaianKontraksTable extends Migration
             $table->string('no_ktp', 20);
             $table->string('departemen');
             $table->string('jabatan');
-            $table->int('lama_kontrak')->nullable();
+            $table->integer('lama_kontrak')->nullable();
             $table->string('status_perkawinan');
             $table->date('tanggal_mulai_kontrak');
             $table->date('tanggal_akhir_kontrak')->nullable();

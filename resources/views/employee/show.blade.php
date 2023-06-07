@@ -45,6 +45,10 @@
             <form action="{{ route('update.employee', $data->nik) }}" method="POST">
               @csrf
               {{ method_field('patch') }}
+              <div class="col-md-12 mb-3">
+                <label class="small mb-1">NO SK PKWTT</label>
+                <input class="form-control" type="text" name="no_sk_pkwtt" value="{{ $data->no_sk_pkwtt }}" />
+              </div>
               <div class="row gx-3 mb-3">
                 <!-- Form Group (first name)-->
                 <div class="col-md-6">
@@ -196,6 +200,19 @@
                 <div class="col-md-6">
                   <label class="small mb-1">Golongan Darah</label>
                   <input class="form-control" type="text" name="golongan_darah" value="{{ $data->golongan_darah }}" />
+                </div>
+              </div>
+
+              <div class="row gx-3 mb-3">
+                <!-- Form Group (phone number)-->
+                <div class="col-md-6">
+                  <label class="small mb-1">Posisi</label>
+                  <input class="form-control" type="text" name="posisi" value="{{ $data->posisi }}" />
+                </div>
+                <!-- Form Group (birthday)-->
+                <div class="col-md-6">
+                  <label class="small mb-1">Jabatan</label>
+                  <input class="form-control" type="text" name="jabatan" value="{{ $data->jabatan }}" />
                 </div>
               </div>
               <!-- Save changes button-->

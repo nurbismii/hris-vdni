@@ -2,123 +2,190 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Print PaySlip</title>
+    <!-- <meta charset="utf-8" /> -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Slip Gaji</title>
+    <style>
+        * {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px;
+        }
+    </style>
+    <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
+    <link href="http://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 
-<body>
-    <div class="container mt-5 mb-5">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="text-center lh-1 mb-2">
-                    <h6 class="fw-bold">PT VDNI</h6>
-                    <span class="fw-normal">SLIP GAJI <br> Periode ({{ date('F Y', strtotime($data->mulai_periode)) }} - {{ date('F Y', strtotime($data->akhir_periode)) }})</span>
-                </div>
-                <div class="row">
-                    <table class="mt-4">
-                        <tbody>
-                            <tr>
-                                <th scope="row">NIK Karyawan</th>
-                                <td>{{ $data->employee_id }}</td>
-                                <td>Total Hari Kerja</td>
-                                <td>{{ $data->jumlah_hari_kerja }}</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">Nama Karyawan</th>
-                                <td>{{ Auth::user()->name }}</td>
-                                <td>Status Gaji</td>
-                                <td>{{ ucfirst($data->status_gaji) }}</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">Departemen</th>
-                                <td>{{ $data->departemen }}</td>
-                                <td>Divisi</td>
-                                <td>{{ ucfirst($data->divisi) }}</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">Posisi</th>
-                                <td>{{ $data->posisi }}</td>
-                                <td>Hour Machine</td>
-                                <td>{{ $data->jumlah_hour_machine }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <table class="mt-4 table table-bordered">
-                        <thead class="small text-uppercase text-muted bg-gradient-primary-to-secondary">
-                            <tr>
-                                <th scope="col">Detail Gaji</th>
-                                <th scope="col">Jumlah</th>
-                                <th scope="col">Deductions</th>
-                                <th scope="col">Jumlah</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row">Gaji</th>
-                                <td>{{ number_format($data->gaji_pokok, 0, ",", ".") }}</td>
-                                <td>BPJS TK JHT</td>
-                                </td>
-                                <td>{{ number_format($data->jht, 0, ",", ".")  }}</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">Tunj. Uang Makan</th>
-                                <td>{{ number_format($data->tunjangan_umum, 0, ",", ".")  }}</td>
-                                <td>BPJS TK JP</td>
-                                <td>{{ number_format($data->jp, 0, ",", ".")  }}</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">Tunj. Pengawas</th>
-                                <td>{{ number_format($data->tunjangan_pengawas, 0, ",", ".")  }}</td>
-                                <td>BPSJ Kesehatan</td>
-                                <td>{{ number_format($data->bpjs_kesehatan, 0, ",", ".")  }}</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">Tunj. Koefisien</th>
-                                <td>{{ number_format($data->tunjugan_koefisien, 0, ",", ".")  }}</td>
-                                <td>Deduction Unpaid Leave</td>
-                                <td>{{ number_format($data->deduction_unpaid_leave, 0, ",", ".")  }}</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">Tunj. Masa Kerja</th>
-                                <td>0.00 </td>
-                                <td>Deduction</td>
-                                <td>{{ number_format($data->tunjangan_mk, 0, ",", ".")  }}</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">Lembur</th>
-                                <td>0.00 </td>
-                                <td>Deduction PPH 21</td>
-                                <td>{{ number_format($data->deduction_php21, 0, ",", ".")  }}</td>
-                            </tr>
-                            <tr>
-                                <th scope="row"></th>
-                                <td></td>
-                                <td>Durasi SP</td>
-                                <td>-</td>
-                            </tr>
-                            <tr class="border-top">
-                                <th scope="row">Total Penghasilan</th>
-                                <td>Rp.{{ number_format($total_diterima) }}</td>
-                                <td>Total Deductions</td>
-                                <td>Rp.{{ number_format($total_deduction) }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <br>
-                        <span class="fw-bold">Gaji Bersih : Rp.{{ number_format($gaji_bersih, 0, ",", ".") }}</span>
+<body class="nav-fixed">
+    <div id="layoutSidenav">
+        <main>
+            <!-- Main page content-->
+            <div class="container-xl px- mt-2">
+                <!-- Invoice-->
+                <div class="card invoice">
+                    <div class="text-center mb-2">
+                        <h4 class="fw-bold">PT VDNI</h4> <br>
+                        <img src="{{ public_path('assets/img/backgrounds/vdni-ikon.png') }}" style="height: 50px;" alt=""><br> <br>
+                        <span class="fw-normal mb-2">SLIP GAJI </span> <br> <br>
+                        <span class="fw-normal mb-2"> Periode ({{ date('F Y', strtotime($data->mulai_periode)) }} - {{ date('F Y', strtotime($data->akhir_periode)) }})</span>
+                    </div>
+                    <div class="card-body p-4 p-md-5">
+                        <!-- Invoice table-->
+                        <div class="table-responsive">
+                            <table class="table table-borderless mb-3">
+                                <tbody>
+                                    <tr>
+                                        <td scope="row">NIK Karyawan</td>
+                                        <td>{{ $data->employee_id }}</td>
+                                        <td>Total Hari Kerja</td>
+                                        <td>{{ $data->jumlah_hari_kerja }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td scope="row">Nama Karyawan</td>
+                                        <td>{{ $karyawan->nama_karyawan }}</td>
+                                        <td>Status Gaji</td>
+                                        <td>{{ ucfirst($data->status_gaji) }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td scope="row">Departemen</td>
+                                        <td style="font-family: 'Ma Shan Zheng', sans-serif">{{ $karyawan->divisi->departemen->departemen }}</td>
+                                        <td>Divisi</td>
+                                        <td style="font-family: 'Ma Shan Zheng', sans-serif">{{ $karyawan->divisi->nama_divisi }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td scope="row">Posisi</td>
+                                        <td>{{ $data->posisi }}</td>
+                                        <td>Hour Machine</td>
+                                        <td>{{ $data->jumlah_hour_machine }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-borderless mb-0">
+                                <thead class="border-bottom">
+                                    <tr class="small text-uppercase text-muted">
+                                        <th scope="col">Detail</th>
+                                        <th class="text-end" scope="col">Jumlah</th>
+                                        <th class="text-end" scope="col">Deduction</th>
+                                        <th class="text-end" scope="col">Jumlah</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Invoice item 1-->
+                                    <tr class="border-bottom">
+                                        <td>
+                                            <div class="fw-bold">Gaji</div>
+                                        </td>
+                                        <td class="text-end fw-bold">Rp{{ number_format($data->gaji_pokok, 0, ",", ".") }}</td>
+                                        <td class="text-end fw-bold">BPJS TK JHT</td>
+                                        <td class="text-end fw-bold">Rp{{ number_format($data->jht, 0, ",", ".")  }}</td>
+                                    </tr>
+                                    <!-- Invoice item 2-->
+                                    <tr class="border-bottom">
+                                        <td>
+                                            <div class="fw-bold">Tunj. Uang Makan</div>
+                                        </td>
+                                        <td class="text-end fw-bold">Rp{{ number_format($data->tunjangan_umum, 0, ",", ".")  }}</td>
+                                        <td class="text-end fw-bold">BPJS TK JP</td>
+                                        <td class="text-end fw-bold">Rp{{ number_format($data->jp, 0, ",", ".")  }}</td>
+                                    </tr>
+                                    <!-- Invoice item 3-->
+                                    <tr class="border-bottom">
+                                        <td>
+                                            <div class="fw-bold">Tunj. Pengawas</div>
+                                        </td>
+                                        <td class="text-end fw-bold">Rp{{ number_format($data->tunjangan_pengawas, 0, ",", ".")  }}</td>
+                                        <td class="text-end fw-bold">BPSJ Kesehatan</td>
+                                        <td class="text-end fw-bold">Rp{{ number_format($data->bpjs_kesehatan, 0, ",", ".")  }}</td>
+                                    </tr>
+                                    <!-- Invoice item 4-->
+                                    <tr class="border-bottom">
+                                        <td>
+                                            <div class="fw-bold">Tunj. Koefisien</div>
+                                        </td>
+                                        <td class="text-end fw-bold">Rp{{ number_format($data->tunjugan_koefisien, 0, ",", ".")  }}</td>
+                                        <td class="text-end fw-bold">Deduction Unpaid Leave</td>
+                                        <td class="text-end fw-bold">Rp{{ number_format($data->deduction_unpaid_leave, 0, ",", ".")  }}</td>
+                                    </tr>
+                                    <tr class="border-bottom">
+                                        <td>
+                                            <div class="fw-bold">Tunj. Masa Kerja</div>
+                                        </td>
+                                        <td class="text-end fw-bold">Rp{{ number_format($data->tunjangan_mk, 0, ",", ".")  }}</td>
+                                        <td class="text-end fw-bold">Deduction</td>
+                                        <td class="text-end fw-bold">Rp{{ number_format($data->tunjangan_mk, 0, ",", ".")  }}</td>
+                                    </tr>
+                                    <tr class="border-bottom">
+                                        <td>
+                                            <div class="fw-bold">Lembur</div>
+                                        </td>
+                                        <td class="text-end fw-bold">Rp{{ number_format($data->deduction_php21, 0, ",", ".")  }}</td>
+                                        <td class="text-end fw-bold">Deduction PPH 21</td>
+                                        <td class="text-end fw-bold">Rp{{ number_format($data->deduction_php21, 0, ",", ".")  }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-end pb-0" colspan="3">
+                                            <div class="text-uppercase small fw-700 text-muted">Total Deduction:</div>
+                                        </td>
+                                        <td class="text-end pb-0">
+                                            <div class="h5 mb-0 fw-700">Rp{{ number_format($total_deduction, 0 , ",", ".") }}</div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-end pb-0" colspan="3">
+                                            <div class="text-uppercase small fw-700 text-muted">Total Penghasilan:</div>
+                                        </td>
+                                        <td class="text-end pb-0">
+                                            <div class="h5 mb-0 fw-700">Rp{{ number_format($total_diterima, 0, ",", ".") }}</div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-end pb-0" colspan="3">
+                                            <div class="text-uppercase small fw-700 text-muted">Gaji Bersih:</div>
+                                        </td>
+                                        <td class="text-end pb-0">
+                                            <div class="h5 mb-0 fw-700 text-green">Rp{{ number_format($gaji_bersih, 0, ",", ".") }}</div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card-footer border-top-0">
+                        <div class="table-responsive">
+                            <table class="table table-borderless mb-3">
+                                <tbody>
+                                    <tr>
+                                        <td class="small text-muted text-uppercase fw-700 mb-1">To</td>
+                                        <td class="small text-muted text-uppercase fw-700 mb-1">From</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="h6 mb-1">{{ $karyawan->nama_karyawan }}</td>
+                                        <td class="h6 mb-1">PT VDNI</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="small">1234 Company Dr.</td>
+                                        <td class="small">1234 Company Dr.</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="small">Yorktown, MA 39201</td>
+                                        <td class="small">Yorktown, MA 39201</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
+        </main>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="js/scripts.js"></script>
 </body>
 
 </html>

@@ -11,12 +11,39 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
+use Yajra\DataTables\DataTables;
 
 class SalaryController extends Controller
 {
     public function index()
     {
         return view('payslip.index');
+    }
+
+    public function slipgaji()
+    {
+        return view('payslip.slipgaji');
+    }
+
+    public function sideServer(Request $request)
+    {
+        $data = salary::with('employee');
+        return DataTables::of($data)->addColumn('action', function ($data) {
+            return view('payslip._action', [
+                'data' => $data,
+                'url_show' => route('payslip.show', $data->id),
+            ]);
+        })->addIndexColumn()->rawColumns(['action'])->make(true);
+    }
+
+    public function show($id)
+    {
+        $data = salary::findOrFail($id);
+        $total_deduction = $data->jht + $data->jp + $data->bpjs_kesehatan + $data->deduction_unpaid_leave + $data->deduction_php21;
+        $total_diterima = ($data->gaji_pokok + $data->tunjangan_umum + $data->tunjangan_pengawas + $data->tunjangan_transport + $data->tunjangan_mk + $data->tunjangan_koefisien + $data->rapel + $data->insentif + $data->tunjangan_lap);
+        $gaji_bersih = ($total_diterima - $total_deduction);
+
+        return view('payslip.show', compact('data', 'total_diterima', 'total_deduction', 'gaji_bersih'));
     }
 
     public function history()

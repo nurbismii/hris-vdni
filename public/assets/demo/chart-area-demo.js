@@ -72,7 +72,7 @@ var myLineChart = new Chart(ctx, {
                 0,
                 0,
                 0,
-                0
+                0,
             ]
         }]
     },
@@ -96,16 +96,17 @@ var myLineChart = new Chart(ctx, {
                     drawBorder: false
                 },
                 ticks: {
-                    maxTicksLimit: 7
+                    maxTicksLimit: 12
                 }
             }],
             yAxes: [{
                 ticks: {
-                    maxTicksLimit: 5,
+                    maxTicksLimit: 12,
                     padding: 10,
                     // Include a dollar sign in the ticks
                     callback: function(value, index, values) {
-                        return "EMP " + number_format(value);
+                        // return "Rec : " + number_format(value);
+                        return number_format(value);
                     }
                 },
                 gridLines: {

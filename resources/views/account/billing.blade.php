@@ -33,9 +33,8 @@
   <!-- Main page content-->
   <div class="container-xl px-4 mt-4">
     <!-- Account page navigation-->
-    <x-nav-account />
-
     <hr class="mt-0 mb-4" />
+    <x-nav-account />
     <x-message />
     <div class="row">
       <div class="col-lg-6 mb-4">
@@ -85,8 +84,8 @@
               @foreach($datas as $data)
               <tr>
                 <td><a href="{{ route('invoice', $data->id) }}">#{{ strtoupper(substr($data->id, 0, 4)) }} </a></td>
-                <td>{{ date('d F Y', strtotime($data->created_at)) }}</td>
-                <td>Rp.{{ number_format($salary->gaji_pokok) ?? '#####'}}</td>
+                <td>{{ date('d F Y', strtotime($data->akhir_periode)) }}</td>
+                <td>Rp.{{ number_format($data->gaji_pokok, 0, ".", ",") ?? '#####'}}</td>
                 <td><span class="badge bg-success">Success</span></td>
               </tr>
               @endforeach

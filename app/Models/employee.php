@@ -17,4 +17,9 @@ class employee extends Model
     {
         return $this->hasOne(user::class, 'nik_karyawan', 'nik');
     }
+
+    public function divisi()
+    {
+        return $this->hasOne(Divisi::class, 'id', 'divisi_id');
+    }
 }

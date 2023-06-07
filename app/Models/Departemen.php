@@ -11,4 +11,5 @@ class Departemen extends Model
 
     protected $table = 'departemens';
     protected $guarded = [];
+
 }

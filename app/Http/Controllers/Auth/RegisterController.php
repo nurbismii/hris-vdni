@@ -49,11 +49,11 @@ class RegisterController extends Controller
             if ($request->password == $request->password_confirm) {
                 $data_user = array(
                     'id' => Uuid::uuid4()->getHex(),
-                    'employee_id' => $request->employee_id,
+                    'nik_karyawan' => $request->employee_id,
                     'name' => $employee->name,
                     'email' => $request->email,
                     'password' => Hash::make($request->password),
-                    'status' => 'Not Active',
+                    'status' => 'Tidak Aktif',
                 );
                 User::create($data_user);
                 return redirect('login')->with('success', 'Akun berhasil dibuat, silahkan login');

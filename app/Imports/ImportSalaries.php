@@ -20,10 +20,8 @@ class ImportSalaries implements ToCollection, WithHeadingRow, WithValidation
             $datas[] = [
                 'id' => Uuid::uuid4()->getHex(),
                 'employee_id' => $collect['nik'],
-                'departemen' => $collect['departemen'],
-                'divisi' => $collect['divisi'],
                 'posisi' => $collect['posisi'],
-                'durasi_sp' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($collect['durasi_sp'])) ?? null,
+                'durasi_sp' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(intVal($collect['durasi_sp']))) ?? null,
                 'status_gaji' => $collect['status_gaji'],
                 'jumlah_hari_kerja' => $collect['jumlah_hari_kerja'],
                 'jumlah_hour_machine' => $collect['jumlah_hour_machine'],
@@ -47,12 +45,12 @@ class ImportSalaries implements ToCollection, WithHeadingRow, WithValidation
                 'total_diterima' => $collect['total_diterima'],
                 'account_number' => $collect['bank_number'],
                 'bank' => $collect['bank_name'],
-                'mulai_periode' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($collect['mulai_periode'])),
-                'akhir_periode' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($collect['akhir_periode'])),
+                'mulai_periode' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(intVal($collect['mulai_periode']))),
+                'akhir_periode' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(intVal($collect['akhir_periode']))),
                 'deduction_pph21' => $collect['deduction_pph21'],
                 'thr' => $collect['thr'],
                 'note' => $collect['note'],
-                'created_by' => Auth::user()->employee_id
+                'created_by' => Auth::user()->nik_karyawan
             ];
         }
 

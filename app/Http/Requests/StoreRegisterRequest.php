@@ -24,7 +24,7 @@ class StoreRegisterRequest extends FormRequest
     public function rules()
     {
         return [
-            'employee_id' => 'required|unique:users,employee_id',
+            'employee_id' => 'required|unique:users,nik_karyawan',
             'email' => 'required|unique:users,email',
             'password' => 'required',
             'password_confirm' => 'required|same:password',

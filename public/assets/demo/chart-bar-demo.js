@@ -33,7 +33,7 @@ var ctx = document.getElementById("myBarChart");
 var myBarChart = new Chart(ctx, {
     type: "bar",
     data: {
-        labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
         datasets: [{
             label: "Revenue",
             backgroundColor: "rgba(0, 97, 242, 1)",
@@ -74,7 +74,8 @@ var myBarChart = new Chart(ctx, {
                     padding: 10,
                     // Include a dollar sign in the ticks
                     callback: function(value, index, values) {
-                        return "EMP " + number_format(value);
+                        // return "Karyawan : " + number_format(value);
+                        return number_format(value);
                     }
                 },
                 gridLines: {

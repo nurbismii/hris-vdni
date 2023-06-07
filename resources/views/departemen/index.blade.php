@@ -37,6 +37,7 @@
                 <table id="datatablesSimple">
                     <thead>
                         <tr>
+                            <th>No</th>
                             <th>Departemen</th>
                             <th>Kepala Dept</th>
                             <th>No Telpon</th>
@@ -47,6 +48,7 @@
                     <tbody>
                         @foreach($data as $row)
                         <tr>
+                            <td>{{ ++$no }}</td>
                             <td><a href="{{ url('departemen/' . $row->id . '/divisi')}}">{{ $row->departemen }}</a></td>
                             <td>{{ $row->kepala_dept }}</td>
                             <td>{{ $row->no_telp_departemen }}</td>

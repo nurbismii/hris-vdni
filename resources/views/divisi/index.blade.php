@@ -1,4 +1,4 @@
-<x-app-layout title="Users">
+<x-app-layout title="Departemen | Divisi">
     @push('styles')
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css" rel="stylesheet" />
@@ -20,6 +20,14 @@
                         </h1>
                     </div>
                     <div class="col-12 col-xl-auto mb-3">
+                        <a class="btn btn-sm btn-light text-primary" href="/departemen">
+                            <i class="me-1" data-feather="arrow-left"></i>
+                            Kembali
+                        </a>
+                        <a class="btn btn-sm btn-light text-primary" href="{{ route('export.div') }}">
+                            <i class="me-1" data-feather="printer"></i>
+                            Export Divisi
+                        </a>
                         <a class="btn btn-sm btn-light text-primary" data-bs-toggle="modal" data-bs-target="#addDiv">
                             <i class="me-1" data-feather="plus"></i>
                             Tambah Divisi
@@ -31,20 +39,21 @@
     </header>
     <!-- Main page content-->
     <div class="container-fluid px-4">
+        <x-message />
         <div class="card bg-gradient-primary-to-secondary mb-4">
             <div class="card-body">
                 <div class="d-flex align-items-center justify-content-between">
                     <div class="me-3">
-                        <div class="small text-white-50">Nama Departemen :</div>
+                        <div class="small text-white-50">DEPARTEMEN 部门 :</div>
                         <div class="h1 text-white">{{ $data->departemen }}</div>
                     </div>
-                    <div class="text-white">20 Divisi</div>
+                    <div class="text-white">{{ count($divisi) }} Divisi</div>
                 </div>
             </div>
         </div>
         <div class="card mb-2">
             <div class="card-body">
-                <div class="small text-muted mb-2">Pengelola/Admin Departemen : </div>
+                <div class="small text-muted mb-2">Penanggung Jawab : </div>
                 <div class="row">
                     <div class="col-lg-4">
                         <div class="d-flex align-items-center">
@@ -73,17 +82,22 @@
                 <table id="datatablesSimple">
                     <thead>
                         <tr>
+                            <th>No</th>
                             <th>Divisi</th>
-                            <th>Jabatan</th>
-                            <th></th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach($divisi as $row)
                         <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <th>{{ ++$no }}</th>
+                            <td>{{ $row->nama_divisi }}</td>
+                            <td>
+                                <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" data-bs-toggle="modal" data-bs-target="#editDiv{{$row->id}}"><i data-feather="edit"></i></a>
+                                <a type="submit" class="btn btn-datatable btn-icon btn-transparent-dark" data-bs-toggle="modal" data-bs-target="#deleteDiv{{$row->id}}"><i data-feather="trash-2"></i></a>
+                            </td>
                         </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
@@ -91,27 +105,24 @@
     </div>
 
     <div class="modal fade" id="addDiv" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Departemen</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Divisi</h5>
                     <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('departemen.store') }}" method="POST" class="nav flex-column" id="stickyNav">
+                <form action="{{ route('store.divisi') }}" method="POST" class="nav flex-column" id="stickyNav">
                     <div class="modal-body">
                         @csrf
                         <div class="after-add-more">
                             <div class="row gx-3 mb-3">
-                                <div class="col-md-4">
+                                <div class="col-md-12">
                                     <label class="small mb-1">Divisi</label>
-                                    <input type="text" class="form-control" name="departemen[]">
+                                    <input type="text" class="form-control" name="divisi[]">
+                                    <input type="hidden" name="departemen_id" value="{{ $data->id }}">
                                 </div>
-                                <div class="col-md-6">
-                                    <label class="small mb-1">Jabatan</label>
-                                    <input type="text" class="form-control" name="status_pengeluaran[]">
-                                </div>
-                                <div class="col-md-2 mt-3">
-                                    <label class="small mt-5"></label>
+                                <div class="col-md-2">
+                                    <label class="small"></label>
                                     <button type="button" class="btn btn-sm btn-success add-more">
                                         <i class="me-1" data-feather="plus"></i>Tambah
                                     </button>
@@ -132,16 +143,13 @@
     <div class="copy invisible">
         <div class="hide-me">
             <div class="row gx-3 mb-3">
-                <div class="col-md-4">
+                <div class="col-md-12">
                     <label class="small mb-1">Divisi</label>
-                    <input type="text" class="form-control" name="departemen[]">
+                    <input type="text" class="form-control" name="divisi[]">
+                    <input type="hidden" name="departemen_id" value="{{ $data->id }}">
                 </div>
-                <div class="col-md-6">
-                    <label class="small mb-1">Jabatan</label>
-                    <input type="text" class="form-control" name="status_pengeluaran[]">
-                </div>
-                <div class="col-md-2 mt-3">
-                    <label class="small mt-5"></label>
+                <div class="col-md-2">
+                    <label class="small"></label>
                     <button type="button" class="btn btn-sm btn-danger remove">
                         <i class="me-1" data-feather="trash"></i>Hapus
                     </button>
@@ -149,6 +157,62 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal delete user -->
+    @foreach($divisi as $data)
+    <div class="modal fade" id="deleteDiv{{$data->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Konfirmasi Penghapusan</h5>
+                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{{ route('destroy.divisi', $data->id) }}" method="POST" enctype="application/x-www-form-urlencoded" class="nav flex-column" id="stickyNav">
+                    <div class="modal-body">
+                        @csrf
+                        {{ method_field('delete') }}
+                        Yakin ingin menghapus divisi ini ({{ $data->nama_divisi }})?
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">No</button>
+                        <button class="btn btn-primary" type="submit">Yes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    @endforeach
+
+    <!-- Modal edit divisi -->
+    @foreach($divisi as $data)
+    <div class="modal fade" id="editDiv{{$data->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Divisi</h5>
+                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{{ route('update.divisi', $data->id) }}" method="POST" enctype="application/x-www-form-urlencoded" class="nav flex-column" id="stickyNav">
+                    @csrf
+                    {{ method_field('patch') }}
+                    <div class="modal-body">
+                        <div class="row gx-3 mb-3">
+                            <div class="col-md-12">
+                                <label class="small mb-1">Divisi</label>
+                                <input type="text" class="form-control" name="divisi" value="{{ $data->nama_divisi }}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">No</button>
+                        <button class="btn btn-primary" type="submit">Yes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    @endforeach
+    <!-- Modal edit divisi -->
 
     @push('scripts')
     <script type="text/javascript">

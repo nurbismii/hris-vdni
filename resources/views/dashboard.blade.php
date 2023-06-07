@@ -39,14 +39,14 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="me-3">
-                                <div class="text-white-75 small">Recruitment (Monthly)</div>
-                                <div class="text-lg fw-bold">250</div>
+                                <div class="text-white-75 small">Rekrutmen (Bulanan)</div>
+                                <div class="text-lg fw-bold">{{ $total_pwkt1_perbulan }}</div>
                             </div>
-                            <i class="feather-xl text-white-50" data-feather="calendar"></i>
+                            <i class="feather-xl text-white-50" data-feather="user-plus"></i>
                         </div>
                     </div>
                     <div class="card-footer d-flex align-items-center justify-content-between small">
-                        <a class="text-white stretched-link" href="#!">View Report</a>
+                        <a class="text-white stretched-link" href="/contract">Selengkapnya...</a>
                         <div class="text-white"><i class="fas fa-angle-right"></i></div>
                     </div>
                 </div>
@@ -56,14 +56,14 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="me-3">
-                                <div class="text-white-75 small">Training (Annual)</div>
-                                <div class="text-lg fw-bold">2000</div>
+                                <div class="text-white-75 small">Total Karyawan</div>
+                                <div class="text-lg fw-bold">{{ $total_karyawan }}</div>
                             </div>
-                            <i class="feather-xl text-white-50" data-feather="user"></i>
+                            <i class="feather-xl text-white-50" data-feather="users"></i>
                         </div>
                     </div>
                     <div class="card-footer d-flex align-items-center justify-content-between small">
-                        <a class="text-white stretched-link" href="#!">View Report</a>
+                        <a class="text-white stretched-link" href="/employees">Selengkapnya...</a>
                         <div class="text-white"><i class="fas fa-angle-right"></i></div>
                     </div>
                 </div>
@@ -90,8 +90,8 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="me-3">
-                                <div class="text-white-75 small">Pending Requests</div>
-                                <div class="text-lg fw-bold">17</div>
+                                <div class="text-white-75 small">Pengguna</div>
+                                <div class="text-lg fw-bold">{{ $total_pengguna }}</div>
                             </div>
                             <i class="feather-xl text-white-50" data-feather="message-circle"></i>
                         </div>

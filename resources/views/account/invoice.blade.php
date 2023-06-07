@@ -1,4 +1,4 @@
-<x-app-layout title="Invoice">
+<x-app-layout title="Slip-Gaji">
 
     @push('styles')
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
@@ -21,13 +21,13 @@
                         </h1>
                     </div>
                     <div class="col-12 col-xl-auto mb-3">
-                        <a class="btn btn-sm btn-light text-blue" href="{{ route('slipgaji', Auth::user()->employee_id) }}">
+                        <a class="btn btn-sm btn-light text-blue" href="/account/information">
+                            <i class="me-1" data-feather="arrow-left"></i>
+                            Kembali
+                        </a>
+                        <a class="btn btn-sm btn-light text-blue" href="{{ route('slipgaji', $data->id) }}">
                             <i class="me-1" data-feather="printer"></i>
                             Print
-                        </a>
-                        <a class="btn btn-sm btn-light text-blue" href="/account/information">
-                            <i class="me-1" data-feather="x"></i>
-                            Tutup
                         </a>
                     </div>
                 </div>
@@ -39,57 +39,39 @@
     <div class="container-xl px-4 mt-4">
         <!-- Invoice-->
         <div class="card invoice">
-            <div class="card-header p-4 p-md-5 border-bottom-0 bg-gradient-primary-to-secondary text-white-50">
-                <div class="row justify-content-between align-items-center">
-                    <div class="col-12 col-lg-auto mb-5 mb-lg-0 text-center text-lg-start">
-                        <!-- Invoice branding-->
-                        <img class="invoice-brand-img rounded-circle mb-4" src="{{ asset('assets/img/illustrations/profiles/profile-4.png') }}" alt="" />
-                        <div class="h2 text-white mb-0">{{ Auth::user()->name }} </div>
-                        {{ Auth::user()->employee_id}} <br />
-                        {{ $data->departemen  }} <br />
-                        {{ $data->divisi }} - {{ $data->posisi }} <br />
-                    </div>
-                    <div class="col-12 col-lg-auto text-center text-lg-end">
-                        <!-- Invoice details-->
-                        <div class="h3 text-white">Invoice</div>
-                        #{{ strtoupper(substr($data->id, 0, 5)) }}
-                        <br />
-                        SLIP GAJI FEBRUARY
-                        <br />
-                        ( Periode {{ date('d F', strtotime($data->mulai_periode)) }} - {{ date('d F', strtotime($data->akhir_periode)) }} )
-                    </div>
+            <div class="card-body p-2 p-md-4">
+                <div class="text-center lh-1 mb-2">
+                    <h4 class="fw-bold">PT VDNI</h4> <br>
+                    <img src="{{ asset('assets/img/backgrounds/vdni-ikon.png') }}" style="height: 50px;" alt=""><br> <br>
+                    <span class="fw-normal mb-2">SLIP GAJI </span> <br> <br>
+                    <span class="fw-normal"> Periode ({{ date('F Y', strtotime($data->mulai_periode)) }} - {{ date('F Y', strtotime($data->akhir_periode)) }})</span>
                 </div>
-            </div>
-            <div class="card-body p-4 p-md-5">
                 <div class="table-responsive">
                     <table class="table table-borderless mb-0">
                         <tbody>
-                            <!-- Invoice item 1-->
-                            <tr class="border-bottom">
-                                <td>
-                                    <div class="fw-bold">Total Hari Kerja</div>
-                                </td>
-                                <td class="text-end fw-bold">:</td>
-                                <td class="text-end fw-bold">{{ $data->jumlah_hari_kerja }}</td>
-                                <td class="text-end fw-bold">Hari</td>
+                            <tr>
+                                <th scope="row">NIK Karyawan</th>
+                                <td>{{ $data->employee_id }}</td>
+                                <td>Total Hari Kerja</td>
+                                <td>{{ $data->jumlah_hari_kerja }}</td>
                             </tr>
-                            <!-- Invoice item 2-->
-                            <tr class="border-bottom">
-                                <td>
-                                    <div class="fw-bold">Status Gaji</div>
-                                </td>
-                                <td class="text-end fw-bold">:</td>
-                                <td class="text-end fw-bold"></td>
-                                <td class="text-end fw-bold">{{ ucfirst($data->status_gaji) }}</td>
+                            <tr>
+                                <th scope="row">Nama Karyawan</th>
+                                <td>{{ Auth::user()->employee->nama_karyawan }}</td>
+                                <td>Status Gaji</td>
+                                <td>{{ ucfirst($data->status_gaji) }}</td>
                             </tr>
-                            <!-- Invoice item 3-->
-                            <tr class="border-bottom">
-                                <td>
-                                    <div class="fw-bold">Total Machine Hour</div>
-                                </td>
-                                <td class="text-end fw-bold">:</td>
-                                <td class="text-end fw-bold">{{ $data->jumlah_hour_machine }}</td>
-                                <td class="text-end fw-bold">Hour</td>
+                            <tr>
+                                <th scope="row">Departemen</th>
+                                <td>{{ Auth::user()->employee->divisi->departemen->departemen }}</td>
+                                <td>Divisi</td>
+                                <td>{{ ucfirst(Auth::user()->employee->divisi->nama_divisi) }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Posisi</th>
+                                <td>{{ $data->posisi }}</td>
+                                <td>Hour Machine</td>
+                                <td>{{ $data->jumlah_hour_machine }}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -248,14 +230,14 @@
                         <!-- Invoice - sent to info-->
                         <div class="small text-muted text-uppercase fw-700 mb-2">Transfer to :</div>
                         <div class="h6 mb-1">{{ Auth::user()->name }}</div>
-                        <div class="small">PT. VDNI</div>
+                        <div class="small">PT VDNI</div>
                         <div class="small">Puuruy, Kec. Bondoala, Kabupaten Konawe, Sulawesi Tenggara 93354</div>
                     </div>
                     <div class="col-md-6 col-lg-3 mb-4 mb-lg-0">
                         <!-- Invoice - sent from info-->
                         <div class="small text-muted text-uppercase fw-700 mb-2">Created By : </div>
                         <div class="h6 mb-1"> </div>
-                        <div class="small">PT. VDNI</div>
+                        <div class="small">PT VDNI</div>
                         <div class="small">Payroll</div>
                     </div>
                     <div class="col-lg-6">

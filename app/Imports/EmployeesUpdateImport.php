@@ -24,18 +24,17 @@ class EmployeesUpdateImport implements ToCollection, WithHeadingRow, WithValidat
         foreach ($collection as $collect) {
 
             $data = $this->employee->where('nik', $collect['nik'])->first();
-
             $data->where('nik', $collect['nik'])->update([
                 'no_sk_pkwtt' => $collect['no_sk_pkwtt'],
                 'nama_karyawan' => $collect['nama_karyawan'],
                 'nama_ibu_kandung' => $collect['nama_ibu_kandung'],
                 'agama' => $collect['agama'],
-                'no_ktp' => $collect['no_ktp'],
-                'no_kk' => $collect['no_kk'],
+                'no_ktp' => str_replace(["'", "`"], "", $collect['no_ktp']),
+                'no_kk' => str_replace(["'", "`"], "", $collect['no_kk']),
                 'jenis_kelamin' => $collect['jenis_kelamin'],
                 'status_perkawinan' => $collect['status_perkawinan'],
                 'status_karyawan' => $collect['status_karyawan'],
-                'status_resign' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(intVal($collect['status_resign']))) ?? '',
+                'tgl_resign' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(intVal($collect['tgl_resign']))) ?? null,
                 'no_telp' => $collect['no_telp'],
                 'tgl_lahir' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(intVal($collect['tgl_lahir']))),
                 'area_kerja' => $collect['area_kerja'],
@@ -46,6 +45,10 @@ class EmployeesUpdateImport implements ToCollection, WithHeadingRow, WithValidat
                 'bpjs_tk' => $collect['bpjs_tk'],
                 'vaksin' => $collect['vaksin'],
                 'jam_kerja' => $collect['jam_kerja'],
+                'status_resign' => $collect['status_resign'],
+                'posisi' => $collect['posisi'],
+                'jabatan' => $collect['jabatan'],
+                'divisi_id' => $collect['divisi_id']
             ]);
         }
     }
@@ -54,15 +57,18 @@ class EmployeesUpdateImport implements ToCollection, WithHeadingRow, WithValidat
     {
         return array(
             'nik' => 'required',
-            'no_ktp' => 'required',
+            'no_ktp' => 'required|min:15|max:16',
+            'no_kk' => 'min:15|max:16'
         );
     }
 
     public function customValidationMessages()
     {
         return array(
-            'nik.required' => 'NIK must be filled',
-            'no_ktp.required' => 'KTP must be filled',
+            'nik.required' => 'NIK Karyawan tidak boleh kosong',
+            'no_ktp.required' => 'NO KTP tidak boleh kosong',
+            'no_kk.min' => 'NO KTP tidak boleh kurang dari 15 angka',
+            'no_kk.max' => 'NO KK tidak boleh lebih dari 16 angka'
         );
     }
 }

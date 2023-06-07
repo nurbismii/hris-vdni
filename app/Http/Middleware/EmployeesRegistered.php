@@ -12,7 +12,7 @@ class EmployeesRegistered
     public function handle(Request $request, Closure $next)
     {
         $employe_exist = employee::where('nik', $request->employee_id)->first();
-        $user_exist = User::where('employee_id', $request->employee_id)->first();
+        $user_exist = User::where('nik_karyawan', $request->employee_id)->first();
 
         if ($user_exist) {
             return back()->with('error', 'NIK Karyawan telah digunakan');

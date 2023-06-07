@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreDepartemenRequest;
 use App\Models\Departemen;
+use App\Models\Divisi;
 use Illuminate\Http\Request;
 
 class DepartemenController extends Controller
@@ -16,7 +17,7 @@ class DepartemenController extends Controller
     public function index()
     {
         $data = Departemen::all();
-        return view('departemen.index', compact('data'));
+        return view('departemen.index', compact('data'))->with('no');
     }
 
     /**
@@ -65,6 +66,7 @@ class DepartemenController extends Controller
     public function divisi($id)
     {
         $data = Departemen::where('id', $id)->first();
-        return view('divisi.index', compact('data'));
+        $divisi = Divisi::where('departemen_id', $data->id)->get();
+        return view('divisi.index', compact('data', 'divisi'))->with('no');
     }
 }

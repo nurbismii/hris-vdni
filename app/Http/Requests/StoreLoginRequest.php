@@ -40,7 +40,7 @@ class StoreLoginRequest extends FormRequest
     public function messages()
     {
         return [
-            'required' => ':attribute must be filled'
+            'required' => ':attribute harus diisi!'
         ];
     }
 }

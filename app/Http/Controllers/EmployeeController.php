@@ -45,7 +45,7 @@ class EmployeeController extends Controller
     public function store(StoreEmployeeRequest $request)
     {
         employee::create($request->all());
-        return back()->with('success', 'Employee has been added');
+        return back()->with('success', 'Karyawan berhasil ditambahkan');
     }
 
     public function show($nik)
@@ -55,17 +55,7 @@ class EmployeeController extends Controller
             $level_vaksin = $data->vaksin == '0' ? 'Belum Vaksin' : ($data->vaksin == '1' ? 'Vaksin 1' : ($data->vaksin == '2' ? 'Vaksin 2' : ($data->vaksin == '3' ? 'Booster 1' : ($data->vaksin == '4' ? 'Booster 2' : 'Tidak diketahui'))));
             return view('employee.show', compact('data', 'level_vaksin'));
         } catch (\Throwable $e) {
-            return back()->with('error', 'Something wrong!');
-        }
-    }
-
-    public function edit($id)
-    {
-        try {
-            $data = employee::where('nik', $id)->first();
-            return view('employee.edit' . compact('data'));
-        } catch (\Throwable  $e) {
-            return back()->with('error', 'Something wrong!');
+            return back()->with('error', 'Terjadi kesalahan');
         }
     }
 
@@ -73,26 +63,29 @@ class EmployeeController extends Controller
     {
         try {
             employee::where('nik', $id)->update([
-                'no_sk_pkwtt' => $request->no_sk_pkwtt,
-                'nama_karyawan' => $request->nama_karyawan,
-                'nama_ibu_kandung' => $request->nama_ibu_kandung,
-                'agama' => $request->agama,
-                'no_ktp' => $request->no_ktp,
-                'no_kk' => $request->no_kk,
-                'jenis_kelamin' => $request->jenis_kelamin,
-                'status_perkawinan' => $request->status_perkawinan,
-                'status_karyawan' => $request->status_karyawan,
-                'status_resign' => $request->status_resign,
-                'no_telp' => $request->no_telp,
-                'tgl_lahir' => $request->tgl_lahir,
-                'area_kerja' => $request->area_kerja,
-                'golongan_darah' => $request->golongan_darah,
-                'entry_date' => $request->entry_date,
-                'npwp' => $request->npwp,
-                'bpjs_kesehatan' => $request->bpjs_kesehatan,
-                'bpjs_tk' => $request->bpjs_tk,
-                'vaksin' => $request->vaksin,
-                'jam_kerja' => $request->jam_kerja,
+                'no_sk_pkwtt' => $request['no_sk_pkwtt'],
+                'nama_karyawan' => $request['nama_karyawan'],
+                'nama_ibu_kandung' => $request['nama_ibu_kandung'],
+                'agama' => $request['agama'],
+                'no_ktp' => $request['no_ktp'],
+                'no_kk' => $request['no_kk'],
+                'jenis_kelamin' => $request['jenis_kelamin'],
+                'status_perkawinan' => $request['status_perkawinan'],
+                'status_karyawan' => $request['status_karyawan'],
+                'tgl_resign' => $request->tgl_resign ?? null,
+                'no_telp' => $request['no_telp'],
+                'tgl_lahir' => $request->tgl_lahir ?? null,
+                'area_kerja' => $request['area_kerja'],
+                'golongan_darah' => $request['golongan_darah'],
+                'entry_date' => $request->entry_date ?? null,
+                'npwp' => $request['npwp'],
+                'bpjs_kesehatan' => $request['bpjs_kesehatan'],
+                'bpjs_tk' => $request['bpjs_tk'],
+                'vaksin' => $request['vaksin'],
+                'jam_kerja' => $request['jam_kerja'],
+                'status_resign' => $request['status_resign'],
+                'posisi' => $request['posisi'],
+                'jabatan' => $request['jabatan'],
             ]);
             return redirect('employees')->with('success', 'Data karyawan berhasil diperbarui');
         } catch (\Throwable $e) {
@@ -104,9 +97,9 @@ class EmployeeController extends Controller
     {
         try {
             employee::where('nik', $id)->delete();
-            return back()->with('success', 'Employee has been deleted');
+            return back()->with('success', 'Karyawan berhasil dihapus');
         } catch (\Throwable $e) {
-            return back()->with('error', 'Something wrong!');
+            return back()->with('error', 'Terjadi kesalahan');
         }
     }
 
@@ -123,18 +116,18 @@ class EmployeeController extends Controller
     public function importEmployee(Request $request)
     {
         Excel::import(new EmployeesImport, $request->file('file'));
-        return back()->with('success', 'All good!');
+        return back()->with('success', 'Data Karyawan Berhasil ditambahkan');
     }
 
     public function updateImportEmployee(Request $request)
     {
         Excel::import(new EmployeesUpdateImport, $request->file('file'));
-        return back()->with('success', 'All good!');
+        return back()->with('success', 'Data Karyawan Berhasil diperbarui');
     }
 
     public function destroyImportEmployee(Request $request)
     {
         Excel::import(new EmployeesDeleteImport, $request->file('file'));
-        return back()->with('success', 'All good!');
+        return back()->with('success', 'Data Karyawan Berhasil dihapus');
     }
 }
