@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AccountUpdateRequest;
 use App\Models\Contract;
+use App\Models\Divisi;
 use App\Models\employee;
 use App\Models\salary;
 use App\Models\User;
-use Exception;
 use PDF;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,7 +20,9 @@ class AccountController extends Controller
      */
     public function profile()
     {
-        return view('account.profile');
+        $datas = User::with('employee')->where('nik_karyawan', Auth::user()->nik_karyawan)->first();
+        $divisi = Divisi::with('departemen')->where('id', $datas->employee->divisi_id)->first();
+        return view('account.profile', compact('datas', 'divisi'));
     }
 
     public function billing()

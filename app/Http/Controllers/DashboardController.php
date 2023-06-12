@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreDashboardRequest;
+use App\Models\Absensi;
 use App\Models\AuditTrail;
 use App\Models\Contract;
 use App\Models\employee;
@@ -10,6 +11,7 @@ use App\Models\parameter_dashboard;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
@@ -18,13 +20,15 @@ class DashboardController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $bulan_sekarang = date('Y-m', strtotime(Carbon::now()));
         $total_karyawan = employee::count();
         $total_pwkt1_perbulan = Contract::where('tanggal_mulai_kontrak', 'like', '%' . $bulan_sekarang . '%')->count();
         $total_pengguna = User::count();
         $data = parameter_dashboard::where('status', '1')->latest()->first();
+
+  
         return view('dashboard', compact('data', 'total_karyawan', 'total_pwkt1_perbulan', 'total_pengguna'));
     }
 

@@ -7,6 +7,7 @@
     <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="http://maps.googleapis.com/maps/api/js"></script>
     @endpush
 
     <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
@@ -20,7 +21,7 @@
                         </h1>
                     </div>
                     <div class="col-12 col-xl-auto mb-3">
-                        <a class="btn btn-sm btn-light text-primary" data-bs-toggle="modal" data-bs-target="#addWaktuAbsen">
+                        <a class="btn btn-sm btn-light text-primary" data-bs-toggle="modal" data-bs-target="#addLokasiAbsen">
                             <i class="me-1" data-feather="plus"></i>
                             Tambah
                         </a>
@@ -37,28 +38,22 @@
                 <table id="datatablesSimple">
                     <thead>
                         <tr>
-                            <th>Shift</th>
-                            <th>Jam Masuk</th>
-                            <th>Jam Keluar</th>
-                            <th>Tipe</th>
-                            <th>Keterangan</th>
+                            <th>No</th>
+                            <th>Divisi</th>
+                            <th>Latitude</th>
+                            <th>Longtitude</th>
+                            <th>Radius</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($datas as $data)
                         <tr>
-                            <td>{{ $data->nama_shift }}</td>
-                            <td>{{ date('H:i:s', strtotime($data->jam_masuk)) }}</td>
-                            <td>{{ date('H:i:s', strtotime($data->jam_keluar)) }}</td>
-                            @if($data->tipe == '1')
-                            <td>Translator</td>
-                            @elseif($data->tipe == ' 2')
-                            <td>Karyawan</td>
-                            @else
-                            <td>Karyawan Shift</td>
-                            @endif
-                            <td>{{ $data->keterangan }}</td>
+                            <td>{{ ++$no }}</td>
+                            <td>{{ $data->divisi->nama_divisi }}</td>
+                            <td>{{ $data->lat }}</td>
+                            <td>{{ $data->long }}</td>
+                            <td>{{ $data->radius }}</td>
                             <td>
                                 <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" data-bs-toggle="modal" data-bs-target="#editWaktuAbsen{{$data->id}}"><i data-feather="edit"></i></a>
                                 <a type="submit" class="btn btn-datatable btn-icon btn-transparent-dark" data-bs-toggle="modal" data-bs-target="#delWaktuAbsen{{$data->id}}"><i data-feather="trash-2"></i>
@@ -72,50 +67,38 @@
         </div>
     </div>
 
-    <div class="modal fade" id="addWaktuAbsen" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+    <div class="modal fade" id="addLokasiAbsen" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Form Content</h5>
                     <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('store.waktu_absen') }}" method="POST" class="nav flex-column" id="stickyNav">
+                <form action="{{ route('store.lokasi') }}" method="POST" class="nav flex-column" id="stickyNav">
                     <div class="modal-body">
                         @csrf
                         <div class="mb-3">
-                            <label class="small mb-1">Shift</label>
-                            <select name="nama_shift" class="form-select" required>
-                                <option value="" disabled selected>- Pilih Shift -</option>
-                                <option value="Pagi">Pagi</option>
-                                <option value="Sore">Sore</option>
-                                <option value="Malam">Malam</option>
+                            <label class="small mb-1">Divisi</label>
+                            <select name="divisi_id" class="form-select" required>
+                                <option value="" disabled selected>- Pilih Divisi -</option>
+                                @foreach($divisi as $row)
+                                <option value="{{ $row->id }}">{{ $row->nama_divisi }}</option>
+                                @endforeach
                             </select>
                         </div>
+                        <div id="googleMap" style="width:100%;height:400px;"></div>
                         <div class="mb-3">
-                            <label class="small mb-1">Jam Masuk</label>
-                            <input type="time" name="jam_masuk" class="form-control">
+                            <label class="small mb-1">Latitude</label>
+                            <input type="text" name="lat" id="lat" class="form-control">
                         </div>
                         <div class="mb-3">
-                            <label class="small mb-1">Jam Keluar</label>
-                            <input type="time" name="jam_keluar" class="form-control">
-                        </div>
-                        <div class="mb-3">
-                            <label class="small mb-1">Tipe</label>
-                            <select name="tipe" class="form-select" required>\
-                                <option value="" disabled selected> - Silahkan pilih - </option>
-                                <option value="1">Translator</option>
-                                <option value="2">Karyawan</option>
-                                <option value="3">Karyawan Shift</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label class="small mb-1">Keterangan</label>
-                            <textarea name="keterangan" class="form-control" cols="30" rows="10"></textarea>
+                            <label class="small mb-1">Longtitude</label>
+                            <input type="text" name="long" id="lng" class="form-control">
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
-                        <button class="btn btn-primary" type="submit">Add</button>
+                        <button class="btn btn-secondary btn-sm" type="button" data-bs-dismiss="modal">Tutup</button>
+                        <button class="btn btn-primary btn-sm" type="submit">Simpan</button>
                     </div>
                 </form>
             </div>
@@ -124,50 +107,29 @@
 
     @foreach($datas as $data)
     <div class="modal fade" id="editWaktuAbsen{{$data->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Form Content</h5>
                     <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('update.waktu_absen', $data->id) }}" method="POST" class="nav flex-column" id="stickyNav">
+                <form action="{{ route('update.lokasi', $data->id) }}" method="POST" class="nav flex-column" id="stickyNav">
                     @csrf
                     {{ method_field('patch') }}
                     <div class="modal-body">
+                        <div id="googleMapUpdate" style="width:100%;height:400px;"></div>
                         <div class="mb-3">
-                            <label class="small mb-1">Shift</label>
-                            <select name="nama_shift" class="form-select" required>
-                                <option value="{{ $data->nama_shift }}" selected>{{ $data->nama_shift }}</option>
-                                <option value="Pagi">Pagi</option>
-                                <option value="Sore">Sore</option>
-                                <option value="Malam">Malam</option>
-                            </select>
+                            <label class="small mb-1">Latitude</label>
+                            <input type="text" name="lat" id="latUpd" class="form-control" value="{{ $data->lat }}">
                         </div>
                         <div class="mb-3">
-                            <label class="small mb-1">Jam Masuk</label>
-                            <input type="time" name="jam_masuk" class="form-control" value="{{ $data->jam_masuk }}">
-                        </div>
-                        <div class="mb-3">
-                            <label class="small mb-1">Jam Keluar</label>
-                            <input type="time" name="jam_keluar" class="form-control" value="{{ $data->jam_keluar }}">
-                        </div>
-                        <div class="mb-3">
-                            <label class="small mb-1">Tipe</label>
-                            <select name="tipe" class="form-select" required>\
-                                <option value="" disabled selected> - Silahkan pilih - </option>
-                                <option value="1">Translator</option>
-                                <option value="2">Karyawan</option>
-                                <option value="3">Karyawan Shift</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label class="small mb-1">Keterangan</label>
-                            <textarea name="keterangan" class="form-control" cols="30" rows="10">{{ $data->keterangan }}</textarea>
+                            <label class="small mb-1">Longtitude</label>
+                            <input type="text" name="long" id="lngUpd" class="form-control" value="{{ $data->long }}">
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
-                        <button class="btn btn-primary" type="submit">Add</button>
+                        <button class="btn btn-secondary btn-sm" type="button" data-bs-dismiss="modal">Tutup</button>
+                        <button class="btn btn-primary btn-sm" type="submit">Perbarui</button>
                     </div>
                 </form>
             </div>
@@ -180,18 +142,18 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Hapus waktu kerja</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Hapus lokasi</h5>
                     <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('delete.waktu_absen', $data->id) }}" method="POST" class="nav flex-column" id="stickyNav">
+                <form action="{{ route('delete.lokasi', $data->id) }}" method="POST" class="nav flex-column" id="stickyNav">
                     <div class="modal-body">
                         @csrf
                         {{ method_field('delete') }}
-                        Apa kamu yakin ingin menghapus data ini ({{ $data->nama_shift }})?
+                        Apa kamu yakin ingin menghapus data ini ({{ $data->divisi->nama_divisi }})?
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
-                        <button class="btn btn-primary" type="submit">Add</button>
+                        <button class="btn btn-secondary btn-sm" type="button" data-bs-dismiss="modal">Tutup</button>
+                        <button class="btn btn-primary btn-sm" type="submit">Hapus</button>
                     </div>
                 </form>
             </div>
@@ -208,5 +170,40 @@
     <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/bundle.js" crossorigin="anonymous"></script>
     <script src="{{ asset('js/litepicker.js')}}"></script>
     <script src="{{ asset('js/app.js')}}"></script>
+    <script>
+        // variabel global marker
+        var marker;
+
+        function taruhMarker(peta, posisiTitik) {
+            if (marker) {
+                // pindahkan marker
+                marker.setPosition(posisiTitik);
+            } else {
+                // buat marker baru
+                marker = new google.maps.Marker({
+                    position: posisiTitik,
+                    map: peta,
+                    animation: google.maps.Animation.DROP
+                });
+            }
+            // isi nilai koordinat ke form
+            document.getElementById("lat").value = posisiTitik.lat();
+            document.getElementById("lng").value = posisiTitik.lng();
+        }
+
+        function initialize() {
+            var propertiPeta = {
+                center: new google.maps.LatLng(-3.906112, 122.416638),
+                zoom: 15,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            var peta = new google.maps.Map(document.getElementById("googleMap"), propertiPeta);
+            google.maps.event.addListener(peta, 'click', function(event) {
+                taruhMarker(this, event.latLng);
+            });
+        }
+        google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+
     @endpush
 </x-app-layout>

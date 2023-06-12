@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AbsensiController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\ContractController;
@@ -7,22 +8,26 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DepartemenController;
 use App\Http\Controllers\DivisiController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\LokasiAbsenController;
 use App\Http\Controllers\Role\RoleController;
 use App\Http\Controllers\SalaryController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\WaktuAbsenController;
 use App\Models\Departemen;
+use App\Models\WaktuAbsen;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/new-register', [RegisterController::class, 'register'])->name('register.employee')->middleware('employee.registered');
 Auth::routes();
+Route::post('/get-lokasi', [DashboardController::class, 'getLocation']);
 Route::get('/', [DashboardController::class, 'index']);
 
 Route::group(['middleware' => ['auth', 'audit.trails']], function () {
 
     Route::get('/dashboard', [DashboardController::class, 'index']);
     Route::get('/audit-trails', [DashboardController::class, 'auditTrails']);
+    Route::post('/store/absen', [WaktuAbsenController::class, 'storeAbsen'])->name('store.absen');
 
     Route::group(['prefix' => 'setting'], function () {
         route::get('/dashboard', [DashboardController::class, 'settingDashboard']);
@@ -34,6 +39,12 @@ Route::group(['middleware' => ['auth', 'audit.trails']], function () {
         route::get('/waktu-absen', [WaktuAbsenController::class, 'index']);
         route::post('/store/waktu-absen', [WaktuAbsenController::class, 'storeWaktuAbsen'])->name('store.waktu_absen');
         route::patch('/update/waktu-absen/{id}', [WaktuAbsenController::class, 'update'])->name('update.waktu_absen');
+        route::delete('/delete/waktu-absen/{id}', [WaktuAbsenController::class, 'destroy'])->name('delete.waktu_absen');
+
+        route::get('/lokasi-absen', [LokasiAbsenController::class, 'index']);
+        route::post('/store/lokasi-absen', [LokasiAbsenController::class, 'store'])->name('store.lokasi');
+        route::patch('/update/lokasi-absen/{id}', [LokasiAbsenController::class, 'update'])->name('update.lokasi');
+        route::delete('/delete/lokasi-absen/{id}', [LokasiAbsenController::class, 'destroy'])->name('delete.lokasi');
     });
 
     Route::group(['prefix' => 'users'], function () {
@@ -119,5 +130,11 @@ Route::group(['middleware' => ['auth', 'audit.trails']], function () {
         route::delete('/destroy/{id}', [DivisiController::class, 'destroy'])->name('destroy.divisi');
         route::patch('/update/{id}', [DivisiController::class, 'update'])->name('update.divisi');
         route::get('/export-divisi', [DivisiController::class, 'exportDivisi'])->name('export.div');
+    });
+
+    Route::group(['prefix' => 'absen'], function () {
+        route::get('/', [AbsensiController::class, 'index']);
+        route::post('/store', [AbsensiController::class, 'store'])->name('store.absensi');
+        route::patch('/update/{id}', [AbsensiController::class, 'update'])->name('update.absensi');
     });
 });

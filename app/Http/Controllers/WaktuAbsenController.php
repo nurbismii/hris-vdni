@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\WaktuAbsen;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class WaktuAbsenController extends Controller
 {
@@ -26,7 +27,6 @@ class WaktuAbsenController extends Controller
         return back()->with('success', 'Data waktu kerja berhasil ditambahkan');
     }
 
-
     public function update(Request $request, $id)
     {
         WaktuAbsen::where('id', $id)->update([
@@ -39,8 +39,9 @@ class WaktuAbsenController extends Controller
         return back()->with('success', 'Data waktu kerja berhasil diperbarui');
     }
 
-    public function destroy(WaktuAbsen $waktuAbsen)
+    public function destroy($id)
     {
-        //
+        WaktuAbsen::find($id)->delete();
+        return back()->with('success', 'Data waktu kerja berhasil dihapus');
     }
 }

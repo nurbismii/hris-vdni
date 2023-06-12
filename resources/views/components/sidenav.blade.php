@@ -53,7 +53,7 @@
                 </a>
                 <div class="collapse" id="collapseEmployees" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavemployee">
-                        <a class="nav-link" href="/employees">Data Karyawan</a>
+                        <a class="nav-link" href="{{ url('employees')}}">Data Karyawan</a>
                         <a class="nav-link" href="/roles">Jabatan Karyawan</a>
                         <a class="nav-link" href="/employees/import">Impor Karyawan</a>
                     </nav>
@@ -63,7 +63,6 @@
                     <div class="nav-link-icon"><i data-feather="codepen"></i></div>
                     Departemen
                 </a>
-
 
                 <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseCoreHr" aria-expanded="false" aria-controls="collapseCoreHr">
                     <div class="nav-link-icon"><i data-feather="cpu"></i></div>
@@ -122,6 +121,19 @@
                     </nav>
                 </div>
 
+                <div class="sidenav-menu-heading">ESS</div>
+
+                <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseKehadiran" aria-expanded="false" aria-controls="collapseKehadiran">
+                    <div class="nav-link-icon"><i data-feather="sliders"></i></div>
+                    Kehadiran
+                    <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
+                <div class="collapse" id="collapseKehadiran" data-bs-parent="#accordionSidenav">
+                    <nav class="sidenav-menu-nested nav">
+                        <a class="nav-link" href="/absen">Kehadiran</a>
+                        <a class="nav-link" href="/">Lokasi Absen</a></a>
+                </div>
+
                 <div class="sidenav-menu-heading">Pengaturan</div>
                 <!-- Sidenav Accordion (Applications)-->
                 <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseApps" aria-expanded="false" aria-controls="collapseApps">
@@ -132,7 +144,7 @@
                 <div class="collapse" id="collapseApps" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav">
                         <a class="nav-link" href="/setting/dashboard">Judul Dashboard</a>
-                        <a class="nav-link" href="/">Lokasi Absen</a></a>
+                        <a class="nav-link" href="/setting/lokasi-absen">Lokasi Absen</a></a>
                         <a class="nav-link" href="/setting/waktu-absen">Waktu Kerja</a>
                 </div>
             </div>

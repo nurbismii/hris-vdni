@@ -15,6 +15,12 @@ class CreateLokasiAbsensTable extends Migration
     {
         Schema::create('lokasi_absens', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('divisi_id');
+            $table->string('lat');
+            $table->string('long');
+            $table->string('radius')->nullable();
+            $table->string('penentuan_lokasi')->nullable();
+            $table->string('jarak_toleransi')->nullable();
             $table->timestamps();
         });
     }

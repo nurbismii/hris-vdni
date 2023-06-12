@@ -74,11 +74,11 @@
             <div class="row gx-3 mb-3">
               <div class="col-md-6">
                 <label class="small mb-1">Departemen</label>
-                <input class="form-control" value="{{ Auth::user()->employee->divisi->departemen->departemen }}" disabled />
+                <input class="form-control" value="{{ $divisi->departemen->departemen }}" disabled />
               </div>
               <div class="col-md-6">
                 <label class="small mb-1">Divisi</label>
-                <input class="form-control" value="{{ Auth::user()->employee->divisi->nama_divisi }}" disabled />
+                <input class="form-control" value="{{ $divisi->nama_divisi }}" disabled />
               </div>
             </div>
             <div class="row gx-3 mb-3">
