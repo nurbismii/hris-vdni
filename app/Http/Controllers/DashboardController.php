@@ -3,15 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreDashboardRequest;
-use App\Models\Absensi;
 use App\Models\AuditTrail;
 use App\Models\Contract;
 use App\Models\employee;
 use App\Models\parameter_dashboard;
+use App\Models\Pengingat;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
@@ -28,7 +27,7 @@ class DashboardController extends Controller
         $total_pengguna = User::count();
         $data = parameter_dashboard::where('status', '1')->latest()->first();
 
-  
+
         return view('dashboard', compact('data', 'total_karyawan', 'total_pwkt1_perbulan', 'total_pengguna'));
     }
 

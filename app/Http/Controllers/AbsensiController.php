@@ -60,35 +60,17 @@ class AbsensiController extends Controller
         return back()->with('error', 'Terjadi kesalahan!');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Absensi  $absensi
-     * @return \Illuminate\Http\Response
-     */
     public function show(Absensi $absensi)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Absensi  $absensi
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit(Absensi $absensi)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Absensi  $absensi
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         $karyawan = employee::where('nik', $request->nik_karyawan)->first();
@@ -115,12 +97,6 @@ class AbsensiController extends Controller
         return back()->with('error', 'Terjadi kesalahan!');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Absensi  $absensi
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Absensi $absensi)
     {
         //

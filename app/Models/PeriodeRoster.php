@@ -5,15 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Divisi extends Model
+class PeriodeRoster extends Model
 {
     use HasFactory;
-
-    protected $table = 'divisis';
+    protected $table = 'periode_rosters';
     protected $guarded = [];
 
-    public function departemen()
+    public function karyawanRoster()
     {
-        return $this->hasOne(Departemen::class, 'id', 'departemen_id');
+        return $this->hasMany(KaryawanRoster::class, 'periode_id', 'id');
     }
 }

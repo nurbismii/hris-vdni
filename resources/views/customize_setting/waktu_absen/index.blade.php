@@ -1,4 +1,4 @@
-<x-app-layout title="Setting Dashboad">
+<x-app-layout title="Setting Waktu Absen">
     @push('styles')
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css" rel="stylesheet" />
@@ -16,7 +16,7 @@
                     <div class="col-auto mb-3">
                         <h1 class="page-header-title">
                             <div class="page-header-icon"><i data-feather="list"></i></div>
-                            Data Waktu Absen
+                            Data Lokasi Absen
                         </h1>
                     </div>
                     <div class="col-12 col-xl-auto mb-3">

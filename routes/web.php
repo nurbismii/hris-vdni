@@ -8,13 +8,14 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DepartemenController;
 use App\Http\Controllers\DivisiController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\KaryawanRosterController;
 use App\Http\Controllers\LokasiAbsenController;
+use App\Http\Controllers\PengingatController;
+use App\Http\Controllers\PeriodeRosterController;
 use App\Http\Controllers\Role\RoleController;
 use App\Http\Controllers\SalaryController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\WaktuAbsenController;
-use App\Models\Departemen;
-use App\Models\WaktuAbsen;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -137,4 +138,19 @@ Route::group(['middleware' => ['auth', 'audit.trails']], function () {
         route::post('/store', [AbsensiController::class, 'store'])->name('store.absensi');
         route::patch('/update/{id}', [AbsensiController::class, 'update'])->name('update.absensi');
     });
+
+    Route::group(['prefix' => 'roster'], function () {
+        route::get('/', [KaryawanRosterController::class, 'index']);
+        route::post('/import-karyawan-roster', [KaryawanRosterController::class, 'importKaryawanRoster'])->name('import.karyawanRoster');
+        route::post('/pengingat', [KaryawanRosterController::class, 'pengingat'])->name('pengingat');
+        route::get('/daftar-pengingat', [KaryawanRosterController::class, 'reminder']);
+    });
+
+    Route::group(['prefix' => 'periode'], function () {
+        route::get('/', [PeriodeRosterController::class, 'index']);
+        route::post('/store', [PeriodeRosterController::class, 'store'])->name('store.periodeRoster');
+        route::patch('/update/{id}', [PeriodeRosterController::class, 'update'])->name('update.periodeRoster');
+        route::delete('/delete/{id}', [PeriodeRosterController::class, 'destroy'])->name('destroy.periodeRoster');
+    });
+
 });

@@ -4,20 +4,16 @@
             <div class="nav accordion" id="accordionSidenav">
                 <!-- Sidenav Menu Heading (Account)-->
                 <!-- * * Note: * * Visible only on and above the sm breakpoint-->
-                <div class="sidenav-menu-heading d-sm-none">Account</div>
-                <!-- Sidenav Link (Alerts)-->
-                <!-- * * Note: * * Visible only on and above the sm breakpoint-->
-                <a class="nav-link d-sm-none" href="#!">
+                <div class="sidenav-menu-heading d-sm-none">Akun</div>
+                <!-- <a class="nav-link d-sm-none" href="#!">
                     <div class="nav-link-icon"><i data-feather="bell"></i></div>
                     Alerts
                     <span class="badge bg-warning-soft text-warning ms-auto">4 New!</span>
-                </a>
-                <!-- Sidenav Link (Messages)-->
-                <!-- * * Note: * * Visible only on and above the sm breakpoint-->
-                <a class="nav-link d-sm-none" href="#!">
-                    <div class="nav-link-icon"><i data-feather="mail"></i></div>
-                    Pesan
-                    <span class="badge bg-success-soft text-success ms-auto">2 New!</span>
+                </a> -->
+                <a class="nav-link d-sm-none" href="/roster/daftar-pengingat">
+                    <div class="nav-link-icon"><i data-feather="bell"></i></div>
+                    Pengingat
+                    <span class="badge bg-success-soft text-success ms-auto">{{ getCountPengingat() }} New!</span>
                 </a>
                 <!-- Sidenav Menu Heading (Core)-->
                 <div class="sidenav-menu-heading">Core</div>
@@ -108,7 +104,7 @@
                     </nav>
                 </div>
                 <!-- Sidanav Accordion (Recruitment) -->
-                <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseRecruitment" aria-expanded="false" aria-controls="collapseRecruitment">
+                <!-- <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseRecruitment" aria-expanded="false" aria-controls="collapseRecruitment">
                     <div class="nav-link-icon"><i data-feather="user-plus"></i></div>
                     Rekrutmen
                     <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -119,7 +115,7 @@
                         <a class="nav-link" href="/pengembangan">Lowongan Kandidat</a>
                         <a class="nav-link" href="/pengembangan">Interview Kandidat</a>
                     </nav>
-                </div>
+                </div> -->
 
                 <div class="sidenav-menu-heading">ESS</div>
 
@@ -131,21 +127,22 @@
                 <div class="collapse" id="collapseKehadiran" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav">
                         <a class="nav-link" href="/absen">Kehadiran</a>
-                        <a class="nav-link" href="/">Lokasi Absen</a></a>
+                        <a class="nav-link" href="/roster">Kelola Cuti</a></a>
                 </div>
 
                 <div class="sidenav-menu-heading">Pengaturan</div>
                 <!-- Sidenav Accordion (Applications)-->
-                <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseApps" aria-expanded="false" aria-controls="collapseApps">
+                <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseSetting" aria-expanded="false" aria-controls="collapseSetting">
                     <div class="nav-link-icon"><i data-feather="sliders"></i></div>
                     Sesuaikan Pengaturan
                     <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
-                <div class="collapse" id="collapseApps" data-bs-parent="#accordionSidenav">
+                <div class="collapse" id="collapseSetting" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav">
                         <a class="nav-link" href="/setting/dashboard">Judul Dashboard</a>
                         <a class="nav-link" href="/setting/lokasi-absen">Lokasi Absen</a></a>
                         <a class="nav-link" href="/setting/waktu-absen">Waktu Kerja</a>
+                        <a class="nav-link" href="/periode">Periode Roster</a>
                 </div>
             </div>
 
