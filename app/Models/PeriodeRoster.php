@@ -15,4 +15,9 @@ class PeriodeRoster extends Model
     {
         return $this->hasMany(KaryawanRoster::class, 'periode_id', 'id');
     }
+
+    public function pengingat()
+    {
+        return $this->hasOne(Pengingat::class, 'periode_id', 'id');
+    }
 }

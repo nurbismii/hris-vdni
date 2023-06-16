@@ -21,7 +21,7 @@
                         </h1>
                     </div>
                     <div class="col-12 col-xl-auto mb-3">
-                        <a class="btn btn-sm btn-light text-primary" data-bs-toggle="modal" data-bs-target="#addLokasiAbsen">
+                        <a class="btn btn-sm btn-light text-primary" data-bs-toggle="modal"  onclick="getLocation()" data-bs-target="#addLokasiAbsen">
                             <i class="me-1" data-feather="plus"></i>
                             Tambah
                         </a>
@@ -86,14 +86,14 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div id="googleMap" style="width:100%;height:400px;"></div>
+                        <div id="location" style="width:100%;height:400px;"></div>
                         <div class="mb-3">
                             <label class="small mb-1">Latitude</label>
-                            <input type="text" name="lat" id="lat" class="form-control">
+                            <input type="text" name="lat" id="latSt1" class="form-control">
                         </div>
                         <div class="mb-3">
                             <label class="small mb-1">Longtitude</label>
-                            <input type="text" name="long" id="lng" class="form-control">
+                            <input type="text" name="long" id="lngSt2" class="form-control">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -162,6 +162,40 @@
     @endforeach
 
     @push('scripts')
+    <script>
+        var lat1 = document.getElementById("lat1");
+        var lng2 = document.getElementById("lng2");
+
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(getPosition);
+            } else {
+                t.innerHTML = "Geolokasi tidak mendukung browser ini!";
+            }
+        }
+
+        function getPosition(position) {
+
+            lat1 = position.coords.latitude;
+            lng2 = position.coords.longitude;
+
+            document.getElementById("latSt1").value = lat1;
+            document.getElementById("lngSt2").value = lng2;
+
+            var propertiPeta = {
+                center: new google.maps.LatLng(lat1, lng2),
+                zoom: 15,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            var peta = new google.maps.Map(document.getElementById("location"), propertiPeta);
+            // membuat Marker
+            var marker = new google.maps.Marker({
+                position: new google.maps.LatLng(lat1, lng2),
+                map: peta
+            });
+        }
+        google.maps.event.addDomListener(window, 'load');
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="{{ asset('js/scripts.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" crossorigin="anonymous"></script>
@@ -170,40 +204,5 @@
     <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/bundle.js" crossorigin="anonymous"></script>
     <script src="{{ asset('js/litepicker.js')}}"></script>
     <script src="{{ asset('js/app.js')}}"></script>
-    <script>
-        // variabel global marker
-        var marker;
-
-        function taruhMarker(peta, posisiTitik) {
-            if (marker) {
-                // pindahkan marker
-                marker.setPosition(posisiTitik);
-            } else {
-                // buat marker baru
-                marker = new google.maps.Marker({
-                    position: posisiTitik,
-                    map: peta,
-                    animation: google.maps.Animation.DROP
-                });
-            }
-            // isi nilai koordinat ke form
-            document.getElementById("lat").value = posisiTitik.lat();
-            document.getElementById("lng").value = posisiTitik.lng();
-        }
-
-        function initialize() {
-            var propertiPeta = {
-                center: new google.maps.LatLng(-3.906112, 122.416638),
-                zoom: 15,
-                mapTypeId: google.maps.MapTypeId.ROADMAP
-            };
-            var peta = new google.maps.Map(document.getElementById("googleMap"), propertiPeta);
-            google.maps.event.addListener(peta, 'click', function(event) {
-                taruhMarker(this, event.latLng);
-            });
-        }
-        google.maps.event.addDomListener(window, 'load', initialize);
-    </script>
-
     @endpush
 </x-app-layout>

@@ -41,6 +41,8 @@ class AbsensiController extends Controller
             $divisi = Divisi::where('id', $karyawan->divisi_id)->first();
             if ($divisi) {
                 $lokasi_absen = LokasiAbsen::where('divisi_id', $divisi->id)->first();
+                if (!$lokasi_absen)
+                    return back()->with('error', 'Lokasi absen tidak dapat ditemukan');
                 $jarak_absen = Controller::getDistance($lokasi_absen->lat, $lokasi_absen->long, $request->lat, $request->lng);
                 if ($jarak_absen > 0.1) {
                     return back()->with('error', 'Posisi kamu terlalu jauh dari lokasi absen');

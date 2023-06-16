@@ -4,17 +4,22 @@
             <div class="nav accordion" id="accordionSidenav">
                 <!-- Sidenav Menu Heading (Account)-->
                 <!-- * * Note: * * Visible only on and above the sm breakpoint-->
-                <div class="sidenav-menu-heading d-sm-none">Akun</div>
-                <!-- <a class="nav-link d-sm-none" href="#!">
-                    <div class="nav-link-icon"><i data-feather="bell"></i></div>
-                    Alerts
-                    <span class="badge bg-warning-soft text-warning ms-auto">4 New!</span>
-                </a> -->
+                @if(strtolower(Auth::user()->employee->nik) == 'administrator')
+                <div class="sidenav-menu-heading d-sm-none">Pemberitahuan</div>
                 <a class="nav-link d-sm-none" href="/roster/daftar-pengingat">
                     <div class="nav-link-icon"><i data-feather="bell"></i></div>
                     Pengingat
                     <span class="badge bg-success-soft text-success ms-auto">{{ getCountPengingat() }} New!</span>
                 </a>
+                @endif
+                @if(strtolower(Auth::user()->employee->nik) != 'administrator')
+                <div class="sidenav-menu-heading d-sm-none">Pemberitahuan</div>
+                <a class="nav-link d-sm-none" href="/lihat-pengingat">
+                    <div class="nav-link-icon"><i data-feather="bell"></i></div>
+                    Pengingat
+                    <span class="badge bg-success-soft text-success ms-auto">{{ getCountPengingat() }} New!</span>
+                </a>
+                @endif
                 <!-- Sidenav Menu Heading (Core)-->
                 <div class="sidenav-menu-heading">Core</div>
                 <!-- Sidenav Accordion (Dashboard)-->
@@ -22,12 +27,12 @@
                     <div class="nav-link-icon"><i data-feather="activity"></i></div>
                     Dashboard
                 </a>
+                @if(strtolower(Auth::user()->job->permission_role ?? '') == 'administrator')
                 <!-- Sidenav Audit Trails (Audit) -->
                 <a class="nav-link" href="/audit-trails">
                     <div class="nav-link-icon"><i data-feather="clipboard"></i></div>
                     Riwayat Audit
                 </a>
-                <!-- Sidenav Heading (Master Menu)-->
                 <div class="sidenav-menu-heading">Master Menu</div>
                 <!-- Sidenav Accordion (Users)-->
                 <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseUsers" aria-expanded="false" aria-controls="collapseUsers">
@@ -103,20 +108,19 @@
                         <a class="nav-link" href="/salary/history">Riwayat Impor</a>
                     </nav>
                 </div>
-                <!-- Sidanav Accordion (Recruitment) -->
-                <!-- <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseRecruitment" aria-expanded="false" aria-controls="collapseRecruitment">
-                    <div class="nav-link-icon"><i data-feather="user-plus"></i></div>
-                    Rekrutmen
+
+                <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseKelolaCuti" aria-expanded="false" aria-controls="collapseKelolaCuti">
+                    <div class="nav-link-icon"><i data-feather="calendar"></i></div>
+                    Kompensasi dan Keuntungan
                     <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
-                <div class="collapse" id="collapseRecruitment" data-bs-parent="#accordionSidenav">
+                <div class="collapse" id="collapseKelolaCuti" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav">
-                        <a class="nav-link" href="/pengembangan">Posting Lowongan</a>
-                        <a class="nav-link" href="/pengembangan">Lowongan Kandidat</a>
-                        <a class="nav-link" href="/pengembangan">Interview Kandidat</a>
+                        <a class="nav-link" href="/roster">Kalender Cuti - Jubir</a>
+                        <a class="nav-link" href="/roster/aktif">Pengingat</a>
                     </nav>
-                </div> -->
-
+                </div>
+                @endif
                 <div class="sidenav-menu-heading">ESS</div>
 
                 <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseKehadiran" aria-expanded="false" aria-controls="collapseKehadiran">
@@ -127,9 +131,8 @@
                 <div class="collapse" id="collapseKehadiran" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav">
                         <a class="nav-link" href="/absen">Kehadiran</a>
-                        <a class="nav-link" href="/roster">Kelola Cuti</a></a>
                 </div>
-
+                @if(strtolower(Auth::user()->job->permission_role ?? '') == 'administrator')
                 <div class="sidenav-menu-heading">Pengaturan</div>
                 <!-- Sidenav Accordion (Applications)-->
                 <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseSetting" aria-expanded="false" aria-controls="collapseSetting">
@@ -144,6 +147,7 @@
                         <a class="nav-link" href="/setting/waktu-absen">Waktu Kerja</a>
                         <a class="nav-link" href="/periode">Periode Roster</a>
                 </div>
+                @endif
             </div>
 
         </div>

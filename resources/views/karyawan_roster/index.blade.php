@@ -30,10 +30,6 @@
                             <i class="me-1" data-feather="calendar"></i>
                             Baru
                         </a>
-                        <a class="btn btn-sm btn-warning text-white" data-bs-toggle="modal" data-bs-target="#modalUpdateEmployee">
-                            <i class="me-1" data-feather="edit-3"></i>
-                            Perbarui
-                        </a>
                         <a class="btn btn-sm btn-danger text-white" data-bs-toggle="modal" data-bs-target="#modalDeleteEmployee">
                             <i class="me-1" data-feather="trash"></i>
                             Hapus
@@ -45,25 +41,34 @@
     </header>
     <!-- Main page content-->
     <div class="container-fluid px-4">
-        <x-message />
         <div class="row">
-            <div class="col-lg-12 mb-3">
+            <div class="col-lg-12 mb-1">
+                <x-message />
+                <button class="btn btn-success mb-2 btn-sm float-end" data-bs-toggle="modal" data-bs-target="#aktifkanPengingat">Aktifkan Pengingat</button>
+            </div>
+            <div class="col-lg-12 mb-2">
                 <div class="card">
                     <div class="card-body" style="overflow-x: auto;">
                         <table id="datatables" class="table table-bordered" style="width: 100%;">
                             <thead>
-                                <tr>
+                                <tr class="text-center">
                                     <th>Awal Periode</th>
                                     <th>Akhir Periode</th>
+                                    <th>Pengingat</th>
                                     <th>Periode</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($list_periode as $data)
                                 @if($periode['awal_periode'] == $data->awal_periode)
-                                <tr class="table-success">
+                                <tr class="table-warning text-center">
                                     <td>{{ $data->awal_periode }}</td>
                                     <td>{{ $data->akhir_periode }}</td>
+                                    @isset($pengingat['periode_id'])
+                                    @if($pengingat['periode_id'] == $periode['id'])
+                                    <td>&radic;</td>
+                                    @endif
+                                    @endisset
                                     <td></td>
                                 </tr>
                                 @endif
@@ -71,6 +76,7 @@
                                 <tr>
                                     <td>{{ $data->awal_periode }}</td>
                                     <td>{{ $data->akhir_periode }}</td>
+                                    <td></td>
                                     <td>
                                         <form action="{{ url('roster') }}" method="GET" class="nav flex-column" id="stickyNav">
                                             @csrf
@@ -85,11 +91,6 @@
                             </tbody>
                         </table>
                     </div>
-                </div>
-            </div>
-            <div class="col-lg-12 mb-3">
-                <div class="card-body">
-                    <button class="btn btn-success mb-2 btn-sm float-end" data-bs-toggle="modal" data-bs-target="#aktifkanPengingat">Aktifkan Pengingat</button>
                 </div>
             </div>
             <div class="col-lg-12">
@@ -189,7 +190,7 @@
                     <h5 class="modal-title" id="exampleModalLabel">Upload delete employee data</h5>
                     <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="/" method="POST" enctype="multipart/form-data" class="nav flex-column" id="stickyNav">
+                <form action="{{ route('import.deleteKaryawanRoster') }}" method="POST" enctype="multipart/form-data" class="nav flex-column" id="stickyNav">
                     <div class="modal-body">
                         @csrf
                         <div class="mb-3">

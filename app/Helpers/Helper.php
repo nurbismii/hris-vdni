@@ -3,6 +3,7 @@
 use App\Models\employee;
 use App\Models\Pengingat;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 function getName($id)
 {
@@ -27,14 +28,14 @@ function prev_segments($uri)
 function getCountPengingat()
 {
     $count_pengingat = [];
-    $count_pengingat = Pengingat::where('flg_kirim', '1')->get();
+    $count_pengingat = Pengingat::where('flg_kirim', '1')->where('nik_karyawan', Auth::user()->employee->nik)->get();
     return $count_pengingat->count();
 }
 
 function getNotifPengingat()
 {
     $datas = [];
-    $datas = Pengingat::orderBy('tanggal_cuti', 'ASC')->where('tanggal_cuti', '>=', date('Y-m-d', strtotime(Carbon::now()->subDays(14)->toDateString())))->where('flg_kirim', '1')->limit(4)->get();
+    $datas = Pengingat::orderBy('tanggal_cuti', 'ASC')->where('tanggal_cuti', '>=', date('Y-m-d', strtotime(Carbon::now()->subDays(14)->toDateString())))->where('flg_kirim', '1')->where('nik_karyawan', Auth::user()->employee->nik)->limit(4)->get();
     return $datas;
 }
 

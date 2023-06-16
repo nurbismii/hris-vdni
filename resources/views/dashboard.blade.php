@@ -27,6 +27,7 @@
         </div>
     </header>
 
+    @if(strtolower($role) == 'administrator')
     <div class="container-xl px-4 mt-n10">
         <div class="row">
             <div class="col-lg-6 col-xl-3 mb-4">
@@ -143,6 +144,7 @@
             </div>
         </div>
     </div>
+    @endif
 
     @push('scripts')
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
