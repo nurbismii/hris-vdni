@@ -2,12 +2,12 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8" />
+<meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Forbidden Access | HRIS VDNI</title>
+    <title>Email Verifikasi | VDNI</title>
     <link href="{{ asset('css/styles.css')}}" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/backgrounds/icon.png') }}" />
     <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
@@ -22,11 +22,11 @@
                     <div class="row justify-content-center">
                         <div class="col-lg-6">
                             <div class="text-center mt-4">
-                                <img class="img-fluid p-4" src="{{ asset('assets/img/illustrations/403-error-forbidden.svg')}}" alt="" />
-                                <p class="lead">Your client does not have permission to get this page from the server.</p>
-                                <a class="text-arrow-icon" href="/">
+                                <img class="img-fluid p-4" src="assets/img/illustrations/401-error-unauthorized.svg" alt="" />
+                                <p class="lead">Akun kamu belum aktif silahkan verifikasi email terlebih!.</p>
+                                <a class="text-arrow-icon" href="https://www.google.com/intl/id/gmail/about/">
                                     <i class="ms-0 me-1" data-feather="arrow-left"></i>
-                                    Return to Dashboard
+                                    Verifkasi Email
                                 </a>
                             </div>
                         </div>

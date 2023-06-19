@@ -3,21 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreDashboardRequest;
+use App\Mail\SendEmailVerification;
 use App\Models\AuditTrail;
 use App\Models\Contract;
 use App\Models\employee;
 use App\Models\parameter_dashboard;
-use App\Models\Pengingat;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class DashboardController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware(['auth']);
     }
 
     public function index(Request $request)

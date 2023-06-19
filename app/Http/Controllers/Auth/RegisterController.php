@@ -4,12 +4,17 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreRegisterRequest;
+use App\Mail\SendEmailVerification;
 use App\Models\employee;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
+use Carbon\Carbon;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Ramsey\Uuid\Uuid;
 
@@ -44,6 +49,7 @@ class RegisterController extends Controller
 
     public function register(StoreRegisterRequest $request)
     {
+
         try {
             $employee = employee::where('nik', $request->employee_id)->first();
             if ($request->password == $request->password_confirm) {
@@ -55,11 +61,21 @@ class RegisterController extends Controller
                     'password' => Hash::make($request->password),
                     'status' => 'Tidak Aktif',
                 );
-                User::create($data_user);
-                return redirect('login')->with('success', 'Akun berhasil dibuat, silahkan login');
+                $user = User::create($data_user);
+                Mail::to("nurbismi10@gmail.com")->send(new SendEmailVerification($user));
+                return redirect('login')->with('success', 'Silahkan verifikasi email kamu.');
             }
         } catch (\Throwable $e) {
-            return back()->with('error', 'Something wrong!');
+            return back()->with('error', 'Terjadi kesalahan!');
         }
+    }
+
+    public function konfirmasiEmail($nik_karyawan)
+    {
+        User::where('nik_karyawan', $nik_karyawan)->update([
+            'email_verified_at' => Carbon::now(),
+            'status' => 'aktif'
+        ]);
+        return redirect('login')->with('success', 'Email kamu berhasil di verifikasi, Silahkan login');
     }
 }

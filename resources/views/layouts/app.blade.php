@@ -12,11 +12,6 @@
     <link href="{{ asset('css/styles.css')}}" rel="stylesheet" />
     <!-- <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> -->
     @stack('styles')
-    <style>
-        .reminder {
-            color: red;
-        }
-    </style>
 </head>
 
 <!-- <body class="nav-fixed"> -->

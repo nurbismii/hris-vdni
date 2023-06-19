@@ -20,20 +20,20 @@
                             @csrf
                             <div class="mb-3">
                                 <label class="small mb-1 text-light">Email</label>
-                                <input class="form-control-login @error('email') is-invalid @enderror" type="email" name="email" placeholder="Enter email" />
+                                <input class="form-control-login @error('email') is-invalid @enderror" type="email" name="email" placeholder="Email" />
                             </div>
                             <div class="mb-3">
-                                <label class="small mb-1 text-light">Password</label>
-                                <input class="form-control-login @error('password') is-invalid @enderror" type="password" name="password" placeholder="Enter password" />
+                                <label class="small mb-1 text-light">Kata Sandi</label>
+                                <input class="form-control-login @error('password') is-invalid @enderror" type="password" name="password" placeholder="Kata Sandi" />
                             </div>
                             <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-                                <a class="small text-light" href="#">Forgot Password?</a>
+                                <a class="small text-light" href="#">Lupa Kata Sandi ?</a>
                                 <button type="submit" class="btn btn-success lift lift-sm text-light fw-600">Login</a>
                             </div>
                         </form>
                     </div>
                     <div class="card-footer text-center">
-                        <div class="small text-light"><a class="text-light" href="{{ route('register') }}">Need an account? Sign up!</a></div>
+                        <div class="small text-light"><a class="text-light" href="{{ route('register') }}">Buat akun baru</a></div>
                     </div>
                 </div>
             </div>

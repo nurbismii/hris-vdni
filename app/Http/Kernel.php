@@ -68,5 +68,6 @@ class Kernel extends HttpKernel
         'audit.trails' => \App\Http\Middleware\AuditTrails::class,
         'ngrok' => \App\Http\Middleware\NgrokMiddleware::class,
         'isAdmin' => \App\Http\Middleware\isAdmin::class,
+        'email.verify' => \App\Http\Middleware\EmailVerification::class,
     ];
 }

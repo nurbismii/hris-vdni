@@ -66,8 +66,8 @@
                 </a>
 
                 <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseCoreHr" aria-expanded="false" aria-controls="collapseCoreHr">
-                    <div class="nav-link-icon"><i data-feather="cpu"></i></div>
-                    SDM
+                    <div class="nav-link-icon"><i data-feather="link-2"></i></div>
+                    Hubungan Industrial
                     <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
                 <div class="collapse" id="collapseCoreHr" data-bs-parent="#accordionSidenav">
@@ -116,21 +116,22 @@
                 </a>
                 <div class="collapse" id="collapseKelolaCuti" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav">
-                        <a class="nav-link" href="/roster">Kalender Cuti - Jubir</a>
+                        <a class="nav-link" href="/roster">Kalender Translator</a>
                         <a class="nav-link" href="/roster/aktif">Pengingat</a>
+                        <a class="nav-link" href="/roster/aktif">Kalender Karyawan</a>
                     </nav>
                 </div>
                 @endif
                 <div class="sidenav-menu-heading">ESS</div>
 
                 <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseKehadiran" aria-expanded="false" aria-controls="collapseKehadiran">
-                    <div class="nav-link-icon"><i data-feather="sliders"></i></div>
+                    <div class="nav-link-icon"><i data-feather="log-in"></i></div>
                     Kehadiran
                     <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
                 <div class="collapse" id="collapseKehadiran" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav">
-                        <a class="nav-link" href="/absen">Kehadiran</a>
+                        <a class="nav-link" href="/absen">Absen</a>
                 </div>
                 @if(strtolower(Auth::user()->job->permission_role ?? '') == 'administrator')
                 <div class="sidenav-menu-heading">Pengaturan</div>
@@ -144,8 +145,9 @@
                     <nav class="sidenav-menu-nested nav">
                         <a class="nav-link" href="/setting/dashboard">Judul Dashboard</a>
                         <a class="nav-link" href="/setting/lokasi-absen">Lokasi Absen</a></a>
-                        <a class="nav-link" href="/setting/waktu-absen">Waktu Kerja</a>
+                        <a class="nav-link" href="/">Periode Absen</a></a>
                         <a class="nav-link" href="/periode">Periode Roster</a>
+                        <a class="nav-link" href="/setting/waktu-absen">Waktu Kerja</a>
                 </div>
                 @endif
             </div>

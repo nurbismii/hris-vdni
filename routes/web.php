@@ -3,6 +3,7 @@
 use App\Http\Controllers\AbsensiController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\ContractController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DepartemenController;
@@ -19,13 +20,14 @@ use App\Http\Controllers\WaktuAbsenController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::post('/new-register', [RegisterController::class, 'register'])->name('register.employee')->middleware('employee.registered');
+Route::get('/konfirmasi-email/{nik_karyawan}', [RegisterController::class, 'konfirmasiEmail']);
+
 Auth::routes();
-Route::post('/get-lokasi', [DashboardController::class, 'getLocation']);
-Route::get('/', [DashboardController::class, 'index']);
 
-Route::group(['middleware' => ['auth', 'audit.trails']], function () {
+Route::post('/new-register', [RegisterController::class, 'register'])->name('register.employee')->middleware('employee.registered');
+Route::get('/', [DashboardController::class, 'index'])->middleware('email.verify');
 
+Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], function () {
 
     Route::get('/dashboard', [DashboardController::class, 'index']);
     Route::post('/store/absen', [WaktuAbsenController::class, 'storeAbsen'])->name('store.absen');
