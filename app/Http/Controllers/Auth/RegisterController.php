@@ -13,6 +13,7 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
@@ -49,7 +50,7 @@ class RegisterController extends Controller
 
     public function register(StoreRegisterRequest $request)
     {
-
+        DB::beginTransaction();
         try {
             $employee = employee::where('nik', $request->employee_id)->first();
             if ($request->password == $request->password_confirm) {
@@ -62,10 +63,12 @@ class RegisterController extends Controller
                     'status' => 'Tidak Aktif',
                 );
                 $user = User::create($data_user);
-                Mail::to("nurbismi10@gmail.com")->send(new SendEmailVerification($user));
+                Mail::to($user->email)->send(new SendEmailVerification($user));
+                DB::commit();
                 return redirect('login')->with('success', 'Silahkan verifikasi email kamu.');
             }
         } catch (\Throwable $e) {
+            DB::rollBack();
             return back()->with('error', 'Terjadi kesalahan!');
         }
     }

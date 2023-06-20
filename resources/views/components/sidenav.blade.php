@@ -118,7 +118,7 @@
                     <nav class="sidenav-menu-nested nav">
                         <a class="nav-link" href="/roster">Kalender Translator</a>
                         <a class="nav-link" href="/roster/aktif">Pengingat</a>
-                        <a class="nav-link" href="/roster/aktif">Kalender Karyawan</a>
+                        <a class="nav-link" href="/absen/detail">Absensi</a>
                     </nav>
                 </div>
                 @endif
@@ -145,7 +145,7 @@
                     <nav class="sidenav-menu-nested nav">
                         <a class="nav-link" href="/setting/dashboard">Judul Dashboard</a>
                         <a class="nav-link" href="/setting/lokasi-absen">Lokasi Absen</a></a>
-                        <a class="nav-link" href="/">Periode Absen</a></a>
+                        <a class="nav-link" href="/periode-absen">Periode Absen</a></a>
                         <a class="nav-link" href="/periode">Periode Roster</a>
                         <a class="nav-link" href="/setting/waktu-absen">Waktu Kerja</a>
                 </div>

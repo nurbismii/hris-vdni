@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\ContractController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DepartemenController;
+use App\Http\Controllers\DetailAbsensiController;
 use App\Http\Controllers\DivisiController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\KaryawanRosterController;
@@ -17,6 +18,7 @@ use App\Http\Controllers\Role\RoleController;
 use App\Http\Controllers\SalaryController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\WaktuAbsenController;
+use App\Models\DetailAbsensi;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -31,13 +33,24 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
 
     Route::get('/dashboard', [DashboardController::class, 'index']);
     Route::post('/store/absen', [WaktuAbsenController::class, 'storeAbsen'])->name('store.absen');
-
     route::get('/lihat-pengingat', [KaryawanRosterController::class, 'pengingatPribadi']);
+
+    Route::group(['prefix' => 'periode-absen'], function () {
+        Route::get('/', [DetailAbsensiController::class, 'index']);
+        Route::post('/store', [DetailAbsensiController::class, 'store'])->name('store.periodeAbsen');
+    });
 
     Route::group(['prefix' => 'absen'], function () {
         route::get('/', [AbsensiController::class, 'index']);
         route::post('/store', [AbsensiController::class, 'store'])->name('store.absensi');
         route::patch('/update/{id}', [AbsensiController::class, 'update'])->name('update.absensi');
+        // Detail Absensi Controller
+        route::get('/detail', [DetailAbsensiController::class, 'getDetailAbsensi']);
+        route::post('/import-data-absen', [DetailAbsensiController::class, 'importAbsensi'])->name('import.absensi');
+        // route::get('/server-side', [DetailAbsensiController::class, 'serverSideDetailAbsensi']);
+        // route::get('/detail/{id}', [DetailAbsensiController::class, 'show'])->name('detailAbsen.show');
+        route::get('/dropdown-bulan/{id}', [DetailAbsensiController::class, 'dropwdownBulan']);
+        // End Detail Absensi Controller
     });
 
     Route::group(['prefix' => 'account'], function () {

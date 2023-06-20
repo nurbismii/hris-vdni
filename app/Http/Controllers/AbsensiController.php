@@ -29,11 +29,6 @@ class AbsensiController extends Controller
         return view('kehadiran.index', compact('datas', 'jam_pulang', 'jam_masuk', 'absen_hari_ini'))->with('no');
     }
 
-    public function create()
-    {
-        //
-    }
-
     public function store(Request $request)
     {
         $karyawan = employee::where('nik', $request->nik_karyawan)->first();
@@ -60,17 +55,6 @@ class AbsensiController extends Controller
             return back()->with('error', 'Divisi kamu tidak dapat ditemukan, silahkan laporkan masalah ini ke HRD');
         }
         return back()->with('error', 'Terjadi kesalahan!');
-    }
-
-    public function show(Absensi $absensi)
-    {
-        //
-    }
-
-
-    public function edit(Absensi $absensi)
-    {
-        //
     }
 
     public function update(Request $request, $id)

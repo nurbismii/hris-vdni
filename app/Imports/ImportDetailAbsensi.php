@@ -1,0 +1,52 @@
+<?php
+
+namespace App\Imports;
+
+use App\Models\DetailAbsensi;
+use Illuminate\Support\Collection;
+use Maatwebsite\Excel\Concerns\ToCollection;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Maatwebsite\Excel\Concerns\WithValidation;
+
+class ImportDetailAbsensi implements ToCollection, WithHeadingRow, WithValidation
+{
+    public function collection(Collection $collection)
+    {
+        $datas = [];
+        foreach ($collection as $collect) {
+            $datas[] = array(
+                'periode_bulan_id' => $collect['bulan_id'],
+                'nik_karyawan' => $collect['nik_karyawan'],
+                'total_alpa' => $collect['total_alpa'],
+                'paid_leave' => $collect['paid_leave'],
+                'unpaid_leave' => $collect['unpaid_leave'],
+                'total_sakit' => $collect['total_sakit'],
+                'total_off' => $collect['total_off'],
+                'total_cuti' => $collect['total_cuti'],
+                'total_libur' => $collect['total_libur'],
+                'total_workdays' => $collect['total_workdays'],
+                'total_absen' => $collect['total_absen'],
+            );
+        }
+        foreach (array_chunk($datas, 500) as $chunk) {
+            DetailAbsensi::insert($chunk);
+        }
+    }
+
+    public function rules(): array
+    {
+        return [
+            'bulan_id' => 'required',
+            'nik_karyawan' => 'required'
+        ];
+    }
+
+    public function customValidationMessages()
+    {
+        return [
+            'bulan_id' => 'ID Bulan harus diisi',
+            'nik.required' => 'NIK karyawan harus diisi',
+
+        ];
+    }
+}

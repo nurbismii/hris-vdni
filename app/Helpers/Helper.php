@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 function getName($id)
 {
-    $data = employee::where('nik', $id)->first();
+    $data = employee::where('nik', $id)->first('nama_karyawan');
     if ($data === null) {
         $retval = "";
     } else {
