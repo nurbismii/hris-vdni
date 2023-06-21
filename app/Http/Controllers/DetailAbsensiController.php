@@ -4,9 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Imports\ImportDetailAbsensi;
 use App\Models\DetailAbsensi;
+use App\Models\Divisi;
+use App\Models\employee;
+use App\Models\KeteranganAbsensi;
 use App\Models\PeriodeBulan;
 use App\Models\PeriodeTahun;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\DataTables;
@@ -20,17 +25,15 @@ class DetailAbsensiController extends Controller
      */
     public function index()
     {
-        $tahun = [];
-        $bulan = [];
-        $datas = PeriodeTahun::with('periode_bulan')->get();
+        $datas = PeriodeTahun::all();
         foreach ($datas as $data) {
-            $tahun = [
+            $tahun[] = [
                 'id' => $data->id,
                 'tahun' => $data->tahun
             ];
-            $bulan = $data->periode_bulan;
         }
-        return view('customize_setting.periode_absen.index', compact('tahun', 'bulan', 'datas'))->with('no');
+        $data_bulan = PeriodeBulan::all();
+        return view('customize_setting.periode_absen.index', compact('tahun', 'datas', 'data_bulan'))->with('no');
     }
 
     public function store(Request $request)
@@ -60,16 +63,26 @@ class DetailAbsensiController extends Controller
 
     public function getDetailAbsensi(Request $request)
     {
-        $datas = PeriodeTahun::all();
+        $datas = PeriodeTahun::orderBy('tahun', 'DESC')->get();
         $data_absen = [];
+        $bulan = [];
         if ($request->tahun_id && $request->bulan_id) {
             $tahun = PeriodeTahun::where('id', $request->tahun_id)->first();
             $bulan = PeriodeBulan::where('id', $request->bulan_id)->where('periode_tahun_id', $tahun->id)->first();
             $data_absen = DetailAbsensi::where('periode_bulan_id', $bulan->id)->get();
         }
-        return view('kehadiran.detail', compact('datas', 'data_absen'));
+        return view('kehadiran.detail', compact('datas', 'data_absen', 'bulan'));
     }
 
+    public function getDetailAbsensiByNik($nik_karyawan, $bulan_id)
+    {
+        $karyawan = employee::where('nik', $nik_karyawan)->first();
+        $bulan = PeriodeBulan::with('periode_tahun')->where('id', $bulan_id)->first();
+        $divisi = Divisi::with('departemen')->where('id', $karyawan->divisi_id)->first();
+        $detail_absen = DetailAbsensi::where('nik_karyawan', $nik_karyawan)->where('periode_bulan_id', $bulan_id)->first();
+        $keterangan_absen = KeteranganAbsensi::where('nik_karyawan', $nik_karyawan)->where('periode_bulan_id', $bulan_id)->get();
+        return view('kehadiran.show', compact('divisi', 'detail_absen', 'karyawan', 'bulan', 'keterangan_absen'));
+    }
 
     public function dropwdownBulan($id)
     {
@@ -77,44 +90,10 @@ class DetailAbsensiController extends Controller
         return response()->json($bulan);
     }
 
-    public function serverSideDetailAbsensi()
-    {
-        $data = DetailAbsensi::query();
-        return DataTables::of($data)->addColumn('action', function ($data) {
-            return view('kehadiran._action', [
-                'data' => $data,
-                'url_show' => route('detailAbsen.show', $data->nik_karyawan),
-            ]);
-        })->addIndexColumn()->rawColumns(['action'])->make(true);
-    }
-
     public function importAbsensi(Request $request)
     {
         Excel::import(new ImportDetailAbsensi, $request->file('file'));
         return back()->with('success', 'Data Karyawan Berhasil ditambahkan');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\DetailAbsensi  $detailAbsensi
-     * @return \Illuminate\Http\Response
-     */
-    public function show(DetailAbsensi $detailAbsensi)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\DetailAbsensi  $detailAbsensi
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, DetailAbsensi $detailAbsensi)
-    {
-        //
     }
 
     /**

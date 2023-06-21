@@ -4,20 +4,24 @@
             <div class="nav accordion" id="accordionSidenav">
                 <!-- Sidenav Menu Heading (Account)-->
                 <!-- * * Note: * * Visible only on and above the sm breakpoint-->
-                @if(strtolower(Auth::user()->employee->nik) == 'administrator')
+                @if(strtolower(Auth::user()->job->permission_role ?? '') == 'administrator')
                 <div class="sidenav-menu-heading d-sm-none">Pemberitahuan</div>
                 <a class="nav-link d-sm-none" href="/roster/daftar-pengingat">
                     <div class="nav-link-icon"><i data-feather="bell"></i></div>
-                    Pengingat
+                    Daftar Cuti
+                    @if(getCountPengingat() > 0)
                     <span class="badge bg-success-soft text-success ms-auto">{{ getCountPengingat() }} New!</span>
+                    @endif
                 </a>
                 @endif
-                @if(strtolower(Auth::user()->employee->nik) != 'administrator')
+                @if(strtolower(Auth::user()->job->permission_role ?? '') != 'administrator')
                 <div class="sidenav-menu-heading d-sm-none">Pemberitahuan</div>
                 <a class="nav-link d-sm-none" href="/lihat-pengingat">
                     <div class="nav-link-icon"><i data-feather="bell"></i></div>
                     Pengingat
+                    @if(getCountPengingat() > 0)
                     <span class="badge bg-success-soft text-success ms-auto">{{ getCountPengingat() }} New!</span>
+                    @endif
                 </a>
                 @endif
                 <!-- Sidenav Menu Heading (Core)-->

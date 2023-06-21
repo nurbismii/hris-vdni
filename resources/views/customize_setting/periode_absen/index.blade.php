@@ -37,9 +37,9 @@
         <div class="row">
             <div class="col-lg-12">
                 <x-message />
-                <div class="card">
+                <div class="card mb-2">
                     <div class="card-body" style="overflow-x: auto;">
-                        <table id="datatablesSimple">
+                        <table id="" class="table table-hover">
                             <thead>
                                 <tr>
                                     <th>No</th>
@@ -56,14 +56,41 @@
                                         {{ $data->tahun }}
                                     </td>
                                     <td>
-                                        @foreach($bulan as $row)
-                                        {{ $row['nama_bulan'] }},
-                                        @endforeach
+                                        {{ getPeriodeBulan($data->id) }}
                                     </td>
                                     <td>
                                         <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" data-bs-toggle="modal" data-bs-target="#editPeriode{{$data->id}}"><i data-feather="edit"></i></a>
                                         <a type="submit" class="btn btn-datatable btn-icon btn-transparent-dark" data-bs-toggle="modal" data-bs-target="#delPeriode{{$data->id}}"><i data-feather="trash-2"></i>
                                         </a>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body" style="overflow-x: auto;">
+                        <table id="datatablesSimple" class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Tahun</th>
+                                    <th>Nama Bulan</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($data_bulan as $data)
+                                <tr>
+                                    <td>{{ $data->id }}</td>
+                                    <td>{{ $data->periode_tahun->tahun }}</td>
+                                    <td>{{ $data->nama_bulan }}</td>
+                                    <td>
+                                        <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" data-bs-toggle="modal" data-bs-target="#editPeriode{{$data->id}}"><i data-feather="edit"></i></a>
+                                        <a type="submit" class="btn btn-datatable btn-icon btn-transparent-dark" data-bs-toggle="modal" data-bs-target="#delPeriode{{$data->id}}"><i data-feather="trash-2"></i></a>
                                     </td>
                                 </tr>
                                 @endforeach

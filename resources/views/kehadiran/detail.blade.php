@@ -7,10 +7,8 @@
     <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
     <link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet" />
     <link href="https://cdn.datatables.net/datetime/1.4.0/css/dataTables.dateTime.min.css" rel="stylesheet" />
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.2.0/js/bootstrap-datepicker.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.2.0/css/datepicker.min.css" rel="stylesheet">
     @endpush
@@ -29,6 +27,10 @@
                         <a class="btn btn-sm btn-light text-primary" data-bs-toggle="modal" data-bs-target="#modalAddAbsensi">
                             <i class="me-1" data-feather="calendar"></i>
                             Baru
+                        </a>
+                        <a class="btn btn-sm btn-info text-white" data-bs-toggle="modal" data-bs-target="#modalAddKeterangan">
+                            <i class="me-1" data-feather="edit-3"></i>
+                            Keterangan Absen
                         </a>
                         <a class="btn btn-sm btn-danger text-white" data-bs-toggle="modal" data-bs-target="#modalDeleteEmployee">
                             <i class="me-1" data-feather="trash"></i>
@@ -70,6 +72,23 @@
                     </div>
                 </div>
             </div>
+            @if(count($data_absen) > 0)
+            <div class="col-lg-12">
+                <div class="card text-white bg-primary mb-3">
+                    <div class="card-body" style="overflow-x:auto;">
+                        <h1 class="text-center text-white">Absensi {{ $bulan->nama_bulan ?? '' }} {{ $bulan->periode_tahun->tahun ?? '' }}</h1>
+                    </div>
+                </div>
+            </div>
+            @else
+            <div class="col-lg-12">
+                <div class="card text-white bg-danger mb-3">
+                    <div class="card-body" style="overflow-x:auto;">
+                        <h1 class="text-center text-white">Periode tidak tersedia...</h1>
+                    </div>
+                </div>
+            </div>
+            @endif
             <div class="col-lg-12">
                 <x-message />
                 <div class="card">
@@ -88,13 +107,12 @@
                                     <th>Total Libur</th>
                                     <th>Total Workdays</th>
                                     <th>Total Absen</th>
-                                    <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($data_absen as $data)
                                 <tr>
-                                    <td>{{ $data->nik_karyawan }}</td>
+                                    <td><a target="_blank" href="{{ url('absen/detail', ['params1' => $data->nik_karyawan, 'params2' => $data->periode_bulan_id]) }}">{{ $data->nik_karyawan }}</a></td>
                                     <td>{{ getName($data->nik_karyawan) }}</td>
                                     <td>{{ $data->total_alpa }}</td>
                                     <td>{{ $data->paid_leave }}</td>
@@ -105,10 +123,6 @@
                                     <td>{{ $data->total_libur }}</td>
                                     <td>{{ $data->total_workdays }}</td>
                                     <td>{{ $data->total_absen }}</td>
-                                    <td>
-                                        <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" data-bs-toggle="modal" data-bs-target="#editAbsensi{{$data->id}}"><i data-feather="edit"></i></a>
-                                        <a type="submit" class="btn btn-datatable btn-icon btn-transparent-dark" data-bs-toggle="modal" data-bs-target="#deleteAbsensi{{$data->id}}"><i data-feather="trash-2"></i></a>
-                                    </td>
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -167,67 +181,32 @@
         </div>
     </div>
 
+    <div class="modal fade" id="modalAddKeterangan" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Bulk Data Keterangan</h5>
+                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{{ route('import.keterangan') }}" method="POST" enctype="multipart/form-data" class="nav flex-column" id="stickyNav">
+                    <div class="modal-body">
+                        @csrf
+                        <div class="mb-3">
+                            <label class="form-label">Pilih file :</label>
+                            <input class="form-control" type="file" name="file" id="formFile">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary btn-sm" type="button" data-bs-dismiss="modal">Tutup</button>
+                        <button class="btn btn-success btn-sm" type="submit">Kirim</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     @push('scripts')
     <script>
-        // $(function() {
-        //     var table = $('#data-absensi').DataTable({
-        //         pageLength: 25,
-        //         processing: true,
-        //         serverSide: true,
-        //         searching: true,
-        //         ajax: "/absen/server-side",
-        //         columns: [{
-        //                 data: 'action',
-        //                 name: 'action',
-        //                 orderable: false
-        //             },
-        //             {
-        //                 data: 'nik_karyawan',
-        //                 name: 'nik_karyawan'
-        //             },
-        //             {
-        //                 data: 'total_alpa',
-        //                 name: 'total_alpa',
-        //             },
-        //             {
-        //                 data: 'paid_leave',
-        //                 name: 'paid_leave',
-        //             },
-        //             {
-        //                 data: 'unpaid_leave',
-        //                 name: 'unpaid_leave'
-        //             },
-        //             {
-        //                 data: 'total_sakit',
-        //                 name: 'total_sakit'
-        //             },
-        //             {
-        //                 data: 'total_off',
-        //                 name: 'total_off'
-        //             },
-        //             {
-        //                 data: 'total_cuti',
-        //                 name: 'total_cuti'
-        //             },
-        //             {
-        //                 data: 'total_libur',
-        //                 name: 'total_libur'
-        //             },
-        //             {
-        //                 data: 'total_workdays',
-        //                 name: 'total_workdays'
-        //             },
-        //             {
-        //                 data: 'total_absen',
-        //                 name: 'total_absen'
-        //             },
-        //         ],
-        //         order: [
-        //             [0, 'desc']
-        //         ]
-        //     });
-        // });
-
         $(document).ready(function() {
             $('#tahun').on('change', function() {
                 var tahunID = $(this).val();

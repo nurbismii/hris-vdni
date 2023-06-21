@@ -11,6 +11,7 @@ use App\Http\Controllers\DetailAbsensiController;
 use App\Http\Controllers\DivisiController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\KaryawanRosterController;
+use App\Http\Controllers\KeteranganAbsensiController;
 use App\Http\Controllers\LokasiAbsenController;
 use App\Http\Controllers\PengingatController;
 use App\Http\Controllers\PeriodeRosterController;
@@ -46,11 +47,13 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
         route::patch('/update/{id}', [AbsensiController::class, 'update'])->name('update.absensi');
         // Detail Absensi Controller
         route::get('/detail', [DetailAbsensiController::class, 'getDetailAbsensi']);
+        route::get('/detail/{nik_karyawan}/{bulan_id}', [DetailAbsensiController::class, 'getDetailAbsensiByNik']);
         route::post('/import-data-absen', [DetailAbsensiController::class, 'importAbsensi'])->name('import.absensi');
-        // route::get('/server-side', [DetailAbsensiController::class, 'serverSideDetailAbsensi']);
-        // route::get('/detail/{id}', [DetailAbsensiController::class, 'show'])->name('detailAbsen.show');
         route::get('/dropdown-bulan/{id}', [DetailAbsensiController::class, 'dropwdownBulan']);
         // End Detail Absensi Controller
+        // Keterangan Absen
+        route::post('/import-keterangan', [KeteranganAbsensiController::class, 'ImportKeteranganAbsen'])->name('import.keterangan');
+        // End Keterangan Absen
     });
 
     Route::group(['prefix' => 'account'], function () {

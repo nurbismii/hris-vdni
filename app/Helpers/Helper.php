@@ -2,6 +2,7 @@
 
 use App\Models\employee;
 use App\Models\Pengingat;
+use App\Models\PeriodeBulan;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
@@ -28,7 +29,7 @@ function prev_segments($uri)
 function getCountPengingat()
 {
     $count_pengingat = [];
-    $count_pengingat = Pengingat::where('flg_kirim', '1')->where('nik_karyawan', Auth::user()->employee->nik)->get();
+    $count_pengingat = Pengingat::where('flg_kirim', '1')->where('tanggal_cuti', '>=', date('Y-m-d', strtotime(Carbon::now()->subDays(14)->toDateString())))->where('nik_karyawan', Auth::user()->employee->nik)->get();
     return $count_pengingat->count();
 }
 
@@ -43,5 +44,11 @@ function getAllPengingat()
 {
     $datas = [];
     $datas = Pengingat::orderBy('tanggal_cuti', 'ASC')->where('tanggal_cuti', '>=', date('Y-m-d', strtotime(Carbon::now()->subDays(14)->toDateString())))->where('flg_kirim', '1')->get();
+    return $datas;
+}
+
+function getPeriodeBulan($id){
+    $datas = [];
+    $datas = PeriodeBulan::where('periode_tahun_id', $id)->pluck('nama_bulan')->implode(", ");
     return $datas;
 }
