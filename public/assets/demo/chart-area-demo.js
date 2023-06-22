@@ -60,20 +60,7 @@ var myLineChart = new Chart(ctx, {
             pointHoverBorderColor: "rgba(0, 97, 242, 1)",
             pointHitRadius: 10,
             pointBorderWidth: 2,
-            data: [
-                0,
-                201,
-                0,
-                65,
-                30,
-                21,
-                16,
-                0,
-                0,
-                0,
-                0,
-                0,
-            ]
+            data: rekrutmen_record
         }]
     },
     options: {

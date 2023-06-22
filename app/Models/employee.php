@@ -22,4 +22,14 @@ class employee extends Model
     {
         return $this->hasOne(Divisi::class, 'id', 'divisi_id');
     }
+
+    public function detailAbsen()
+    {
+        return $this->hasMany(DetailAbsensi::class, 'nik_karyawan', 'nik');
+    }
+
+    public function keteranganAbsen()
+    {
+        return $this->hasMany(KeteranganAbsensi::class, 'nik_karyawan', 'nik');
+    }
 }

@@ -1,0 +1,214 @@
+<x-app-layout title="Edit User">
+    @push('styles')
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css" rel="stylesheet" />
+    <link href="{{ asset('css/styles.css')}}" rel="stylesheet" />
+    <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/favicon.png')}}" />
+    <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    @endpush
+
+    <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
+        <div class="container-xl px-4">
+            <div class="page-header-content">
+                <div class="row align-items-center justify-content-between pt-3">
+                    <div class="col-auto mb-3">
+                        <h1 class="page-header-title">
+                            <div class="page-header-icon"><i data-feather="user"></i></div>
+                            Detail Data Karyawan
+                        </h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Main page content-->
+    <div class="container-xl px-4 mt-4">
+        <div class="row">
+            <div class="col-lg-12">
+                <!-- Account details card-->
+                <div class="card mb-4">
+                    <div class="card-header">Detail Data Karyawan</div>
+                    <div class="card-body">
+                        <form action="{{ route('update.employee', $data->nik) }}" method="POST">
+                            @csrf
+                            {{ method_field('patch') }}
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (first name)-->
+                                <div class="col-md-6">
+                                    <label class="small mb-1">NIK Karyawan</label>
+                                    <input class="form-control" type="text" name="nik_karyawan" value="{{ $data->nik }}" readonly />
+                                </div>
+                                <!-- Form Group (last name)-->
+                                <div class="col-md-6">
+                                    <label class="small mb-1">NIK KTP</label>
+                                    <input class="form-control" type="text" name="no_ktp" value="{{ $data->no_ktp }}" readonly />
+                                </div>
+                            </div>
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (phone number)-->
+                                <div class="col-md-6">
+                                    <label class="small mb-1">Email</label>
+                                    <input class="form-control" type="email" value="{{ $data->user->email ?? 'Belum terdaftar sebagai pengguna' }}" readonly />
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="small mb-1">Agama</label>
+                                    <input type="text" name="" class="form-control" value="{{ $data->agama }}" readonly>
+                                </div>
+                            </div>
+                            <!-- Form Row-->
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (phone number)-->
+                                <div class="col-md-6">
+                                    <label class="small mb-1">Tanggal Lahir</label>
+                                    <input class="form-control" type="date" name="tgl_lahir" value="{{ date('Y-m-d', strtotime($data->tgl_lahir)) }}" readonly />
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="small mb-1">Entry Date</label>
+                                    <input class="form-control" type="date" name="entry_date" value="{{ date('Y-m-d', strtotime($data->entry_date)) }}" readonly />
+                                </div>
+                            </div>
+
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (phone number)-->
+                                <div class="col-md-6">
+                                    <label class="small mb-1">No Telp</label>
+                                    <input class="form-control" name="no_telp" type="tel" value="{{ $data->no_telp }}" readonly />
+                                </div>
+                                <!-- Form Group (birthday)-->
+                                <div class="col-md-6">
+                                    <label class="small mb-1">NPWP</label>
+                                    <input class="form-control" type="text" name="npwp" value="{{ $data->npwp }}" readonly />
+                                </div>
+                            </div>
+
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (phone number)-->
+                                <div class="col-md-6">
+                                    <label class="small mb-1">BPSJ Kesehatan</label>
+                                    <input class="form-control" name="bpjs_kesehatan" type="text" value="{{ $data->bpjs_kesehatan }}" readonly />
+                                </div>
+                                <!-- Form Group (birthday)-->
+                                <div class="col-md-6">
+                                    <label class="small mb-1">BPJS Ketenagakerjaan</label>
+                                    <input class="form-control" name="bpjs_tk" type="text" name="bpjs_tk" value="{{ $data->bpjs_tk }}" readonly />
+                                </div>
+                            </div>
+
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (phone number)-->
+                                <div class="col-md-6">
+                                    <label class="small mb-1">Area Kerja</label>
+                                    <input class="form-control" type="text" name="area_kerja" value="{{ $data->area_kerja }}" readonly />
+                                </div>
+                                <!-- Form Group (birthday)-->
+                                <div class="col-md-6">
+                                    <label class="small mb-1">Golongan Darah</label>
+                                    <input class="form-control" type="text" name="golongan_darah" value="{{ $data->golongan_darah }}" readonly />
+                                </div>
+                            </div>
+
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (phone number)-->
+                                <div class="col-md-6">
+                                    <label class="small mb-1">Posisi</label>
+                                    <input class="form-control" type="text" name="posisi" value="{{ $data->posisi }}" readonly />
+                                </div>
+                                <!-- Form Group (birthday)-->
+                                <div class="col-md-6">
+                                    <label class="small mb-1">Jabatan</label>
+                                    <input class="form-control" type="text" name="jabatan" value="{{ $data->jabatan }}" readonly />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="card mb-3">
+                    <div class="card-body" style="overflow-x:auto;">
+                        <table class="table accordion table-striped table-hover" style="width: 100%;">
+                            <thead>
+                                <tr class="text-center">
+                                    <th>#</th>
+                                    <th>NIK</th>
+                                    <th>Nama</th>
+                                    <th>Total Alpa</th>
+                                    <th>PL</th>
+                                    <th>UL</th>
+                                    <th>Total S</th>
+                                    <th>Total OFF</th>
+                                    <th>Total C</th>
+                                    <th>Total L</th>
+                                    <th>Total Workdays</th>
+                                    <th>Total Absen</th>
+                                    <th>Periode</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($data->detailAbsen as $data)
+                                <tr class="text-center" data-bs-toggle="collapse" data-bs-target="#accor{{$data->id}}">
+                                    <th scope="row">{{ ++$no }}</th>
+                                    <th scope="row">{{ $data->nik_karyawan }}</a></td>
+                                    <td>{{ getName($data->nik_karyawan) }}</td>
+                                    <td>{{ $data->total_alpa }}</td>
+                                    <td>{{ $data->paid_leave }}</td>
+                                    <td>{{ $data->unpaid_leave }}</td>
+                                    <td>{{ $data->total_sakit }}</td>
+                                    <td>{{ $data->total_off }}</td>
+                                    <td>{{ $data->total_cuti }}</td>
+                                    <td>{{ $data->total_libur }}</td>
+                                    <td>{{ $data->total_workdays }}</td>
+                                    <th scope="row">{{ $data->total_absen }}</th>
+                                    <td>{{ $data->periodeBulan->nama_bulan }} {{ $data->periodeBulan->periode_tahun->tahun }}</td>
+                                </tr>
+                                <tr class="collapse accordion-collapse" id="accor{{$data->id}}" data-bs-parent=".table">
+                                    <td colspan="13">
+                                        <table class="table table-condensed table-hover" style="width: 100%;">
+                                            <thead>
+                                                <tr>
+                                                    <th>Tanggal Mulai Izin</th>
+                                                    <th>Tanggal Selesai Izin</th>
+                                                    <th>Total Izin</th>
+                                                    <th>Keterangan</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach($keterangan_absen as $row)
+                                                @if($row->periode_bulan_id == $data->periodeBulan->id)
+                                                <tr>
+                                                    <td>{{ date('d F Y', strtotime($row->tanggal_mulai_izin)) }}</a></td>
+                                                    <td>{{ date('d F Y', strtotime($row->tanggal_selesai_izin)) }}</a></td>
+                                                    <td>{{ $row->total_izin }}</td>
+                                                    <td>{{ $row->keterangan_izin }}</td>
+                                                    <td>{{ ucwords($row->status_izin) }}</td>
+                                                </tr>
+                                                @endif
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @push('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="{{ asset('js/scripts.js')}}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+    <script src="{{ asset('js/datatables/datatables-simple-demo.js')}}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/bundle.js" crossorigin="anonymous"></script>
+    <script src="{{ asset('js/litepicker.js')}}"></script>
+    <script src="{{ asset('js/app.js')}}"></script>
+    @endpush
+
+</x-app-layout>

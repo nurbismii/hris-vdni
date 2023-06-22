@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\ImportDestroyDetailAbsensi;
 use App\Imports\ImportDetailAbsensi;
 use App\Models\DetailAbsensi;
 use App\Models\Divisi;
@@ -14,15 +15,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
+use PhpParser\Node\Expr\FuncCall;
 use Yajra\DataTables\DataTables;
 
 class DetailAbsensiController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $datas = PeriodeTahun::all();
@@ -84,6 +81,11 @@ class DetailAbsensiController extends Controller
         return view('kehadiran.show', compact('divisi', 'detail_absen', 'karyawan', 'bulan', 'keterangan_absen'));
     }
 
+    public function getDetailAllIn()
+    {
+        return view('kehadiran.all-in');
+    }
+
     public function dropwdownBulan($id)
     {
         $bulan = PeriodeBulan::where('periode_tahun_id', $id)->get();
@@ -93,15 +95,33 @@ class DetailAbsensiController extends Controller
     public function importAbsensi(Request $request)
     {
         Excel::import(new ImportDetailAbsensi, $request->file('file'));
-        return back()->with('success', 'Data Karyawan Berhasil ditambahkan');
+        return back()->with('success', 'Data absensi berhasil ditambahkan');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\DetailAbsensi  $detailAbsensi
-     * @return \Illuminate\Http\Response
-     */
+    public function importDeleteAbsensi(Request $request)
+    {
+        Excel::import(new ImportDestroyDetailAbsensi, $request->file('file'));
+        return back()->with('success', 'Data absensi berhasil dihapus');
+    }
+
+    public function serverSideAllin()
+    {
+        $data = employee::query();
+        return DataTables::of($data)->addColumn('action', function ($data) {
+            return view('kehadiran._action', [
+                'data' => $data,
+                'url_show' => route('all-in/detail', $data->nik),
+            ]);
+        })->addIndexColumn()->rawColumns(['action'])->make(true);
+    }
+
+    public function show($nik)
+    {
+        $data = employee::with(['detailAbsen', 'keteranganAbsen'])->where('nik', $nik)->first();
+        $keterangan_absen = $data->keteranganAbsen;
+        return view('kehadiran.all-in-detail', compact('data', 'keterangan_absen'))->with('no');
+    }
+
     public function destroy(DetailAbsensi $detailAbsensi)
     {
         //

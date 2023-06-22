@@ -6,6 +6,7 @@ use App\Http\Requests\StoreDashboardRequest;
 use App\Mail\SendEmailVerification;
 use App\Models\AuditTrail;
 use App\Models\Contract;
+use App\Models\Divisi;
 use App\Models\employee;
 use App\Models\parameter_dashboard;
 use App\Models\User;
@@ -23,15 +24,59 @@ class DashboardController extends Controller
 
     public function index(Request $request)
     {
-        $role = Auth::user()->job->permission_role ?? '';
-        $bulan_sekarang = date('Y-m', strtotime(Carbon::now()));
-        $total_karyawan = employee::count();
-        $total_pwkt1_perbulan = Contract::where('tanggal_mulai_kontrak', 'like', '%' . $bulan_sekarang . '%')->count();
-        $total_pengguna = User::count();
-        $data = parameter_dashboard::where('status', '1')->latest()->first();
+        if (strtolower(Auth::user()->job->permission_role ?? '') == 'administrator') {
+            $role = Auth::user()->job->permission_role ?? '';
+            $bulan_sekarang = date('Y-m', strtotime(Carbon::now()));
+            $tahun_sekarang = date('Y', strtotime(Carbon::now()));
+            $total_karyawan = employee::count();
+            $total_pwkt1_perbulan = Contract::where('tanggal_mulai_kontrak', 'like', '%' . $bulan_sekarang . '%')->count();
+            $total_pengguna = User::count();
+            $total_divisi = Divisi::count();
+            $data = parameter_dashboard::where('status', '1')->latest()->first();
+            $data_contract = Contract::all();
 
+            foreach ($data_contract as $d) {
+                $validation[] = date('Y', strtotime($d->tanggal_mulai_kontrak));
+            }
 
-        return view('dashboard', compact('data', 'total_karyawan', 'total_pwkt1_perbulan', 'total_pengguna', 'role'));
+            foreach ($data_contract as $d) {
+                $rekrutmen_record[] = date('m', strtotime($d->tanggal_mulai_kontrak));
+            }
+
+            for ($i = 0; $i < count($rekrutmen_record); $i++) :
+                if ($validation[$i] == $tahun_sekarang) :
+                    $jan[] = $rekrutmen_record[$i] == "01" ? $rekrutmen_record[$i] : [];
+                    $feb[] = $rekrutmen_record[$i] == "02" ? $rekrutmen_record[$i] : [];
+                    $maret[] = $rekrutmen_record[$i] == "03" ? $rekrutmen_record[$i] : [];
+                    $april[] = $rekrutmen_record[$i] == "04" ? $rekrutmen_record[$i] : [];
+                    $mei[] = $rekrutmen_record[$i] == "05" ? $rekrutmen_record[$i] : [];
+                    $juni[] = $rekrutmen_record[$i] == "06" ? $rekrutmen_record[$i] : [];
+                    $juli[] = $rekrutmen_record[$i] == "07" ? $rekrutmen_record[$i] : [];
+                    $agust[] = $rekrutmen_record[$i] == "08" ? $rekrutmen_record[$i] : [];
+                    $sept[] = $rekrutmen_record[$i] == "09" ? $rekrutmen_record[$i] : [];
+                    $okt[] = $rekrutmen_record[$i] == "10" ? $rekrutmen_record[$i] : [];
+                    $nov[] = $rekrutmen_record[$i] == "11" ? $rekrutmen_record[$i] : [];
+                    $dec[] = $rekrutmen_record[$i] == "12" ? $rekrutmen_record[$i] : [];
+                endif;
+            endfor;
+
+            $chart_rekrut = [
+                count(array_filter($jan)),
+                count(array_filter($feb)),
+                count(array_filter($maret)),
+                count(array_filter($april)),
+                count(array_filter($mei)),
+                count(array_filter($juni)),
+                count(array_filter($juli)),
+                count(array_filter($agust)),
+                count(array_filter($sept)),
+                count(array_filter($okt)),
+                count(array_filter($nov)),
+                count(array_filter($dec))
+            ];
+            return view('dashboard', compact('data', 'total_karyawan', 'total_pwkt1_perbulan', 'total_pengguna', 'role', 'total_divisi', 'chart_rekrut'));
+        }
+        return view('dashboard-user');
     }
 
     public function settingDashboard(Request $request)

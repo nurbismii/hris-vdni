@@ -71,7 +71,7 @@
 
                 <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseCoreHr" aria-expanded="false" aria-controls="collapseCoreHr">
                     <div class="nav-link-icon"><i data-feather="link-2"></i></div>
-                    Hubungan Industrial
+                    HI
                     <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
                 <div class="collapse" id="collapseCoreHr" data-bs-parent="#accordionSidenav">
@@ -115,7 +115,7 @@
 
                 <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseKelolaCuti" aria-expanded="false" aria-controls="collapseKelolaCuti">
                     <div class="nav-link-icon"><i data-feather="calendar"></i></div>
-                    Kompensasi dan Keuntungan
+                    Kompensasi & Keuntungan
                     <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
                 <div class="collapse" id="collapseKelolaCuti" data-bs-parent="#accordionSidenav">

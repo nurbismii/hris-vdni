@@ -28,11 +28,11 @@
                             <i class="me-1" data-feather="calendar"></i>
                             Baru
                         </a>
-                        <a class="btn btn-sm btn-info text-white" data-bs-toggle="modal" data-bs-target="#modalAddKeterangan">
+                        <a class="btn btn-sm btn-light text-primary" data-bs-toggle="modal" data-bs-target="#modalAddKeterangan">
                             <i class="me-1" data-feather="edit-3"></i>
                             Keterangan Absen
                         </a>
-                        <a class="btn btn-sm btn-danger text-white" data-bs-toggle="modal" data-bs-target="#modalDeleteEmployee">
+                        <a class="btn btn-sm btn-danger text-white" data-bs-toggle="modal" data-bs-target="#modalDestroyAbsensi">
                             <i class="me-1" data-feather="trash"></i>
                             Hapus
                         </a>
@@ -42,7 +42,12 @@
         </div>
     </header>
     <!-- Main page content-->
-    <div class="container-fluid px-4">
+    <div class="container-fluid px-4 mt-3">
+        <nav class="nav nav-borders">
+            <a class="nav-link {{ (request()->segment(2) == 'detail') ? 'active' : '' }} ms-0" href="/absen/detail">Data Perbulan</a>
+            <a class="nav-link {{ (request()->segment(2) == 'all-in') ? 'active' : '' }} ms-0" href="/absen/detail/all-in">Semua Data</a>
+        </nav>
+        <hr class="mt-0 mb-4" />
         <div class="row">
             <div class="col-lg-12 mb-3">
                 <x-message />
@@ -90,7 +95,6 @@
             </div>
             @endif
             <div class="col-lg-12">
-                <x-message />
                 <div class="card">
                     <div class="card-body" style="overflow-x:auto;">
                         <table id="datatablesSimple" class="table table-hover" style="width: 100%;">
@@ -189,6 +193,30 @@
                     <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form action="{{ route('import.keterangan') }}" method="POST" enctype="multipart/form-data" class="nav flex-column" id="stickyNav">
+                    <div class="modal-body">
+                        @csrf
+                        <div class="mb-3">
+                            <label class="form-label">Pilih file :</label>
+                            <input class="form-control" type="file" name="file" id="formFile">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary btn-sm" type="button" data-bs-dismiss="modal">Tutup</button>
+                        <button class="btn btn-success btn-sm" type="submit">Kirim</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalDestroyAbsensi" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Bulk Hapus Data Absensi</h5>
+                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{{ route('import.destroy.absensi') }}" method="POST" enctype="multipart/form-data" class="nav flex-column" id="stickyNav">
                     <div class="modal-body">
                         @csrf
                         <div class="mb-3">

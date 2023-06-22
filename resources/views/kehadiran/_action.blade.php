@@ -1,0 +1,1 @@
+<a target="_blank" href="{{ $url_show }}" title="{{ $data->nama_karyawan }}" class="btn btn-link btn-icon btn-xs"><i class="fas fa-info-circle"></i></a>

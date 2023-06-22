@@ -33,8 +33,8 @@
   <!-- Main page content-->
   <div class="container-xl px-4 mt-4">
     <!-- Account page navigation-->
-    <hr class="mt-0 mb-4" />
     <x-nav-account />
+    <hr class="mt-0 mb-4" />
     <x-message />
     <div class="row">
       <div class="col-lg-6 mb-4">

@@ -52,7 +52,7 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="me-3">
-                                <div class="text-white-75 small">Total Karyawan</div>
+                                <div class="text-white-75 small">Karyawan</div>
                                 <div class="text-lg fw-bold">{{ $total_karyawan }}</div>
                             </div>
                             <i class="feather-xl text-white-50" data-feather="users"></i>
@@ -69,14 +69,14 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="me-3">
-                                <div class="text-white-75 small">Task Completion</div>
-                                <div class="text-lg fw-bold">24</div>
+                                <div class="text-white-75 small">Divisi</div>
+                                <div class="text-lg fw-bold">{{ $total_divisi }}</div>
                             </div>
                             <i class="feather-xl text-white-50" data-feather="check-square"></i>
                         </div>
                     </div>
                     <div class="card-footer d-flex align-items-center justify-content-between small">
-                        <a class="text-white stretched-link" href="#!">View Tasks</a>
+                        <a class="text-white stretched-link" href="/departemen">Selengkapnya...</a>
                         <div class="text-white"><i class="fas fa-angle-right"></i></div>
                     </div>
                 </div>
@@ -93,7 +93,7 @@
                         </div>
                     </div>
                     <div class="card-footer d-flex align-items-center justify-content-between small">
-                        <a class="text-white stretched-link" href="#!">View Requests</a>
+                        <a class="text-white stretched-link" href="users">Selengkapnya...</a>
                         <div class="text-white"><i class="fas fa-angle-right"></i></div>
                     </div>
                 </div>
@@ -103,18 +103,7 @@
             <div class="col-xl-6 mb-4">
                 <div class="card card-header-actions h-100">
                     <div class="card-header">
-                        Recruitment record
-                        <div class="dropdown no-caret">
-                            <button class="btn btn-transparent-dark btn-icon dropdown-toggle" id="areaChartDropdownExample" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="text-gray-500" data-feather="more-vertical"></i></button>
-                            <div class="dropdown-menu dropdown-menu-end animated--fade-in-up" aria-labelledby="areaChartDropdownExample">
-                                <a class="dropdown-item" href="#!">Last 12 Months</a>
-                                <a class="dropdown-item" href="#!">Last 30 Days</a>
-                                <a class="dropdown-item" href="#!">Last 7 Days</a>
-                                <a class="dropdown-item" href="#!">This Month</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#!">Custom Range</a>
-                            </div>
-                        </div>
+                        Diagram Rekrutmen
                     </div>
                     <div class="card-body">
                         <div class="chart-area"><canvas id="myAreaChart" width="100%" height="30"></canvas></div>
@@ -124,18 +113,7 @@
             <div class="col-xl-6 mb-4">
                 <div class="card card-header-actions h-100">
                     <div class="card-header">
-                        Resign record
-                        <div class="dropdown no-caret">
-                            <button class="btn btn-transparent-dark btn-icon dropdown-toggle" id="areaChartDropdownExample" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="text-gray-500" data-feather="more-vertical"></i></button>
-                            <div class="dropdown-menu dropdown-menu-end animated--fade-in-up" aria-labelledby="areaChartDropdownExample">
-                                <a class="dropdown-item" href="#!">Last 12 Months</a>
-                                <a class="dropdown-item" href="#!">Last 30 Days</a>
-                                <a class="dropdown-item" href="#!">Last 7 Days</a>
-                                <a class="dropdown-item" href="#!">This Month</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#!">Custom Range</a>
-                            </div>
-                        </div>
+                        Diagram
                     </div>
                     <div class="card-body">
                         <div class="chart-bar"><canvas id="myBarChart" width="100%" height="30"></canvas></div>
@@ -147,6 +125,9 @@
     @endif
 
     @push('scripts')
+    <script>
+        var rekrutmen_record = JSON.parse('{!! json_encode($chart_rekrut) !!}');
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="{{ asset('js/scripts.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" crossorigin="anonymous"></script>
@@ -156,4 +137,6 @@
     <script src="{{ asset('js/datatables/datatables-simple-demo.js')}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/bundle.js" crossorigin="anonymous"></script>
     <script src="{{ asset('js/litepicker.js')}}"></script>
-    <script src="{{ asset('js/app.js') }}" @endpush </x-app-layout>
+    <script src="{{ asset('js/app.js') }}"></script>
+    @endpush 
+</x-app-layout>

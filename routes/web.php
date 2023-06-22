@@ -45,15 +45,23 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
         route::get('/', [AbsensiController::class, 'index']);
         route::post('/store', [AbsensiController::class, 'store'])->name('store.absensi');
         route::patch('/update/{id}', [AbsensiController::class, 'update'])->name('update.absensi');
-        // Detail Absensi Controller
-        route::get('/detail', [DetailAbsensiController::class, 'getDetailAbsensi']);
-        route::get('/detail/{nik_karyawan}/{bulan_id}', [DetailAbsensiController::class, 'getDetailAbsensiByNik']);
-        route::post('/import-data-absen', [DetailAbsensiController::class, 'importAbsensi'])->name('import.absensi');
-        route::get('/dropdown-bulan/{id}', [DetailAbsensiController::class, 'dropwdownBulan']);
-        // End Detail Absensi Controller
-        // Keterangan Absen
-        route::post('/import-keterangan', [KeteranganAbsensiController::class, 'ImportKeteranganAbsen'])->name('import.keterangan');
-        // End Keterangan Absen
+        
+        route::group(['middleware' => 'isAdmin'], function () {
+            // Detail Absensi Controller
+            route::get('/detail', [DetailAbsensiController::class, 'getDetailAbsensi']);
+            route::get('/detail/all-in', [DetailAbsensiController::class, 'getDetailAllIn']);
+            route::get('/detail/{nik_karyawan}/{bulan_id}', [DetailAbsensiController::class, 'getDetailAbsensiByNik']);
+            route::post('/import-data-absen', [DetailAbsensiController::class, 'importAbsensi'])->name('import.absensi');
+            route::post('/import-data-absen/destroy', [DetailAbsensiController::class, 'importDeleteAbsensi'])->name('import.destroy.absensi');
+            route::get('/dropdown-bulan/{id}', [DetailAbsensiController::class, 'dropwdownBulan']);
+            route::get('/server-side', [DetailAbsensiController::class, 'serverSideAllin']);
+            route::get('/all-in/detail/{nik}', [DetailAbsensiController::class, 'show'])->name('all-in/detail');
+            // End Detail Absensi Controller
+
+            // Keterangan Absen
+            route::post('/import-keterangan', [KeteranganAbsensiController::class, 'ImportKeteranganAbsen'])->name('import.keterangan');
+            // End Keterangan Absen
+        });
     });
 
     Route::group(['prefix' => 'account'], function () {
