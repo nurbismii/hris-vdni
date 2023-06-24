@@ -76,7 +76,22 @@ class DashboardController extends Controller
             ];
             return view('dashboard', compact('data', 'total_karyawan', 'total_pwkt1_perbulan', 'total_pengguna', 'role', 'total_divisi', 'chart_rekrut'));
         }
-        return view('dashboard-user');
+        $day = date('D', strtotime(today()));
+        $dayList = array(
+            'Sun' => 'Minggu',
+            'Mon' => 'Senin',
+            'Tue' => 'Selasa',
+            'Wed' => 'Rabu',
+            'Thu' => 'Kamis',
+            'Fri' => 'Jumat',
+            'Sat' => 'Sabtu'
+        );
+        $hari_ini = $dayList[$day];
+
+        $datas = User::with('employee')->where('nik_karyawan', Auth::user()->nik_karyawan)->first();
+        $divisi = Divisi::with('departemen')->where('id', $datas->employee->divisi_id)->first();
+
+        return view('dashboard-user', compact('hari_ini', 'divisi'));
     }
 
     public function settingDashboard(Request $request)

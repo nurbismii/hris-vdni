@@ -49,7 +49,7 @@
             <div class="col-lg-12 mb-2">
                 <div class="card">
                     <div class="card-body" style="overflow-x: auto;">
-                        <table id="datatables" class="table table-bordered" style="width: 100%;">
+                        <table id="datatables" class="table table-hover" style="width: 100%;">
                             <thead>
                                 <tr class="text-center">
                                     <th>Awal Periode</th>

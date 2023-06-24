@@ -9,29 +9,33 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title>Slip Gaji</title>
+     
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <style>
+        @font-face { 
+            font-family: 'Firefly Sung'; 
+            font-style: normal; 
+            font-weight: 400;
+            src: url('https://eclecticgeek.com/dompdf/fonts/cjk/fireflysung.ttf') format('truetype'); }
         * {
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 14px;
+            font-family: Firefly Sung, DejaVu Sans, sans-serif;
+            font-size: 11px;
         }
     </style>
-    <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
-    <link href="http://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 
 <body class="nav-fixed">
     <div id="layoutSidenav">
         <main>
             <!-- Main page content-->
-            <div class="container-xl px- mt-2">
+            <div class="container-xl px-1">
                 <!-- Invoice-->
                 <div class="card invoice">
-                    <div class="text-center mb-2">
-                        <h4 class="fw-bold">PT VDNI</h4> <br>
-                        <img src="{{ public_path('assets/img/backgrounds/vdni-ikon.png') }}" style="height: 50px;" alt=""><br> <br>
-                        <span class="fw-normal mb-2">SLIP GAJI </span> <br> <br>
-                        <span class="fw-normal mb-2"> Periode ({{ date('F Y', strtotime($data->mulai_periode)) }} - {{ date('F Y', strtotime($data->akhir_periode)) }})</span>
+                    <div class="text-center">
+                        <h4 class="fw-bold">PT VDNI</h4>
+                        <img src="{{ public_path('assets/img/backgrounds/vdni-ikon.png') }}" style="height: 30px;" alt=""><br>
+                        <span class="fw-normal">SLIP GAJI </span> <br>
+                        <span class="fw-normal"> Periode ({{ date('F Y', strtotime($data->mulai_periode)) }} - {{ date('F Y', strtotime($data->akhir_periode)) }})</span>
                     </div>
                     <div class="card-body p-4 p-md-5">
                         <!-- Invoice table-->
@@ -52,9 +56,9 @@
                                     </tr>
                                     <tr>
                                         <td scope="row">Departemen</td>
-                                        <td style="font-family: 'Ma Shan Zheng', sans-serif">{{ $karyawan->divisi->departemen->departemen }}</td>
+                                        <td>{{ $karyawan->divisi->departemen->departemen }}</td>
                                         <td>Divisi</td>
-                                        <td style="font-family: 'Ma Shan Zheng', sans-serif">{{ $karyawan->divisi->nama_divisi }}</td>
+                                        <td>{{ $karyawan->divisi->nama_divisi }}</td>
                                     </tr>
                                     <tr>
                                         <td scope="row">Posisi</td>
@@ -79,62 +83,54 @@
                                     <!-- Invoice item 1-->
                                     <tr class="border-bottom">
                                         <td>
-                                            <div class="fw-bold">Gaji</div>
+                                            <div class="">Gaji</div>
                                         </td>
-                                        <td class="text-end fw-bold">Rp{{ number_format($data->gaji_pokok, 0, ",", ".") }}</td>
-                                        <td class="text-end fw-bold">BPJS TK JHT</td>
-                                        <td class="text-end fw-bold">Rp{{ number_format($data->jht, 0, ",", ".")  }}</td>
+                                        <td class="text-end ">Rp{{ number_format($data->gaji_pokok, 0, ",", ".") }}</td>
+                                        <td class="text-end ">BPJS TK JHT</td>
+                                        <td class="text-end ">Rp{{ number_format($data->jht, 0, ",", ".")  }}</td>
                                     </tr>
                                     <!-- Invoice item 2-->
                                     <tr class="border-bottom">
                                         <td>
-                                            <div class="fw-bold">Tunj. Uang Makan</div>
+                                            <div class="">Tunj. Uang Makan</div>
                                         </td>
-                                        <td class="text-end fw-bold">Rp{{ number_format($data->tunjangan_umum, 0, ",", ".")  }}</td>
-                                        <td class="text-end fw-bold">BPJS TK JP</td>
-                                        <td class="text-end fw-bold">Rp{{ number_format($data->jp, 0, ",", ".")  }}</td>
+                                        <td class="text-end ">Rp{{ number_format($data->tunjangan_umum, 0, ",", ".")  }}</td>
+                                        <td class="text-end ">BPJS TK JP</td>
+                                        <td class="text-end ">Rp{{ number_format($data->jp, 0, ",", ".")  }}</td>
                                     </tr>
                                     <!-- Invoice item 3-->
                                     <tr class="border-bottom">
                                         <td>
-                                            <div class="fw-bold">Tunj. Pengawas</div>
+                                            <div class="">Tunj. Pengawas</div>
                                         </td>
-                                        <td class="text-end fw-bold">Rp{{ number_format($data->tunjangan_pengawas, 0, ",", ".")  }}</td>
-                                        <td class="text-end fw-bold">BPSJ Kesehatan</td>
-                                        <td class="text-end fw-bold">Rp{{ number_format($data->bpjs_kesehatan, 0, ",", ".")  }}</td>
+                                        <td class="text-end ">Rp{{ number_format($data->tunjangan_pengawas, 0, ",", ".")  }}</td>
+                                        <td class="text-end ">BPSJ Kesehatan</td>
+                                        <td class="text-end ">Rp{{ number_format($data->bpjs_kesehatan, 0, ",", ".")  }}</td>
                                     </tr>
                                     <!-- Invoice item 4-->
                                     <tr class="border-bottom">
                                         <td>
-                                            <div class="fw-bold">Tunj. Koefisien</div>
+                                            <div class="">Tunj. Koefisien</div>
                                         </td>
-                                        <td class="text-end fw-bold">Rp{{ number_format($data->tunjugan_koefisien, 0, ",", ".")  }}</td>
-                                        <td class="text-end fw-bold">Deduction Unpaid Leave</td>
-                                        <td class="text-end fw-bold">Rp{{ number_format($data->deduction_unpaid_leave, 0, ",", ".")  }}</td>
+                                        <td class="text-end ">Rp{{ number_format($data->tunjugan_koefisien, 0, ",", ".")  }}</td>
+                                        <td class="text-end ">Deduction Unpaid Leave</td>
+                                        <td class="text-end ">Rp{{ number_format($data->deduction_unpaid_leave, 0, ",", ".")  }}</td>
                                     </tr>
                                     <tr class="border-bottom">
                                         <td>
-                                            <div class="fw-bold">Tunj. Masa Kerja</div>
+                                            <div class="">Tunj. Masa Kerja</div>
                                         </td>
-                                        <td class="text-end fw-bold">Rp{{ number_format($data->tunjangan_mk, 0, ",", ".")  }}</td>
-                                        <td class="text-end fw-bold">Deduction</td>
-                                        <td class="text-end fw-bold">Rp{{ number_format($data->tunjangan_mk, 0, ",", ".")  }}</td>
+                                        <td class="text-end ">Rp{{ number_format($data->tunjangan_mk, 0, ",", ".")  }}</td>
+                                        <td class="text-end ">Deduction</td>
+                                        <td class="text-end ">Rp{{ number_format($data->tunjangan_mk, 0, ",", ".")  }}</td>
                                     </tr>
                                     <tr class="border-bottom">
                                         <td>
-                                            <div class="fw-bold">Lembur</div>
+                                            <div class="">Lembur</div>
                                         </td>
-                                        <td class="text-end fw-bold">Rp{{ number_format($data->deduction_php21, 0, ",", ".")  }}</td>
-                                        <td class="text-end fw-bold">Deduction PPH 21</td>
-                                        <td class="text-end fw-bold">Rp{{ number_format($data->deduction_php21, 0, ",", ".")  }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-end pb-0" colspan="3">
-                                            <div class="text-uppercase small fw-700 text-muted">Total Deduction:</div>
-                                        </td>
-                                        <td class="text-end pb-0">
-                                            <div class="h5 mb-0 fw-700">Rp{{ number_format($total_deduction, 0 , ",", ".") }}</div>
-                                        </td>
+                                        <td class="text-end">Rp{{ number_format($data->deduction_php21, 0, ",", ".")  }}</td>
+                                        <td class="text-end ">Deduction PPH 21</td>
+                                        <td class="text-end ">Rp{{ number_format($data->deduction_php21, 0, ",", ".")  }}</td>
                                     </tr>
                                     <tr>
                                         <td class="text-end pb-0" colspan="3">
@@ -142,6 +138,14 @@
                                         </td>
                                         <td class="text-end pb-0">
                                             <div class="h5 mb-0 fw-700">Rp{{ number_format($total_diterima, 0, ",", ".") }}</div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-end pb-0" colspan="3">
+                                            <div class="text-uppercase small fw-700 text-muted">Total Deduction:</div>
+                                        </td>
+                                        <td class="text-end pb-0">
+                                            <div class="h5 mb-0 fw-700">Rp{{ number_format($total_deduction, 0 , ",", ".") }}</div>
                                         </td>
                                     </tr>
                                     <tr>
@@ -166,15 +170,7 @@
                                     </tr>
                                     <tr>
                                         <td class="h6 mb-1">{{ $karyawan->nama_karyawan }}</td>
-                                        <td class="h6 mb-1">PT VDNI</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="small">1234 Company Dr.</td>
-                                        <td class="small">1234 Company Dr.</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="small">Yorktown, MA 39201</td>
-                                        <td class="small">Yorktown, MA 39201</td>
+                                        <td class="h6 mb-1">Sistem Payroll VDNI</td>
                                     </tr>
                                 </tbody>
                             </table>

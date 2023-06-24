@@ -9,10 +9,7 @@ use App\Models\employee;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Carbon\Carbon;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -50,8 +47,8 @@ class RegisterController extends Controller
 
     public function register(StoreRegisterRequest $request)
     {
-        DB::beginTransaction();
         try {
+            DB::beginTransaction();
             $employee = employee::where('nik', $request->employee_id)->first();
             if ($request->password == $request->password_confirm) {
                 $data_user = array(
@@ -75,10 +72,14 @@ class RegisterController extends Controller
 
     public function konfirmasiEmail($nik_karyawan)
     {
+        $check = User::where('nik_karyawan', $nik_karyawan)->first();
+        if (strtolower($check->status) == 'aktif') {
+            return redirect('login')->with('warning', 'Verifikasi ini telah digunakan');
+        }
         User::where('nik_karyawan', $nik_karyawan)->update([
             'email_verified_at' => Carbon::now(),
             'status' => 'aktif'
         ]);
-        return redirect('login')->with('success', 'Email kamu berhasil di verifikasi, Silahkan login');
+        return view('200');
     }
 }
