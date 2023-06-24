@@ -3,7 +3,6 @@
 use App\Http\Controllers\AbsensiController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\ContractController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DepartemenController;
@@ -13,13 +12,11 @@ use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\KaryawanRosterController;
 use App\Http\Controllers\KeteranganAbsensiController;
 use App\Http\Controllers\LokasiAbsenController;
-use App\Http\Controllers\PengingatController;
 use App\Http\Controllers\PeriodeRosterController;
 use App\Http\Controllers\Role\RoleController;
 use App\Http\Controllers\SalaryController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\WaktuAbsenController;
-use App\Models\DetailAbsensi;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -144,7 +141,6 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
             route::get('/export-template', [SalaryController::class, 'exportSalary'])->name('export.salary');
             route::get('/slip-gaji', [SalaryController::class, 'slipgaji'])->name('salary.slipgaji');
             route::post('/import-salarys', [SalaryController::class, 'importSalary'])->name('import.salary');
-            route::get('/server-side', [SalaryController::class, 'sideServer']);
             route::get('/show/{id}', [SalaryController::class, 'show'])->name('payslip.show');
         });
 
@@ -175,7 +171,6 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
             route::get('/', [KaryawanRosterController::class, 'index']);
             route::post('/import-karyawan-roster', [KaryawanRosterController::class, 'importKaryawanRoster'])->name('import.karyawanRoster');
             route::post('/import-delete-karyawan-roster', [KaryawanRosterController::class, 'importDeleteKaryawanRoster'])->name('import.deleteKaryawanRoster');
-            route::post('/pengingat', [KaryawanRosterController::class, 'pengingat'])->name('pengingat');
             route::get('/daftar-pengingat', [KaryawanRosterController::class, 'reminder']);
             route::get('/aktif', [KaryawanRosterController::class, 'rosterAktif']);
             route::patch('/update/status-pengajuan/{id}', [KaryawanRosterController::class, 'updateStatusPengajuan'])->name('update.statusPengajuan');

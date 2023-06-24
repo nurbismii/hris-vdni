@@ -88,22 +88,22 @@
                                     <td>
                                         {{ $data->nik_karyawan }} <br>
                                         @if($data->status_pengajuan === NULL)
-                                        <span class="badge bg-warning">Belum Pengajuan</span>
+                                        <span class="badge bg-warning-soft text-warning">Belum Pengajuan</span>
                                         @endif
                                         @if((strtolower($data->status_pengajuan) === 'proses') && ($tgl_jt_tempo > 0))
-                                        <span class="badge bg-primary">Proses</span>
+                                        <span class="badge bg-primary-soft text-primary">Proses</span>
                                         @endif
                                         @if(strtolower($data->status_pengajuan) == 'selesai' && $tgl_jt_tempo > 0)
-                                        <span class="badge bg-success">Selesai</span>
+                                        <span class="badge bg-success-soft text-success">Selesai</span>
                                         @endif
                                         @if($data->status_pengajuan == NULL || strtolower($data->status_pengajuan) && $tgl_jt_tempo > 0 && strtolower($data->status_pengajuan) != 'selesai')
                                         @if($tgl_jt_tempo >= 14 && $tahun > 0)
-                                        <span class="badge bg-danger">Expired {{ $tahun }} tahun {{ $bulan }} bulan</span>
+                                        <span class="badge bg-danger-soft text-danger">Expired {{ $tahun }} tahun {{ $bulan }} bulan</span>
                                         @endif
-                                        @if($tgl_cuti < $tgl_sekarang && $tgl_jt_tempo < 365) <span class="badge bg-danger">Expired {{ $tgl_jt_tempo }} hari lalu</span>
+                                        @if($tgl_cuti < $tgl_sekarang && $tgl_jt_tempo < 365) <span class="badge bg-danger-soft text-danger">Expired {{ $tgl_jt_tempo }} hari lalu</span>
                                             @endif
                                             @if($tgl_cuti > $tgl_sekarang)
-                                            <span class="badge bg-info">Expired {{ $tgl_jt_tempo }} hari lagi</span>
+                                            <span class="badge bg-info-soft text-info">Expired {{ $tgl_jt_tempo }} hari lagi</span>
                                             @endif
                                             @endif
                                     </td>

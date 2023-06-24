@@ -20,20 +20,11 @@ class SalaryController extends Controller
         return view('payslip.index');
     }
 
-    public function slipgaji()
+    public function slipgaji(Request $request)
     {
-        return view('payslip.slipgaji');
-    }
-
-    public function sideServer(Request $request)
-    {
-        $data = salary::with('employee');
-        return DataTables::of($data)->addColumn('action', function ($data) {
-            return view('payslip._action', [
-                'data' => $data,
-                'url_show' => route('payslip.show', $data->id),
-            ]);
-        })->addIndexColumn()->rawColumns(['action'])->make(true);
+        $periode = date('Y-m', strtotime($request->periode));
+        $datas = salary::where('akhir_periode', 'like', '%' . $periode . '%')->get();
+        return view('payslip.slipgaji', compact('datas'));
     }
 
     public function show($id)

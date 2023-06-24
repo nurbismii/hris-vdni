@@ -31,36 +31,36 @@
       <div class="card-body">
         <!-- Button with lift -->
         <a class="btn btn-indigo  btn-sm lift mb-3" href="{{ route('export.salary') }}">
-          <i>Download sample file</i>
+          <i>Download template file</i>
         </a>
         <p class="col-12">
-          The first line in downloaded sample file should remain as it is. Please do not change the order of columns in file.
+          Baris pertama dalam file sampel yang diunduh harus tetap apa adanya. Harap jangan mengubah urutan kolom dalam file.
         </p>
         <p class="col-12 text-justify">
-          The correct column order is (NIK, KTP, Departement, Divisi, Position, SP Duration and etc.)
+          Urutan kolom yang benar adalah (NIK, KTP, Departemen, Divisi, Jabatan, Durasi SP dan lain-lain)
         </p>
         <!-- Fade In Animation -->
         <div class="timeline timeline-sm">
           <div class="timeline-item">
             <div class="timeline-item-marker">
-              <div class="timeline-item-marker-text">First</div>
+              <div class="timeline-item-marker-text">Pertama</div>
               <div class="timeline-item-marker-indicator"><i data-feather="check"></i></div>
             </div>
-            <div class="timeline-item-content">Date format should be match (general setting)</div>
+            <div class="timeline-item-content">Format tanggal harus sesuai (pengaturan umum)</div>
           </div>
           <div class="timeline-item">
             <div class="timeline-item-marker">
-              <div class="timeline-item-marker-text">Second.</div>
+              <div class="timeline-item-marker-text">Kedua</div>
               <div class="timeline-item-marker-indicator"><i data-feather="check"></i></div>
             </div>
-            <div class="timeline-item-content">NIK must be filled</div>
+            <div class="timeline-item-content">NIK harus diisi</div>
           </div>
           <div class="timeline-item mb-3">
             <div class="timeline-item-marker">
-              <div class="timeline-item-marker-text">Third.</div>
+              <div class="timeline-item-marker-text">Ketiga</div>
               <div class="timeline-item-marker-indicator"><i data-feather="check"></i></div>
             </div>
-            <div class="timeline-item-content">You must follow the file, otherwise you will get an error while importing the file..</div>
+            <div class="timeline-item-content">Anda harus mengikuti file tersebut, jika tidak, Anda akan mendapatkan kesalahan saat mengimpor file.</div>
           </div>
         </div>
         <form action="{{ route('import.salary') }}" method="POST" enctype="multipart/form-data">
@@ -70,7 +70,7 @@
               <input class="form-control" name="file" type="file" id="formFile" required>
             </div>
             <div class="mb-3 col-3">
-              <button class="btn btn-primary" type="submit">Send file</button>
+              <button class="btn btn-primary" type="submit">Kirim File</button>
             </div>
           </div>
         </form>

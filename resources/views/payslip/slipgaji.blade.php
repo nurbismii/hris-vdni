@@ -18,7 +18,7 @@
                 <div class="row align-items-center justify-content-between pt-3">
                     <div class="col-auto mb-3">
                         <h1 class="page-header-title">
-                            <div class="page-header-icon"><i data-feather="dollar-sign"></i></div>
+                            <div class="page-header-icon"><i data-feather="calendar"></i></div>
                             Data Slip Gaji
                         </h1>
                     </div>
@@ -35,36 +35,51 @@
     <!-- Main page content-->
     <div class="container-fluid px-4">
         <x-message />
-        <!-- <div class="col-xl-12">
+        <div class="col-xl-12">
             <div class="card mb-3">
-                <div class="card-body">
-                    <div class="row gx-3 mb-3">
-                        <div class="col-md-6">
-                            <label class="small mb-1">Entry Date Start</label>
-                            <input class="form-control" id="min" name="min" type="text" />
-                        </div>
-                        <div class="col-md-6">
-                            <label class="small mb-1">Entry Date End</label>
-                            <input class="form-control" id="max" name="max" type="text" />
+                <form action="{{ url('salary/slip-gaji') }}" method="get">
+                    @csrf
+                    <div class="card-body">
+                        <div class="row gx-3 mb-3">
+                            <div class="col-10">
+                                <input class="form-control" name="periode" type="month" required />
+                            </div>
+                            <div class="col-2">
+                                <button class="btn btn-primary" type="submit">Filter</button>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
-        </div> -->
+        </div>
         <div class="card">
             <div class="card-body" style="overflow-x:auto;">
-                <table id="data-gaji" class="table table-hover" style="width: 100%;">
+                <table id="datatablesSimple" class="table table-hover" style="width: 100%;">
                     <thead>
                         <tr>
-                            <th></th>
                             <th>NIK</th>
                             <th>Nama</th>
                             <th>Gaji</th>
                             <th>Status</th>
                             <th>Total Diterima</th>
+                            <th>Detail</th>
                         </tr>
                     </thead>
-                    <tbody> </tbody>
+                    <tbody>
+                        @foreach($datas as $data)
+                        <tr>
+                            <td>{{ $data->employee_id }}</td>
+                            <td>{{ getName($data->employee_id) }}</td>
+                            <td>{{ $data->gaji_pokok }}</td>
+                            <td>{{ $data->status_gaji }}</td>
+                            <td>{{ $data->total_diterima }}</td>
+                            <td>
+                                <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="{{ route('edit.user', $data->employee_id) }}"><i data-feather="edit"></i></a>
+                                <a type="submit" class="btn btn-datatable btn-icon btn-transparent-dark" data-bs-toggle="modal" data-bs-target="#deleteUser{{$data->employee_id}}"><i data-feather="trash-2"></i></a>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
                 </table>
             </div>
         </div>
@@ -136,48 +151,5 @@
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.2/moment.min.js"></script>
     <script src="https://cdn.datatables.net/datetime/1.4.0/js/dataTables.dateTime.min.js"></script>
-
-    <script>
-        $(function() {
-
-            var table = $('#data-gaji').DataTable({
-                pageLength: 25,
-                processing: true,
-                serverSide: true,
-                searching: true,
-                ajax: "/salary/server-side",
-                columns: [{
-                        data: 'action',
-                        name: 'action',
-                        orderable: false
-                    },
-                    {
-                        data: 'employee_id',
-                        name: 'employee_id'
-                    },
-                    {
-                        data: 'employee.nama_karyawan',
-                        name: 'employee.nama_karyawan'
-                    },
-                    {
-                        data: 'gaji_pokok',
-                        name: 'gaji_pokok',
-                    },
-                    {
-                        data: 'status_gaji',
-                        name: 'status_gaji',
-                    },
-                    {
-                        data: 'total_diterima',
-                        name: 'total_diterima'
-                    },
-                ],
-                order: [
-                    [0, 'desc']
-                ]
-            });
-        });
-    </script>
-
     @endpush
 </x-app-layout>

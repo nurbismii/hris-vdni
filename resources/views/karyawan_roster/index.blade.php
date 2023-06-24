@@ -44,7 +44,6 @@
         <div class="row">
             <div class="col-lg-12 mb-1">
                 <x-message />
-                <button class="btn btn-success mb-2 btn-sm float-end" data-bs-toggle="modal" data-bs-target="#aktifkanPengingat">Aktifkan Pengingat</button>
             </div>
             <div class="col-lg-12 mb-2">
                 <div class="card">
@@ -124,37 +123,6 @@
                         </table>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="aktifkanPengingat" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Pengingat</h5>
-                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form action="{{ route('pengingat') }}" method="POST" enctype="multipart/form-data" class="nav flex-column" id="stickyNav">
-                    @csrf
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="mb-3 col-lg">
-                                <label class="small mb-1">Periode</label>
-                                <select name="periode" class="form-control">
-                                    <option disabled selected>Pilih Periode : </option>
-                                    @foreach($list_periode as $row)
-                                    <option value="{{$row->id}}">{{ $row->awal_periode }} - {{ $row->akhir_periode }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary btn-sm" type="button" data-bs-dismiss="modal">Tutup</button>
-                        <button class="btn btn-success btn-sm" type="submit">Simpan</button>
-                    </div>
-                </form>
             </div>
         </div>
     </div>

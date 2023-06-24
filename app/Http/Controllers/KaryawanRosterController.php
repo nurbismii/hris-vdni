@@ -73,109 +73,13 @@ class KaryawanRosterController extends Controller
     public function importKaryawanRoster(Request $request)
     {
         Excel::import(new KaryawanRosterImport, $request->file('file'));
-        return back()->with('success', 'Data Karyawan Roster Berhasil ditambahkan');
+        return back();
     }
 
     public function importDeleteKaryawanRoster(Request $request)
     {
         Excel::import(new KaryawanRosterDeleteImport, $request->file('file'));
         return back()->with('success', 'Data Karyawan Roster Berhasil dhapus');
-    }
-
-    public function pengingat(Request $request)
-    {
-        $minggu_pertama = [];
-        $minggu_kedua = [];
-        $minggu_ketiga = [];
-        $minggu_keempat = [];
-        $minggu_kelima = [];
-
-        $data_pengingat = Pengingat::where('periode_id', $request->periode)->first();
-
-        if ($data_pengingat) {
-            return back()->with('error', 'Periode sudah terdaftar dalam pengingat');
-        }
-
-        $data_periode = PeriodeRoster::where('id', $request->periode)->first();
-
-        $data_minggu_pertama = KaryawanRoster::where('periode_id', $request->periode)->get(['id', 'nik_karyawan', 'periode_id', 'minggu_pertama']);
-        $data_minggu_kedua = KaryawanRoster::where('periode_id', $request->periode)->get(['id', 'nik_karyawan', 'periode_id', 'minggu_kedua']);
-        $data_minggu_ketiga = KaryawanRoster::where('periode_id', $request->periode)->get(['id', 'nik_karyawan', 'periode_id', 'minggu_ketiga']);
-        $data_minggu_keempat = KaryawanRoster::where('periode_id', $request->periode)->get(['id', 'nik_karyawan', 'periode_id', 'minggu_keempat']);
-        $data_minggu_kelima = KaryawanRoster::where('periode_id', $request->periode)->get(['id', 'nik_karyawan', 'periode_id', 'minggu_kelima']);
-
-        foreach ($data_minggu_pertama as $row) {
-            $minggu_pertama[] =  [
-                'roster_id' => $row->id,
-                'nik_karyawan' => $row->nik_karyawan,
-                'pesan' => 'Karyawan an: ' . getName($row->nik_karyawan) . ' dengan NIK :' . $row->nik_karyawan . ' telah mendekati masa cuti pertama periode ' . $data_periode->awal_periode . '-' . $data_periode->akhir_periode,
-                'periode_id' => $row->periode_id,
-                'periode_mingguan' => '1',
-                'tanggal_cuti' => $row->minggu_pertama,
-                'flg_kirim' => 0
-            ];
-        }
-
-        foreach ($data_minggu_kedua as $row) {
-            $minggu_kedua[] =  [
-                'roster_id' => $row->id,
-                'nik_karyawan' => $row->nik_karyawan,
-                'pesan' => 'Karyawan an: ' . getName($row->nik_karyawan) . ' dengan NIK :' . $row->nik_karyawan . ' telah mendekati masa cuti kedua periode ' . $data_periode->awal_periode . '-' . $data_periode->akhir_periode,
-                'periode_id' => $row->periode_id,
-                'periode_mingguan' => '2',
-                'tanggal_cuti' => $row->minggu_kedua,
-                'flg_kirim' => 0
-            ];
-        }
-
-        foreach ($data_minggu_ketiga as $row) {
-            $minggu_ketiga[] =  [
-                'roster_id' => $row->id,
-                'nik_karyawan' => $row->nik_karyawan,
-                'pesan' => 'Karyawan an: ' . getName($row->nik_karyawan) . ' dengan NIK :' . $row->nik_karyawan . ' telah mendekati masa cuti ketiga periode ' . $data_periode->awal_periode . '-' . $data_periode->akhir_periode,
-                'periode_id' => $row->periode_id,
-                'periode_mingguan' => '3',
-                'tanggal_cuti' => $row->minggu_ketiga,
-                'flg_kirim' => 0
-            ];
-        }
-        foreach ($data_minggu_keempat as $row) {
-            $minggu_keempat[] =  [
-                'roster_id' => $row->id,
-                'nik_karyawan' => $row->nik_karyawan,
-                'pesan' => 'Karyawan an: ' . getName($row->nik_karyawan) . ' dengan NIK :' . $row->nik_karyawan . ' telah mendekati masa cuti keempat periode ' . $data_periode->awal_periode . '-' . $data_periode->akhir_periode,
-                'periode_id' => $row->periode_id,
-                'periode_mingguan' => '4',
-                'tanggal_cuti' => $row->minggu_keempat,
-                'flg_kirim' => 0
-            ];
-        }
-
-        foreach ($data_minggu_kelima as $row) {
-            $minggu_kelima[] =  [
-                'roster_id' => $row->id,
-                'nik_karyawan' => $row->nik_karyawan,
-                'pesan' => 'Karyawan an: ' . getName($row->nik_karyawan) . ' dengan NIK :' . $row->nik_karyawan . ' telah mendekati masa cuti kelima periode ' . $data_periode->awal_periode . '-' . $data_periode->akhir_periode,
-                'periode_id' => $row->periode_id,
-                'periode_mingguan' => '5',
-                'tanggal_cuti' => $row->minggu_kelima,
-                'flg_kirim' => 0
-            ];
-        }
-
-        if (count($minggu_pertama) > 0) {
-            $batch_pengingat = array_merge($minggu_pertama, $minggu_kedua, $minggu_ketiga, $minggu_keempat, $minggu_kelima);
-            foreach (array_chunk($batch_pengingat, 300) as $chunk) {
-                Pengingat::insert($chunk);
-            }
-            return redirect('roster')->with('success', 'Pengingat untuk periode ' . $data_periode->awal_periode . ' - ' . $data_periode->akhir_periode);
-        }
-        return back()->with('warning', 'Data di periode ini ' . $data_periode->awal_periode . '-' . $data_periode->akhir_periode . ' belum tersedia, silahkan import terlebih dahulu');
-
-        try {
-        } catch (\Throwable $e) {
-            return back()->with('error', 'Upps, Terjadi kesalahan');
-        }
     }
 
     public function reminder(Request $request)
