@@ -48,7 +48,7 @@ var myLineChart = new Chart(ctx, {
             "Dec"
         ],
         datasets: [{
-            label: "Earnings",
+            label: "Rekrut",
             lineTension: 0.3,
             backgroundColor: "rgba(0, 97, 242, 0.05)",
             borderColor: "rgba(0, 97, 242, 1)",
@@ -126,7 +126,7 @@ var myLineChart = new Chart(ctx, {
                 label: function(tooltipItem, chart) {
                     var datasetLabel =
                         chart.datasets[tooltipItem.datasetIndex].label || "";
-                    return datasetLabel + ": EMP " + number_format(tooltipItem.yLabel);
+                    return datasetLabel + " : " + number_format(tooltipItem.yLabel) + " Karyawan ";
                 }
             }
         }

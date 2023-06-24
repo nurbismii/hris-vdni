@@ -53,17 +53,23 @@
                         <table id="datatablesSimple" class="table table-hover">
                             <thead>
                                 <tr>
+                                    @if(strtolower(Auth::user()->job->permission_role ?? '') == 'administrator')
                                     <th>No</th>
                                     <th>NIK</th>
-                                    @if(strtolower(Auth::user()->job->permission_role ?? '') == 'administrator')
                                     <th>Proses</th>
                                     <th>Nama Karyawan</th>
-                                    @endif
                                     <th>Pesan</th>
                                     <th>Tgl Cuti</th>
                                     <th>Cuti</th>
                                     <th>Tahun</th>
+                                    @endif
                                 </tr>
+                                @if(strtolower(Auth::user()->job->permission_role ?? '') != 'administrator')
+                                <tr>
+                                    <th>No</th>
+                                    <th>Pesan</th>
+                                </tr>
+                                @endif
                             </thead>
                             <tbody>
                                 @foreach($datas as $data)
@@ -131,9 +137,8 @@
 
                                 @if(strtolower($role) != 'administrator')
                                 <tr>
-                                    <td>{{ ++$no }}</td>
-                                    <td>
-                                        {{ $data->nik_karyawan }} <br>
+                                    <td>{{ ++$no }}
+                                        <br>
                                         @if($data->status_pengajuan === NULL)
                                         <span class="badge bg-warning">Belum Pengajuan</span>
                                         @endif
@@ -155,9 +160,6 @@
                                             @endif
                                     </td>
                                     <td>{{ $data->pesan }}</td>
-                                    <td>{{ $data->tanggal_cuti }}</td>
-                                    <td>Cuti Ke-{{ $data->periode_mingguan }}</td>
-                                    <td>{{ $data->periode->awal_periode }} - {{ $data->periode->akhir_periode }}</td>
                                 </tr>
                                 @endif
 

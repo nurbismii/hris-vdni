@@ -35,7 +35,7 @@ var myBarChart = new Chart(ctx, {
     data: {
         labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
         datasets: [{
-            label: "Revenue",
+            label: "Keluar",
             backgroundColor: "rgba(0, 97, 242, 1)",
             hoverBackgroundColor: "rgba(0, 97, 242, 0.9)",
             borderColor: "#4e73df",
@@ -106,7 +106,7 @@ var myBarChart = new Chart(ctx, {
                 label: function(tooltipItem, chart) {
                     var datasetLabel =
                         chart.datasets[tooltipItem.datasetIndex].label || "";
-                    return datasetLabel + ": EMP " + number_format(tooltipItem.yLabel);
+                    return datasetLabel + " : " + number_format(tooltipItem.yLabel) + " Karyawan";
                 }
             }
         }

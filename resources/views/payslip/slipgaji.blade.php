@@ -1,4 +1,4 @@
-<x-app-layout title="Employee">
+<x-app-layout title="Karyawan">
     @push('styles')
     <link href="{{ asset('css/styles.css')}}" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/favicon.png')}}" />
@@ -68,11 +68,11 @@
                     <tbody>
                         @foreach($datas as $data)
                         <tr>
-                            <td>{{ $data->employee_id }}</td>
+                            <td class="fw-bold">{{ $data->employee_id }}</td>
                             <td>{{ getName($data->employee_id) }}</td>
-                            <td>{{ $data->gaji_pokok }}</td>
+                            <td>Rp{{ number_format($data->gaji_pokok) }}</td>
                             <td>{{ $data->status_gaji }}</td>
-                            <td>{{ $data->total_diterima }}</td>
+                            <td>Rp{{ number_format($data->total_diterima) }}</td>
                             <td>
                                 <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="{{ route('edit.user', $data->employee_id) }}"><i data-feather="edit"></i></a>
                                 <a type="submit" class="btn btn-datatable btn-icon btn-transparent-dark" data-bs-toggle="modal" data-bs-target="#deleteUser{{$data->employee_id}}"><i data-feather="trash-2"></i></a>

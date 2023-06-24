@@ -1,4 +1,4 @@
-<x-app-layout title="Employee">
+<x-app-layout title="Kalender">
     @push('styles')
     <link href="{{ asset('css/styles.css')}}" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/favicon.png')}}" />
@@ -22,7 +22,7 @@
                     <div class="col-auto mb-3">
                         <h1 class="page-header-title">
                             <div class="page-header-icon"><i data-feather="user"></i></div>
-                            Data Karyawan Roster
+                            Data Kalender Translator
                         </h1>
                     </div>
                     <div class="col-12 col-xl-auto mb-3">

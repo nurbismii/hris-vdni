@@ -59,7 +59,7 @@
                 <div class="collapse" id="collapseEmployees" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavemployee">
                         <a class="nav-link" href="{{ url('employees')}}">Data Karyawan</a>
-                        <a class="nav-link" href="/roles">Jabatan Karyawan</a>
+                        <a class="nav-link" href="/roles">Akses Karyawan</a>
                         <a class="nav-link" href="/employees/import">Impor Karyawan</a>
                     </nav>
                 </div>
@@ -71,7 +71,7 @@
 
                 <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseCoreHr" aria-expanded="false" aria-controls="collapseCoreHr">
                     <div class="nav-link-icon"><i data-feather="link-2"></i></div>
-                    HI
+                    Hubungan Industrial
                     <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
                 <div class="collapse" id="collapseCoreHr" data-bs-parent="#accordionSidenav">
@@ -82,8 +82,8 @@
                         </a>
                         <div class="collapse" id="pagesCollapseCoreHr" data-bs-parent="#accordionSidenavPagesMenu">
                             <nav class="sidenav-menu-nested nav">
-                                <a class="nav-link" href="/contract">PKWT 1</a>
-                                <a class="nav-link" href="/contract">PKWT Lanjutan</a>
+                                <a class="nav-link" href="/contract">Data PKWT 1</a>
+                                <a class="nav-link" href="/contract">Data PKWT Lanjutan</a>
                             </nav>
                         </div>
                         <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#pagesCollapseTraining" aria-expanded="false" aria-controls="pagesCollapseTraining">
@@ -149,8 +149,8 @@
                     <nav class="sidenav-menu-nested nav">
                         <a class="nav-link" href="/setting/dashboard">Judul Dashboard</a>
                         <a class="nav-link" href="/setting/lokasi-absen">Lokasi Absen</a></a>
-                        <a class="nav-link" href="/periode-absen">Periode Absen</a></a>
-                        <a class="nav-link" href="/periode">Periode Roster</a>
+                        <a class="nav-link" href="/periode-absen">Periode Absensi</a></a>
+                        <a class="nav-link" href="/periode">Periode Kalender Translator</a>
                         <a class="nav-link" href="/setting/waktu-absen">Waktu Kerja</a>
                 </div>
                 @endif
@@ -160,7 +160,7 @@
         <!-- Sidenav Footer-->
         <div class="sidenav-footer">
             <div class="sidenav-footer-content">
-                <div class="sidenav-footer-subtitle">Logged in as:</div>
+                <div class="sidenav-footer-subtitle">Masuk sebagai :</div>
                 <div class="sidenav-footer-title">{{ Auth::user()->employee->nama_karyawan }}</div>
             </div>
         </div>
