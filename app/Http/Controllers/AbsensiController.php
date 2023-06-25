@@ -40,7 +40,7 @@ class AbsensiController extends Controller
                     return back()->with('error', 'Lokasi absen tidak dapat ditemukan');
                 $jarak_absen = Controller::getDistance($lokasi_absen->lat, $lokasi_absen->long, $request->lat, $request->lng);
                 if ($jarak_absen > $lokasi_absen->jarak_toleransi) {
-                    $msg = $lokasi_absen->jarak_toleransi - $jarak_absen;
+                    $msg = ($jarak_absen - $lokasi_absen->jarak_toleransi);
                     return back()->with('error', 'Posisi kurang ' . $msg . ' meter dari titik absen');
                 }
                 $cek_absen = Absensi::where('nik_karyawan', $request->nik_karyawan)->whereDate('created_at', Carbon::today())->first();
