@@ -35,8 +35,10 @@ class LokasiAbsenController extends Controller
     public function update(Request $request, $id)
     {
         LokasiAbsen::find($id)->update([
+            'divisi_id' => $request->divisi_id,
             'lat' => $request->lat,
             'long' => $request->long,
+            'jarak_toleransi' => $request->jarak_toleransi
         ]);
         return back()->with('success', 'Data lokasi absen berhasil diperbarui');
     }

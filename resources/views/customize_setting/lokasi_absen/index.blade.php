@@ -41,9 +41,9 @@
                             <th>No</th>
                             <th>Divisi</th>
                             <th>Latitude</th>
-                            <th>Longtitude</th>
-                            <th>Radius</th>
-                            <th>Action</th>
+                            <th>Longitude</th>
+                            <th>Jarak Toleransi</th>
+                            <th>Hapus</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -53,7 +53,7 @@
                             <td>{{ $data->divisi->nama_divisi }}</td>
                             <td>{{ $data->lat }}</td>
                             <td>{{ $data->long }}</td>
-                            <td>{{ $data->radius }}</td>
+                            <td>{{ $data->jarak_toleransi }}m</td>
                             <td>
                                 <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" data-bs-toggle="modal" data-bs-target="#editWaktuAbsen{{$data->id}}"><i data-feather="edit"></i></a>
                                 <a type="submit" class="btn btn-datatable btn-icon btn-transparent-dark" data-bs-toggle="modal" data-bs-target="#delWaktuAbsen{{$data->id}}"><i data-feather="trash-2"></i>
@@ -86,13 +86,13 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div id="location" style="width:100%;height:400px;"></div>
-                        <div class="mb-3">
+                        <div id="location" style="width:100%;height:400px;" class="mb-2"></div>
+                        <div class="mb-2">
                             <label class="small mb-1">Latitude</label>
                             <input type="text" name="lat" id="latSt1" class="form-control">
                         </div>
-                        <div class="mb-3">
-                            <label class="small mb-1">Longtitude</label>
+                        <div class="mb-2">
+                            <label class="small mb-1">Longitude</label>
                             <input type="text" name="long" id="lngSt2" class="form-control">
                         </div>
                         <div class="input-group mb-3">
@@ -121,14 +121,22 @@
                     @csrf
                     {{ method_field('patch') }}
                     <div class="modal-body">
-                        <div id="googleMapUpdate" style="width:100%;height:400px;"></div>
                         <div class="mb-3">
-                            <label class="small mb-1">Latitude</label>
-                            <input type="text" name="lat" id="latUpd" class="form-control" value="{{ $data->lat }}">
+                            <label class="small mb-1">Divisi</label>
+                            <input type="text" class="form-control" value="{{ $data->divisi->nama_divisi }}" readonly>
+                            <input type="hidden" name="divisi_id" class="form-control" value="{{ $data->divisi_id }}" readonly>
                         </div>
                         <div class="mb-3">
-                            <label class="small mb-1">Longtitude</label>
-                            <input type="text" name="long" id="lngUpd" class="form-control" value="{{ $data->long }}">
+                            <label class="small mb-1">Latitude</label>
+                            <input type="text" name="lat" id="latUpd" class="form-control" value="{{ $data->lat }}" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label class="small mb-1">Longitude</label>
+                            <input type="text" name="long" id="lngUpd" class="form-control" value="{{ $data->long }}" readonly>
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="text" name="jarak_toleransi" class="form-control" value="{{ $data->jarak_toleransi }}">
+                            <span class="input-group-text" id="basic-addon2">M</span>
                         </div>
                     </div>
                     <div class="modal-footer">
