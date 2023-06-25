@@ -21,7 +21,7 @@
                         </h1>
                     </div>
                     <div class="col-12 col-xl-auto mb-3">
-                        <a class="btn btn-sm btn-light text-primary" data-bs-toggle="modal"  onclick="getLocation()" data-bs-target="#addLokasiAbsen">
+                        <a class="btn btn-sm btn-light text-primary" data-bs-toggle="modal" onclick="getLocation()" data-bs-target="#addLokasiAbsen">
                             <i class="me-1" data-feather="plus"></i>
                             Tambah
                         </a>
@@ -94,6 +94,10 @@
                         <div class="mb-3">
                             <label class="small mb-1">Longtitude</label>
                             <input type="text" name="long" id="lngSt2" class="form-control">
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="text" name="jarak_toleransi" class="form-control" placeholder="Jarak Toleransi">
+                            <span class="input-group-text" id="basic-addon2">M</span>
                         </div>
                     </div>
                     <div class="modal-footer">

@@ -27,6 +27,7 @@ class LokasiAbsenController extends Controller
             'divisi_id' => $request->divisi_id,
             'lat' => $request->lat,
             'long' => $request->long,
+            'jarak_toleransi' => $request->jarak_toleransi
         ]);
         return back()->with('success', 'Data lokasi absen berhasil ditambahkan');
     }
