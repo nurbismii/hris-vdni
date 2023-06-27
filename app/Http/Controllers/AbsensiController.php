@@ -35,22 +35,30 @@ class AbsensiController extends Controller
         if ($karyawan) {
             $divisi = Divisi::where('id', $karyawan->divisi_id)->first();
             if ($divisi) {
+
                 $lokasi_absen = LokasiAbsen::where('divisi_id', $divisi->id)->first();
+
                 if (!$lokasi_absen)
                     return back()->with('error', 'Lokasi absen tidak dapat ditemukan');
-                $jarak_absen = Controller::getDistance($lokasi_absen->lat, $lokasi_absen->long, $request->lat, $request->lng);
-                return $jarak_absen;
-                if ($jarak_absen > $lokasi_absen->jarak_toleransi) {
+
+                if ($lokasi_absen->jarak_toleransi <= '50') {
+                    $jarak_absen = 50;
+                } else {
+                    $jarak_absen = Controller::getDistance($lokasi_absen->lat, $lokasi_absen->long, $request->lat, $request->lng);
+                }
+
+                if ($jarak_absen >= $lokasi_absen->jarak_toleransi) {
                     $msg = ($jarak_absen - $lokasi_absen->jarak_toleransi);
                     return back()->with('error', 'Posisi kurang ' . $msg . ' meter dari titik absen');
                 }
+
                 $cek_absen = Absensi::where('nik_karyawan', $request->nik_karyawan)->whereDate('created_at', Carbon::today())->first();
                 if (!$cek_absen) {
                     Absensi::create([
                         'nik_karyawan' => $request->nik_karyawan,
                         'jam_masuk' => date('H:i:s', strtotime(Carbon::now()))
                     ]);
-                    return back()->with('success', 'Berhasil melakukan absen');
+                    return back()->with('success', 'Berhasil melakukan absen masuk');
                 }
                 return back()->with('warning', 'Kamu sudah melakukan absen masuk');
             }
@@ -65,21 +73,32 @@ class AbsensiController extends Controller
         if ($karyawan) {
             $divisi = Divisi::where('id', $karyawan->divisi_id)->first();
             if ($divisi) {
+
                 $lokasi_absen = LokasiAbsen::where('divisi_id', $divisi->id)->first();
-                $jarak_absen = Controller::getDistance($lokasi_absen->lat, $lokasi_absen->long, $request->lat, $request->lng);
-                return $jarak_absen;
-                if ($jarak_absen > $lokasi_absen->jarak_toleransi) {
-                    return back()->with('error', 'Posisi kamu terlalu jauh dari lokasi absen');
+
+                if (!$lokasi_absen)
+                    return back()->with('error', 'Lokasi absen tidak dapat ditemukan');
+
+                if ($lokasi_absen->jarak_toleransi <= '50') {
+                    $jarak_absen = 50;
+                } else {
+                    $jarak_absen = Controller::getDistance($lokasi_absen->lat, $lokasi_absen->long, $request->lat, $request->lng);
                 }
+
+                if ($jarak_absen >= $lokasi_absen->jarak_toleransi) {
+                    $msg = ($jarak_absen - $lokasi_absen->jarak_toleransi);
+                    return back()->with('error', 'Posisi kurang ' . $msg . ' meter dari titik absen');
+                }
+
                 $cek_absen = Absensi::where('id', $id)->first();
-                if (!$cek_absen->jam_keluar) {
+                if ($cek_absen->jam_keluar < '16:00:00') {
                     Absensi::where('id', $id)->update([
                         'nik_karyawan' => $request->nik_karyawan,
                         'jam_pulang' => date('H:i:s', strtotime(Carbon::now()))
                     ]);
-                    return back()->with('success', 'Berhasil melakukan absen');
+                    return back()->with('success', 'Berhasil melakukan absen keluar');
                 }
-                return back()->with('info', 'Kamu sudah melakukan absen masuk');
+                return back()->with('info', 'Kamu sudah melakukan absen keluar');
             }
             return back()->with('error', 'Divisi kamu tidak dapat ditemukan, silahkan laporkan masalah ini ke HRD');
         }
