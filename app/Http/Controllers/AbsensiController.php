@@ -42,12 +42,10 @@ class AbsensiController extends Controller
                     return back()->with('error', 'Lokasi absen tidak dapat ditemukan');
 
                 if ($lokasi_absen->jarak_toleransi <= '50') {
-                    $jarak_absen = 50;
-                } else {
-                    $jarak_absen = Controller::getDistance($lokasi_absen->lat, $lokasi_absen->long, $request->lat, $request->lng);
+                    $lokasi_absen->jarak_toleransi = 50;
                 }
-
-                if ($jarak_absen >= $lokasi_absen->jarak_toleransi) {
+                $jarak_absen = Controller::getDistance($lokasi_absen->lat, $lokasi_absen->long, $request->lat, $request->lng);
+                if ($jarak_absen > $lokasi_absen->jarak_toleransi) {
                     $msg = ($jarak_absen - $lokasi_absen->jarak_toleransi);
                     return back()->with('error', 'Posisi kurang ' . $msg . ' meter dari titik absen');
                 }
@@ -80,11 +78,10 @@ class AbsensiController extends Controller
                     return back()->with('error', 'Lokasi absen tidak dapat ditemukan');
 
                 if ($lokasi_absen->jarak_toleransi <= '50') {
-                    $jarak_absen = 50;
-                } else {
-                    $jarak_absen = Controller::getDistance($lokasi_absen->lat, $lokasi_absen->long, $request->lat, $request->lng);
+                    $lokasi_absen->jarak_toleransi = 50;
                 }
 
+                $jarak_absen = Controller::getDistance($lokasi_absen->lat, $lokasi_absen->long, $request->lat, $request->lng);
                 if ($jarak_absen >= $lokasi_absen->jarak_toleransi) {
                     $msg = ($jarak_absen - $lokasi_absen->jarak_toleransi);
                     return back()->with('error', 'Posisi kurang ' . $msg . ' meter dari titik absen');
