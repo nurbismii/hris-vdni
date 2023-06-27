@@ -16,13 +16,13 @@
                     <div class="col-auto mb-3">
                         <h1 class="page-header-title">
                             <div class="page-header-icon"><i data-feather="user"></i></div>
-                            Data User
+                            Data Pengguna
                         </h1>
                     </div>
                     <div class="col-12 col-xl-auto mb-3">
                         <a class="btn btn-sm btn-purple text-white" href="/users/import">
                             <i class="me-1" data-feather="users"></i>
-                            Impor Pengguna
+                            Bulk Pengguna
                         </a>
                         <a class="btn btn-sm btn-light text-primary" href="/users/create">
                             <i class="me-1" data-feather="user-plus"></i>

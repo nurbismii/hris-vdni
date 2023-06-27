@@ -26,15 +26,11 @@
                     <div class="col-12 col-xl-auto mb-3">
                         <a class="btn btn-sm btn-light text-primary" data-bs-toggle="modal" data-bs-target="#modalAddAbsensi">
                             <i class="me-1" data-feather="calendar"></i>
-                            Baru
-                        </a>
-                        <a class="btn btn-sm btn-light text-primary" data-bs-toggle="modal" data-bs-target="#modalAddKeterangan">
-                            <i class="me-1" data-feather="edit-3"></i>
-                            Keterangan Absen
+                            Bulk Absen
                         </a>
                         <a class="btn btn-sm btn-danger text-white" data-bs-toggle="modal" data-bs-target="#modalDestroyAbsensi">
                             <i class="me-1" data-feather="trash"></i>
-                            Hapus
+                            Bulk Hapus Absen
                         </a>
                     </div>
                 </div>
@@ -44,8 +40,8 @@
     <!-- Main page content-->
     <div class="container-fluid px-4 mt-3">
         <nav class="nav nav-borders">
-            <a class="nav-link {{ (request()->segment(2) == 'detail') ? 'active' : '' }} ms-0" href="/absen/detail">Data Perbulan</a>
             <a class="nav-link {{ (request()->segment(2) == 'all-in') ? 'active' : '' }} ms-0" href="/absen/detail/all-in">Semua Data</a>
+            <a class="nav-link {{ (request()->segment(2) == 'detail') ? 'active' : '' }} ms-0" href="/absen/detail">Data Perbulan</a>
         </nav>
         <hr class="mt-0 mb-4" />
         <div class="row">

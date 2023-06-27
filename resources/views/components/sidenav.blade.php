@@ -115,14 +115,14 @@
 
                 <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseKelolaCuti" aria-expanded="false" aria-controls="collapseKelolaCuti">
                     <div class="nav-link-icon"><i data-feather="calendar"></i></div>
-                    Kompensasi & Keuntungan
+                    Comben
                     <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
                 <div class="collapse" id="collapseKelolaCuti" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav">
                         <a class="nav-link" href="/roster">Kalender Translator</a>
                         <a class="nav-link" href="/roster/aktif">Pengingat</a>
-                        <a class="nav-link" href="/absen/detail">Absensi</a>
+                        <a class="nav-link" href="/absen/detail/all-in">Absensi</a>
                     </nav>
                 </div>
                 @endif
@@ -142,7 +142,7 @@
                 <!-- Sidenav Accordion (Applications)-->
                 <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseSetting" aria-expanded="false" aria-controls="collapseSetting">
                     <div class="nav-link-icon"><i data-feather="sliders"></i></div>
-                    Sesuaikan Pengaturan
+                    Pengaturan
                     <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
                 <div class="collapse" id="collapseSetting" data-bs-parent="#accordionSidenav">
@@ -150,7 +150,7 @@
                         <a class="nav-link" href="/setting/dashboard">Judul Dashboard</a>
                         <a class="nav-link" href="/setting/lokasi-absen">Lokasi Absen</a></a>
                         <a class="nav-link" href="/periode-absen">Periode Absensi</a></a>
-                        <a class="nav-link" href="/periode">Periode Kalender Translator</a>
+                        <a class="nav-link" href="/periode">Periode Kalender</a>
                         <a class="nav-link" href="/setting/waktu-absen">Waktu Kerja</a>
                 </div>
                 @endif

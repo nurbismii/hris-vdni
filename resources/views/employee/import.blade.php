@@ -16,7 +16,7 @@
                     <div class="col-auto mt-4">
                         <h3 class="page-header-title">
                             <div class="page-header-icon"><i data-feather="file"></i></div>
-                            Import Karyawan
+                            Bulk Karyawan
                         </h3>
                     </div>
                 </div>

@@ -16,7 +16,7 @@
           <div class="col-auto mb-3">
             <h1 class="page-header-title">
               <div class="page-header-icon"><i data-feather="user"></i></div>
-              Last Login List
+              Login Terkini
             </h1>
           </div>
         </div>
@@ -33,7 +33,7 @@
             <tr>
               <th>User</th>
               <th>Email</th>
-              <th>Last Login</th>
+              <th>Terakhir Login</th>
             </tr>
           </thead>
           <tbody>

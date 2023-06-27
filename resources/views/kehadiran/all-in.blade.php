@@ -22,6 +22,12 @@
                             Data Karyawan
                         </h1>
                     </div>
+                    <div class="col-12 col-xl-auto mb-3">
+                        <a class="btn btn-sm btn-light text-primary" data-bs-toggle="modal" data-bs-target="#modalAddKeterangan">
+                            <i class="me-1" data-feather="edit-3"></i>
+                            Keterangan Absen
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -29,8 +35,8 @@
     <!-- Main page content-->
     <div class="container-fluid px-4">
         <nav class="nav nav-borders">
-            <a class="nav-link {{ (request()->is('absen/detail')) ? 'active' : '' }} ms-0" href="/absen/detail">Data Perbulan</a>
             <a class="nav-link {{ (request()->segment(3) == 'all-in') ? 'active' : '' }} ms-0" href="/absen/detail/all-in">Semua Data</a>
+            <a class="nav-link {{ (request()->is('absen/detail')) ? 'active' : '' }} ms-0" href="/absen/detail">Data Perbulan</a>
         </nav>
         <hr class="mt-0 mb-4" />
         <x-message />
