@@ -39,6 +39,7 @@ class AbsensiController extends Controller
                 if (!$lokasi_absen)
                     return back()->with('error', 'Lokasi absen tidak dapat ditemukan');
                 $jarak_absen = Controller::getDistance($lokasi_absen->lat, $lokasi_absen->long, $request->lat, $request->lng);
+                return $jarak_absen;
                 if ($jarak_absen > $lokasi_absen->jarak_toleransi) {
                     $msg = ($jarak_absen - $lokasi_absen->jarak_toleransi);
                     return back()->with('error', 'Posisi kurang ' . $msg . ' meter dari titik absen');
@@ -66,7 +67,8 @@ class AbsensiController extends Controller
             if ($divisi) {
                 $lokasi_absen = LokasiAbsen::where('divisi_id', $divisi->id)->first();
                 $jarak_absen = Controller::getDistance($lokasi_absen->lat, $lokasi_absen->long, $request->lat, $request->lng);
-                if ($jarak_absen > 0.1) {
+                return $jarak_absen;
+                if ($jarak_absen > $lokasi_absen->jarak_toleransi) {
                     return back()->with('error', 'Posisi kamu terlalu jauh dari lokasi absen');
                 }
                 $cek_absen = Absensi::where('id', $id)->first();
