@@ -75,17 +75,17 @@
             </div>
             @if(count($data_absen) > 0)
             <div class="col-lg-12">
-                <div class="card text-white bg-primary mb-3">
+                <div class="card text-white bg-primary-soft mb-3">
                     <div class="card-body" style="overflow-x:auto;">
-                        <h1 class="text-center text-white">Absensi {{ $bulan->nama_bulan ?? '' }} {{ $bulan->periode_tahun->tahun ?? '' }}</h1>
+                        <h1 class="text-center text-primary">Absensi {{ $bulan->nama_bulan ?? '' }} {{ $bulan->periode_tahun->tahun ?? '' }}</h1>
                     </div>
                 </div>
             </div>
             @else
             <div class="col-lg-12">
-                <div class="card text-white bg-danger mb-3">
+                <div class="card text-white bg-danger-soft mb-3">
                     <div class="card-body" style="overflow-x:auto;">
-                        <h1 class="text-center text-white">Periode tidak tersedia...</h1>
+                        <h1 class="text-center text-danger">Periode tidak tersedia...</h1>
                     </div>
                 </div>
             </div>

@@ -24,8 +24,8 @@ class KaryawanRosterController extends Controller
     {
         $rosters = [];
         $periode = [];
+        $list_periode = PeriodeRoster::orderBy('id', 'ASC')->limit(3)->get();
         if ($request->filled('awal_periode')) {
-            $list_periode = PeriodeRoster::orderBy('id', 'DESC')->get();
             $cek_filter = $request->akhir_periode - $request->awal_periode;
             if ($cek_filter == 1) {
                 $datas = PeriodeRoster::with('karyawanRoster', 'pengingat')->where([
@@ -49,7 +49,6 @@ class KaryawanRosterController extends Controller
             }
         }
 
-        $list_periode = PeriodeRoster::orderBy('id', 'DESC')->get();
         $datas = PeriodeRoster::with('karyawanRoster', 'pengingat')->where([
             'awal_periode' => date('Y', strtotime("-1 year")),
             'akhir_periode' => date('Y', strtotime(Carbon::now()))
