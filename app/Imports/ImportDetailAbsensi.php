@@ -3,6 +3,7 @@
 namespace App\Imports;
 
 use App\Models\DetailAbsensi;
+use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
@@ -16,6 +17,8 @@ class ImportDetailAbsensi implements ToCollection, WithHeadingRow, WithValidatio
         foreach ($collection as $collect) {
             $datas[] = array(
                 'periode_bulan_id' => $collect['bulan_id'],
+                'awal_periode' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(intVal($collect['awal_periode']))),
+                'akhir_periode' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(intVal($collect['akhir_periode']))),
                 'nik_karyawan' => $collect['nik_karyawan'],
                 'total_alpa' => $collect['total_alpa'],
                 'paid_leave' => $collect['paid_leave'],
@@ -36,7 +39,6 @@ class ImportDetailAbsensi implements ToCollection, WithHeadingRow, WithValidatio
     public function rules(): array
     {
         return [
-            'bulan_id' => 'required',
             'nik_karyawan' => 'required'
         ];
     }
@@ -44,7 +46,6 @@ class ImportDetailAbsensi implements ToCollection, WithHeadingRow, WithValidatio
     public function customValidationMessages()
     {
         return [
-            'bulan_id' => 'ID Bulan harus diisi',
             'nik.required' => 'NIK karyawan harus diisi',
 
         ];

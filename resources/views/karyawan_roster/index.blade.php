@@ -28,11 +28,11 @@
                     <div class="col-12 col-xl-auto mb-3">
                         <a class="btn btn-sm btn-light text-primary" data-bs-toggle="modal" data-bs-target="#modalAddRoster">
                             <i class="me-1" data-feather="calendar"></i>
-                            Baru
+                            Bulk Kalender
                         </a>
                         <a class="btn btn-sm btn-danger text-white" data-bs-toggle="modal" data-bs-target="#modalDeleteEmployee">
                             <i class="me-1" data-feather="trash"></i>
-                            Hapus
+                            Bulk Hapus Data
                         </a>
                     </div>
                 </div>

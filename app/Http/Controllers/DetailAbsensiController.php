@@ -60,25 +60,13 @@ class DetailAbsensiController extends Controller
 
     public function getDetailAbsensi(Request $request)
     {
-        $datas = PeriodeTahun::orderBy('tahun', 'DESC')->get();
         $data_absen = [];
-        $bulan = [];
-        if ($request->tahun_id && $request->bulan_id) {
-            $tahun = PeriodeTahun::where('id', $request->tahun_id)->first();
-            $bulan = PeriodeBulan::where('id', $request->bulan_id)->where('periode_tahun_id', $tahun->id)->first();
-            $data_absen = DetailAbsensi::where('periode_bulan_id', $bulan->id)->get();
+        $periode = [];
+        if ($request->awal_periode && $request->akhir_periode) {
+            $periode = DetailAbsensi::where('awal_periode', $request->awal_periode)->where('akhir_periode', $request->akhir_periode)->first();
+            $data_absen = DetailAbsensi::where('awal_periode', $request->awal_periode)->where('akhir_periode', $request->akhir_periode)->get();
         }
-        return view('kehadiran.detail', compact('datas', 'data_absen', 'bulan'));
-    }
-
-    public function getDetailAbsensiByNik($nik_karyawan, $bulan_id)
-    {
-        $karyawan = employee::where('nik', $nik_karyawan)->first();
-        $bulan = PeriodeBulan::with('periode_tahun')->where('id', $bulan_id)->first();
-        $divisi = Divisi::with('departemen')->where('id', $karyawan->divisi_id)->first();
-        $detail_absen = DetailAbsensi::where('nik_karyawan', $nik_karyawan)->where('periode_bulan_id', $bulan_id)->first();
-        $keterangan_absen = KeteranganAbsensi::where('nik_karyawan', $nik_karyawan)->where('periode_bulan_id', $bulan_id)->get();
-        return view('kehadiran.show', compact('divisi', 'detail_absen', 'karyawan', 'bulan', 'keterangan_absen'));
+        return view('kehadiran.detail', compact('data_absen', 'periode'));
     }
 
     public function getDetailAllIn()

@@ -18,6 +18,8 @@ class ImportKeteranganAbsen implements ToCollection, WithHeadingRow, WithValidat
             $datas[] = array(
                 'periode' => strtolower($collect['periode']),
                 'periode_bulan_id' => $collect['periode_bulan_id'],
+                'awal_periode' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(intVal($collect['awal_periode']))),
+                'akhir_periode' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(intVal($collect['akhir_periode']))),
                 'nik_karyawan' => $collect['nik_karyawan'],
                 'tanggal_mulai_izin' =>  Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(intVal($collect['tanggal_mulai']))),
                 'tanggal_selesai_izin' =>  Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(intVal($collect['tanggal_selesai']))),
@@ -34,7 +36,6 @@ class ImportKeteranganAbsen implements ToCollection, WithHeadingRow, WithValidat
     public function rules(): array
     {
         return [
-            'periode_bulan_id' => 'required',
             'nik_karyawan' => 'required',
         ];
     }
@@ -42,7 +43,6 @@ class ImportKeteranganAbsen implements ToCollection, WithHeadingRow, WithValidat
     public function customValidationMessages()
     {
         return [
-            'periode_bulan_id.required' => 'ID periode bulan harus diisi',
             'nik_karyawan.required' => 'NIK harus diisi',
         ];
     }

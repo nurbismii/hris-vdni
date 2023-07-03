@@ -57,58 +57,30 @@
             </div>
         </div>
     </div>
-
-    <!-- Modal update employee maatwebsite -->
-    <div class="modal fade" id="modalUpdateEmployee" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    
+    <div class="modal fade" id="modalAddKeterangan" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Upload employee data change</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Bulk Data Keterangan</h5>
                     <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('updateImport.employee') }}" method="POST" enctype="multipart/form-data" class="nav flex-column" id="stickyNav">
+                <form action="{{ route('import.keterangan') }}" method="POST" enctype="multipart/form-data" class="nav flex-column" id="stickyNav">
                     <div class="modal-body">
                         @csrf
                         <div class="mb-3">
-                            <label class="form-label">Select a file</label>
+                            <label class="form-label">Pilih file :</label>
                             <input class="form-control" type="file" name="file" id="formFile">
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
-                        <button class="btn btn-success" type="submit">Send</button>
+                        <button class="btn btn-secondary btn-sm" type="button" data-bs-dismiss="modal">Tutup</button>
+                        <button class="btn btn-success btn-sm" type="submit">Kirim</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-    <!-- Modal update emplooye maatwebsite end -->
-
-    <!-- Modal delete emplooye maatwebsite -->
-    <div class="modal fade" id="modalDeleteEmployee" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Upload delete employee data</h5>
-                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form action="{{ route('destroyImport.employee') }}" method="POST" enctype="multipart/form-data" class="nav flex-column" id="stickyNav">
-                    <div class="modal-body">
-                        @csrf
-                        <div class="mb-3">
-                            <label class="form-label">Select a file</label>
-                            <input class="form-control" name="file" type="file" id="formFile">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
-                        <button class="btn btn-success" type="submit">Send</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    <!-- Modal delete emplooye maatwebsite end -->
 
     @push('scripts')
     <script src="{{ asset('js/scripts.js') }}"></script>

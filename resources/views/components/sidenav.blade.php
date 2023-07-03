@@ -120,23 +120,18 @@
                 </a>
                 <div class="collapse" id="collapseKelolaCuti" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav">
-                        <a class="nav-link" href="/roster">Kalender Translator</a>
-                        <a class="nav-link" href="/roster/aktif">Pengingat</a>
-                        <a class="nav-link" href="/absen/detail/all-in">Absensi</a>
+                        <a class="nav-link" href="/roster">Kalender Roster</a>
+                        <a class="nav-link" href="/roster/aktif">Data Pengingat</a>
+                        <a class="nav-link" href="/absen/detail/all-in">Data Absensi</a>
                     </nav>
                 </div>
                 @endif
                 <div class="sidenav-menu-heading">ESS</div>
 
-                <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseKehadiran" aria-expanded="false" aria-controls="collapseKehadiran">
+                <a class="nav-link" href="/absen">
                     <div class="nav-link-icon"><i data-feather="log-in"></i></div>
-                    Kehadiran
-                    <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    Presensi
                 </a>
-                <div class="collapse" id="collapseKehadiran" data-bs-parent="#accordionSidenav">
-                    <nav class="sidenav-menu-nested nav">
-                        <a class="nav-link" href="/absen">Absen</a>
-                </div>
                 @if(strtolower(Auth::user()->job->permission_role ?? '') == 'administrator')
                 <div class="sidenav-menu-heading">Pengaturan</div>
                 <!-- Sidenav Accordion (Applications)-->
@@ -149,7 +144,7 @@
                     <nav class="sidenav-menu-nested nav">
                         <a class="nav-link" href="/setting/dashboard">Judul Dashboard</a>
                         <a class="nav-link" href="/setting/lokasi-absen">Lokasi Absen</a></a>
-                        <a class="nav-link" href="/periode-absen">Periode Absensi</a></a>
+                        <!-- <a class="nav-link" href="/periode-absen">Periode Absensi</a></a> -->
                         <a class="nav-link" href="/periode">Periode Kalender</a>
                         <a class="nav-link" href="/setting/waktu-absen">Waktu Kerja</a>
                 </div>

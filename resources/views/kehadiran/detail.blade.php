@@ -54,17 +54,12 @@
                             <div class="modal-body">
                                 <div class="row">
                                     <div class="mb-3 col-6">
-                                        <label class="small mb-1">Tahun</label>
-                                        <select name="tahun_id" id="tahun" class="form-select">
-                                            <option value="" disabled selected>- Pilih Tahun -</option>
-                                            @foreach($datas as $row)
-                                            <option value="{{ $row->id }}">Tahun {{ $row->tahun }}</option>
-                                            @endforeach
-                                        </select>
+                                        <label class="small mb-1">Awal Periode</label>
+                                        <input type="date" name="awal_periode" class="form-control">
                                     </div>
                                     <div class="mb-3 col-6">
-                                        <label class="small mb-1">Bulan</label>
-                                        <select name="bulan_id" id="bulan" class="form-select"></select>
+                                        <label class="small mb-1">Akhir Periode</label>
+                                        <input type="date" name="akhir_periode" class="form-control">
                                     </div>
                                 </div>
                                 <button class="btn btn-primary btn-sm" type="submit">Filter</button>
@@ -77,7 +72,7 @@
             <div class="col-lg-12">
                 <div class="card text-white bg-primary-soft mb-3">
                     <div class="card-body" style="overflow-x:auto;">
-                        <h1 class="text-center text-primary">Absensi {{ $bulan->nama_bulan ?? '' }} {{ $bulan->periode_tahun->tahun ?? '' }}</h1>
+                        <h1 class="text-center text-primary">Absensi Periode <br> {{ date('d F Y', strtotime($periode->awal_periode)) ?? '' }} - {{ date('d F Y', strtotime($periode->akhir_periode)) ?? '' }}</h1>
                     </div>
                 </div>
             </div>
@@ -112,7 +107,7 @@
                             <tbody>
                                 @foreach($data_absen as $data)
                                 <tr>
-                                    <td><a target="_blank" href="{{ url('absen/detail', ['params1' => $data->nik_karyawan, 'params2' => $data->periode_bulan_id]) }}">{{ $data->nik_karyawan }}</a></td>
+                                    <td><a target="_blank" href="{{ url('absen/all-in/detail', $data->nik_karyawan) }}">{{ $data->nik_karyawan }}</a></td>
                                     <td>{{ getName($data->nik_karyawan) }}</td>
                                     <td>{{ $data->total_alpa }}</td>
                                     <td>{{ $data->paid_leave }}</td>
@@ -170,30 +165,6 @@
                         <div class="mb-3">
                             <label class="form-label">Select a file</label>
                             <input class="form-control" name="file" type="file" id="formFile">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary btn-sm" type="button" data-bs-dismiss="modal">Tutup</button>
-                        <button class="btn btn-success btn-sm" type="submit">Kirim</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="modalAddKeterangan" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Bulk Data Keterangan</h5>
-                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form action="{{ route('import.keterangan') }}" method="POST" enctype="multipart/form-data" class="nav flex-column" id="stickyNav">
-                    <div class="modal-body">
-                        @csrf
-                        <div class="mb-3">
-                            <label class="form-label">Pilih file :</label>
-                            <input class="form-control" type="file" name="file" id="formFile">
                         </div>
                     </div>
                     <div class="modal-footer">

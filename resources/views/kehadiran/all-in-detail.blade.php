@@ -134,16 +134,15 @@
                                     <th>#</th>
                                     <th>NIK</th>
                                     <th>Nama</th>
-                                    <th>Total Alpa</th>
+                                    <th>Alpa</th>
                                     <th>PL</th>
                                     <th>UL</th>
-                                    <th>Total S</th>
-                                    <th>Total OFF</th>
-                                    <th>Total C</th>
-                                    <th>Total L</th>
-                                    <th>Total Workdays</th>
+                                    <th>S</th>
+                                    <th>OFF</th>
+                                    <th>C</th>
+                                    <th>L</th>
+                                    <th>Workdays</th>
                                     <th>Total Absen</th>
-                                    <th>Periode</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -161,7 +160,6 @@
                                     <td>{{ $data->total_libur }}</td>
                                     <td>{{ $data->total_workdays }}</td>
                                     <th scope="row">{{ $data->total_absen }}</th>
-                                    <td>{{ $data->periodeBulan->nama_bulan }} {{ $data->periodeBulan->periode_tahun->tahun }}</td>
                                 </tr>
                                 <tr class="collapse accordion-collapse" id="accor{{$data->id}}" data-bs-parent=".table">
                                     <td colspan="13">
@@ -177,7 +175,7 @@
                                             </thead>
                                             <tbody>
                                                 @foreach($keterangan_absen as $row)
-                                                @if($row->periode_bulan_id == $data->periodeBulan->id)
+                                                @if($data->awal_periode == $row->awal_periode and $data->akhir_periode == $row->akhir_periode)
                                                 <tr>
                                                     <td>{{ date('d F Y', strtotime($row->tanggal_mulai_izin)) }}</a></td>
                                                     <td>{{ date('d F Y', strtotime($row->tanggal_selesai_izin)) }}</a></td>

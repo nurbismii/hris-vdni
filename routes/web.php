@@ -47,7 +47,6 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
             // Detail Absensi Controller
             route::get('/detail', [DetailAbsensiController::class, 'getDetailAbsensi']);
             route::get('/detail/all-in', [DetailAbsensiController::class, 'getDetailAllIn']);
-            route::get('/detail/{nik_karyawan}/{bulan_id}', [DetailAbsensiController::class, 'getDetailAbsensiByNik']);
             route::post('/import-data-absen', [DetailAbsensiController::class, 'importAbsensi'])->name('import.absensi');
             route::post('/import-data-absen/destroy', [DetailAbsensiController::class, 'importDeleteAbsensi'])->name('import.destroy.absensi');
             route::get('/dropdown-bulan/{id}', [DetailAbsensiController::class, 'dropwdownBulan']);
