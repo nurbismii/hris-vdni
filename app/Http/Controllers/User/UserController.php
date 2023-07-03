@@ -102,24 +102,24 @@ class UserController extends Controller
 
     public function update(Request $request, $id)
     {
-        if ($request->password == $request->konfirmasi_password) {
-            $password_baru = $request->password;
+        try {
+            if ($request->password == $request->konfirmasi_password && $request->password != '') {
+                $password_baru = $request->password;
+                User::where('nik_karyawan', $id)->update([
+                    'email' => $request->email,
+                    'status' => $request->status,
+                    'password' => Hash::make($password_baru),
+                ]);
+                return redirect('users')->with('success', 'Pengguna berhasil diperbarui');
+            }
+            if ($request->password != $request->konfirmasi_password) {
+                return back()->with('error', 'Password konfirmasi tidak sesuai');
+            }
             User::where('nik_karyawan', $id)->update([
                 'email' => $request->email,
                 'status' => $request->status,
-                'password' => Hash::make($password_baru),
             ]);
             return redirect('users')->with('success', 'Pengguna berhasil diperbarui');
-        }
-        if ($request->password != $request->konfirmasi_password) {
-            return back()->with('error', 'Password konfirmasi tidak sesuai');
-        }
-        User::where('nik_karyawan', $id)->update([
-            'email' => $request->email,
-            'status' => $request->status,
-        ]);
-        return redirect('users')->with('success', 'Pengguna berhasil diperbarui');
-        try {
         } catch (\Throwable $e) {
             return redirect('users')->with('error', 'Something wrong!');
         }

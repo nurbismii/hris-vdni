@@ -23,7 +23,7 @@
                         <div class="col-lg-6">
                             <div class="text-center mt-4">
                                 <img class="img-fluid p-4" src="{{ asset('assets/img/verification-success.jpg') }}" alt="" />
-                                <p class="lead">Yeai. Akun kamu berhasil di verifikasi, silahkan login!.</p>
+                                <p class="lead">Akun kamu berhasil di verifikasi, silahkan login!.</p>
                                 <a class="text-arrow-icon" href="{{ route('login') }}">
                                     <i class="ms-0 me-1" data-feather="arrow-left"></i>
                                     Login disini

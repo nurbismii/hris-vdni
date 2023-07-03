@@ -3,6 +3,7 @@
 namespace App\Imports;
 
 use App\Models\DetailAbsensi;
+use App\Models\KeteranganAbsensi;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
@@ -18,8 +19,13 @@ class ImportDestroyDetailAbsensi implements ToModel, WithHeadingRow, WithValidat
 
     public function model(array $row)
     {
-        DetailAbsensi::where('periode_bulan_id', $row['bulan_id'])->chunkById(1000, function ($detail_absensi) {
+        DetailAbsensi::where('awal_periode', $row['awal_periode'])->where('akhir_periode', $row['akhir_periode'])->where('nik_karyawan', $row['nik_karyawan'])->chunkById(1000, function ($detail_absensi) {
             foreach ($detail_absensi as $data) {
+                $data->delete();
+            }
+        });
+        KeteranganAbsensi::where('awal_periode', $row['awal_periode'])->where('akhir_periode', $row['akhir_periode'])->where('nik_karyawan', $row['nik_karyawan'])->chunkById(1000, function ($ket_absensi) {
+            foreach ($ket_absensi as $data) {
                 $data->delete();
             }
         });
@@ -29,14 +35,14 @@ class ImportDestroyDetailAbsensi implements ToModel, WithHeadingRow, WithValidat
     public function rules(): array
     {
         return array(
-            'bulan_id' => 'required',
+            'nik_karyawan' => 'required',
         );
     }
 
     public function customValidationMessages()
     {
         return array(
-            'bulan_id.required' => 'ID Periode bulan harus diisi.',
+            'nik_karyawan.required' => 'NIK karyawan harus diisi.',
         );
     }
 }
