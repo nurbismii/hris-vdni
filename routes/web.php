@@ -33,10 +33,10 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
     Route::post('/store/absen', [WaktuAbsenController::class, 'storeAbsen'])->name('store.absen');
     route::get('/lihat-pengingat', [KaryawanRosterController::class, 'pengingatPribadi']);
 
-    Route::group(['prefix' => 'periode-absen'], function () {
-        Route::get('/', [DetailAbsensiController::class, 'index']);
-        Route::post('/store', [DetailAbsensiController::class, 'store'])->name('store.periodeAbsen');
-    });
+    // Route::group(['prefix' => 'periode-absen'], function () {
+    //     Route::get('/', [DetailAbsensiController::class, 'index']);
+    //     Route::post('/store', [DetailAbsensiController::class, 'store'])->name('store.periodeAbsen');
+    // });
 
     Route::group(['prefix' => 'absen'], function () {
         route::get('/', [AbsensiController::class, 'index']);

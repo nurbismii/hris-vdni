@@ -12,8 +12,9 @@
                     <x-message />
                 </div>
                 <div class="card-opacation shadow-lg border-0 rounded-lg mt-5">
-                    <div class="card-header justify-content-center">
-                        <h3 class="fw-light my-4 text-light text-center">Login</h3>
+                    <div class="card-header text-center">
+                        <h3 class="fw-light my-2 text-light">Masuk</h3>
+                        <img src="{{ asset('assets/img/backgrounds/icon.png') }}" class="text-center" style="height: 55px;" alt="">
                     </div>
                     <div class="card-body">
                         <form action="{{ route('login') }}" method="POST">
@@ -26,9 +27,11 @@
                                 <label class="small mb-1 text-light">Kata Sandi</label>
                                 <input class="form-control-login @error('password') is-invalid @enderror" type="password" name="password" placeholder="Kata Sandi" />
                             </div>
-                            <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
+                            <div class="d-flex align-items-center justify-content-between mt-2 mb-3">
                                 <a class="small text-light" href="#">Lupa Kata Sandi ?</a>
-                                <button type="submit" class="btn btn-success lift lift-sm text-light fw-600">Login</a>
+                            </div>
+                            <div class="text-center d-grid">
+                                <button type="submit" class="btn btn-success text-light">Masuk</button>
                             </div>
                         </form>
                     </div>

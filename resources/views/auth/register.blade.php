@@ -13,8 +13,9 @@
                     <x-message />
                 </div>
                 <div class="card-opacation shadow-lg border-0 rounded-lg mt-5">
-                    <div class="card-header justify-content-center">
-                        <h3 class="fw-light my-4 text-light">Register</h3>
+                    <div class="card-header text-center">
+                        <h3 class="fw-light my-2 text-light">Register</h3>
+                        <img src="{{ asset('assets/img/backgrounds/icon.png') }}" class="text-center" style="height: 55px;" alt="">
                     </div>
                     <div class="card-body">
                         <form action="{{ route('register.employee') }}" method="POST">
@@ -53,7 +54,7 @@
                         </form>
                     </div>
                     <div class="card-footer text-center">
-                        <div class="small text-light"><a class="text-light" href="/login">Sudah punya akun! Login</a></div>
+                        <div class="small text-light"><a class="text-light" href="/login">Sudah punya akun! Masuk</a></div>
                     </div>
                 </div>
             </div>

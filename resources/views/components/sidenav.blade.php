@@ -120,7 +120,7 @@
                 </a>
                 <div class="collapse" id="collapseKelolaCuti" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav">
-                        <a class="nav-link" href="/roster">Kalender Roster</a>
+                        <a class="nav-link" href="/roster">Data Roster</a>
                         <a class="nav-link" href="/roster/aktif">Data Pengingat</a>
                         <a class="nav-link" href="/absen/detail/all-in">Data Absensi</a>
                     </nav>
@@ -143,9 +143,9 @@
                 <div class="collapse" id="collapseSetting" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav">
                         <a class="nav-link" href="/setting/dashboard">Judul Dashboard</a>
-                        <a class="nav-link" href="/setting/lokasi-absen">Lokasi Absen</a></a>
+                        <a class="nav-link" href="/setting/lokasi-absen">Lokasi Presensi</a></a>
                         <!-- <a class="nav-link" href="/periode-absen">Periode Absensi</a></a> -->
-                        <a class="nav-link" href="/periode">Periode Kalender</a>
+                        <a class="nav-link" href="/periode">Periode Roster</a>
                         <a class="nav-link" href="/setting/waktu-absen">Waktu Kerja</a>
                 </div>
                 @endif
