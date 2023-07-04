@@ -28,13 +28,14 @@
         <div class="row">
             <div class="col-lg-12">
                 <x-message />
-                <!-- Account details card-->
-                <div class="card mb-4">
-                    <div class="card-header">Detail Data Karyawan</div>
-                    <div class="card-body">
-                        <form action="{{ route('update.employee', $data->nik) }}" method="POST">
-                            @csrf
-                            {{ method_field('patch') }}
+                <div class="card card-collapsable mb-3">
+                    <a class="card-header" href="#collapseDetailKaryawan" data-bs-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample">Detail Data Karyawan
+                        <div class="card-collapsable-arrow">
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                    </a>
+                    <div class="collapse" id="collapseDetailKaryawan">
+                        <div class="card-body">
                             <div class="row gx-3 mb-3">
                                 <!-- Form Group (first name)-->
                                 <div class="col-md-6">
@@ -122,7 +123,7 @@
                                     <input class="form-control" type="text" name="jabatan" value="{{ $data->jabatan }}" readonly />
                                 </div>
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
