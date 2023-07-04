@@ -1,4 +1,4 @@
-<x-app-layout title="Employee">
+<x-app-layout title="Karyawan">
     @push('styles')
     <link href="{{ asset('css/styles.css')}}" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/favicon.png')}}" />
@@ -18,7 +18,7 @@
                 <div class="row align-items-center justify-content-between pt-3">
                     <div class="col-auto mb-3">
                         <h1 class="page-header-title">
-                            <div class="page-header-icon"><i data-feather="list"></i></div>
+                            <div class="page-header-icon"><i data-feather="users"></i></div>
                             Data Karyawan
                         </h1>
                     </div>

@@ -1,4 +1,4 @@
-<x-app-layout title="Audit Trails">
+<x-app-layout title="Riwayat Payslip">
   @push('styles')
   <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css" rel="stylesheet" />
@@ -16,7 +16,7 @@
           <div class="col-auto mb-3">
             <h1 class="page-header-title">
               <div class="page-header-icon"><i data-feather="user"></i></div>
-              History Payslip
+              Riwayat Payslip
             </h1>
           </div>
         </div>

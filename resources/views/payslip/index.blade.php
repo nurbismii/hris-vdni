@@ -1,4 +1,4 @@
-<x-app-layout title="Import Salary">
+<x-app-layout title="Import Payslip">
   @push('styles')
   <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css" rel="stylesheet" />
@@ -27,7 +27,7 @@
   <div class="container-xl px-4 mt-n10">
     <x-message />
     <div class="card">
-      <div class="card-header">Import Excel File Only</div>
+      <div class="card-header">Import file excel</div>
       <div class="card-body">
         <!-- Button with lift -->
         <a class="btn btn-indigo  btn-sm lift mb-3" href="{{ route('export.salary') }}">

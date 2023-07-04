@@ -190,7 +190,7 @@
                     <!-- start permission -->
                     <tr>
                         <td align="center" bgcolor="#e9ecef" style="padding: 12px 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; color: #666;">
-                            <p style="margin: 0;">Anda menerima email ini karena kami menerima permintaan [type_of_action] untuk akun Anda. Jika Anda tidak meminta [type_of_action], Anda dapat menghapus email ini dengan aman.</p>
+                            <p style="margin: 0;">Anda menerima email ini karena kami menerima permintaan registrasi untuk akun Anda. Jika Anda tidak meminta verifikasi, Anda dapat menghapus email ini dengan aman.</p>
                         </td>
                     </tr>
                     <!-- end permission -->

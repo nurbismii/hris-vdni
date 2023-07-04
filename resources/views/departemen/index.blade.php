@@ -1,4 +1,4 @@
-<x-app-layout title="Users">
+<x-app-layout title="Departemen">
     @push('styles')
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css" rel="stylesheet" />
@@ -15,7 +15,7 @@
                 <div class="row align-items-center justify-content-between pt-3">
                     <div class="col-auto mb-3">
                         <h1 class="page-header-title">
-                            <div class="page-header-icon"><i data-feather="user"></i></div>
+                            <div class="page-header-icon"><i data-feather="codepen"></i></div>
                             Data Departemen
                         </h1>
                     </div>

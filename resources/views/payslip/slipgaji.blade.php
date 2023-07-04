@@ -1,4 +1,4 @@
-<x-app-layout title="Karyawan">
+<x-app-layout title="Slip Gaji">
     @push('styles')
     <link href="{{ asset('css/styles.css')}}" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/favicon.png')}}" />

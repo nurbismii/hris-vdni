@@ -1,4 +1,4 @@
-<x-app-layout title="Users">
+<x-app-layout title="Riwayat Login">
   @push('styles')
   <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css" rel="stylesheet" />

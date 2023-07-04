@@ -1,4 +1,4 @@
-<x-app-layout title="Edit User">
+<x-app-layout title="Absen | Keterangan Absen">
     @push('styles')
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css" rel="stylesheet" />
@@ -15,8 +15,8 @@
                 <div class="row align-items-center justify-content-between pt-3">
                     <div class="col-auto mb-3">
                         <h1 class="page-header-title">
-                            <div class="page-header-icon"><i data-feather="user"></i></div>
-                            Detail Data Karyawan
+                            <div class="page-header-icon"><i data-feather="edit-2"></i></div>
+                            Detail Data Absensi
                         </h1>
                     </div>
                 </div>
@@ -27,6 +27,7 @@
     <div class="container-xl px-4 mt-4">
         <div class="row">
             <div class="col-lg-12">
+                <x-message />
                 <!-- Account details card-->
                 <div class="card mb-4">
                     <div class="card-header">Detail Data Karyawan</div>
@@ -128,7 +129,7 @@
             <div class="col-lg-12">
                 <div class="card mb-3">
                     <div class="card-body" style="overflow-x:auto;">
-                        <table class="table accordion table-striped table-hover" style="width: 100%;">
+                        <table class="table accordion table-condensed table-striped" style="width: 100%;">
                             <thead>
                                 <tr class="text-center">
                                     <th>#</th>
@@ -163,7 +164,7 @@
                                 </tr>
                                 <tr class="collapse accordion-collapse" id="accor{{$data->id}}" data-bs-parent=".table">
                                     <td colspan="13">
-                                        <table class="table table-condensed table-hover" style="width: 100%;">
+                                        <table class="table table-striped" style="width: 100%;">
                                             <thead>
                                                 <tr>
                                                     <th>Tanggal Mulai Izin</th>
@@ -171,6 +172,7 @@
                                                     <th>Total Izin</th>
                                                     <th>Keterangan</th>
                                                     <th>Status</th>
+                                                    <th>Aksi</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -182,6 +184,9 @@
                                                     <td>{{ $row->total_izin }}</td>
                                                     <td>{{ $row->keterangan_izin }}</td>
                                                     <td>{{ ucwords($row->status_izin) }}</td>
+                                                    <td>
+                                                        <a type="submit" class="btn btn-datatable btn-icon btn-transparent-dark" data-bs-toggle="modal" data-bs-target="#deleteKetAbsen{{ $row->id }}"><i data-feather="trash-2"></i></a>
+                                                    </td>
                                                 </tr>
                                                 @endif
                                                 @endforeach
@@ -197,6 +202,31 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal delete user -->
+    @foreach($keterangan_absen as $data)
+    <div class="modal fade" id="deleteKetAbsen{{$row->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">New Role</h5>
+                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{{ route('destroy.ket', $data->id) }}" method="POST" enctype="application/x-www-form-urlencoded" class="nav flex-column" id="stickyNav">
+                    <div class="modal-body">
+                        @csrf
+                        {{ method_field('delete') }}
+                        Yakin ingin menghapus keterangan ini ({{ $data->keterangan_izin }})?
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary btn-sm" type="button" data-bs-dismiss="modal">No</button>
+                        <button class="btn btn-primary btn-sm" type="submit">Yes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    @endforeach
 
     @push('scripts')
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>

@@ -56,6 +56,7 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
 
             // Keterangan Absen
             route::post('/import-keterangan', [KeteranganAbsensiController::class, 'ImportKeteranganAbsen'])->name('import.keterangan');
+            route::delete('/destroy/ket/{id}', [KeteranganAbsensiController::class, 'destroy'])->name('destroy.ket');
             // End Keterangan Absen
         });
     });
