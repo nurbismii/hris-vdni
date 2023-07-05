@@ -38,9 +38,11 @@ class DashboardController extends Controller
 
             $resign_record = [];
             $validation1 = [];
+            $chart_resign = '';
 
             $rekrutmen_record = [];
             $validation = [];
+            $chart_record = '';
 
             foreach ($karyawan_resign as $ks) {
                 $validation1[] = date('Y', strtotime($ks->tgl_resign));
