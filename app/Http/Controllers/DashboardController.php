@@ -39,6 +39,9 @@ class DashboardController extends Controller
             $resign_record = [];
             $validation1 = [];
 
+            $rekrutmen_record = [];
+            $validation = [];
+
             foreach ($karyawan_resign as $ks) {
                 $validation1[] = date('Y', strtotime($ks->tgl_resign));
             }
@@ -46,7 +49,7 @@ class DashboardController extends Controller
             foreach ($karyawan_resign as $ks) {
                 $resign_record[] = date('m', strtotime($ks->tgl_resign));
             }
-            
+
 
             for ($i = 0; $i < count($resign_record); $i++) :
                 if ($validation1[$i] == $tahun_sekarang) :
@@ -65,20 +68,22 @@ class DashboardController extends Controller
                 endif;
             endfor;
 
-            $chart_resign = [
-                count(array_filter($jan1)),
-                count(array_filter($feb1)),
-                count(array_filter($maret1)),
-                count(array_filter($april1)),
-                count(array_filter($mei1)),
-                count(array_filter($juni1)),
-                count(array_filter($juli1)),
-                count(array_filter($agust1)),
-                count(array_filter($sept1)),
-                count(array_filter($okt1)),
-                count(array_filter($nov1)),
-                count(array_filter($dec1))
-            ];
+            if (count($resign_record) > 0) {
+                $chart_resign = [
+                    count(array_filter($jan1)),
+                    count(array_filter($feb1)),
+                    count(array_filter($maret1)),
+                    count(array_filter($april1)),
+                    count(array_filter($mei1)),
+                    count(array_filter($juni1)),
+                    count(array_filter($juli1)),
+                    count(array_filter($agust1)),
+                    count(array_filter($sept1)),
+                    count(array_filter($okt1)),
+                    count(array_filter($nov1)),
+                    count(array_filter($dec1))
+                ];
+            }
 
             foreach ($data_contract as $d) {
                 $validation[] = date('Y', strtotime($d->tanggal_mulai_kontrak));
@@ -105,20 +110,22 @@ class DashboardController extends Controller
                 endif;
             endfor;
 
-            $chart_rekrut = [
-                count(array_filter($jan)),
-                count(array_filter($feb)),
-                count(array_filter($maret)),
-                count(array_filter($april)),
-                count(array_filter($mei)),
-                count(array_filter($juni)),
-                count(array_filter($juli)),
-                count(array_filter($agust)),
-                count(array_filter($sept)),
-                count(array_filter($okt)),
-                count(array_filter($nov)),
-                count(array_filter($dec))
-            ];
+            if (count($rekrutmen_record) > 0) {
+                $chart_rekrut = [
+                    count(array_filter($jan)),
+                    count(array_filter($feb)),
+                    count(array_filter($maret)),
+                    count(array_filter($april)),
+                    count(array_filter($mei)),
+                    count(array_filter($juni)),
+                    count(array_filter($juli)),
+                    count(array_filter($agust)),
+                    count(array_filter($sept)),
+                    count(array_filter($okt)),
+                    count(array_filter($nov)),
+                    count(array_filter($dec))
+                ];
+            }
             return view('dashboard', compact('data', 'total_karyawan', 'total_pwkt1_perbulan', 'total_pengguna', 'role', 'total_divisi', 'chart_rekrut', 'chart_resign'));
         }
         $day = date('D', strtotime(today()));
