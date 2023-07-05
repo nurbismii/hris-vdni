@@ -63,7 +63,7 @@
                         <div class="timeline-item-content">Jangan Merubah Template File Yang Telah Didownload..</div>
                     </div>
                 </div>
-                <form action="{{ route('import.employee') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('import.employee') }}" method="POST" enctype="multipart/form-data" id="fileUploadForm">
                     @csrf
                     <div class="row gx-3 mb-3">
                         <div class="mb-3 col-4">
@@ -79,6 +79,7 @@
     </div>
 
     @push('scripts')
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="{{ asset('js/scripts.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" crossorigin="anonymous"></script>
@@ -87,6 +88,8 @@
     <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/bundle.js" crossorigin="anonymous"></script>
     <script src="{{ asset('js/litepicker.js')}}"></script>
     <script src="{{ asset('js/app.js')}}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js"></script>
     @endpush
 
 </x-app-layout>

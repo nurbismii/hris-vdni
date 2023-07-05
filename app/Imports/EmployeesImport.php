@@ -22,11 +22,11 @@ class EmployeesImport implements ToCollection, WithHeadingRow, WithValidation
                 'nama_ibu_kandung' => $collect['nama_ibu_kandung'],
                 'agama' => $collect['agama'],
                 'no_ktp' => str_replace(["'", "`"], "", $collect['no_ktp']),
-                'no_kk' => str_replace(["'", "`"], "" , $collect['no_kk']),
+                'no_kk' => str_replace(["'", "`"], "", $collect['no_kk']),
                 'jenis_kelamin' => $collect['jenis_kelamin'],
                 'status_perkawinan' => $collect['status_perkawinan'],
                 'status_karyawan' => $collect['status_karyawan'],
-                'tgl_resign' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(intVal($collect['tgl_resign']))) ?? null,
+                'tgl_resign' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(intVal($collect['tgl_resign']))),
                 'no_telp' => $collect['no_telp'],
                 'tgl_lahir' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(intVal($collect['tgl_lahir']))),
                 'area_kerja' => $collect['area_kerja'],
@@ -43,7 +43,7 @@ class EmployeesImport implements ToCollection, WithHeadingRow, WithValidation
                 'divisi_id' => $collect['divisi_id']
             );
         }
-        foreach (array_chunk($datas, 500) as $chunk) {
+        foreach (array_chunk($datas, 1000) as $chunk) {
             employee::insert($chunk);
         }
     }
@@ -52,8 +52,6 @@ class EmployeesImport implements ToCollection, WithHeadingRow, WithValidation
     {
         return [
             'nik' => 'required|unique:employees,nik',
-            'no_ktp' => 'required|max:16|min:15|unique:employees,no_ktp',
-            'area_kerja' => 'required|in:VDNI,VDNIP'
         ];
     }
 
@@ -62,13 +60,6 @@ class EmployeesImport implements ToCollection, WithHeadingRow, WithValidation
         return [
             'nik.unique' => 'NIK Karyawan telah digunakan',
             'nik.required' => 'NIK karyawan harus diisi',
-            'no_ktp.unique' => 'No KTP telah digunakan',
-            'no_ktp.max' => 'No KTP tidak boleh lebih dari 16 angka',
-            'no_ktp.min' => 'No KTP tidak boleh kurang dari 16 angka',
-            'no_ktp.required' => 'No KTP harus diisi',
-            'area_kerja.required' => 'Area Kerja harus diisi',
-            'area_kerja.in' => 'Area Kerja hanya bisa diisi VDNI atau VDNIP'
-
         ];
     }
 }

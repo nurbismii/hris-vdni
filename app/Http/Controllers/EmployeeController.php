@@ -28,7 +28,7 @@ class EmployeeController extends Controller
 
     public function serverSideEmployee()
     {
-        $data = employee::query();
+        $data = employee::where('status_resign', NULL)->get();
         return DataTables::of($data)->addColumn('action', function ($data) {
             return view('employee._action', [
                 'data' => $data,

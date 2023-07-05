@@ -15,24 +15,15 @@
 </head>
 
 <!-- <body class="nav-fixed"> -->
-
 <body>
     <nav class="topnav navbar navbar-expand shadow justify-content-between justify-content-sm-start navbar-light bg-white" id="sidenavAccordion">
-        <!-- Sidenav Toggle Button-->
         <button class="btn btn-icon btn-transparent-dark order-1 order-lg-0 me-2 ms-lg-2 me-lg-0" id="sidebarToggle"><i data-feather="menu"></i></button>
-        <!-- Navbar Brand-->
-        <!-- * * Tip * * You can use text or an image for your navbar brand.-->
-        <!-- * * * * * * When using an image, we recommend the SVG format.-->
-        <!-- * * * * * * Dimensions: Maximum height: 32px, maximum width: 240px-->
-        <a class="navbar-brand pe-3 ps-4 ps-lg-3" href="/"><img src="{{ asset('assets/img/backgrounds/vdni-ikon.png') }}" alt="Logo VDNI" style="height: 45px; width: 90px"></a>
 
+        <a class="navbar-brand pe-3 ps-4 ps-lg-3" href="/"><img src="{{ asset('assets/img/backgrounds/vdni-ikon.png') }}" alt="Logo VDNI" style="height: 45px; width: 90px"></a>
         <x-navbar />
-        <!-- End Navbar Items -->
     </nav>
     <div id="layoutSidenav">
-        <!-- Side navbar -->
         <x-sidenav />
-        <!-- Modal Detail Pesan Pengingat -->
         @foreach(getNotifPengingat() as $data)
         <div class="modal fade" id="pengingat{{$data->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -59,18 +50,13 @@
             </div>
         </div>
         @endforeach
-        <!-- Detail Pesan Pengingat End -->
-
-        <!-- End Sidenav  -->
         <div id="layoutSidenav_content">
             <main>
                 {{ $slot }}
             </main>
-            <!-- Footer -->
             <footer class="footer-admin mt-auto footer-light">
                 <x-footer />
             </footer>
-            <!-- End Footer -->
         </div>
     </div>
     @stack('scripts')

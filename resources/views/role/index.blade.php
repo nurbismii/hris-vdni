@@ -82,7 +82,7 @@
                             <select name="nik_karyawan" class="form-select">
                                 <option disabled selected>Kepada pengguna :</option>
                                 @foreach($users as $row)
-                                <option value="{{ $row->nik_karyawan }}">{{ $row->employee->nama_karyawan }}</option>
+                                <option value="{{ $row->nik_karyawan }}">{{ $row->employee->nama_karyawan ?? ''}}</option>
                                 @endforeach
                             </select>
                         </div>

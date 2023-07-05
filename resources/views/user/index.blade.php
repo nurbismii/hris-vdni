@@ -54,13 +54,13 @@
                             <td>
                                 <div class="d-flex align-items-center">
                                     <div class="avatar me-2"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-1.png" /></div>
-                                    {{ $row->employee->nama_karyawan }} <br />
+                                    {{ $row->employee->nama_karyawan ?? '' }} <br />
                                     {{ $row->email }}
                                 </div>
                             </td>
                             <td>{{ $row->role->permission_role ?? 'User' }}</td>
                             <td>{{ ucfirst($row->status) }}</td>
-                            <td>{{ date('d F Y', strtotime($row->employee->entry_date)) }}</td>
+                            <td>{{ date('d F Y', strtotime($row->employee->entry_date ?? ''))}}</td>
                             <td>
 
                                 <form action="{{ route('destroy.user', $row->nik_karyawan) }}" method="POST">

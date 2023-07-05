@@ -39,7 +39,7 @@ var myBarChart = new Chart(ctx, {
             backgroundColor: "rgba(0, 97, 242, 1)",
             hoverBackgroundColor: "rgba(0, 97, 242, 0.9)",
             borderColor: "#4e73df",
-            data: [201, 232, 405, 432, 102, 94, 94, 94, 94, 94, 94, 94],
+            data: resign_record,
             maxBarThickness: 15
         }]
     },

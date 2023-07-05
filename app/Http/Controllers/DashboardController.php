@@ -34,6 +34,47 @@ class DashboardController extends Controller
             $total_divisi = Divisi::count();
             $data = parameter_dashboard::where('status', '1')->latest()->first();
             $data_contract = Contract::all();
+            $karyawan_resign = employee::where('status_resign', 'Ya')->get();
+
+            foreach ($karyawan_resign as $ks) {
+                $validation1[] = date('Y', strtotime($ks->tgl_resign));
+            }
+
+            foreach ($karyawan_resign as $ks) {
+                $resign_record[] = date('m', strtotime($ks->tgl_resign));
+            }
+
+            for ($i = 0; $i < count($resign_record); $i++) :
+                if ($validation1[$i] == $tahun_sekarang) :
+                    $jan1[] = $resign_record[$i] == "01" ? $resign_record[$i] : [];
+                    $feb1[] = $resign_record[$i] == "02" ? $resign_record[$i] : [];
+                    $maret1[] = $resign_record[$i] == "03" ? $resign_record[$i] : [];
+                    $april1[] = $resign_record[$i] == "04" ? $resign_record[$i] : [];
+                    $mei1[] = $resign_record[$i] == "05" ? $resign_record[$i] : [];
+                    $juni1[] = $resign_record[$i] == "06" ? $resign_record[$i] : [];
+                    $juli1[] = $resign_record[$i] == "07" ? $resign_record[$i] : [];
+                    $agust1[] = $resign_record[$i] == "08" ? $resign_record[$i] : [];
+                    $sept1[] = $resign_record[$i] == "09" ? $resign_record[$i] : [];
+                    $okt1[] = $resign_record[$i] == "10" ? $resign_record[$i] : [];
+                    $nov1[] = $resign_record[$i] == "11" ? $resign_record[$i] : [];
+                    $dec1[] = $resign_record[$i] == "12" ? $resign_record[$i] : [];
+                endif;
+            endfor;
+
+            $chart_resign = [
+                count(array_filter($jan1)),
+                count(array_filter($feb1)),
+                count(array_filter($maret1)),
+                count(array_filter($april1)),
+                count(array_filter($mei1)),
+                count(array_filter($juni1)),
+                count(array_filter($juli1)),
+                count(array_filter($agust1)),
+                count(array_filter($sept1)),
+                count(array_filter($okt1)),
+                count(array_filter($nov1)),
+                count(array_filter($dec1))
+            ];
 
             foreach ($data_contract as $d) {
                 $validation[] = date('Y', strtotime($d->tanggal_mulai_kontrak));
@@ -74,9 +115,10 @@ class DashboardController extends Controller
                 count(array_filter($nov)),
                 count(array_filter($dec))
             ];
-            return view('dashboard', compact('data', 'total_karyawan', 'total_pwkt1_perbulan', 'total_pengguna', 'role', 'total_divisi', 'chart_rekrut'));
+            return view('dashboard', compact('data', 'total_karyawan', 'total_pwkt1_perbulan', 'total_pengguna', 'role', 'total_divisi', 'chart_rekrut', 'chart_resign'));
         }
         $day = date('D', strtotime(today()));
+
         $dayList = array(
             'Sun' => 'Minggu',
             'Mon' => 'Senin',

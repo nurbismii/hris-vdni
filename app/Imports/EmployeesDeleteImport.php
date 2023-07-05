@@ -3,6 +3,7 @@
 namespace App\Imports;
 
 use App\Models\employee;
+use App\Models\User;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
@@ -23,6 +24,11 @@ class EmployeesDeleteImport implements ToModel, WithHeadingRow, WithValidation
                 $employee->delete();
             }
         });
+        User::where('nik_karyawan', $row['nik'])->chunkById(1000, function ($users){
+            foreach($users as $user){
+                $user->delete();
+            }
+        });
     }
 
 
@@ -30,7 +36,6 @@ class EmployeesDeleteImport implements ToModel, WithHeadingRow, WithValidation
     {
         return array(
             'nik' => 'required',
-            'no_ktp' => 'required',
         );
     }
 
@@ -38,7 +43,6 @@ class EmployeesDeleteImport implements ToModel, WithHeadingRow, WithValidation
     {
         return array(
             'nik.required' => 'NIK must be filled',
-            'no_ktp.required' => 'KTP must be filled',
         );
     }
 }
