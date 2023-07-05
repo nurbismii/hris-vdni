@@ -36,6 +36,9 @@ class DashboardController extends Controller
             $data_contract = Contract::all();
             $karyawan_resign = employee::where('status_resign', 'Ya')->get();
 
+            $resign_record = [];
+            $validation1 = [];
+
             foreach ($karyawan_resign as $ks) {
                 $validation1[] = date('Y', strtotime($ks->tgl_resign));
             }
@@ -43,6 +46,7 @@ class DashboardController extends Controller
             foreach ($karyawan_resign as $ks) {
                 $resign_record[] = date('m', strtotime($ks->tgl_resign));
             }
+            
 
             for ($i = 0; $i < count($resign_record); $i++) :
                 if ($validation1[$i] == $tahun_sekarang) :
