@@ -16,8 +16,6 @@ class ImportDetailAbsensi implements ToCollection, WithHeadingRow, WithValidatio
         $datas = [];
         foreach ($collection as $collect) {
             $datas[] = array(
-                'awal_periode' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(intVal($collect['awal_periode']))),
-                'akhir_periode' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(intVal($collect['akhir_periode']))),
                 'nik_karyawan' => $collect['nik_karyawan'],
                 'total_alpa' => $collect['total_alpa'],
                 'paid_leave' => $collect['paid_leave'],
@@ -28,6 +26,8 @@ class ImportDetailAbsensi implements ToCollection, WithHeadingRow, WithValidatio
                 'total_libur' => $collect['total_libur'],
                 'total_workdays' => $collect['total_workdays'],
                 'total_absen' => $collect['total_absen'],
+                'awal_periode' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(intVal($collect['awal_periode']))),
+                'akhir_periode' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(intVal($collect['akhir_periode']))),
             );
         }
         foreach (array_chunk($datas, 500) as $chunk) {

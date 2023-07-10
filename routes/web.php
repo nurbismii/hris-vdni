@@ -33,11 +33,6 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
     Route::post('/store/absen', [WaktuAbsenController::class, 'storeAbsen'])->name('store.absen');
     route::get('/lihat-pengingat', [KaryawanRosterController::class, 'pengingatPribadi']);
 
-    // Route::group(['prefix' => 'periode-absen'], function () {
-    //     Route::get('/', [DetailAbsensiController::class, 'index']);
-    //     Route::post('/store', [DetailAbsensiController::class, 'store'])->name('store.periodeAbsen');
-    // });
-
     Route::group(['prefix' => 'absen'], function () {
         route::get('/', [AbsensiController::class, 'index']);
         route::post('/store', [AbsensiController::class, 'store'])->name('store.absensi');
@@ -118,14 +113,14 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
         });
 
         Route::group(['prefix' => 'employees'], function () {
-            route::get('/', [EmployeeController::class, 'index']);
+
+            route::get('/', [EmployeeController::class, 'index'])->name('karyawan.index');
             route::get('/create', [EmployeeController::class, 'create']);
-            // route::post('/store', [EmployeeController::class, 'store'])->name('store.employee');
-            // route::get('/edit/{id}', [EmployeeController::class, 'edit'])->name('edit.employee');
             route::patch('update/{id}', [EmployeeController::class, 'update'])->name('update.employee');
-            route::get('/show/{nik}', [EmployeeController::class, 'show'])->name('employee.show');
+            route::get('/edit/{nik}', [EmployeeController::class, 'edit'])->name('employee.edit');
             route::delete('/destroy/{id}', [EmployeeController::class, 'destroy'])->name('destroy.employee');
             route::get('/server-side', [EmployeeController::class, 'serverSideEmployee']);
+            route::get('/divisi/{id}', [EmployeeController::class, 'fetchDivisi'])->name('fetch/divisi');
             // Maatwebsite excel 
             route::get('/import', [EmployeeController::class, 'import']);
             route::get('/download-example', [EmployeeController::class, 'downloadExample'])->name('download.example');

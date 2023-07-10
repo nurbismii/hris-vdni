@@ -5,8 +5,6 @@ namespace App\Http\Middleware;
 use App\Models\AuditTrail;
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
-use PSpell\Config;
 use Ramsey\Uuid\Uuid;
 
 class AuditTrails
@@ -30,7 +28,7 @@ class AuditTrails
                 'ip' => $request->ip(),
                 'agent' => $request->header('user-agent'),
                 'request_body' => json_encode($request->except(['image_employee'])),
-                'response' => ''
+                'response' => json_encode($request->http_response_code),
             ];
             AuditTrail::create($log);
             return $response;

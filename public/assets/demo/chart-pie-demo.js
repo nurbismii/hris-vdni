@@ -8,9 +8,9 @@ var ctx = document.getElementById("myPieChart");
 var myPieChart = new Chart(ctx, {
     type: "doughnut",
     data: {
-        labels: ["Direct", "Referral", "Social"],
+        labels: ["PKWTT", "PWKT", "Training"],
         datasets: [{
-            data: [55, 30, 15],
+            data: status_karyawan_record,
             backgroundColor: [
                 "rgba(0, 97, 242, 1)",
                 "rgba(0, 172, 105, 1)",
@@ -42,3 +42,4 @@ var myPieChart = new Chart(ctx, {
         cutoutPercentage: 80
     }
 });
+

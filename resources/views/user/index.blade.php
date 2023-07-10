@@ -62,7 +62,6 @@
                             <td>{{ ucfirst($row->status) }}</td>
                             <td>{{ date('d F Y', strtotime($row->employee->entry_date ?? ''))}}</td>
                             <td>
-
                                 <form action="{{ route('destroy.user', $row->nik_karyawan) }}" method="POST">
                                     @csrf
                                     {{ method_field('delete') }}
@@ -70,7 +69,6 @@
                                     <a type="submit" class="btn btn-datatable btn-icon btn-transparent-dark" data-bs-toggle="modal" data-bs-target="#deleteUser{{$row->nik_karyawan}}"><i data-feather="trash-2"></i>
                                     </a>
                                 </form>
-
                             </td>
                         </tr>
                         @endforeach

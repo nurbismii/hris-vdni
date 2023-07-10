@@ -45,12 +45,6 @@ class PeriodeRosterController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\PeriodeRoster  $periodeRoster
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         PeriodeRoster::findorFail($id)->delete();

@@ -40,7 +40,7 @@ var myBarChart = new Chart(ctx, {
             hoverBackgroundColor: "rgba(0, 97, 242, 0.9)",
             borderColor: "#4e73df",
             data: resign_record,
-            maxBarThickness: 15
+            maxBarThickness: 10
         }]
     },
     options: {
@@ -69,7 +69,7 @@ var myBarChart = new Chart(ctx, {
             yAxes: [{
                 ticks: {
                     min: 0,
-                    max: 500,
+                    max: 300,
                     maxTicksLimit: 12,
                     padding: 10,
                     // Include a dollar sign in the ticks

@@ -7,6 +7,8 @@ use App\Http\Requests\StoreEmployeeRequest;
 use App\Imports\EmployeesDeleteImport;
 use App\Imports\EmployeesImport;
 use App\Imports\EmployeesUpdateImport;
+use App\Models\Departemen;
+use App\Models\Divisi;
 use App\Models\employee;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
@@ -14,27 +16,62 @@ use Yajra\DataTables\DataTables;
 
 class EmployeeController extends Controller
 {
-    protected $default;
-
-    public function __construct($default = 10000)
+    public function index(Request $request)
     {
-        $this->default = $default;
+        $departemen = Departemen::all();
+
+        if ($request->tanggal_join1 != '' && $request->tanggal_join2 != '') {
+            $datas = employee::whereBetween('entry_date', array($request->tanggal_join1, $request->tanggal_join2))->get();
+            return view('employee.index', compact('datas', 'departemen'));
+        }
+
+        if ($request->tanggal_join1 != '') {
+            $datas = employee::where('entry_date', $request->tanggal_join1)->get();
+            return view('employee.index', compact('datas', 'departemen'));
+        }
+
+        if ($request->status_karyawan != '' && $request->divisi != '') {
+            $datas = employee::where('status_karyawan', $request->status_karyawan)->where('divisi_id', $request->divisi)->get();
+            return view('employee.index', compact('datas', 'departemen'));
+        }
+
+        if ($request->divisi != '') {
+            $datas = employee::where('divisi_id', $request->divisi)->get();
+            return view('employee.index', compact('datas', 'departemen'));
+        }
+
+        if ($request->status_karyawan != '') {
+            $datas = employee::where('status_karyawan', $request->status_karyawan)->get();
+            return view('employee.index', compact('datas', 'departemen'));
+        }
+
+        $datas = employee::all();
+        return view('employee.index', compact('datas', 'departemen'));
     }
 
-    public function index()
+    public function fetchDivisi($id)
     {
-        return view('employee.index');
+        $divisi = Divisi::where('departemen_id', $id)->get();
+        return response()->json($divisi);
     }
 
-    public function serverSideEmployee()
+    public function serverSideEmployee(Request $request)
     {
-        $data = employee::where('status_resign', NULL)->get();
-        return DataTables::of($data)->addColumn('action', function ($data) {
-            return view('employee._action', [
-                'data' => $data,
-                'url_show' => route('employee.show', $data->nik),
-            ]);
-        })->addIndexColumn()->rawColumns(['action'])->make(true);
+        // if ($request->ajax()) {
+        //     $data = employee::all();
+        //     return DataTables::of($data)
+        //         ->addIndexColumn()
+        //         ->addColumn('action', function ($data) {
+        //             return view('employee._action', [
+        //                 'data' => $data,
+        //                 'url_show' => route('employee.show', $data->nik),
+        //             ]);
+        //         })->filter(function ($instance) use ($request) {
+        //             if ($request->get('status_karyawan') == 'PKWTT' || $request->get('status_karyawan') == 'PKWT' || $request->get('status_karyawan') == 'TRAINING') {
+        //                 $instance->where('status_karyawan', $request->get('status_karyawan'));
+        //             }
+        //         })->rawColumns(['action'])->make(true);
+        // }
     }
 
     public function create()
@@ -48,12 +85,12 @@ class EmployeeController extends Controller
         return back()->with('success', 'Karyawan berhasil ditambahkan');
     }
 
-    public function show($nik)
+    public function edit($nik)
     {
         try {
             $data = employee::where('nik', $nik)->first();
             $level_vaksin = $data->vaksin == '0' ? 'Belum Vaksin' : ($data->vaksin == '1' ? 'Vaksin 1' : ($data->vaksin == '2' ? 'Vaksin 2' : ($data->vaksin == '3' ? 'Booster 1' : ($data->vaksin == '4' ? 'Booster 2' : 'Tidak diketahui'))));
-            return view('employee.show', compact('data', 'level_vaksin'));
+            return view('employee.edit', compact('data', 'level_vaksin'));
         } catch (\Throwable $e) {
             return back()->with('error', 'Terjadi kesalahan');
         }
@@ -66,7 +103,9 @@ class EmployeeController extends Controller
                 'no_sk_pkwtt' => $request['no_sk_pkwtt'],
                 'nama_karyawan' => $request['nama_karyawan'],
                 'nama_ibu_kandung' => $request['nama_ibu_kandung'],
+                'nama_bapak' => $request['nama_bapak'],
                 'agama' => $request['agama'],
+                'kode_area_kerja' => $request['kode_area_kerja'],
                 'no_ktp' => $request['no_ktp'],
                 'no_kk' => $request['no_kk'],
                 'jenis_kelamin' => $request['jenis_kelamin'],
@@ -75,6 +114,15 @@ class EmployeeController extends Controller
                 'tgl_resign' => $request->tgl_resign ?? null,
                 'no_telp' => $request['no_telp'],
                 'tgl_lahir' => $request->tgl_lahir ?? null,
+                // 'provinsi_id' => $request['provinsi_id'],
+                // 'kabupaten_id' => $request['kabupaten_id'],
+                // 'kecamatan_id' => $request['kecamatan_id'],
+                // 'kelurahan_id' => $request['kelurahan_id'],
+                'alamat_ktp' => $request['alamat_ktp'],
+                // 'alamat_domisili' => $request['alamat_domisili'],
+                // 'rt' => $request['rt'],
+                // 'rw' => $request['rw'],
+                // 'kode_pos' => $request['kode_pos'],
                 'area_kerja' => $request['area_kerja'],
                 'golongan_darah' => $request['golongan_darah'],
                 'entry_date' => $request->entry_date ?? null,
@@ -86,6 +134,20 @@ class EmployeeController extends Controller
                 'status_resign' => $request['status_resign'],
                 'posisi' => $request['posisi'],
                 'jabatan' => $request['jabatan'],
+                // 'divisi_id' => $request['divisi_id'],
+                // 'tinggi' => $request['tinggi'],
+                // 'berat' => $request['berat'],
+                // 'hobi' => $request['hobi'],
+                // 'no_jamsostek' => $request['no_jamsostek'],
+                // 'no_asuransi' => $request['no_asuransi'],
+                // 'no_kartu_asuransi' => $request['no_kartu_asuransi'],
+                // 'nama_bank' => $request['nama_bank'],
+                // 'no_rekening' => $request['no_rekening'],
+                // 'nama_instansi_pendidikan' => $request['nama_instansi_pendidikan'],
+                // 'pendidikan_terakhir' => $request['pendidikan_terakhir'],
+                // 'jurusan' => $request['jurusan'],
+                // 'tanggal_kelulusan' => $request['tanggal_kelulusan'],
+                // 'tanggal_menikah' => $request['tanggal_menikah']
             ]);
             return redirect('employees')->with('success', 'Data karyawan berhasil diperbarui');
         } catch (\Throwable $e) {

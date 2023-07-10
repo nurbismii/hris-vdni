@@ -17,14 +17,14 @@ class ImportKeteranganAbsen implements ToCollection, WithHeadingRow, WithValidat
         foreach ($collection as $collect) {
             $datas[] = array(
                 'periode' => strtolower($collect['periode']),
-                'awal_periode' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(intVal($collect['awal_periode']))),
-                'akhir_periode' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(intVal($collect['akhir_periode']))),
                 'nik_karyawan' => $collect['nik_karyawan'],
                 'tanggal_mulai_izin' =>  Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(intVal($collect['tanggal_mulai']))),
                 'tanggal_selesai_izin' =>  Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(intVal($collect['tanggal_selesai']))),
                 'total_izin' =>  $collect['total_izin'],
                 'keterangan_izin' =>  $collect['keterangan_izin'],
                 'status_izin' =>  strtolower($collect['status_izin']),
+                'awal_periode' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(intVal($collect['awal_periode']))),
+                'akhir_periode' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(intVal($collect['akhir_periode']))),
             );
         }
         foreach (array_chunk($datas, 300) as $chunk) {

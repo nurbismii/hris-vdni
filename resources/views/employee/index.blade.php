@@ -36,23 +36,125 @@
     </header>
     <!-- Main page content-->
     <div class="container-fluid px-4">
-        <x-message />
-        <div class="card">
-            <div class="card-body" style="overflow-x:auto;">
-                <table id="data-employee" class="table table-hover" style="width: 100%;">
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th>NIK</th>
-                            <th>Nama</th>
-                            <th>BPJS Kesehatan</th>
-                            <th>BPJS TK</th>
-                            <th>Perusahaan</th>
-                            <th>Tanggal Join</th>
-                        </tr>
-                    </thead>
-                    <tbody> </tbody>
-                </table>
+        <div class="row">
+            <div class="col-lg-12">
+                <x-message />
+                <div class="card card-collapsable mb-3">
+                    <a class="card-header" href="#collapseFilterEntryDate" data-bs-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample">Filter Periode Tanggal Masuk
+                        <div class="card-collapsable-arrow">
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                    </a>
+                    <div class="collapse" id="collapseFilterEntryDate">
+                        <form action="{{ route('karyawan.index') }}" method="get">
+                            @csrf
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-2">
+                                        <label class="small mt-3">Periode</label>
+                                    </div>
+                                    <div class="mb-3 col-5">
+                                        <input name="tanggal_join1" type="date" class="form-control">
+                                    </div>
+                                    <div class="mb-3 col-5">
+                                        <input type="date" name="tanggal_join2" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer text-end">
+                                <a href="{{ route('karyawan.index') }}" class="btn btn-danger btn-sm">Hapus Filter</a>
+                                <button type="submit" class="btn btn-success btn-sm">Filter</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="card card-collapsable mb-3">
+                    <a class="card-header" href="#collapseFilterKaryawan" data-bs-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample">Filter Karyawan
+                        <div class="card-collapsable-arrow">
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                    </a>
+                    <div class="collapse" id="collapseFilterKaryawan">
+                        <form action="{{ route('karyawan.index') }}" method="get">
+                            @csrf
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="mb-3 col-4">
+                                        <label class="small mb-1">Status Karyawan</label>
+                                        <select class="form-select" name="status_karyawan">
+                                            <option value="" disabled selected>- Pilih Status -</option>
+                                            <option value="PKWTT">PKWTT</option>
+                                            <option value="PKWT">PKWT</option>
+                                            <option value="TRAINING">TRAINING</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3 col-4">
+                                        <label class="small mb-1">Departemen</label>
+                                        <select class="form-select" id="dept_id" name="">
+                                            <option value="" disabled selected>- Pilih Status Departemen -</option>
+                                            @foreach($departemen as $row)
+                                            <option value="{{$row->id}}">{{ $row->departemen }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="mb-3 col-4">
+                                        <label class="small mb-1">Divisi</label>
+                                        <select class="form-control" name="divisi" id="divisi"></select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer text-end">
+                                <a href="{{ route('karyawan.index') }}" class="btn btn-danger btn-sm">Hapus Filter</a>
+                                <button type="submit" class="btn btn-success btn-sm">Filter</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body" style="overflow-x:auto;">
+                        <table id="datatablesSimple" class="table table-hover" style="width: 100%;">
+                            <thead>
+                                <tr>
+                                    <th>NIK</th>
+                                    <th>Kode</th>
+                                    <th>Nama</th>
+                                    <th>BPJS</th>
+                                    <th>NPWP</th>
+                                    <th>Status</th>
+                                    <th>Dept</th>
+                                    <th>Div</th>
+                                    <th>Perusahaan</th>
+                                    <th>Masuk</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($datas as $data)
+                                <tr>
+                                    <td>{{ $data->nik }}</td>
+                                    <td>{{ $data->kode_area_kerja }}</td>
+                                    <td>{{ $data->nama_karyawan }}</td>
+                                    <td>{{ $data->bpjs_kesehatan }}</td>
+                                    <td>{{ $data->npwp }}</td>
+                                    <td>{{ $data->status_karyawan }}</td>
+                                    <td>{{ $data->divisi->departemen->departemen ?? '' }}</td>
+                                    <td>{{ $data->divisi->nama_divisi ?? '' }}</td>
+                                    <td>{{ $data->area_kerja }}</td>
+                                    <td>{{ $data->entry_date }}</td>
+                                    <td>
+                                        <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="{{ route('employee.edit', $data->nik) }}"><i data-feather="edit"></i></a>
+                                        <a class="btn btn-datatable btn-icon btn-transparent-dark" data-bs-toggle="modal" data-bs-target="#deleteKaryawan{{$data->nik}}"><i data-feather="trash-2"></i></a>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -125,47 +227,32 @@
     <script src="https://cdn.datatables.net/datetime/1.4.0/js/dataTables.dateTime.min.js"></script>
 
     <script>
-        $(function() {
-
-            var table = $('#data-employee').DataTable({
-                pageLength: 25,
-                processing: true,
-                serverSide: true,
-                searching: true,
-                ajax: "/employees/server-side",
-                columns: [{
-                        data: 'action',
-                        name: 'action',
-                        orderable: false
-                    },
-                    {
-                        data: 'nik',
-                        name: 'nik'
-                    },
-                    {
-                        data: 'nama_karyawan',
-                        name: 'nama_karyawan'
-                    },
-                    {
-                        data: 'bpjs_kesehatan',
-                        name: 'bpjs_kesehatan',
-                    },
-                    {
-                        data: 'bpjs_tk',
-                        name: 'bpjs_tk',
-                    },
-                    {
-                        data: 'area_kerja',
-                        name: 'area_kerja'
-                    },
-                    {
-                        data: 'entry_date',
-                        name: 'entry_date'
-                    },
-                ],
-                order: [
-                    [0, 'desc']
-                ]
+        $(document).ready(function() {
+            $('#dept_id').on('change', function() {
+                var deptID = $(this).val();
+                if (deptID) {
+                    $.ajax({
+                        url: '/employees/divisi/' + deptID,
+                        type: "GET",
+                        data: {
+                            "_token": "{{ csrf_token() }}"
+                        },
+                        dataType: "json",
+                        success: function(data) {
+                            if (data) {
+                                $('#divisi').empty();
+                                $('#divisi').append('<option hidden>- Pilih Divisi -</option>');
+                                $.each(data, function(id, divisi) {
+                                    $('select[name="divisi"]').append('<option value="' + divisi.id + '">' + divisi.nama_divisi + '</option>');
+                                });
+                            } else {
+                                $('#divisi').empty();
+                            }
+                        }
+                    });
+                } else {
+                    $('#divisi').empty();
+                }
             });
         });
     </script>

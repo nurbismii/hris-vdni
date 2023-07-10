@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreDashboardRequest;
 use App\Mail\SendEmailVerification;
+use App\Models\Absensi;
 use App\Models\AuditTrail;
 use App\Models\Contract;
 use App\Models\Divisi;
@@ -24,112 +25,70 @@ class DashboardController extends Controller
 
     public function index(Request $request)
     {
+        $data = parameter_dashboard::where('status', '1')->latest()->first();
+
         if (strtolower(Auth::user()->job->permission_role ?? '') == 'administrator') {
+
             $role = Auth::user()->job->permission_role ?? '';
+
             $bulan_sekarang = date('Y-m', strtotime(Carbon::now()));
             $tahun_sekarang = date('Y', strtotime(Carbon::now()));
-            $total_karyawan = employee::count();
+
+            $total_karyawan = employee::where('status_resign', '!=', 'Ya')->count();
             $total_pwkt1_perbulan = Contract::where('tanggal_mulai_kontrak', 'like', '%' . $bulan_sekarang . '%')->count();
             $total_pengguna = User::count();
             $total_divisi = Divisi::count();
-            $data = parameter_dashboard::where('status', '1')->latest()->first();
+
+            $terakhir_login = User::select('nik_karyawan', 'terakhir_login')->orderBy('terakhir_login', 'desc')->limit(6)->get();
             $data_contract = Contract::all();
-            $karyawan_resign = employee::where('status_resign', 'Ya')->get();
 
-            $resign_record = [];
-            $validation1 = [];
-            $chart_resign = '';
+            $karyawan_resign = employee::select('tgl_resign', 'status_resign')->where('status_resign', 'Ya')->get();
+            $data_karyawan = employee::select('nik', 'status_karyawan', 'provinsi_id', 'kabupaten_id', 'kecamatan_id', 'kelurahan_id', 'tgl_lahir')->get();
 
-            $rekrutmen_record = [];
-            $validation = [];
-            $chart_record = '';
+            $chart_rekrut = getDataRekrut($data_contract, $tahun_sekarang);
+            $chart_resign = getDataResign($karyawan_resign, $tahun_sekarang);
+            $chart_status_karyawan = getDataStatusKaryawan($data_karyawan);
 
-            foreach ($karyawan_resign as $ks) {
-                $validation1[] = date('Y', strtotime($ks->tgl_resign));
-            }
+            $persentase = getDataStatusKaryawanPersentase($data_karyawan);
+            $persen_pkwtt = $persentase['pkwtt'] / count($data_karyawan) * 100;
+            $persen_pkwt = $persentase['pkwt'] / count($data_karyawan) * 100;
+            $persen_training = $persentase['training'] / count($data_karyawan) * 100;
 
-            foreach ($karyawan_resign as $ks) {
-                $resign_record[] = date('m', strtotime($ks->tgl_resign));
-            }
+            $data_karyawan_provinsi = employee::select('provinsi_id', 'kabupaten_id', 'kecamatan_id', 'kelurahan_id')->where('provinsi_id', '74')->first();
+            $data_karyawan_kabupaten = employee::select('provinsi_id', 'kabupaten_id', 'kecamatan_id', 'kelurahan_id')->where('kabupaten_id', '7403')->get();
 
+            $jumlah_daerah = getJumlahPekerjaDaerah($data_karyawan_kabupaten);
+            $persen_morosi = $jumlah_daerah['morosi'] / count($data_karyawan_kabupaten) * 100;
+            $persen_bondoala = $jumlah_daerah['bondoala'] / count($data_karyawan_kabupaten) * 100;
+            $persen_kapioala = $jumlah_daerah['kapioala'] / count($data_karyawan_kabupaten) * 100;
 
-            for ($i = 0; $i < count($resign_record); $i++) :
-                if ($validation1[$i] == $tahun_sekarang) :
-                    $jan1[] = $resign_record[$i] == "01" ? $resign_record[$i] : [];
-                    $feb1[] = $resign_record[$i] == "02" ? $resign_record[$i] : [];
-                    $maret1[] = $resign_record[$i] == "03" ? $resign_record[$i] : [];
-                    $april1[] = $resign_record[$i] == "04" ? $resign_record[$i] : [];
-                    $mei1[] = $resign_record[$i] == "05" ? $resign_record[$i] : [];
-                    $juni1[] = $resign_record[$i] == "06" ? $resign_record[$i] : [];
-                    $juli1[] = $resign_record[$i] == "07" ? $resign_record[$i] : [];
-                    $agust1[] = $resign_record[$i] == "08" ? $resign_record[$i] : [];
-                    $sept1[] = $resign_record[$i] == "09" ? $resign_record[$i] : [];
-                    $okt1[] = $resign_record[$i] == "10" ? $resign_record[$i] : [];
-                    $nov1[] = $resign_record[$i] == "11" ? $resign_record[$i] : [];
-                    $dec1[] = $resign_record[$i] == "12" ? $resign_record[$i] : [];
-                endif;
-            endfor;
+            $umur_karyawan = getUmur($data_karyawan);
 
-            if (count($resign_record) > 0) {
-                $chart_resign = [
-                    count(array_filter($jan1)),
-                    count(array_filter($feb1)),
-                    count(array_filter($maret1)),
-                    count(array_filter($april1)),
-                    count(array_filter($mei1)),
-                    count(array_filter($juni1)),
-                    count(array_filter($juli1)),
-                    count(array_filter($agust1)),
-                    count(array_filter($sept1)),
-                    count(array_filter($okt1)),
-                    count(array_filter($nov1)),
-                    count(array_filter($dec1))
-                ];
-            }
+            $presensi_terakhir = Absensi::select('*')->orderBy('created_at', 'desc')->limit(10)->get();
 
-            foreach ($data_contract as $d) {
-                $validation[] = date('Y', strtotime($d->tanggal_mulai_kontrak));
-            }
-
-            foreach ($data_contract as $d) {
-                $rekrutmen_record[] = date('m', strtotime($d->tanggal_mulai_kontrak));
-            }
-
-            for ($i = 0; $i < count($rekrutmen_record); $i++) :
-                if ($validation[$i] == $tahun_sekarang) :
-                    $jan[] = $rekrutmen_record[$i] == "01" ? $rekrutmen_record[$i] : [];
-                    $feb[] = $rekrutmen_record[$i] == "02" ? $rekrutmen_record[$i] : [];
-                    $maret[] = $rekrutmen_record[$i] == "03" ? $rekrutmen_record[$i] : [];
-                    $april[] = $rekrutmen_record[$i] == "04" ? $rekrutmen_record[$i] : [];
-                    $mei[] = $rekrutmen_record[$i] == "05" ? $rekrutmen_record[$i] : [];
-                    $juni[] = $rekrutmen_record[$i] == "06" ? $rekrutmen_record[$i] : [];
-                    $juli[] = $rekrutmen_record[$i] == "07" ? $rekrutmen_record[$i] : [];
-                    $agust[] = $rekrutmen_record[$i] == "08" ? $rekrutmen_record[$i] : [];
-                    $sept[] = $rekrutmen_record[$i] == "09" ? $rekrutmen_record[$i] : [];
-                    $okt[] = $rekrutmen_record[$i] == "10" ? $rekrutmen_record[$i] : [];
-                    $nov[] = $rekrutmen_record[$i] == "11" ? $rekrutmen_record[$i] : [];
-                    $dec[] = $rekrutmen_record[$i] == "12" ? $rekrutmen_record[$i] : [];
-                endif;
-            endfor;
-
-            if (count($rekrutmen_record) > 0) {
-                $chart_rekrut = [
-                    count(array_filter($jan)),
-                    count(array_filter($feb)),
-                    count(array_filter($maret)),
-                    count(array_filter($april)),
-                    count(array_filter($mei)),
-                    count(array_filter($juni)),
-                    count(array_filter($juli)),
-                    count(array_filter($agust)),
-                    count(array_filter($sept)),
-                    count(array_filter($okt)),
-                    count(array_filter($nov)),
-                    count(array_filter($dec))
-                ];
-            }
-            return view('dashboard', compact('data', 'total_karyawan', 'total_pwkt1_perbulan', 'total_pengguna', 'role', 'total_divisi', 'chart_rekrut', 'chart_resign'));
+            return view('dashboard', compact(
+                'data',
+                'total_karyawan',
+                'total_pwkt1_perbulan',
+                'total_pengguna',
+                'role',
+                'total_divisi',
+                'chart_rekrut',
+                'chart_resign',
+                'chart_status_karyawan',
+                'persen_morosi',
+                'persen_bondoala',
+                'persen_kapioala',
+                'persen_pkwtt',
+                'persen_pkwt',
+                'persen_training',
+                'umur_karyawan',
+                'terakhir_login',
+                'data_karyawan_kabupaten',
+                'presensi_terakhir'
+            ));
         }
+
         $day = date('D', strtotime(today()));
 
         $dayList = array(

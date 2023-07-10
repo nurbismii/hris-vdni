@@ -20,43 +20,6 @@ use Yajra\DataTables\DataTables;
 
 class DetailAbsensiController extends Controller
 {
-    public function index()
-    {
-        $datas = PeriodeTahun::all();
-        foreach ($datas as $data) {
-            $tahun[] = [
-                'id' => $data->id,
-                'tahun' => $data->tahun
-            ];
-        }
-        $data_bulan = PeriodeBulan::all();
-        return view('customize_setting.periode_absen.index', compact('tahun', 'datas', 'data_bulan'))->with('no');
-    }
-
-    public function store(Request $request)
-    {
-        try {
-            DB::beginTransaction();
-            $tahun = PeriodeTahun::create([
-                'tahun' => $request->tahun,
-            ]);
-
-            $bulan = $request['bulan'];
-
-            for ($i = 0; $i < count($bulan); $i++) {
-                $datas[] = [
-                    'periode_tahun_id' => $tahun->id,
-                    'nama_bulan' => $bulan[$i],
-                ];
-            }
-            PeriodeBulan::insert($datas);
-            DB::commit();
-            return back()->with('success', 'Periode tahun dan bulan berhasil ditambahkan');
-        } catch (\Throwable $e) {
-            DB::rollBack();
-            return back()->with('error', 'Terjadi kesalahan!');
-        }
-    }
 
     public function getDetailAbsensi(Request $request)
     {
@@ -72,12 +35,6 @@ class DetailAbsensiController extends Controller
     public function getDetailAllIn()
     {
         return view('kehadiran.all-in');
-    }
-
-    public function dropwdownBulan($id)
-    {
-        $bulan = PeriodeBulan::where('periode_tahun_id', $id)->get();
-        return response()->json($bulan);
     }
 
     public function importAbsensi(Request $request)
@@ -108,10 +65,5 @@ class DetailAbsensiController extends Controller
         $data = employee::with(['detailAbsen', 'keteranganAbsen'])->where('nik', $nik)->first();
         $keterangan_absen = $data->keteranganAbsen;
         return view('kehadiran.all-in-detail', compact('data', 'keterangan_absen'))->with('no');
-    }
-
-    public function destroy(DetailAbsensi $detailAbsensi)
-    {
-        //
     }
 }
