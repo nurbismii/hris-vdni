@@ -26,6 +26,8 @@ Auth::routes();
 
 Route::post('/new-register', [RegisterController::class, 'register'])->name('register.employee')->middleware('employee.registered');
 Route::get('/', [DashboardController::class, 'index'])->middleware('email.verify');
+Route::get('dashboard/fetch-kabupaten/{id}', [DashboardController::class, 'fetchKabupaten']);
+Route::get('dashboard/fetch-kecamatan/{id}', [DashboardController::class, 'fetchKecamatan']);
 
 Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], function () {
 

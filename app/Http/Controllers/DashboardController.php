@@ -9,7 +9,10 @@ use App\Models\AuditTrail;
 use App\Models\Contract;
 use App\Models\Divisi;
 use App\Models\employee;
+use App\Models\Kabupaten;
+use App\Models\Kecamatan;
 use App\Models\parameter_dashboard;
+use App\Models\Provinsi;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -34,6 +37,7 @@ class DashboardController extends Controller
             $bulan_sekarang = date('Y-m', strtotime(Carbon::now()));
             $tahun_sekarang = date('Y', strtotime(Carbon::now()));
 
+            $provinsi = Provinsi::all();
             $total_karyawan = employee::where('status_resign', '!=', 'Ya')->count();
             $total_pwkt1_perbulan = Contract::where('tanggal_mulai_kontrak', 'like', '%' . $bulan_sekarang . '%')->count();
             $total_pengguna = User::count();
@@ -45,6 +49,7 @@ class DashboardController extends Controller
             $karyawan_resign = employee::select('tgl_resign', 'status_resign')->where('status_resign', 'Ya')->get();
             $data_karyawan = employee::select('nik', 'status_karyawan', 'provinsi_id', 'kabupaten_id', 'kecamatan_id', 'kelurahan_id', 'tgl_lahir')->get();
 
+            /* Code for chart  */
             $chart_rekrut = getDataRekrut($data_contract, $tahun_sekarang);
             $chart_resign = getDataResign($karyawan_resign, $tahun_sekarang);
             $chart_status_karyawan = getDataStatusKaryawan($data_karyawan);
@@ -54,16 +59,38 @@ class DashboardController extends Controller
             $persen_pkwt = $persentase['pkwt'] / count($data_karyawan) * 100;
             $persen_training = $persentase['training'] / count($data_karyawan) * 100;
 
-            $data_karyawan_provinsi = employee::select('provinsi_id', 'kabupaten_id', 'kecamatan_id', 'kelurahan_id')->where('provinsi_id', '74')->first();
-            $data_karyawan_kabupaten = employee::select('provinsi_id', 'kabupaten_id', 'kecamatan_id', 'kelurahan_id')->where('kabupaten_id', '7403')->get();
-
-            $jumlah_daerah = getJumlahPekerjaDaerah($data_karyawan_kabupaten);
-            $persen_morosi = $jumlah_daerah['morosi'] / count($data_karyawan_kabupaten) * 100;
-            $persen_bondoala = $jumlah_daerah['bondoala'] / count($data_karyawan_kabupaten) * 100;
-            $persen_kapioala = $jumlah_daerah['kapioala'] / count($data_karyawan_kabupaten) * 100;
-
             $umur_karyawan = getUmur($data_karyawan);
+            /* Code for chart  end */
 
+            $kabupaten_id = $request->kabupaten ?? '7403';
+            $kabupaten = employee::select('provinsi_id', 'kabupaten_id', 'kecamatan_id', 'kelurahan_id')->where('kabupaten_id', $kabupaten_id)->first();
+
+            if(!$kabupaten){
+                return redirect('dashboard')->with('error', 'Data dari kabupaten yang kamu inginkan, belum tersedia');
+            }
+
+            $data_karyawan_kabupaten = employee::select('provinsi_id', 'kabupaten_id', 'kecamatan_id', 'kelurahan_id')->where('kabupaten_id', $kabupaten_id)->get()->pluck('kecamatan_id')->toArray();
+
+            $daerah = getJumlahPekerjaDaerah($data_karyawan_kabupaten);
+
+            $persen_daerah_1 = 0;
+            $persen_daerah_2 = 0;
+            $persen_daerah_3 = 0;
+
+            $daerah_1 = isset($daerah[0]['total']) == true ? $daerah[0]['total'] : 0;
+            $daerah_2 = isset($daerah[1]['total']) == true ? $daerah[1]['total'] : 0;
+            $daerah_3 = isset($daerah[2]['total']) == true ? $daerah[2]['total'] : 0;
+
+            if($daerah_1 > 0){
+                $persen_daerah_1 = $daerah_1 / count($data_karyawan_kabupaten) * 100;
+            }
+            if($daerah_2 > 0){
+                $persen_daerah_2 = $daerah_2 / count($data_karyawan_kabupaten) * 100;
+            }
+            if($daerah_3 > 0){
+                $persen_daerah_3 = $daerah_3 / count($data_karyawan_kabupaten) * 100;
+            }
+            
             $presensi_terakhir = Absensi::select('*')->orderBy('created_at', 'desc')->limit(10)->get();
 
             return view('dashboard', compact(
@@ -76,16 +103,18 @@ class DashboardController extends Controller
                 'chart_rekrut',
                 'chart_resign',
                 'chart_status_karyawan',
-                'persen_morosi',
-                'persen_bondoala',
-                'persen_kapioala',
+                'persen_daerah_1',
+                'persen_daerah_2',
+                'persen_daerah_3',
+                'daerah',
                 'persen_pkwtt',
                 'persen_pkwt',
                 'persen_training',
                 'umur_karyawan',
                 'terakhir_login',
-                'data_karyawan_kabupaten',
-                'presensi_terakhir'
+                'provinsi',
+                'kabupaten',
+                'presensi_terakhir',
             ));
         }
 
@@ -181,5 +210,17 @@ class DashboardController extends Controller
         } catch (\Throwable $e) {
             return back()->with('error', 'Something Wrong!');
         }
+    }
+
+    public function fetchKabupaten($id)
+    {
+        $kabupaten = Kabupaten::where('id_provinsi', $id)->get();
+        return response()->json($kabupaten);
+    }
+
+    public function fetchKecamatan($id)
+    {
+        $kecamatan = Kecamatan::where('id_kabupaten', $id)->get();
+        return response()->json($kecamatan);
     }
 }

@@ -98,6 +98,7 @@
                 </div>
             </div>
         </div>
+        <x-message />
         <div class="row">
             <div class="col-xl-6 mb-4">
                 <div class="card card-header-actions h-100">
@@ -112,7 +113,7 @@
             <div class="col-xl-6 mb-4">
                 <div class="card card-header-actions h-100">
                     <div class="card-header">
-                        Karyawan Keluar-
+                        Karyawan Keluar
                     </div>
                     <div class="card-body">
                         <div class="chart-bar"><canvas id="myBarChart" width="100%" height="30"></canvas></div>
@@ -232,32 +233,33 @@
                         <!-- Project tracker card example-->
                         <div class="card card-header-actions mb-4">
                             <div class="card-header">
-                                Konawe
+                                {{ ucwords(strtolower(getNamaKabupaten($kabupaten->kabupaten_id))) ?? 'Tidak ditemukan'}}
+                                <a class="btn btn-sm btn-primary-soft text-primary" data-bs-toggle="modal" data-bs-target="#selectDaerah">Pilih Lokasi</a>
                             </div>
                             <div class="card-body">
                                 <!-- Progress item 1-->
                                 <div class="d-flex align-items-center justify-content-between small mb-1">
-                                    <div class="fw-bold">Morosi</div>
-                                    <div class="small">{{ number_format($persen_morosi, 2) }}%</div>
+                                    <div class="fw-bold">{{ $daerah[0]['kecamatan'] ?? 'Tidak tersedia'}}</div>
+                                    <div class="small">{{ $daerah[0]['total'] ?? '0'}} Karyawan | {{ number_format($persen_daerah_1, 2) }}%</div>
                                 </div>
                                 <div class="progress mb-3">
-                                    <div class="progress-bar bg-danger" role="progressbar" style="width: {{number_format($persen_morosi)}}%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                    <div class="progress-bar bg-danger" role="progressbar" style="width: {{number_format($persen_daerah_1)}}%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
                                 <!-- Progress item 2-->
                                 <div class="d-flex align-items-center justify-content-between small mb-1">
-                                    <div class="fw-bold">Bondoala</div>
-                                    <div class="small">{{ number_format($persen_bondoala, 2) }}%</div>
+                                    <div class="fw-bold">{{ $daerah[1]['kecamatan'] ?? 'Tidak tersedia' }}</div>
+                                    <div class="small">{{ $daerah[1]['total'] ?? '0'}} Karyawan | {{ number_format($persen_daerah_2, 2) }}%</div>
                                 </div>
                                 <div class="progress mb-3">
-                                    <div class="progress-bar bg-warning" role="progressbar" style="width: {{number_format($persen_bondoala)}}%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                    <div class="progress-bar bg-warning" role="progressbar" style="width: {{number_format($persen_daerah_2)}}%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
                                 <!-- Progress item 3-->
                                 <div class="d-flex align-items-center justify-content-between small mb-1">
-                                    <div class="fw-bold">Kapioala</div>
-                                    <div class="small">{{ number_format($persen_kapioala, 2) }}%</div>
+                                    <div class="fw-bold">{{ $daerah[2]['kecamatan'] ?? 'Tidak tersedia'}}</div>
+                                    <div class="small">{{ $daerah[2]['total'] ?? '0'}} Karyawan | {{ number_format($persen_daerah_3, 2) }}%</div>
                                 </div>
                                 <div class="progress mb-3">
-                                    <div class="progress-bar bg-primary" role="progressbar" style="width: {{number_format($persen_kapioala)}}%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                    <div class="progress-bar bg-primary" role="progressbar" style="width: {{number_format($persen_daerah_3)}}%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
                             </div>
                         </div>
@@ -268,7 +270,96 @@
     </div>
     @endif
 
+    <div class="modal fade" id="selectDaerah" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Departemen</h5>
+                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{{ url('dashboard') }}" method="GET" class="nav flex-column" id="stickyNav">
+                    <div class="modal-body">
+                        @csrf
+                        <div class="mb-3">
+                            <label class="small mb-1">Provinsi</label>
+                            <select name="provinsi_id" class="form-select" id="provinsi_id">
+                                <option value="" disabled selected>- Pilih Lokasi -</option>
+                                @foreach($provinsi as $row)
+                                <option value="{{ $row->id }}">{{ $row->provinsi }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="small mb-1">Kabupaten</label>
+                            <select name="kabupaten" class="form-select" id="kabupaten_id"></select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-light btn-sm" type="button" data-bs-dismiss="modal">Tutup</button>
+                        <button class="btn btn-primary btn-sm" type="submit">Cari</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     @push('scripts')
+    <script>
+        $(document).ready(function() {
+            $('#provinsi_id').on('change', function() {
+                var provinsiID = $(this).val();
+                if (provinsiID) {
+                    $.ajax({
+                        url: 'dashboard/fetch-kabupaten/' + provinsiID,
+                        type: "GET",
+                        data: {
+                            "_token": "{{ csrf_token() }}"
+                        },
+                        dataType: "json",
+                        success: function(data) {
+                            if (data) {
+                                $('#kabupaten_id').empty();
+                                $('#kabupaten_id').append('<option hidden>- Pilih Kabupaten -</option>');
+                                $.each(data, function(id, kabupaten) {
+                                    $('select[name="kabupaten"]').append('<option value="' + kabupaten.id + '">' + kabupaten.kabupaten + '</option>');
+                                });
+                            } else {
+                                $('#kabupaten').empty();
+                            }
+                        }
+                    });
+                } else {
+                    $('#kabupaten').empty();
+                }
+            });
+            // $('#kabupaten_id').on('change', function() {
+            //     var kabupatenID = $(this).val();
+            //     if (kabupatenID) {
+            //         $.ajax({
+            //             url: 'dashboard/fetch-kecamatan/' + kabupatenID,
+            //             type: "GET",
+            //             data: {
+            //                 "_token": "{{ csrf_token() }}"
+            //             },
+            //             dataType: "json",
+            //             success: function(data) {
+            //                 if (data) {
+            //                     $('#kecamatan_id').empty();
+            //                     $('#kecamatan_id').append('<option hidden>- Pilih Kecamatan -</option>');
+            //                     $.each(data, function(id, kecamatan) {
+            //                         $('select[name="kecamatan"]').append('<option value="' + kecamatan.id + '">' + kecamatan.kecamatan + '</option>');
+            //                     });
+            //                 } else {
+            //                     $('#kecamatan').empty();
+            //                 }
+            //             }
+            //         });
+            //     } else {
+            //         $('#kecamatan').empty();
+            //     }
+            // });
+        });
+    </script>
     <script>
         var rekrutmen_record = JSON.parse('{!! json_encode($chart_rekrut) !!}');
         var resign_record = JSON.parse('{!! json_encode($chart_resign) !!}');

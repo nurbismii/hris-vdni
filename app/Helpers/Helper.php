@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\employee;
+use App\Models\Kabupaten;
 use App\Models\Kecamatan;
 use App\Models\Pengingat;
 use App\Models\PeriodeBulan;
@@ -17,6 +18,45 @@ function getName($id)
         $retval = $data->nama_karyawan;
     }
     return $retval;
+}
+
+if (!function_exists('getNamaProvinsi')) {
+    function getNamaProvinsi($id)
+    {
+        $name = Provinsi::where('id', $id)->first();
+        if ($name === null) {
+            $retval = "";
+        } else {
+            $retval = $name->provinsi;
+        }
+        return $retval;
+    }
+}
+
+if (!function_exists('getNamaKabupaten')) {
+    function getNamaKabupaten($id)
+    {
+        $name = Kabupaten::where('id', $id)->first();
+        if ($name === null) {
+            $retval = "";
+        } else {
+            $retval = $name->kabupaten;
+        }
+        return $retval;
+    }
+}
+
+if (!function_exists('getNamaKecamatan')) {
+    function getNamaKecamatan($id)
+    {
+        $name = Kecamatan::where('id', $id)->first();
+        if ($name === null) {
+            $retval = "";
+        } else {
+            $retval = $name->kecamatan;
+        }
+        return $retval;
+    }
 }
 
 function prev_segments($uri)
@@ -435,65 +475,23 @@ if (!function_exists('http_response_code')) {
     }
 }
 
-if (!function_exists('getNamaProvinsi')) {
-    function getNamaProvinsi($id)
-    {
-        $name = Provinsi::where('id', $id)->first();
-        if ($name === null) {
-            $retval = "";
-        } else {
-            $retval = $name->provinsi;
-        }
-        return $retval;
-    }
-}
-
-if (!function_exists('getNamaKecamatan')) {
-    function getNamaKecamatan($id)
-    {
-        $name = Kecamatan::where('id', $id)->first();
-        if ($name === null) {
-            $retval = "";
-        } else {
-            $retval = $name->kecamatan;
-        }
-        return $retval;
-    }
-}
 
 if (!function_exists('getJumlahPekerjaDaerah')) {
-    function getJumlahPekerjaDaerah($data_karyawan)
+    function getJumlahPekerjaDaerah($data_karyawan_kabupaten)
     {
         $data = [];
-        $morosi = [];
-        $bondoala = [];
-        $kapoiala = [];
+        $array = $data_karyawan_kabupaten;
+        $counted = array_count_values($array);
 
-        foreach ($data_karyawan as $d) {
-            if (getNamaKecamatan($d->kecamatan_id) == 'MOROSI') {
-                $morosi[] = [
-                    'nama_provinsi' => getNamaKecamatan($d->kecamatan_id),
-                ];
-            }
+        arsort($counted);
 
-            if (getNamaKecamatan($d->kecamatan_id) == 'BONDOALA') {
-                $bondoala[] = [
-                    'nama_provinsi' => getNamaKecamatan($d->kecamatan_id),
-                ];
-            }
-
-            if (getNamaKecamatan($d->kecamatan_id) == 'KAPOIALA') {
-                $kapoiala[] = [
-                    'nama_provinsi' => getNamaKecamatan($d->kecamatan_id),
-                ];
-            }
+        foreach ($counted as $key => $val) {
+            $data[] = [
+                'id' => $key,
+                'kecamatan' => getNamaKecamatan($key),
+                'total' => $val,
+            ];
         }
-        $data = [
-            'morosi' => count($morosi),
-            'bondoala' => count($bondoala),
-            'kapioala' => count($kapoiala),
-        ];
-
         return $data;
     }
 }
