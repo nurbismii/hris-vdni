@@ -212,7 +212,7 @@
                     <div class="col-xl-6 col-xxl-12">
                         <!-- Team members / people dashboard card example-->
                         <div class="card mb-4">
-                            <div class="card-header">Terakhir Masuk</div>
+                            <div class="card-header">Terakhir Aktif</div>
                             <div class="card-body">
                                 <!-- Item 1-->
                                 @foreach($terakhir_login as $d)
@@ -274,7 +274,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Departemen</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Pilih lokasi</h5>
                     <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form action="{{ url('dashboard') }}" method="GET" class="nav flex-column" id="stickyNav">

@@ -16,37 +16,10 @@ use Yajra\DataTables\DataTables;
 
 class EmployeeController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
-        $departemen = Departemen::all();
-
-        if ($request->tanggal_join1 != '' && $request->tanggal_join2 != '') {
-            $datas = employee::whereBetween('entry_date', array($request->tanggal_join1, $request->tanggal_join2))->get();
-            return view('employee.index', compact('datas', 'departemen'));
-        }
-
-        if ($request->tanggal_join1 != '') {
-            $datas = employee::where('entry_date', $request->tanggal_join1)->get();
-            return view('employee.index', compact('datas', 'departemen'));
-        }
-
-        if ($request->status_karyawan != '' && $request->divisi != '') {
-            $datas = employee::where('status_karyawan', $request->status_karyawan)->where('divisi_id', $request->divisi)->get();
-            return view('employee.index', compact('datas', 'departemen'));
-        }
-
-        if ($request->divisi != '') {
-            $datas = employee::where('divisi_id', $request->divisi)->get();
-            return view('employee.index', compact('datas', 'departemen'));
-        }
-
-        if ($request->status_karyawan != '') {
-            $datas = employee::where('status_karyawan', $request->status_karyawan)->get();
-            return view('employee.index', compact('datas', 'departemen'));
-        }
-
-        $datas = employee::all();
-        return view('employee.index', compact('datas', 'departemen'));
+        $depts = Departemen::all();
+        return view('employee.index', compact('depts'));
     }
 
     public function fetchDivisi($id)
@@ -57,21 +30,35 @@ class EmployeeController extends Controller
 
     public function serverSideEmployee(Request $request)
     {
-        // if ($request->ajax()) {
-        //     $data = employee::all();
-        //     return DataTables::of($data)
-        //         ->addIndexColumn()
-        //         ->addColumn('action', function ($data) {
-        //             return view('employee._action', [
-        //                 'data' => $data,
-        //                 'url_show' => route('employee.show', $data->nik),
-        //             ]);
-        //         })->filter(function ($instance) use ($request) {
-        //             if ($request->get('status_karyawan') == 'PKWTT' || $request->get('status_karyawan') == 'PKWT' || $request->get('status_karyawan') == 'TRAINING') {
-        //                 $instance->where('status_karyawan', $request->get('status_karyawan'));
-        //             }
-        //         })->rawColumns(['action'])->make(true);
-        // }
+        $data = employee::leftjoin('divisis', 'divisis.id', '=', 'employees.divisi_id')
+            ->leftjoin('departemens', 'departemens.id', '=', 'divisis.departemen_id');
+        return DataTables::of($data)
+            ->addIndexColumn()
+            ->addColumn('action', function ($data) {
+                return view('employee._action', [
+                    'data' => $data,
+                    'url_show' => route('employee.edit', $data->nik),
+                ]);
+            })->filter(function ($instance) use ($request) {
+                if ($request->get('status_karyawan') == 'PKWTT' || $request->get('status_karyawan') == 'PKWT' || $request->get('status_karyawan') == 'TRAINING') {
+                    $instance->where('status_karyawan', $request->get('status_karyawan'));
+                }
+                if ($request->get('departemen') != '') {
+                    $instance->where('departemen_id', $request->get('departemen'));
+                }
+                if ($request->get('nama_divisi') != '') {
+                    $instance->where('divisi_id', $request->get('nama_divisi'));
+                }
+                if (!empty($request->get('search'))) {
+                    $instance->where(function ($w) use ($request) {
+                        $search = $request->get('search');
+                        $w->orWhere('nik', 'LIKE', "%$search%")
+                            ->orWhere('nama_karyawan', 'LIKE', "%$search%");
+                    });
+                }
+            })
+            ->rawColumns(['action'])
+            ->make(true);
     }
 
     public function create()
