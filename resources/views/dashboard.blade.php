@@ -240,26 +240,26 @@
                                 <!-- Progress item 1-->
                                 <div class="d-flex align-items-center justify-content-between small mb-1">
                                     <div class="fw-bold">{{ $daerah[0]['kecamatan'] ?? 'Tidak tersedia'}}</div>
-                                    <div class="small">{{ $daerah[0]['total'] ?? '0'}} Karyawan | {{ number_format($persen_daerah_1, 2) }}%</div>
+                                    <div class="small">{{ $daerah[0]['total'] ?? '0'}} Karyawan</div>
                                 </div>
                                 <div class="progress mb-3">
-                                    <div class="progress-bar bg-danger" role="progressbar" style="width: {{number_format($persen_daerah_1)}}%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                    <div class="progress-bar bg-danger" role="progressbar" style="width: {{number_format($persen_daerah_1)}}%" aria-valuenow="{{number_format($persen_daerah_1)}}" aria-valuemin="0" aria-valuemax="100">{{ number_format($persen_daerah_1, 2) }}%</div>
                                 </div>
                                 <!-- Progress item 2-->
                                 <div class="d-flex align-items-center justify-content-between small mb-1">
                                     <div class="fw-bold">{{ $daerah[1]['kecamatan'] ?? 'Tidak tersedia' }}</div>
-                                    <div class="small">{{ $daerah[1]['total'] ?? '0'}} Karyawan | {{ number_format($persen_daerah_2, 2) }}%</div>
+                                    <div class="small">{{ $daerah[1]['total'] ?? '0'}} Karyawan</div>
                                 </div>
                                 <div class="progress mb-3">
-                                    <div class="progress-bar bg-warning" role="progressbar" style="width: {{number_format($persen_daerah_2)}}%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                    <div class="progress-bar bg-warning" role="progressbar" style="width: {{number_format($persen_daerah_2)}}%" aria-valuenow="{{number_format($persen_daerah_1)}}" aria-valuemin="0" aria-valuemax="100">{{ number_format($persen_daerah_2, 2) }}%</div>
                                 </div>
                                 <!-- Progress item 3-->
                                 <div class="d-flex align-items-center justify-content-between small mb-1">
                                     <div class="fw-bold">{{ $daerah[2]['kecamatan'] ?? 'Tidak tersedia'}}</div>
-                                    <div class="small">{{ $daerah[2]['total'] ?? '0'}} Karyawan | {{ number_format($persen_daerah_3, 2) }}%</div>
+                                    <div class="small">{{ $daerah[2]['total'] ?? '0'}} Karyawan</div>
                                 </div>
                                 <div class="progress mb-3">
-                                    <div class="progress-bar bg-primary" role="progressbar" style="width: {{number_format($persen_daerah_3)}}%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                    <div class="progress-bar bg-primary" role="progressbar" style="width: {{number_format($persen_daerah_3)}}%" aria-valuenow="{{number_format($persen_daerah_1)}}" aria-valuemin="0" aria-valuemax="100">{{ number_format($persen_daerah_3, 2) }}%</div>
                                 </div>
                             </div>
                         </div>

@@ -22,12 +22,6 @@
                             Data Slip Gaji
                         </h1>
                     </div>
-                    <div class="col-12 col-xl-auto mb-3">
-                        <!-- <a class="btn btn-sm btn-light text-primary" href="/employees/create">
-                            <i class="me-1" data-feather="user-plus"></i>
-                            Karyawan Baru
-                        </a> -->
-                    </div>
                 </div>
             </div>
         </div>
@@ -45,7 +39,11 @@
                                 <input class="form-control" name="periode" type="month" required />
                             </div>
                             <div class="col-2">
-                                <button class="btn btn-primary" type="submit">Filter</button>
+                                <div class="text-center d-grid">
+                                    <button class="btn btn-facebook">
+                                        <i class="fa fa-search"></i> Periode Slip Gaji
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>

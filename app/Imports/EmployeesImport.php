@@ -45,7 +45,7 @@ class EmployeesImport implements ToCollection, WithHeadingRow, WithValidation
                 'area_kerja' => $collect['area_kerja'],
                 'golongan_darah' => $collect['golongan_darah'],
                 'entry_date' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(intVal($collect['entry_date']))),
-                'npwp' => $collect['npwp'],
+                'npwp' => str_replace(array('-', '.'), "", $collect['npwp']),
                 'status_pajak' => $collect['status_pajak'],
                 'bpjs_kesehatan' => $collect['bpjs_kesehatan'],
                 'bpjs_tk' => $collect['bpjs_tk'],

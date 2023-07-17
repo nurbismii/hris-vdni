@@ -31,7 +31,7 @@
       <div class="card-body">
         <!-- Button with lift -->
         <a class="btn btn-indigo  btn-sm lift mb-3" href="{{ route('export.salary') }}">
-          <i>Download template file</i>
+          <i>Unduh template file</i>
         </a>
         <p class="col-12">
           Baris pertama dalam file sampel yang diunduh harus tetap apa adanya. Harap jangan mengubah urutan kolom dalam file.

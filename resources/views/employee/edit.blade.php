@@ -66,12 +66,37 @@
                 <!-- Form Group (first name)-->
                 <div class="col-md-6">
                   <label class="small mb-1">NIK Karyawan</label>
-                  <input class="form-control" type="text" name="nik_karyawan" value="{{ $data->nik }}" />
+                  <input class="form-control" type="text" name="nik_karyawan" value="{{ $data->nik }}" readonly/>
                 </div>
                 <!-- Form Group (last name)-->
                 <div class="col-md-6">
                   <label class="small mb-1">NIK KTP</label>
                   <input class="form-control" type="text" name="no_ktp" value="{{ $data->no_ktp }}" />
+                </div>
+              </div>
+              <div class="row gx-3 mb-3">
+                <!-- Form Group (first name)-->
+                <div class="col-md-6">
+                  <label class="small mb-1">Departemen</label>
+                  <input class="form-control" type="text" name="nik_karyawan" value="{{ $data->divisi->departemen->departemen }}" />
+                </div>
+                <!-- Form Group (last name)-->
+                <div class="col-md-6">
+                  <label class="small mb-1">Divisi</label>
+                  <input class="form-control" type="text" name="no_ktp" value="{{ $data->divisi->nama_divisi }}" />
+                </div>
+              </div>
+
+              <div class="row gx-3 mb-3">
+                <!-- Form Group (phone number)-->
+                <div class="col-md-6">
+                  <label class="small mb-1">Posisi</label>
+                  <input class="form-control" type="text" name="posisi" value="{{ $data->posisi }}" />
+                </div>
+                <!-- Form Group (birthday)-->
+                <div class="col-md-6">
+                  <label class="small mb-1">Jabatan</label>
+                  <input class="form-control" type="text" name="jabatan" value="{{ $data->jabatan }}" />
                 </div>
               </div>
               <div class="col-md-12 mb-3">
@@ -166,12 +191,12 @@
                 <!-- Form Group (first name)-->
                 <div class="col-md-6">
                   <label class="small mb-1">Provinsi</label>
-                  <input class="form-control" type="text" name="" value="{{ $data->provinsi->provinsi ?? '' }}" readonly/>
+                  <input class="form-control" type="text" name="" value="{{ $data->provinsi->provinsi ?? '' }}" readonly />
                 </div>
                 <!-- Form Group (last name)-->
                 <div class="col-md-6">
                   <label class="small mb-1">Kabupaten</label>
-                  <input class="form-control" type="text" name="" value="{{ $data->kabupaten->kabupaten ?? '' }}" readonly/>
+                  <input class="form-control" type="text" name="" value="{{ $data->kabupaten->kabupaten ?? '' }}" readonly />
                 </div>
               </div>
 
@@ -179,12 +204,12 @@
                 <!-- Form Group (first name)-->
                 <div class="col-md-6">
                   <label class="small mb-1">Kecamatan</label>
-                  <input class="form-control" type="text" name="" value="{{ $data->kecamatan->kecamatan ?? '' }}" readonly/>
+                  <input class="form-control" type="text" name="" value="{{ $data->kecamatan->kecamatan ?? '' }}" readonly />
                 </div>
                 <!-- Form Group (last name)-->
                 <div class="col-md-6">
                   <label class="small mb-1">Kelurahan</label>
-                  <input class="form-control" type="text" name="" value="{{ $data->kelurahan->kelurahan ?? '' }}" readonly/>
+                  <input class="form-control" type="text" name="" value="{{ $data->kelurahan->kelurahan ?? '' }}" readonly />
                 </div>
               </div>
 
@@ -230,19 +255,6 @@
                 <div class="col-md-6">
                   <label class="small mb-1">Golongan Darah</label>
                   <input class="form-control" type="text" name="golongan_darah" value="{{ $data->golongan_darah }}" />
-                </div>
-              </div>
-
-              <div class="row gx-3 mb-3">
-                <!-- Form Group (phone number)-->
-                <div class="col-md-6">
-                  <label class="small mb-1">Posisi</label>
-                  <input class="form-control" type="text" name="posisi" value="{{ $data->posisi }}" />
-                </div>
-                <!-- Form Group (birthday)-->
-                <div class="col-md-6">
-                  <label class="small mb-1">Jabatan</label>
-                  <input class="form-control" type="text" name="jabatan" value="{{ $data->jabatan }}" />
                 </div>
               </div>
               <!-- Save changes button-->

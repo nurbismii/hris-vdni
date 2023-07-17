@@ -39,31 +39,6 @@
         <div class="row">
             <div class="col-lg-12">
                 <x-message />
-                <!-- <div class="card card-collapsable mb-3">
-                    <a class="card-header" href="#collapseFilterEntryDate" data-bs-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample">Filter Periode Tanggal Masuk
-                        <div class="card-collapsable-arrow">
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                    </a>
-                    <div class="collapse" id="collapseFilterEntryDate">
-                        <form action="" method="get">
-                            @csrf
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-2">
-                                        <label class="small mt-3">Periode</label>
-                                    </div>
-                                    <div class="mb-3 col-5">
-                                        <input name="tanggal_join1" type="date" class="form-control">
-                                    </div>
-                                    <div class="mb-3 col-5">
-                                        <input type="date" name="tanggal_join2" class="form-control">
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div> -->
             </div>
             <div class="col-lg-12">
                 <div class="card card-collapsable mb-3">
@@ -77,7 +52,15 @@
                             @csrf
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="mb-3 col-4">
+                                    <div class="mb-3 col-3">
+                                        <label class="small mb-1">Status Resign</label>
+                                        <select class="form-select" id="status_resign">
+                                            <option value="" disabled selected>- Pilih Status -</option>
+                                            <option value="Ya">Ya</option>
+                                            <option value="Tidak">Tidak</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3 col-3">
                                         <label class="small mb-1">Status Karyawan</label>
                                         <select class="form-select" id="status_karyawan">
                                             <option value="">- Pilih Status -</option>
@@ -86,7 +69,7 @@
                                             <option value="TRAINING">TRAINING</option>
                                         </select>
                                     </div>
-                                    <div class="mb-3 col-4">
+                                    <div class="mb-3 col-3">
                                         <label class="small mb-1">Departemen</label>
                                         <select class="form-select" id="departemen">
                                             <option value="">- Pilih Departemen -</option>
@@ -95,7 +78,7 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="mb-3 col-4">
+                                    <div class="mb-3 col-3">
                                         <label class="small mb-1">Divisi</label>
                                         <select class="form-control" name="divisi" id="divisi"></select>
                                     </div>
@@ -118,7 +101,8 @@
                                     <th>Departemen</th>
                                     <th>Divisi</th>
                                     <th>NPWP</th>
-                                    <th>Status</th>
+                                    <th>Status Karyawan</th>
+                                    <th>Status Resign</th>
                                 </tr>
                             </thead>
                             <tbody> </tbody>
@@ -215,6 +199,7 @@
                     url: "employees/server-side",
                     data: function(d) {
                         d.status_karyawan = $('#status_karyawan').val()
+                        d.status_resign = $('#status_resign').val()
                         d.departemen = $('#departemen').val()
                         d.nama_divisi = $('#divisi').val()
                         d.search = $('input[type="search"]').val()
@@ -249,6 +234,10 @@
                         data: 'status_karyawan',
                         name: 'status_karyawan'
                     },
+                    {
+                        data: 'status_resign',
+                        name: 'status_resign'
+                    },
                 ],
                 order: [
                     [0, 'desc']
@@ -264,6 +253,10 @@
             });
 
             $('#divisi').change(function() {
+                table.draw();
+            });
+
+            $('#status_resign').change(function() {
                 table.draw();
             });
         });

@@ -49,6 +49,9 @@ class EmployeeController extends Controller
                 if ($request->get('nama_divisi') != '') {
                     $instance->where('divisi_id', $request->get('nama_divisi'));
                 }
+                if ($request->get('status_resign') != '') {
+                    $instance->where('status_resign', $request->get('status_resign'));
+                }
                 if (!empty($request->get('search'))) {
                     $instance->where(function ($w) use ($request) {
                         $search = $request->get('search');

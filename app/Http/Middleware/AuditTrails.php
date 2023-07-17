@@ -6,6 +6,7 @@ use App\Models\AuditTrail;
 use Closure;
 use Illuminate\Http\Request;
 use Ramsey\Uuid\Uuid;
+use Illuminate\Http\Response;
 
 class AuditTrails
 {
@@ -28,7 +29,7 @@ class AuditTrails
                 'ip' => $request->ip(),
                 'agent' => $request->header('user-agent'),
                 'request_body' => json_encode($request->except(['image_employee'])),
-                'response' => json_encode($request->http_response_code),
+                'response' => app('Illuminate\Http\Response')->status()
             ];
             AuditTrail::create($log);
             return $response;

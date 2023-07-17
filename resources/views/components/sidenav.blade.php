@@ -86,17 +86,6 @@
                                 <a class="nav-link" href="/contract">Data PKWT Lanjutan</a>
                             </nav>
                         </div>
-                        <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#pagesCollapseTraining" aria-expanded="false" aria-controls="pagesCollapseTraining">
-                            Pelatihan
-                            <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                        </a>
-                        <div class="collapse" id="pagesCollapseTraining" data-bs-parent="#accordionSidenavPagesMenu">
-                            <nav class="sidenav-menu-nested nav">
-                                <a class="nav-link" href="/pengembangan">Data Pelatihan</a>
-                                <a class="nav-link" href="/pengembangan">Tipe Pelatihan</a>
-                                <a class="nav-link" href="/pengembangan">Data Pelatih</a>
-                            </nav>
-                        </div>
                     </nav>
                 </div>
                 <!-- Sidenav Accordion (Payslip) -->

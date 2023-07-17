@@ -7,6 +7,7 @@ use App\Imports\KaryawanRosterImport;
 use App\Models\KaryawanRoster;
 use App\Models\Pengingat;
 use App\Models\PeriodeRoster;
+use App\Models\User;
 use Carbon\Carbon;
 use DateTime;
 use Illuminate\Http\Request;
@@ -103,25 +104,10 @@ class KaryawanRosterController extends Controller
         return view('pengingat.index', compact('datas'))->with('no');
     }
 
-    public function pengingatPribadi(Request $request)
+    public function pengingatPribadi()
     {
-        if ($request->filled('status_pengajuan')) {
-            if ($request->status_pengajuan == 'Selesai') {
-                $datas = Pengingat::with('periode')->where('flg_kirim', '2')->where('status_pengajuan', $request->status_pengajuan)->where('nik_karyawan', Auth::user()->employee->nik)->orderBy('tanggal_cuti', 'desc')->get();
-            }
-            if ($request->status_pengajuan == 'Proses') {
-                $datas = Pengingat::with('periode')->where('flg_kirim', '1')->where('status_pengajuan', $request->status_pengajuan)->where('nik_karyawan', Auth::user()->employee->nik)->rderBy('tanggal_cuti', 'desc')->get();
-            }
-            if ($request->status_pengajuan == 'Jatuh Tempo') {
-                $datas = Pengingat::with('periode')->where('flg_kirim', '1')->where('tanggal_cuti', '<=', date('Y-m-d'))->where('nik_karyawan', Auth::user()->employee->nik)->orderBy('tanggal_cuti', 'desc')->get();
-            }
-            if ($request->status_pengajuan == 'Belum Pengajuan') {
-                $datas = Pengingat::with('periode')->where('flg_kirim', '1')->where('status_pengajuan', NULL)->where('nik_karyawan', Auth::user()->employee->nik)->orderBy('tanggal_cuti', 'desc')->get();
-            }
-            return view('pengingat.index', compact('datas'))->with('no');
-        }
-        $datas = Pengingat::with('periode')->where('flg_kirim', '1')->where('nik_karyawan', Auth::user()->employee->nik)->orderBy('tanggal_cuti', 'desc')->get();
-        return view('pengingat.index', compact('datas'))->with('no');
+        $datas = Pengingat::orderBy('tanggal_cuti', 'ASC')->where('tanggal_cuti', '>=', date('Y-m-d', strtotime(Carbon::now()->subDays(14)->toDateString())))->where('flg_kirim', '1')->where('nik_karyawan', Auth::user()->employee->nik)->get();
+        return view('pengingat.pengingat-user', compact('datas'))->with('no');
     }
 
     public function updateStatusPengajuan(Request $request, $id)
