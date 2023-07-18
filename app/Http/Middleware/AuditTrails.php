@@ -6,17 +6,9 @@ use App\Models\AuditTrail;
 use Closure;
 use Illuminate\Http\Request;
 use Ramsey\Uuid\Uuid;
-use Illuminate\Http\Response;
 
 class AuditTrails
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
-     * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
-     */
     public function handle(Request $request, Closure $next)
     {
         $response = $next($request);
@@ -34,13 +26,16 @@ class AuditTrails
             AuditTrail::create($log);
             return $response;
         } catch (\Throwable $e) {
-            $res = [
-                'status_code' => 500,
-                'status' => false,
-                'Flag' => 'Log Activity',
-                'message' => $e->getMessage(),
+            $log = [
+                'id' => Uuid::uuid4()->getHex(),
+                'url' => $request->segment(2) == 'server-side' ? 'server-side' : $request->getUri(),
+                'method' => $request->getMethod(),
+                'ip' => $request->ip(),
+                'agent' => $request->header('user-agent'),
+                'request_body' => json_encode($request->except(['image_employee'])),
+                'response' => app('Illuminate\Http\Response')->status()
             ];
-            return response()->json($res, 500);
+            AuditTrail::create($log);
         }
     }
 }

@@ -2,18 +2,6 @@
     <nav class="sidenav shadow-right sidenav-light">
         <div class="sidenav-menu">
             <div class="nav accordion" id="accordionSidenav">
-                <!-- Sidenav Menu Heading (Account)-->
-                <!-- * * Note: * * Visible only on and above the sm breakpoint-->
-                @if(strtolower(Auth::user()->job->permission_role ?? '') == 'administrator')
-                <div class="sidenav-menu-heading d-sm-none">Pemberitahuan</div>
-                <a class="nav-link d-sm-none" href="/roster/daftar-pengingat">
-                    <div class="nav-link-icon"><i data-feather="bell"></i></div>
-                    Daftar Cuti
-                    @if(getCountPengingat() > 0)
-                    <span class="badge bg-success-soft text-success ms-auto">{{ getCountPengingat() }} New!</span>
-                    @endif
-                </a>
-                @endif
                 @if(strtolower(Auth::user()->job->permission_role ?? '') != 'administrator')
                 <div class="sidenav-menu-heading d-sm-none">Pemberitahuan</div>
                 <a class="nav-link d-sm-none" href="/lihat-pengingat">
@@ -24,21 +12,17 @@
                     @endif
                 </a>
                 @endif
-                <!-- Sidenav Menu Heading (Core)-->
                 <div class="sidenav-menu-heading">Core</div>
-                <!-- Sidenav Accordion (Dashboard)-->
                 <a class="nav-link" href="/dashboard">
                     <div class="nav-link-icon"><i data-feather="activity"></i></div>
                     Dashboard
                 </a>
                 @if(strtolower(Auth::user()->job->permission_role ?? '') == 'administrator')
-                <!-- Sidenav Audit Trails (Audit) -->
                 <a class="nav-link" href="/audit-trails">
                     <div class="nav-link-icon"><i data-feather="clipboard"></i></div>
                     Riwayat Audit
                 </a>
                 <div class="sidenav-menu-heading">Master Menu</div>
-                <!-- Sidenav Accordion (Users)-->
                 <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseUsers" aria-expanded="false" aria-controls="collapseUsers">
                     <div class="nav-link-icon"><i data-feather="users"></i></div>
                     Pengguna
@@ -50,7 +34,6 @@
                         <a class="nav-link" href="/users/last-login">Riwayat Login</a>
                     </nav>
                 </div>
-                <!-- Sidenav Accordion (Employees)-->
                 <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseEmployees" aria-expanded="false" aria-controls="collapseEmployees">
                     <div class="nav-link-icon"><i data-feather="user-check"></i></div>
                     Karyawan
@@ -83,12 +66,10 @@
                         <div class="collapse" id="pagesCollapseCoreHr" data-bs-parent="#accordionSidenavPagesMenu">
                             <nav class="sidenav-menu-nested nav">
                                 <a class="nav-link" href="/contract">Data PKWT 1</a>
-                                <a class="nav-link" href="/contract">Data PKWT Lanjutan</a>
                             </nav>
                         </div>
                     </nav>
                 </div>
-                <!-- Sidenav Accordion (Payslip) -->
                 <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapsePayroll" aria-expanded="false" aria-controls="collapsePayroll">
                     <div class="nav-link-icon"><i data-feather="credit-card"></i></div>
                     Slip Gaji
@@ -121,9 +102,21 @@
                     <div class="nav-link-icon"><i data-feather="log-in"></i></div>
                     Presensi
                 </a>
+
+                <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseCuti" aria-expanded="false" aria-controls="collapseCuti">
+                    <div class="nav-link-icon"><i data-feather="edit-3"></i></div>
+                    Cuti
+                    <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
+                <div class="collapse" id="collapseCuti" data-bs-parent="#accordionSidenav">
+                    <nav class="sidenav-menu-nested nav">
+                        <a class="nav-link" href="">Cuti Tahunan</a>
+                        <a class="nav-link" href="">Izin Dibayarkan</a>
+                        <a class="nav-link" href="">Izin Tidak Dibayarkan</a>
+                    </nav>
+                </div>
                 @if(strtolower(Auth::user()->job->permission_role ?? '') == 'administrator')
                 <div class="sidenav-menu-heading">Pengaturan</div>
-                <!-- Sidenav Accordion (Applications)-->
                 <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseSetting" aria-expanded="false" aria-controls="collapseSetting">
                     <div class="nav-link-icon"><i data-feather="sliders"></i></div>
                     Pengaturan
@@ -133,15 +126,12 @@
                     <nav class="sidenav-menu-nested nav">
                         <a class="nav-link" href="/setting/dashboard">Judul Dashboard</a>
                         <a class="nav-link" href="/setting/lokasi-absen">Lokasi Presensi</a></a>
-                        <!-- <a class="nav-link" href="/periode-absen">Periode Absensi</a></a> -->
                         <a class="nav-link" href="/periode">Periode Roster</a>
                         <a class="nav-link" href="/setting/waktu-absen">Waktu Kerja</a>
                 </div>
                 @endif
             </div>
-
         </div>
-        <!-- Sidenav Footer-->
         <div class="sidenav-footer">
             <div class="sidenav-footer-content">
                 <div class="sidenav-footer-subtitle">Masuk sebagai :</div>

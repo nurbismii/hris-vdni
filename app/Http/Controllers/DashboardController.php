@@ -48,6 +48,19 @@ class DashboardController extends Controller
 
             $karyawan_resign = employee::select('tgl_resign', 'status_resign')->where('status_resign', 'Ya')->get();
             $data_karyawan = employee::select('nik', 'status_karyawan', 'provinsi_id', 'kabupaten_id', 'kecamatan_id', 'kelurahan_id', 'tgl_lahir')->get();
+             
+            $data_audit = AuditTrail::count();
+            $audit_200 = AuditTrail::where([
+                'response' => '200',
+                'response' => 'null',
+                'response' => ''
+            ])->count();
+            $audit_419 = AuditTrail::where('response', '419')->count();
+            $audit_500 = AuditTrail::where('response', '500')->count();
+
+            $audit_200 = $audit_200 / $data_audit * 100;
+            $audit_419 = $audit_419 / $data_audit * 100;
+            $audit_500 = $audit_500 / $data_audit * 100;
 
             /* Code for chart  */
             $chart_rekrut = getDataRekrut($data_contract, $tahun_sekarang);
@@ -65,7 +78,7 @@ class DashboardController extends Controller
             $kabupaten_id = $request->kabupaten ?? '7403';
             $kabupaten = employee::select('provinsi_id', 'kabupaten_id', 'kecamatan_id', 'kelurahan_id')->where('kabupaten_id', $kabupaten_id)->first();
 
-            if(!$kabupaten){
+            if (!$kabupaten) {
                 return redirect('dashboard')->with('error', 'Data dari kabupaten yang kamu inginkan, belum tersedia');
             }
 
@@ -81,17 +94,17 @@ class DashboardController extends Controller
             $daerah_2 = isset($daerah[1]['total']) == true ? $daerah[1]['total'] : 0;
             $daerah_3 = isset($daerah[2]['total']) == true ? $daerah[2]['total'] : 0;
 
-            if($daerah_1 > 0){
+            if ($daerah_1 > 0) {
                 $persen_daerah_1 = $daerah_1 / count($data_karyawan_kabupaten) * 100;
             }
-            if($daerah_2 > 0){
+            if ($daerah_2 > 0) {
                 $persen_daerah_2 = $daerah_2 / count($data_karyawan_kabupaten) * 100;
             }
-            if($daerah_3 > 0){
+            if ($daerah_3 > 0) {
                 $persen_daerah_3 = $daerah_3 / count($data_karyawan_kabupaten) * 100;
             }
-            
-            $presensi_terakhir = Absensi::select('*')->orderBy('created_at', 'desc')->limit(10)->get();
+
+            $presensi_terakhir = Absensi::orderBy('created_at', 'desc')->limit(5)->get();
 
             return view('dashboard', compact(
                 'data',
@@ -115,6 +128,9 @@ class DashboardController extends Controller
                 'provinsi',
                 'kabupaten',
                 'presensi_terakhir',
+                'audit_200',
+                'audit_419',
+                'audit_500',
             ));
         }
 

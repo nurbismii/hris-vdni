@@ -7,6 +7,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/datetime/1.4.0/css/dataTables.dateTime.min.css" rel="stylesheet" />
     @endpush
 
     <header class="page-header page-header-dark bg-gradient-primary-to-secondary pb-10">
@@ -102,7 +104,7 @@
         <div class="row">
             <div class="col-xl-6 mb-4">
                 <div class="card card-header-actions h-100">
-                    <div class="card-header">
+                    <div class="card-header text-muted 75">
                         Karyawan Masuk
                     </div>
                     <div class="card-body">
@@ -112,11 +114,11 @@
             </div>
             <div class="col-xl-6 mb-4">
                 <div class="card card-header-actions h-100">
-                    <div class="card-header">
+                    <div class="card-header text-muted 75">
                         Karyawan Keluar
                     </div>
                     <div class="card-body">
-                        <div class="chart-bar"><canvas id="myBarChart" width="100%" height="30"></canvas></div>
+                        <div class="chart-bar"><canvas id="barChart1" width="100%" height="38"></canvas></div>
                     </div>
                 </div>
             </div>
@@ -124,26 +126,63 @@
         <div class="row">
             <div class="col-xxl-8">
                 <!-- Tabbed dashboard card example-->
-                <div class="card mb-4">
-                    <div class="card-header">
-                        Rentang Umur Karyawan
+                <div class="card mb-3">
+                    <div class="card-header border-bottom">
+                        <!-- Dashboard card navigation-->
+                        <ul class="nav nav-tabs card-header-tabs" id="dashboardNav" role="tablist">
+                            <li class="nav-item"><a class="nav-link" id="activities-pill" href="#karyawan" data-bs-toggle="tab" role="tab" aria-controls="activities" aria-selected="true">Karyawan</a></li>
+                            <li class="nav-item me-1"><a class="nav-link" id="overview-pill" href="#rentang-umur" data-bs-toggle="tab" role="tab" aria-controls="overview" aria-selected="false">Rentang Umur</a></li>
+                        </ul>
                     </div>
                     <div class="card-body">
                         <div class="tab-content" id="dashboardNavContent">
                             <!-- Dashboard Tab Pane 1-->
-                            <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview-pill">
-                                <div class="chart-area"><canvas id="myAreaChartUmurKaryawan" width="100%" height="30"></canvas></div>
+                            <div class="tab-pane fade" id="rentang-umur" role="tabpanel" aria-labelledby="overview-pill">
+                                <div class="chart-area mb-4 mb-lg-0" style="height: 20rem"><canvas id="barChart" width="100%" height="0"></canvas></div>
+                            </div>
+                            <!-- Dashboard Tab Pane 2-->
+                            <div class="tab-pane fade show active" id="karyawan" role="tabpanel" aria-labelledby="activities-pill">
+                                <table class="table table-hover" id="table-karyawan-dashboard">
+                                    <!-- <div class="row mb-3">
+                                        <div class="mb-3 col-2 mt-2">
+                                            <label class="small mb-1">Rentang Umur</label>
+                                        </div>
+                                        <div class="mb-3 col-3">
+                                            <input type="number" name="umur_mulai" id="umur_mulai" placeholder="Awal" class="form-control">
+                                        </div>
+                                        <div class="mb-3 col-3">
+                                            <input type="number" name="umur_akhir" id="umur_akhir" placeholder="Akhir" class="form-control">
+                                        </div>
+                                        <div class="mb-3 col-4">
+                                            <select name="jenis_kelamin" class="form-select" id="jenis_kelamin">
+                                                <option value="" disabled selected>- Pilih Jenis Kelamin -</option>
+                                                <option value="L">Laki - Laki</option>
+                                                <option value="P">Perempuan</option>
+                                            </select>
+                                        </div>
+                                    </div> -->
+                                    <thead>
+                                        <tr>
+                                            <th>NIK</th>
+                                            <th>Nama</th>
+                                            <th>Jenis Kelamin</th>
+                                            <th>Tanggal Lahir</th>
+                                            <th>Umur</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody> </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-xl-6 mb-4">
+                    <div class="col-xl-8 mb-4">
                         <!-- Dashboard activity timeline example-->
                         <div class="card card-header-actions h-100">
-                            <div class="card-header">
+                            <div class="card-header text-muted 75">
                                 Presensi Terbaru
-                                <div class="dropdown no-caret">
+                                <!-- <div class="dropdown no-caret">
                                     <button class="btn btn-transparent-dark btn-icon dropdown-toggle" id="dropdownMenuButton" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="text-gray-500" data-feather="more-vertical"></i></button>
                                     <div class="dropdown-menu dropdown-menu-end animated--fade-in-up" aria-labelledby="dropdownMenuButton">
                                         <h6 class="dropdown-header">Filter Activity:</h6>
@@ -152,7 +191,7 @@
                                         <a class="dropdown-item" href="#!"><span class="badge bg-yellow-soft text-yellow my-1">Server</span></a>
                                         <a class="dropdown-item" href="#!"><span class="badge bg-purple-soft text-purple my-1">Users</span></a>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                             <div class="card-body">
                                 <div class="timeline timeline-xs">
@@ -160,7 +199,7 @@
                                     @foreach($presensi_terakhir as $row)
                                     <div class="timeline-item">
                                         <div class="timeline-item-marker">
-                                            <div class="timeline-item-marker-text">27 min</div>
+                                            <div class="timeline-item-marker-text">{{ $row->created_at->diffForHumans() }}</div>
                                             <div class="timeline-item-marker-indicator bg-green"></div>
                                         </div>
                                         <div class="timeline-item-content">
@@ -174,45 +213,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-6 mb-4">
+                    <div class="col-xl-4 mb-4">
                         <div class="card h-100">
-                            <div class="card-header">Status Karyawan</div>
-                            <div class="card-body">
-                                <div class="chart-pie mb-4"><canvas id="myPieChart" width="100%" height="50"></canvas></div>
-                                <div class="list-group list-group-flush">
-                                    <div class="list-group-item d-flex align-items-center justify-content-between small px-0 py-2">
-                                        <div class="me-3">
-                                            <i class="fas fa-circle fa-sm me-1 text-blue"></i>
-                                            PKWTT
-                                        </div>
-                                        <div class="fw-500 text-dark">{{ number_format($persen_pkwtt, 2) }}%</div>
-                                    </div>
-                                    <div class="list-group-item d-flex align-items-center justify-content-between small px-0 py-2">
-                                        <div class="me-3">
-                                            <i class="fas fa-circle fa-sm me-1 text-green"></i>
-                                            PKWT
-                                        </div>
-                                        <div class="fw-500 text-dark">{{ number_format($persen_pkwt, 2) }}%</div>
-                                    </div>
-                                    <div class="list-group-item d-flex align-items-center justify-content-between small px-0 py-2">
-                                        <div class="me-3">
-                                            <i class="fas fa-circle fa-sm me-1 text-purple"></i>
-                                            TRAINING
-                                        </div>
-                                        <div class="fw-500 text-dark">{{ number_format($persen_training, 2) }}%</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xxl-4">
-                <div class="row">
-                    <div class="col-xl-6 col-xxl-12">
-                        <!-- Team members / people dashboard card example-->
-                        <div class="card mb-4">
-                            <div class="card-header">Terakhir Aktif</div>
+                            <div class="card-header text-muted 75">Terakhir Aktif</div>
                             <div class="card-body">
                                 <!-- Item 1-->
                                 @foreach($terakhir_login as $d)
@@ -229,10 +232,25 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div class="col-xxl-4">
+                <div class="row">
+                    <div class="col-xl-6 col-xxl-12">
+                        <!-- Team members / people dashboard card example-->
+                        <div class="card mb-4">
+                            <div class="card-header text-muted 75">Status Karyawan</div>
+                            <div class="card-body">
+                                <div class="chart-pie mb-4">
+                                    <canvas id="pieChart" width="100%" height="68"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="col-xl-6 col-xxl-12">
                         <!-- Project tracker card example-->
                         <div class="card card-header-actions mb-4">
-                            <div class="card-header">
+                            <div class="card-header text-muted 75">
                                 {{ ucwords(strtolower(getNamaKabupaten($kabupaten->kabupaten_id))) ?? 'Tidak ditemukan'}}
                                 <a class="btn btn-sm btn-primary-soft text-primary" data-bs-toggle="modal" data-bs-target="#selectDaerah">Pilih Lokasi</a>
                             </div>
@@ -243,7 +261,7 @@
                                     <div class="small">{{ $daerah[0]['total'] ?? '0'}} Karyawan</div>
                                 </div>
                                 <div class="progress mb-3">
-                                    <div class="progress-bar bg-danger" role="progressbar" style="width: {{number_format($persen_daerah_1)}}%" aria-valuenow="{{number_format($persen_daerah_1)}}" aria-valuemin="0" aria-valuemax="100">{{ number_format($persen_daerah_1, 2) }}%</div>
+                                    <div class="progress-bar bg-danger-soft text-danger" role="progressbar" style="width: {{number_format($persen_daerah_1)}}%" aria-valuenow="{{number_format($persen_daerah_1)}}" aria-valuemin="0" aria-valuemax="100">{{ number_format($persen_daerah_1, 2) }}%</div>
                                 </div>
                                 <!-- Progress item 2-->
                                 <div class="d-flex align-items-center justify-content-between small mb-1">
@@ -251,7 +269,7 @@
                                     <div class="small">{{ $daerah[1]['total'] ?? '0'}} Karyawan</div>
                                 </div>
                                 <div class="progress mb-3">
-                                    <div class="progress-bar bg-warning" role="progressbar" style="width: {{number_format($persen_daerah_2)}}%" aria-valuenow="{{number_format($persen_daerah_1)}}" aria-valuemin="0" aria-valuemax="100">{{ number_format($persen_daerah_2, 2) }}%</div>
+                                    <div class="progress-bar bg-warning-soft text-warning" role="progressbar" style="width: {{number_format($persen_daerah_2)}}%" aria-valuenow="{{number_format($persen_daerah_1)}}" aria-valuemin="0" aria-valuemax="100">{{ number_format($persen_daerah_2, 2) }}%</div>
                                 </div>
                                 <!-- Progress item 3-->
                                 <div class="d-flex align-items-center justify-content-between small mb-1">
@@ -259,7 +277,41 @@
                                     <div class="small">{{ $daerah[2]['total'] ?? '0'}} Karyawan</div>
                                 </div>
                                 <div class="progress mb-3">
-                                    <div class="progress-bar bg-primary" role="progressbar" style="width: {{number_format($persen_daerah_3)}}%" aria-valuenow="{{number_format($persen_daerah_1)}}" aria-valuemin="0" aria-valuemax="100">{{ number_format($persen_daerah_3, 2) }}%</div>
+                                    <div class="progress-bar bg-primary-soft text-primary" role="progressbar" style="width: {{number_format($persen_daerah_3)}}%" aria-valuenow="{{number_format($persen_daerah_1)}}" aria-valuemin="0" aria-valuemax="100">{{ number_format($persen_daerah_3, 2) }}%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-xxl-12">
+                        <!-- Project tracker card example-->
+                        <div class="card card-header-actions mb-4">
+                            <div class="card-header text-muted 75">
+                                Respon Permintaan
+                            </div>
+                            <div class="card-body">
+                                <!-- Progress item 1-->
+                                <div class="d-flex align-items-center justify-content-between small mb-1">
+                                    <div class="fw-bold">Berhasil</div>
+                                    <div class="small">{{ number_format($audit_200) ?? '0'}}%</div>
+                                </div>
+                                <div class="progress mb-3">
+                                    <div class="progress-bar" role="progressbar" style="background-color: rgba(75, 192, 192, 0.5);  width: {{number_format($audit_200)}}%" aria-valuenow="{{number_format($audit_200)}}" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                <!-- Progress item 2-->
+                                <div class="d-flex align-items-center justify-content-between small mb-1">
+                                    <div class="fw-bold">Internal Server Error</div>
+                                    <div class="small">{{ number_format($audit_500) ?? '0'}}%</div>
+                                </div>
+                                <div class="progress mb-3">
+                                    <div class="progress-bar bg-danger" role="progressbar" style="background-color: rgba(255, 99, 132, 0.5); width: {{number_format($audit_500)}}%" aria-valuenow="{{number_format($audit_500)}}" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                <!-- Progress item 3-->
+                                <div class="d-flex align-items-center justify-content-between small mb-1">
+                                    <div class="fw-bold">Page Expired</div>
+                                    <div class="small">{{ number_format($audit_419) ?? '0'}}%</div>
+                                </div>
+                                <div class="progress mb-3">
+                                    <div class="progress-bar bg-primary" role="progressbar" style="background-color: rgba(54, 162, 235, 0.5); width: {{number_format($audit_419)}}%" aria-valuenow="{{number_format($audit_419)}}" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
                             </div>
                         </div>
@@ -305,7 +357,61 @@
 
     @push('scripts')
     <script>
+        var rekrutmen_record = JSON.parse('{!! json_encode($chart_rekrut) !!}');
+        var resign_record = JSON.parse('{!! json_encode($chart_resign) !!}');
+        var status_karyawan_record = JSON.parse('{!! json_encode($chart_status_karyawan) !!}');
+        var umur_karyawan = JSON.parse('{!! json_encode($umur_karyawan) !!}');
+    </script>
+    <script>
         $(document).ready(function() {
+
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            var table = $('#table-karyawan-dashboard').DataTable({
+                pageLength: 10,
+                processing: true,
+                serverSide: true,
+                searching: true,
+                responsive: true,
+                ajax: {
+                    url: "employees/server-side",
+                    data: function(d) {
+                        d.umur_mulai = $('#umur_mulai').val()
+                        d.umur_akhir = $('#umur_akhir').val()
+                        d.search = $('input[type="search"]').val()
+                    }
+                },
+                columns: [{
+                        data: 'nik',
+                        name: 'nik'
+                    },
+                    {
+                        data: 'nama_karyawan',
+                        name: 'nama_karyawan'
+                    },
+                    {
+                        data: 'jenis_kelamin',
+                        name: 'jenis_kelamin'
+                    },
+                    {
+                        data: 'tgl_lahir',
+                        name: 'tgl_lahir'
+                    },
+                    {
+                        data: 'umur',
+                        name: 'umur'
+                    }
+                ],
+                order: [
+                    [0, 'desc']
+                ]
+            });
+
             $('#provinsi_id').on('change', function() {
                 var provinsiID = $(this).val();
                 if (provinsiID) {
@@ -332,50 +438,25 @@
                     $('#kabupaten').empty();
                 }
             });
-            // $('#kabupaten_id').on('change', function() {
-            //     var kabupatenID = $(this).val();
-            //     if (kabupatenID) {
-            //         $.ajax({
-            //             url: 'dashboard/fetch-kecamatan/' + kabupatenID,
-            //             type: "GET",
-            //             data: {
-            //                 "_token": "{{ csrf_token() }}"
-            //             },
-            //             dataType: "json",
-            //             success: function(data) {
-            //                 if (data) {
-            //                     $('#kecamatan_id').empty();
-            //                     $('#kecamatan_id').append('<option hidden>- Pilih Kecamatan -</option>');
-            //                     $.each(data, function(id, kecamatan) {
-            //                         $('select[name="kecamatan"]').append('<option value="' + kecamatan.id + '">' + kecamatan.kecamatan + '</option>');
-            //                     });
-            //                 } else {
-            //                     $('#kecamatan').empty();
-            //                 }
-            //             }
-            //         });
-            //     } else {
-            //         $('#kecamatan').empty();
-            //     }
-            // });
         });
     </script>
-    <script>
-        var rekrutmen_record = JSON.parse('{!! json_encode($chart_rekrut) !!}');
-        var resign_record = JSON.parse('{!! json_encode($chart_resign) !!}');
-        var status_karyawan_record = JSON.parse('{!! json_encode($chart_status_karyawan) !!}');
-        var umur_karyawan = JSON.parse('{!! json_encode($umur_karyawan) !!}');
-    </script>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="{{ asset('js/scripts.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" crossorigin="anonymous"></script>
     <script src="{{ asset('assets/demo/chart-area-demo.js')}}"></script>
-    <script src="{{ asset('assets/demo/chart-bar-demo.js')}}"></script>
-    <script src="{{ asset('assets/demo/chart-pie-demo.js')}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
     <script src="{{ asset('js/datatables/datatables-simple-demo.js')}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/bundle.js" crossorigin="anonymous"></script>
     <script src="{{ asset('js/litepicker.js')}}"></script>
     <script src="{{ asset('js/app.js') }}"></script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.2/moment.min.js"></script>
+    <script src="https://cdn.datatables.net/datetime/1.4.0/js/dataTables.dateTime.min.js"></script>
+
+    <script src="{{ asset('assets/vendors/chart.js/Chart.min.js')}}"></script>
+    <script src="{{ asset('assets/js/chart.js')}}"></script>
     @endpush
 </x-app-layout>

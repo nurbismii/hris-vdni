@@ -11,6 +11,7 @@ use App\Models\Departemen;
 use App\Models\Divisi;
 use App\Models\employee;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\DataTables;
 
@@ -31,7 +32,7 @@ class EmployeeController extends Controller
     public function serverSideEmployee(Request $request)
     {
         $data = employee::leftjoin('divisis', 'divisis.id', '=', 'employees.divisi_id')
-            ->leftjoin('departemens', 'departemens.id', '=', 'divisis.departemen_id');
+            ->leftjoin('departemens', 'departemens.id', '=', 'divisis.departemen_id')->select(DB::raw("*, tgl_lahir, (year(curdate())-year(tgl_lahir)) as umur"));
         return DataTables::of($data)
             ->addIndexColumn()
             ->addColumn('action', function ($data) {

@@ -34,12 +34,12 @@
                 <i class="me-2" data-feather="globe"></i>
                 Pilih bahasa
             </h6>
-            <a class="lang-select dropdown-item dropdown-notifications-item" data-lang="id" href="#googtrans(en|id)">
+            <a class="lang-select dropdown-item dropdown-notifications-item" data-lang="id" href="#googtrans(id|id)">
                 <div class="dropdown-notifications-item-content">
                     <div class="dridopdown-notifications-item-content-text">Indonesia</div>
                 </div>
             </a>
-            <a class="lang-select dropdown-item dropdown-notifications-item" data-lang="zh" href="#googtrans(en|zh-CN)">
+            <a class="lang-select dropdown-item dropdown-notifications-item" data-lang="zh" href="#googtrans(id|zh-CN)">
                 <div class="dropdown-notifications-item-content">
                     <div class="dridopdown-notifications-item-content-text">Mandarin (Sederhana)</div>
                 </div>

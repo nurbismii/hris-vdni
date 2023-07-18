@@ -86,6 +86,7 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @if($data->gaji_pokok > 0)
                                 <tr class="border-bottom">
                                     <td>
                                         <div class="fw-bold">Gaji</div>
@@ -94,6 +95,8 @@
                                     <td class="text-end fw-bold">Rp.</td>
                                     <td class="text-end fw-bold">{{ number_format($data->gaji_pokok, 0, ",", ".") }}</td>
                                 </tr>
+                                @endif
+                                @if($data->tunjangan_umum > 0)
                                 <tr class="border-bottom">
                                     <td>
                                         <div class="fw-bold">Uang Makan</div>
@@ -102,6 +105,8 @@
                                     <td class="text-end fw-bold">Rp.</td>
                                     <td class="text-end fw-bold">{{ number_format($data->tunjangan_umum, 0, ",", ".") }}</td>
                                 </tr>
+                                @endif
+                                @if($data->tunjangan_pengawas > 0)
                                 <tr class="border-bottom">
                                     <td>
                                         <div class="fw-bold">Tunj. Pengawas</div>
@@ -110,6 +115,8 @@
                                     <td class="text-end fw-bold">Rp.</td>
                                     <td class="text-end fw-bold">{{ number_format($data->tunjangan_pengawas) }}</td>
                                 </tr>
+                                @endif
+                                @if($data->tunjangan_mk > 0)
                                 <tr class="border-bottom">
                                     <td>
                                         <div class="fw-bold">Tunj. Masa Kerja</div>
@@ -118,6 +125,8 @@
                                     <td class="text-end fw-bold">Rp.</td>
                                     <td class="text-end fw-bold">{{ number_format($data->tunjangan_mk) }}</td>
                                 </tr>
+                                @endif
+                                @if($data->overtime > 0)
                                 <tr class="border-bottom">
                                     <td>
                                         <div class="fw-bold">Lembur</div>
@@ -126,6 +135,8 @@
                                     <td class="text-end fw-bold">Rp.</td>
                                     <td class="text-end fw-bold">{{ number_format($data->overtime) }}</td>
                                 </tr>
+                                @endif
+                                @if($data->jumlah_hour_machine > 0)
                                 <tr class="border-bottom">
                                     <td>
                                         <div class="fw-bold">Hour Machine</div>
@@ -134,6 +145,8 @@
                                     <td class="text-end fw-bold">Rp.</td>
                                     <td class="text-end fw-bold">{{ number_format($data->jumlah_hour_machine) }}</td>
                                 </tr>
+                                @endif
+                                @if($data->rapel > 0)
                                 <tr class="border-bottom">
                                     <td>
                                         <div class="fw-bold">Rapel</div>
@@ -142,6 +155,7 @@
                                     <td class="text-end fw-bold">Rp.</td>
                                     <td class="text-end fw-bold">{{ number_format($data->rapel) }}</td>
                                 </tr>
+                                @endif
                             </tbody>
                         </table>
                     </div>
@@ -154,6 +168,7 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @if($data->jht > 0)
                                 <tr class="border-bottom">
                                     <td>
                                         <div class="fw-bold">BPJS TK JHT</div>
@@ -162,6 +177,8 @@
                                     <td class="text-end fw-bold">Rp.</td>
                                     <td class="text-end fw-bold">{{ number_format($data->jht, 0, ",", ".") }}</td>
                                 </tr>
+                                @endif
+                                @if($data->jp > 0)
                                 <tr class="border-bottom">
                                     <td>
                                         <div class="fw-bold">BPJS TK JP</div>
@@ -170,6 +187,8 @@
                                     <td class="text-end fw-bold">Rp.</td>
                                     <td class="text-end fw-bold">{{ number_format($data->jp, 0, ",", ".") }}</td>
                                 </tr>
+                                @endif
+                                @if($data->bpjs_kesehatan > 0)
                                 <tr class="border-bottom">
                                     <td>
                                         <div class="fw-bold">BPJS Kesehatan</div>
@@ -178,6 +197,8 @@
                                     <td class="text-end fw-bold">Rp.</td>
                                     <td class="text-end fw-bold">{{ number_format($data->bpjs_kesehatan) }}</td>
                                 </tr>
+                                @endif
+                                @if($data->deduction > 0)
                                 <tr class="border-bottom">
                                     <td>
                                         <div class="fw-bold">Deduction Unpaid Leave</div>
@@ -186,6 +207,8 @@
                                     <td class="text-end fw-bold">Rp.</td>
                                     <td class="text-end fw-bold">{{ number_format($data->deduction) }}</td>
                                 </tr>
+                                @endif
+                                @if($data->deduction_pph21 > 0)
                                 <tr class="border-bottom">
                                     <td>
                                         <div class="fw-bold">deduction PPH 21</div>
@@ -194,6 +217,8 @@
                                     <td class="text-end fw-bold">Rp.</td>
                                     <td class="text-end fw-bold">{{ number_format($data->deduction_pph21) }}</td>
                                 </tr>
+                                @endif
+                                @if($total_diterima > 0)
                                 <tr>
                                     <td class="text-end pb-0" colspan="3">
                                         <div class="text-uppercase small fw-700 text-muted">Total Penghasilan:</div>
@@ -202,6 +227,8 @@
                                         <div class="h5 mb-0 fw-700">Rp.{{ number_format($total_diterima, 0, ",",".") }}</div>
                                     </td>
                                 </tr>
+                                @endif
+                                @if($total_deduction > 0)
                                 <tr>
                                     <td class="text-end pb-0" colspan="3">
                                         <div class="text-uppercase small fw-700 text-muted">Total Deduction :</div>
@@ -210,6 +237,8 @@
                                         <div class="h5 mb-0 fw-700 text-red"> - Rp.{{ number_format($total_deduction, 0, ",",".") }}</div>
                                     </td>
                                 </tr>
+                                @endif
+                                @if($gaji_bersih > 0)
                                 <tr>
                                     <td class="text-end pb-0" colspan="3">
                                         <div class="text-uppercase small fw-700 text-muted">Gaji Bersih:</div>
@@ -218,6 +247,7 @@
                                         <div class="h5 mb-0 fw-700 text-green">Rp.{{ number_format($gaji_bersih, 0, ",", ".") }}</div>
                                     </td>
                                 </tr>
+                                @endif
                             </tbody>
                         </table>
                     </div>

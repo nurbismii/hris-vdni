@@ -63,9 +63,16 @@
     </div>
     @stack('scripts')
     <script type="text/javascript">
+        function setCookie(key, value, expiry) {
+            var expires = new Date();
+            expires.setTime(expires.getTime() + (expiry * 24 * 60 * 60 * 1000));
+            document.cookie = key + '=' + value + ';expires=' + expires.toUTCString();
+        }
+
         function googleTranslateElementInit() {
+            setCookie('googtrans', '/id/ch',1);
             new google.translate.TranslateElement({
-                pageLanguage: 'id'
+                pageLanguage: 'id_ID'
             }, 'google_translate_element');
         }
 

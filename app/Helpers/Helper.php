@@ -278,12 +278,12 @@ function getUmur($data_karyawan)
                 'data7' => $tahun
             ];
         }
-        if ($tahun >= '53' && $tahun <= '58') {
+        if ($tahun >= '53' && $tahun <= '57') {
             $data8[] = [
                 'data8' => $tahun
             ];
         }
-        if ($tahun >= '59') {
+        if ($tahun >= '58') {
             $data9[] = [
                 'data9' => $tahun
             ];
