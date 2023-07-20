@@ -104,7 +104,7 @@ class KaryawanRosterController extends Controller
     public function pengingatPribadi()
     {
         $datas = Pengingat::orderBy('tanggal_cuti', 'ASC')->where('tanggal_cuti', '>=', date('Y-m-d', strtotime(Carbon::now()->subDays(14)->toDateString())))->where('flg_kirim', '1')->where('nik_karyawan', Auth::user()->employee->nik)->get();
-        return view('pengingat.pengingat-user', compact('datas'))->with('no');
+        return view('comben.pengingat.pengingat-user', compact('datas'))->with('no');
     }
 
     public function updateStatusPengajuan(Request $request, $id)
