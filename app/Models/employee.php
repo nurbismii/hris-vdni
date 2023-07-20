@@ -25,7 +25,7 @@ class employee extends Model
 
     public function detailAbsen()
     {
-        return $this->hasMany(DetailAbsensi::class, 'nik_karyawan', 'nik');
+        return $this->hasMany(DetailAbsensi::class, 'nik_karyawan', 'nik')->orderBy('akhir_periode', 'ASC');
     }
 
     public function keteranganAbsen()

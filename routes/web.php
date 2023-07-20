@@ -4,6 +4,8 @@ use App\Http\Controllers\AbsensiController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\ContractController;
+use App\Http\Controllers\CutiIzin;
+use App\Http\Controllers\CutiIzinController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DepartemenController;
 use App\Http\Controllers\DetailAbsensiController;
@@ -39,7 +41,7 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
         route::get('/', [AbsensiController::class, 'index']);
         route::post('/store', [AbsensiController::class, 'store'])->name('store.absensi');
         route::patch('/update/{id}', [AbsensiController::class, 'update'])->name('update.absensi');
-        
+
         route::group(['middleware' => 'isAdmin'], function () {
             // Detail Absensi Controller
             route::get('/detail', [DetailAbsensiController::class, 'getDetailAbsensi']);
@@ -61,10 +63,16 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
     Route::group(['prefix' => 'account'], function () {
         route::get('/profile', [AccountController::class, 'profile']);
         route::get('/information', [AccountController::class, 'billing']);
+        route::get('/pengajuan', [AccountController::class, 'pengajuan']);
         route::get('/invoice/{id}', [AccountController::class, 'show'])->name('invoice');
         route::patch('/update/{id}', [AccountController::class, 'update'])->name('account.update');
         route::get('/contract', [AccountController::class, 'contract'])->name('contract');
         route::get('/slip-gaji/{id}', [AccountController::class, 'cetak_pdf'])->name('slipgaji');
+    });
+
+    Route::group(['prefix' => 'pengajuan'], function () {
+        route::get('/cuti', [CutiIzinController::class, 'cutiIzin']);
+        route::post('/store-cuti', [CutiIzinController::class, 'storeCutiIzin']);
     });
 
     Route::group(['middleware' => 'isAdmin'], function () {
@@ -171,6 +179,13 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
             route::get('/daftar-pengingat', [KaryawanRosterController::class, 'reminder']);
             route::get('/aktif', [KaryawanRosterController::class, 'rosterAktif']);
             route::patch('/update/status-pengajuan/{id}', [KaryawanRosterController::class, 'updateStatusPengajuan'])->name('update.statusPengajuan');
+        });
+
+        Route::group(['prefix' => 'pengajuan-karyawan'], function () {
+            route::get('/', [CutiIzinController::class, 'index']);
+            route::get('/server-side', [CutiIzinController::class, 'serverSidePengajuan']);
+            route::get('/update/diterima/{id}', [CutiIzinController::class, 'updatePengajuanKaryawanDiterima'])->name('pengajuan-karyawan-setuju/update');
+            route::get('/update/ditolak/{id}', [CutiIzinController::class, 'updatePengajuanKaryawanDitolak'])->name('pengajuan-karyawan-ditolak/update');
         });
 
         Route::group(['prefix' => 'periode'], function () {

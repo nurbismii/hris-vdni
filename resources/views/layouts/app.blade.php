@@ -11,7 +11,6 @@
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/backgrounds/icon.png') }}" />
     <link href="{{ asset('css/styles.css')}}" rel="stylesheet" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <!-- <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> -->
     @stack('styles')
 </head>
 
@@ -20,7 +19,6 @@
 <body>
     <nav class="topnav navbar navbar-expand shadow justify-content-between justify-content-sm-start navbar-light bg-white" id="sidenavAccordion">
         <button class="btn btn-icon btn-transparent-dark order-1 order-lg-0 me-2 ms-lg-2 me-lg-0" id="sidebarToggle"><i data-feather="menu"></i></button>
-
         <a class="navbar-brand pe-3 ps-4 ps-lg-3" href="/"><img src="{{ asset('assets/img/backgrounds/vdni-ikon.png') }}" alt="Logo VDNI" style="height: 45px; width: 90px"></a>
         <x-navbar />
     </nav>
@@ -70,7 +68,7 @@
         }
 
         function googleTranslateElementInit() {
-            setCookie('googtrans', '/id/ch',1);
+            setCookie('googtrans', '/id/ch', 1);
             new google.translate.TranslateElement({
                 pageLanguage: 'id_ID'
             }, 'google_translate_element');
@@ -98,7 +96,6 @@
         });
     </script>
     <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
 </body>
 
 </html>

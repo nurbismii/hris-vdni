@@ -91,6 +91,7 @@
                 <div class="collapse" id="collapseKelolaCuti" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav">
                         <a class="nav-link" href="/roster">Data Roster</a>
+                        <a class="nav-link" href="/pengajuan-karyawan">Data Pengajuan Cuti</a>
                         <a class="nav-link" href="/roster/aktif">Data Pengingat</a>
                         <a class="nav-link" href="/absen/detail/all-in">Data Absensi</a>
                     </nav>
@@ -110,7 +111,7 @@
                 </a>
                 <div class="collapse" id="collapseCuti" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav">
-                        <a class="nav-link" href="">Cuti Tahunan</a>
+                        <a class="nav-link" href="/pengajuan/cuti">Cuti Tahunan</a>
                         <a class="nav-link" href="">Izin Dibayarkan</a>
                         <a class="nav-link" href="">Izin Tidak Dibayarkan</a>
                     </nav>

@@ -48,19 +48,6 @@ class DashboardController extends Controller
 
             $karyawan_resign = employee::select('tgl_resign', 'status_resign')->where('status_resign', 'Ya')->get();
             $data_karyawan = employee::select('nik', 'status_karyawan', 'provinsi_id', 'kabupaten_id', 'kecamatan_id', 'kelurahan_id', 'tgl_lahir')->get();
-             
-            $data_audit = AuditTrail::count();
-            $audit_200 = AuditTrail::where([
-                'response' => '200',
-                'response' => 'null',
-                'response' => ''
-            ])->count();
-            $audit_419 = AuditTrail::where('response', '419')->count();
-            $audit_500 = AuditTrail::where('response', '500')->count();
-
-            $audit_200 = $audit_200 / $data_audit * 100;
-            $audit_419 = $audit_419 / $data_audit * 100;
-            $audit_500 = $audit_500 / $data_audit * 100;
 
             /* Code for chart  */
             $chart_rekrut = getDataRekrut($data_contract, $tahun_sekarang);
@@ -83,26 +70,23 @@ class DashboardController extends Controller
             }
 
             $data_karyawan_kabupaten = employee::select('provinsi_id', 'kabupaten_id', 'kecamatan_id', 'kelurahan_id')->where('kabupaten_id', $kabupaten_id)->get()->pluck('kecamatan_id')->toArray();
-
             $daerah = getJumlahPekerjaDaerah($data_karyawan_kabupaten);
+            $persen_daerah_1 = $this->checkVariabelDaerah1($daerah, $data_karyawan_kabupaten);
+            $persen_daerah_2 = $this->checkVariabelDaerah2($daerah, $data_karyawan_kabupaten);
+            $persen_daerah_3 = $this->checkVariabelDaerah3($daerah, $data_karyawan_kabupaten);
 
-            $persen_daerah_1 = 0;
-            $persen_daerah_2 = 0;
-            $persen_daerah_3 = 0;
+            $data_audit = AuditTrail::count();
+            $audit_200 = AuditTrail::where([
+                'response' => '200',
+                'response' => 'null',
+                'response' => ''
+            ])->count();
+            $audit_419 = AuditTrail::where('response', '419')->count();
+            $audit_500 = AuditTrail::where('response', '500')->count();
 
-            $daerah_1 = isset($daerah[0]['total']) == true ? $daerah[0]['total'] : 0;
-            $daerah_2 = isset($daerah[1]['total']) == true ? $daerah[1]['total'] : 0;
-            $daerah_3 = isset($daerah[2]['total']) == true ? $daerah[2]['total'] : 0;
-
-            if ($daerah_1 > 0) {
-                $persen_daerah_1 = $daerah_1 / count($data_karyawan_kabupaten) * 100;
-            }
-            if ($daerah_2 > 0) {
-                $persen_daerah_2 = $daerah_2 / count($data_karyawan_kabupaten) * 100;
-            }
-            if ($daerah_3 > 0) {
-                $persen_daerah_3 = $daerah_3 / count($data_karyawan_kabupaten) * 100;
-            }
+            $audit_200 = $audit_200 / $data_audit * 100;
+            $audit_419 = $audit_419 / $data_audit * 100;
+            $audit_500 = $audit_500 / $data_audit * 100;
 
             $presensi_terakhir = Absensi::orderBy('created_at', 'desc')->limit(5)->get();
 
@@ -151,6 +135,40 @@ class DashboardController extends Controller
         $divisi = Divisi::with('departemen')->where('id', $datas->employee->divisi_id)->first();
 
         return view('dashboard-user', compact('hari_ini', 'divisi'));
+    }
+
+    public function checkVariabelDaerah1($var, $data_kab)
+    {
+        $persen_daerah_1 = 0;
+
+        $daerah_1 = isset($var[0]['total']) == true ? $var[0]['total'] : 0;
+
+        if ($daerah_1 > 0) {
+            $persen_daerah_1 = $daerah_1 / count($data_kab) * 100;
+        }
+        return $persen_daerah_1;
+    }
+
+    public function checkVariabelDaerah2($var, $data_kab)
+    {
+        $persen_daerah_2 = 0;
+        $daerah_2 = isset($var[1]['total']) == true ? $var[1]['total'] : 0;
+
+        if ($daerah_2 > 0) {
+            $persen_daerah_2 = $daerah_2 / count($data_kab) * 100;
+        }
+        return $persen_daerah_2;
+    }
+
+    public function checkVariabelDaerah3($var, $data_kab)
+    {
+        $persen_daerah_3 = 0;
+        $daerah_3 = isset($var[2]['total']) == true ? $var[2]['total'] : 0;
+
+        if ($daerah_3 > 0) {
+            $persen_daerah_3 = $daerah_3 / count($data_kab) * 100;
+        }
+        return $persen_daerah_3;
     }
 
     public function settingDashboard(Request $request)

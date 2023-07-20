@@ -4,12 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Imports\KaryawanRosterDeleteImport;
 use App\Imports\KaryawanRosterImport;
-use App\Models\KaryawanRoster;
 use App\Models\Pengingat;
 use App\Models\PeriodeRoster;
-use App\Models\User;
 use Carbon\Carbon;
-use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
@@ -46,7 +43,7 @@ class KaryawanRosterController extends Controller
                     $rosters = $data->karyawanRoster;
                 }
                 $url = prev_segments(url()->current());
-                return view('karyawan_roster.index', compact('periode', 'rosters', 'list_periode', 'pengingat'));
+                return view('comben.karyawan_roster.index', compact('periode', 'rosters', 'list_periode', 'pengingat'));
             }
         }
 
@@ -67,7 +64,7 @@ class KaryawanRosterController extends Controller
 
             $rosters = $data->karyawanRoster;
         }
-        return view('karyawan_roster.index', compact('periode', 'rosters', 'list_periode', 'pengingat'));
+        return view('comben.karyawan_roster.index', compact('periode', 'rosters', 'list_periode', 'pengingat'));
     }
 
     public function importKaryawanRoster(Request $request)
@@ -98,10 +95,10 @@ class KaryawanRosterController extends Controller
             if ($request->status_pengajuan == 'Belum Pengajuan') {
                 $datas = Pengingat::with('periode')->where('flg_kirim', '1')->where('status_pengajuan', NULL)->orderBy('tanggal_cuti', 'desc')->get();
             }
-            return view('pengingat.index', compact('datas'))->with('no');
+            return view('comben.pengingat.index', compact('datas'))->with('no');
         }
         $datas = Pengingat::with('periode')->where('flg_kirim', '1')->orderBy('tanggal_cuti', 'desc')->get();
-        return view('pengingat.index', compact('datas'))->with('no');
+        return view('comben.pengingat.index', compact('datas'))->with('no');
     }
 
     public function pengingatPribadi()

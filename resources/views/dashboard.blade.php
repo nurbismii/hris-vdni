@@ -108,7 +108,7 @@
                         Karyawan Masuk
                     </div>
                     <div class="card-body">
-                        <div class="chart-area"><canvas id="myAreaChart" width="100%" height="30"></canvas></div>
+                        <div class="chart-area"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
                     </div>
                 </div>
             </div>
@@ -118,7 +118,7 @@
                         Karyawan Keluar
                     </div>
                     <div class="card-body">
-                        <div class="chart-bar"><canvas id="barChart1" width="100%" height="38"></canvas></div>
+                        <div class="chart-bar"><canvas id="barChart1" width="100%" height="40"></canvas></div>
                     </div>
                 </div>
             </div>
@@ -141,7 +141,7 @@
                                 <div class="chart-area mb-4 mb-lg-0" style="height: 20rem"><canvas id="barChart" width="100%" height="0"></canvas></div>
                             </div>
                             <!-- Dashboard Tab Pane 2-->
-                            <div class="tab-pane fade show active" id="karyawan" role="tabpanel" aria-labelledby="activities-pill">
+                            <div class="tab-pane fade show active" style="overflow-x:auto;" id="karyawan" role="tabpanel" aria-labelledby="activities-pill">
                                 <table class="table table-hover" id="table-karyawan-dashboard">
                                     <!-- <div class="row mb-3">
                                         <div class="mb-3 col-2 mt-2">
@@ -364,8 +364,6 @@
     </script>
     <script>
         $(document).ready(function() {
-
-
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

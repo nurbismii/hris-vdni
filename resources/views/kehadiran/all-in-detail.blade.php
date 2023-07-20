@@ -144,6 +144,7 @@
                                     <th>C</th>
                                     <th>L</th>
                                     <th>Workdays</th>
+                                    <th>Periode</th>
                                     <th>Total Absen</th>
                                 </tr>
                             </thead>
@@ -161,6 +162,7 @@
                                     <td>{{ $data->total_cuti }}</td>
                                     <td>{{ $data->total_libur }}</td>
                                     <td>{{ $data->total_workdays }}</td>
+                                    <td>{{ date('d F Y', strtotime($data->awal_periode)) }} - {{ date('d F Y', strtotime($data->akhir_periode)) }}</td>
                                     <th scope="row">{{ $data->total_absen }}</th>
                                 </tr>
                                 <tr class="collapse accordion-collapse" id="accor{{$data->id}}" data-bs-parent=".table">

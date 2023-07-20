@@ -92,7 +92,7 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body" style="overflow-x:auto;">
-                        <table id="data-table-karyawan" class="table table-hover " style="width: 100%;">
+                        <table id="data-table-karyawan" class="table table-hover" style="width: 100%;">
                             <thead>
                                 <tr>
                                     <th>#</th>

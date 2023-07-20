@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AccountUpdateRequest;
 use App\Models\Contract;
+use App\Models\CutiIzin;
 use App\Models\Divisi;
 use App\Models\employee;
 use App\Models\salary;
@@ -90,5 +91,11 @@ class AccountController extends Controller
 
         $pdf = PDF::loadView('account.invoice_pdf', compact('data', 'gaji_bersih', 'total_diterima', 'total_deduction', 'karyawan'))->setPaper('a4', 'landscape');
         return $pdf->stream();
+    }
+
+    public function pengajuan()
+    {
+        $datas = CutiIzin::where('nik_karyawan', Auth::user()->nik_karyawan)->get();
+        return view('account.pengajuan', compact('datas'));
     }
 }
