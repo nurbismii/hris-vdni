@@ -29,7 +29,7 @@ class AccountController extends Controller
     public function billing()
     {
         try {
-            $datas = salary::orderBy('akhir_periode', 'DESC')->where('employee_id', Auth::user()->nik_karyawan)->get();
+            $datas = salary::orderBy('akhir_periode', 'DESC')->where('employee_id', Auth::user()->nik_karyawan)->limit(6)->get();
             $salary = salary::orderBy('akhir_periode', 'DESC')->where('employee_id', Auth::user()->nik_karyawan)->latest()->first('gaji_pokok');
             if (!$salary) {
                 return back()->with('info', 'Informasi yang kamu minta belum tersedia');
@@ -95,7 +95,7 @@ class AccountController extends Controller
 
     public function pengajuan()
     {
-        $datas = CutiIzin::where('nik_karyawan', Auth::user()->nik_karyawan)->get();
+        $datas = CutiIzin::orderBy('tanggal', 'DESC')->where('nik_karyawan', Auth::user()->nik_karyawan)->limit(6)->get();
         return view('account.pengajuan', compact('datas'));
     }
 }

@@ -22,12 +22,6 @@
                             Data Karyawan
                         </h1>
                     </div>
-                    <div class="col-12 col-xl-auto mb-3">
-                        <a class="btn btn-sm btn-light text-primary" data-bs-toggle="modal" data-bs-target="#modalAddKeterangan">
-                            <i class="me-1" data-feather="edit-3"></i>
-                            Keterangan Absen
-                        </a>
-                    </div>
                 </div>
             </div>
         </div>
@@ -54,30 +48,6 @@
                     </thead>
                     <tbody> </tbody>
                 </table>
-            </div>
-        </div>
-    </div>
-    
-    <div class="modal fade" id="modalAddKeterangan" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Bulk Data Keterangan</h5>
-                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form action="{{ route('import.keterangan') }}" method="POST" enctype="multipart/form-data" class="nav flex-column" id="stickyNav">
-                    <div class="modal-body">
-                        @csrf
-                        <div class="mb-3">
-                            <label class="form-label">Pilih file :</label>
-                            <input class="form-control" type="file" name="file" id="formFile">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary btn-sm" type="button" data-bs-dismiss="modal">Tutup</button>
-                        <button class="btn btn-success btn-sm" type="submit">Kirim</button>
-                    </div>
-                </form>
             </div>
         </div>
     </div>

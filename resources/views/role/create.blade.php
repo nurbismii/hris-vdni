@@ -45,11 +45,11 @@
                         <table id="datatablesSimple" class="table">
                             <thead>
                                 <tr>
-                                    <th>Permission Role</th>
-                                    <th>Description</th>
+                                    <th>Posisi</th>
+                                    <th>Deksripsi</th>
                                     <th>Status</th>
-                                    <th>Created At</th>
-                                    <th>Action</th>
+                                    <th>Tanggal</th>
+                                    <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -57,10 +57,10 @@
                                 <tr>
                                     <td>{{ $data->permission_role }}</td>
                                     <td>{{ $data->description}}</td>
-                                    <td>{{ ($data->status == '1') ? 'Active' : 'Not Active'}}</td>
+                                    <td>{{ ($data->status == '1') ? 'Aktif' : 'Tidak aktif'}}</td>
                                     <td>{{ date('d F Y', strtotime($data->created_at)) }}</td>
                                     <td>
-                                        <a class="btn btn-purple btn-sm lift lift-sm" href="#!">Permission</a>
+                                        <a class="btn btn-purple btn-sm lift lift-sm" data-bs-toggle="modal" data-bs-target="#modalAccess" href="#!">Akses</a>
                                         <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" data-bs-toggle="modal" data-bs-target="#editRole{{$data->id}}"><i data-feather="edit"></i></a>
                                         <a class="btn btn-datatable btn-icon btn-transparent-dark" data-bs-toggle="modal" data-bs-target="#deleteRole{{$data->id}}"><i data-feather="trash-2"></i></a>
                                     </td>
@@ -70,6 +70,134 @@
                         </table>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalAccess" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Pilih akses</h5>
+                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" id="flexCheckDefault" name="pengguna" type="checkbox" value="">
+                                <label class="form-check-label" for="flexCheckDefault">Pengguna</label>
+                            </div>
+                            <div class="form-check mx-4 mb-2">
+                                <input class="form-check-input" id="flexCheckChecked" name="data_pengguna" type="checkbox" value="">
+                                <label class="form-check-label" for="flexCheckChecked">Data Pengguna</label>
+                            </div>
+                            <div class="form-check mx-4 mb-2">
+                                <input class="form-check-input" id="flexCheckChecked" name="riwayat_login" type="checkbox" value="">
+                                <label class="form-check-label" for="flexCheckChecked">Riwayat Login</label>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" id="flexCheckDefault" type="checkbox" value="">
+                                <label class="form-check-label" for="flexCheckDefault">Karyawan</label>
+                            </div>
+                            <div class="form-check mx-4 mb-2">
+                                <input class="form-check-input" id="flexCheckChecked" type="checkbox" value="" checked">
+                                <label class="form-check-label" for="flexCheckChecked">Data Karyawan</label>
+                            </div>
+                            <div class="form-check mx-4 mb-2">
+                                <input class="form-check-input" id="flexCheckChecked" type="checkbox" value="" checked">
+                                <label class="form-check-label" for="flexCheckChecked">Akses Karyawan</label>
+                            </div>
+                            <div class="form-check mx-4 mb-2">
+                                <input class="form-check-input" id="flexCheckChecked" type="checkbox" value="" checked">
+                                <label class="form-check-label" for="flexCheckChecked">Import Karyawan</label>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" id="flexCheckDefault" type="checkbox" value="">
+                                <label class="form-check-label" for="flexCheckDefault">Departemen</label>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="col-4">
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" id="flexCheckDefault" type="checkbox" value="">
+                                <label class="form-check-label" for="flexCheckDefault">Hubungan Industrial</label>
+                            </div>
+                            <div class="form-check mx-4 mb-2">
+                                <input class="form-check-input" id="flexCheckChecked" type="checkbox" value="" checked">
+                                <label class="form-check-label" for="flexCheckChecked">Data PKWT 1</label>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" id="flexCheckDefault" type="checkbox" value="">
+                                <label class="form-check-label" for="flexCheckDefault">Slip Gaji</label>
+                            </div>
+                            <div class="form-check mx-4 mb-2">
+                                <input class="form-check-input" id="flexCheckChecked" type="checkbox" value="" checked">
+                                <label class="form-check-label" for="flexCheckChecked">Data Slip Gaji</label>
+                            </div>
+                            <div class="form-check mx-4 mb-2">
+                                <input class="form-check-input" id="flexCheckChecked" type="checkbox" value="" checked">
+                                <label class="form-check-label" for="flexCheckChecked">Import Slip Gaji</label>
+                            </div>
+                            <div class="form-check mx-4 mb-2">
+                                <input class="form-check-input" id="flexCheckChecked" type="checkbox" value="" checked">
+                                <label class="form-check-label" for="flexCheckChecked">Riwayat Import</label>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" id="flexCheckDefault" type="checkbox" value="">
+                                <label class="form-check-label" for="flexCheckDefault">Kompensasi & Keuntungan</label>
+                            </div>
+                            <div class="form-check mx-4 mb-2">
+                                <input class="form-check-input" id="flexCheckChecked" type="checkbox" value="" checked">
+                                <label class="form-check-label" for="flexCheckChecked">Data Roster</label>
+                            </div>
+                            <div class="form-check mx-4 mb-2">
+                                <input class="form-check-input" id="flexCheckChecked" type="checkbox" value="" checked">
+                                <label class="form-check-label" for="flexCheckChecked">Data Pengajuan Cuti</label>
+                            </div>
+                            <div class="form-check mx-4 mb-2">
+                                <input class="form-check-input" id="flexCheckChecked" type="checkbox" value="" checked">
+                                <label class="form-check-label" for="flexCheckChecked">Data Pengingat Cuti</label>
+                            </div>
+                            <div class="form-check mx-4 mb-2">
+                                <input class="form-check-input" id="flexCheckChecked" type="checkbox" value="" checked">
+                                <label class="form-check-label" for="flexCheckChecked">Data Absensi</label>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="col-4">
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" id="flexCheckDefault" type="checkbox" value="">
+                                <label class="form-check-label" for="flexCheckDefault">Pengaturan</label>
+                            </div>
+                            <div class="form-check mx-4 mb-2">
+                                <input class="form-check-input" id="flexCheckChecked" type="checkbox" value="" checked">
+                                <label class="form-check-label" for="flexCheckChecked">Judul Dashboard</label>
+                            </div>
+                            <div class="form-check mx-4 mb-2">
+                                <input class="form-check-input" id="flexCheckChecked" type="checkbox" value="" checked">
+                                <label class="form-check-label" for="flexCheckChecked">Lokasi Presensi</label>
+                            </div>
+                            <div class="form-check mx-4 mb-2">
+                                <input class="form-check-input" id="flexCheckChecked" type="checkbox" value="" checked">
+                                <label class="form-check-label" for="flexCheckChecked">Periode Roster</label>
+                            </div>
+                            <div class="form-check mx-4 mb-2">
+                                <input class="form-check-input" id="flexCheckChecked" type="checkbox" value="" checked">
+                                <label class="form-check-label" for="flexCheckChecked">Waktu Kerja</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer"><button class="btn btn-primary" type="button" data-bs-dismiss="modal">Close</button></div>
             </div>
         </div>
     </div>
@@ -112,8 +240,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
-                        <button class="btn btn-primary" type="submit">Save changes</button>
+                        <button class="btn btn-secondary btn-sm" type="button" data-bs-dismiss="modal">Tutup</button>
+                        <button class="btn btn-primary btn-sm" type="submit">Simpan</button>
                     </div>
                 </form>
             </div>
@@ -126,18 +254,18 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">New Role</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Posisi baru</h5>
                     <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form action="{{ route('destroy.role', $data->id) }}" method="POST" enctype="application/x-www-form-urlencoded" class="nav flex-column" id="stickyNav">
                     <div class="modal-body">
                         @csrf
                         {{ method_field('delete') }}
-                        Are you sure you want to delete this data ({{ $data->permission_role }})?
+                        Apa kamu yakin ingin menghapus data ini_restore ({{ $data->permission_role }})?
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">No</button>
-                        <button class="btn btn-primary" type="submit">Yes</button>
+                        <button class="btn btn-secondary btn-sm" type="button" data-bs-dismiss="modal">Batal</button>
+                        <button class="btn btn-primary btn-sm" type="submit">Ya</button>
                     </div>
                 </form>
             </div>
@@ -179,8 +307,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">No</button>
-                        <button class="btn btn-primary" type="submit">Yes</button>
+                        <button class="btn btn-secondary btn-sm" type="button" data-bs-dismiss="modal">Batal</button>
+                        <button class="btn btn-primary btn-sm" type="submit">Simpan</button>
                     </div>
                 </form>
             </div>

@@ -30,24 +30,44 @@
             <a class="nav-link {{ (request()->segment(2) == 'detail') ? 'active' : '' }} ms-0" href="/absen/detail">Import Data Absensi</a>
         </nav>
         <hr class="mt-0 mb-4" />
-        <div class="col-lg-12 mb-3">
-            <x-message />
-            <div class="card">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="mb-3 col-6">
+        <div class="row">
+            <div class="col-lg-12">
+                <x-message />
+            </div>
+            <div class="col-lg-6 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
                             <form action="{{ route('import.absensi') }}" method="post">
                                 <label class="form-label">Bulk absensi:</label>
                                 <input class="form-control" type="file" name="file" id="formFile">
-                                <button type="submit" class="btn btn-primary mt-2">Simpan</button>
+                                <button type="submit" class="btn btn-primary btn-sm mt-2">Simpan</button>
                             </form>
                         </div>
-
-                        <div class="mb-3 col-6">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
                             <form action="{{ route('import.destroy.absensi') }}" method="post">
                                 <label class="form-label">Bulk hapus absensi :</label>
                                 <input class="form-control" type="file" name="file" id="formFile">
-                                <button type="submit" class="btn btn-danger mt-2">Hapus</button>
+                                <button type="submit" class="btn btn-danger btn-sm mt-2">Hapus</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <form action="{{ route('import.keterangan') }}" method="post">
+                                <label class="form-label">Bulk keterangan absensi :</label>
+                                <input class="form-control" type="file" name="file" id="formFile">
+                                <button type="submit" class="btn btn-success btn-sm mt-2">Simpan</button>
                             </form>
                         </div>
                     </div>

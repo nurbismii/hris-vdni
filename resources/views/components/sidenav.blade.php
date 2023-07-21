@@ -58,16 +58,8 @@
                     <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
                 <div class="collapse" id="collapseCoreHr" data-bs-parent="#accordionSidenav">
-                    <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPagesMenu">
-                        <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#pagesCollapseCoreHr" aria-expanded="false" aria-controls="pagesCollapseCoreHr">
-                            Kontrak
-                            <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                        </a>
-                        <div class="collapse" id="pagesCollapseCoreHr" data-bs-parent="#accordionSidenavPagesMenu">
-                            <nav class="sidenav-menu-nested nav">
-                                <a class="nav-link" href="/contract">Data PKWT 1</a>
-                            </nav>
-                        </div>
+                    <nav class="sidenav-menu-nested nav">
+                        <a class="nav-link" href="/contract">Data PKWT 1</a>
                     </nav>
                 </div>
                 <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapsePayroll" aria-expanded="false" aria-controls="collapsePayroll">
@@ -92,7 +84,7 @@
                     <nav class="sidenav-menu-nested nav">
                         <a class="nav-link" href="/roster">Data Roster</a>
                         <a class="nav-link" href="/pengajuan-karyawan">Data Pengajuan Cuti</a>
-                        <a class="nav-link" href="/roster/aktif">Data Pengingat</a>
+                        <a class="nav-link" href="/roster/aktif">Data Pengingat Cuti</a>
                         <a class="nav-link" href="/absen/detail/all-in">Data Absensi</a>
                     </nav>
                 </div>

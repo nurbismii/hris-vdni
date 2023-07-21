@@ -21,7 +21,7 @@ class ImportKeteranganAbsen implements ToCollection, WithHeadingRow, WithValidat
                 'tanggal_mulai_izin' =>  Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(intVal($collect['tanggal_mulai']))),
                 'tanggal_selesai_izin' =>  Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(intVal($collect['tanggal_selesai']))),
                 'total_izin' =>  str_replace(['hari', 'HARI', 'Hari'], '', $collect['total_izin']),
-                'keterangan_izin' =>  $collect['keterangan_izin'],
+                'keterangan_izin' =>  $collect['keterangan_izin'] == '' ? 'Urusan keluarga' : $collect['keterangan_izin'],
                 'status_izin' =>  strtolower($collect['status_izin']),
                 'awal_periode' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(intVal($collect['awal_periode']))),
                 'akhir_periode' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(intVal($collect['akhir_periode']))),
