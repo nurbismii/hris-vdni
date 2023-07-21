@@ -39,6 +39,7 @@
                     <div class="card-body">
                         <div class="row">
                             <form action="{{ route('import.absensi') }}" method="post">
+                                @csrf
                                 <label class="form-label">Bulk absensi:</label>
                                 <input class="form-control" type="file" name="file" id="formFile">
                                 <button type="submit" class="btn btn-primary btn-sm mt-2">Simpan</button>
@@ -52,6 +53,7 @@
                     <div class="card-body">
                         <div class="row">
                             <form action="{{ route('import.destroy.absensi') }}" method="post">
+                                @csrf
                                 <label class="form-label">Bulk hapus absensi :</label>
                                 <input class="form-control" type="file" name="file" id="formFile">
                                 <button type="submit" class="btn btn-danger btn-sm mt-2">Hapus</button>
@@ -65,6 +67,7 @@
                     <div class="card-body">
                         <div class="row">
                             <form action="{{ route('import.keterangan') }}" method="post">
+                                @csrf
                                 <label class="form-label">Bulk keterangan absensi :</label>
                                 <input class="form-control" type="file" name="file" id="formFile">
                                 <button type="submit" class="btn btn-success btn-sm mt-2">Simpan</button>
