@@ -29,12 +29,12 @@
             <div class="col-lg-12">
                 <x-message />
                 <div class="card card-collapsable mb-3">
-                    <a class="card-header" href="#collapseDetailKaryawan" data-bs-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample">Detail Data Karyawan
+                    <a class="card-header" href="#collapseDetailKaryawan" data-bs-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample">Data absensi {{ ucwords(strtolower(getName($data->nik))) }}
                         <div class="card-collapsable-arrow">
                             <i class="fas fa-chevron-down"></i>
                         </div>
                     </a>
-                    <div class="collapse" id="collapseDetailKaryawan">
+                    <div class="collapse show" id="collapseDetailKaryawan">
                         <div class="card-body">
                             <div class="row gx-3 mb-3">
                                 <!-- Form Group (first name)-->
@@ -130,11 +130,10 @@
             <div class="col-lg-12">
                 <div class="card mb-3">
                     <div class="card-body" style="overflow-x:auto;">
-                        <table class="table accordion table-condensed table-striped" style="width: 100%;">
+                        <table class="table accordion table-condensed" style="width: 100%;">
                             <thead>
-                                <tr class="text-center">
+                                <tr class="text-start">
                                     <th>#</th>
-                                    <th>NIK</th>
                                     <th>Nama</th>
                                     <th>Alpa</th>
                                     <th>PL</th>
@@ -144,15 +143,14 @@
                                     <th>C</th>
                                     <th>L</th>
                                     <th>Workdays</th>
-                                    <th>Periode</th>
                                     <th>Total Absen</th>
+                                    <th>Periode</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($data->detailAbsen as $data)
-                                <tr class="text-center" data-bs-toggle="collapse" data-bs-target="#accor{{$data->id}}">
-                                    <th scope="row">{{ ++$no }}</th>
-                                    <th scope="row">{{ $data->nik_karyawan }}</a></td>
+                                <tr class="text-start" data-bs-toggle="collapse" data-bs-target="#accor{{$data->id}}">
+                                    <th scope="row"><i data-feather="corner-right-down"></i></th>
                                     <td>{{ getName($data->nik_karyawan) }}</td>
                                     <td>{{ $data->total_alpa }}</td>
                                     <td>{{ $data->paid_leave }}</td>
@@ -162,11 +160,11 @@
                                     <td>{{ $data->total_cuti }}</td>
                                     <td>{{ $data->total_libur }}</td>
                                     <td>{{ $data->total_workdays }}</td>
-                                    <td>{{ date('d F Y', strtotime($data->awal_periode)) }} - {{ date('d F Y', strtotime($data->akhir_periode)) }}</td>
                                     <th scope="row">{{ $data->total_absen }}</th>
+                                    <td>{{ date('d F Y', strtotime($data->awal_periode)) }} - {{ date('d F Y', strtotime($data->akhir_periode)) }}</td>
                                 </tr>
                                 <tr class="collapse accordion-collapse" id="accor{{$data->id}}" data-bs-parent=".table">
-                                    <td colspan="13">
+                                    <td colspan="12">
                                         <table class="table table-striped" style="width: 100%;">
                                             <thead>
                                                 <tr>

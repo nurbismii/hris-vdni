@@ -56,7 +56,7 @@
                                 @csrf
                                 <label class="form-label">Bulk hapus absensi :</label>
                                 <input class="form-control" type="file" name="file" id="formFile">
-                                <button type="submit" class="btn btn-danger btn-sm mt-2">Hapus</button>
+                                <button type="submit" class="btn btn-danger btn-sm mt-2">Simpan</button>
                             </form>
                         </div>
                     </div>

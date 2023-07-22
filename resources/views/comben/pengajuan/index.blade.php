@@ -40,6 +40,7 @@
                                     <option value="Ditolak">Ditolak</option>
                                 </select>
                             </div>
+                            <hr class="mt-0 mb-4" />
                             <thead>
                                 <tr>
                                     <th>NIK</th>
@@ -65,6 +66,7 @@
         function confirmApprove() {
             return confirm('Kamu yakin ingin menyetujui pengajuan ini ?');
         }
+
         function confirmDelete() {
             return confirm('Kamu yakin ingin menolak pengajuan ini ?');
         }
