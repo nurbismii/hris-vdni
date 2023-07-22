@@ -31,7 +31,7 @@
                 <div class="card mb-4">
                     <div class="card-header">Formulir Cuti</div>
                     <div class="card-body">
-                        <form action="/pengajuan/store-cuti" method="POST">
+                        <form action="/pengajuan/store-cuti" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="row gx-3 mb-2">
                                 <div class="col-md-6 mb-2">
@@ -43,14 +43,14 @@
                                     <input class="form-control" name="departemen" type="email" value="{{$data->divisi->departemen->departemen}}" readonly />
                                 </div>
                             </div>
-                            <div class="row gx-3 mb-3">
+                            <div class="row gx-3 mb-2">
                                 <div class="col-md-6 mb-2">
                                     <label class="small mb-2">NIK</label>
                                     <input class="form-control" name="nik" type="text" value="{{$data->nik}}" readonly />
                                 </div>
                                 <div class="col-md-6">
                                     <label class="small mb-2">Tanggal Pengajuan</label>
-                                    <input class="form-control" name="tanggal_pengajuan" type="text" value="{{ $tanggal_sekarang }}" readonly/>
+                                    <input class="form-control" name="tanggal_pengajuan" type="text" value="{{ $tanggal_sekarang }}" readonly />
                                 </div>
                             </div>
                             <div class="col-md-12 mb-2">
@@ -66,10 +66,14 @@
                                     <label class="small mb-2">Tanggal Akhir Cuti</label>
                                     <input class="form-control" name="tgl_akhir_cuti" type="date" />
                                 </div>
-                                <div class="col-md-2 mb-2">
+                                <div class="col-md-2">
                                     <label class="small mb-2">Sisa Cuti</label>
-                                    <input name="sisa_cuti" class="form-control" type="number" value="4" max="12" disabled/>
+                                    <input name="sisa_cuti" class="form-control" type="number" value="4" max="12" disabled />
                                 </div>
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <label class="small mb-2">Foto Pendukung</label>
+                                <input type="file" name="foto_pendukung" class="form-control">
                             </div>
                             <div class="text-center d-grid">
                                 <button class="btn btn-primary btn-sm" type="submit">Kirim</button>

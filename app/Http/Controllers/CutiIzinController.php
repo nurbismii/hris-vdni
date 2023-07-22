@@ -27,6 +27,7 @@ class CutiIzinController extends Controller
                     'data' => $data,
                     'url_update_diterima' => route('pengajuan-karyawan-setuju/update', $data->id),
                     'url_update_ditolak' => route('pengajuan-karyawan-ditolak/update', $data->id),
+                    'url_foto' => 'dokumentasi/' . $data->nik_karyawan . '/' . $data->foto
                 ]);
             })->filter(function ($instance) use ($request) {
                 if ($request->status_hrd == 'Diterima' || $request->status_hrd == 'Ditolak' || $request->status_hrd == 'Menunggu') {
@@ -61,6 +62,12 @@ class CutiIzinController extends Controller
         if ($akhir->diff($awal)->days > $sisa_cuti) {
             return back()->with('info', 'Hak cuti kamu tidak mencukupi...');
         }
+        if ($request->hasFile('foto_pendukung')) {
+            $upload = $request->file('foto_pendukung');
+            $file_name = $request->nik . '-' . $upload->getClientOriginalName();
+            $path = public_path('/dokumentasi/' . $request->nik . '/');
+            $upload->move($path, $file_name);
+        }
 
         CutiIzin::create([
             'nik_karyawan' => $request->nik,
@@ -73,7 +80,8 @@ class CutiIzinController extends Controller
             'status_hrd' => 'Menunggu',
             'status_hod' => 'Menunggu',
             'status_penanggung_jawab' => 'Menunggu',
-            'tipe' => 'cuti'
+            'tipe' => 'cuti',
+            'foto' => $file_name
         ]);
 
         return back()->with('success', 'Berhasil melakukan pengajuan, untuk melihat status pengajuan silahkan ke profil >>> Akun >>> Pengajuan');
