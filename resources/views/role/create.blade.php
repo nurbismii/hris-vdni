@@ -240,8 +240,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-secondary btn-sm" type="button" data-bs-dismiss="modal">Tutup</button>
-                        <button class="btn btn-primary btn-sm" type="submit">Simpan</button>
+                        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Tutup</button>
+                        <button class="btn btn-primary" type="submit">Simpan</button>
                     </div>
                 </form>
             </div>
@@ -264,8 +264,8 @@
                         Apa kamu yakin ingin menghapus data ini_restore ({{ $data->permission_role }})?
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-secondary btn-sm" type="button" data-bs-dismiss="modal">Batal</button>
-                        <button class="btn btn-primary btn-sm" type="submit">Ya</button>
+                        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Batal</button>
+                        <button class="btn btn-primary" type="submit">Ya</button>
                     </div>
                 </form>
             </div>
@@ -307,8 +307,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-secondary btn-sm" type="button" data-bs-dismiss="modal">Batal</button>
-                        <button class="btn btn-primary btn-sm" type="submit">Simpan</button>
+                        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Batal</button>
+                        <button class="btn btn-primary" type="submit">Simpan</button>
                     </div>
                 </form>
             </div>

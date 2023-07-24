@@ -30,7 +30,7 @@
                             <i class="me-1" data-feather="calendar"></i>
                             Bulk Kalender
                         </a>
-                        <a class="btn btn-sm btn-danger text-white" data-bs-toggle="modal" data-bs-target="#modalDeleteEmployee">
+                        <a class="btn btn-sm btn-light text-primary" data-bs-toggle="modal" data-bs-target="#modalDeleteEmployee">
                             <i class="me-1" data-feather="trash"></i>
                             Bulk Hapus Data
                         </a>
@@ -143,8 +143,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-secondary btn-sm" type="button" data-bs-dismiss="modal">Tutup</button>
-                        <button class="btn btn-success btn-sm" type="submit">Kirim</button>
+                        <button class="btn btn-light" type="button" data-bs-dismiss="modal">Tutup</button>
+                        <button class="btn btn-primary" type="submit">Kirim</button>
                     </div>
                 </form>
             </div>
@@ -167,8 +167,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-secondary btn-sm" type="button" data-bs-dismiss="modal">Tutup</button>
-                        <button class="btn btn-success btn-sm" type="submit">Kirim</button>
+                        <button class="btn btn-light" type="button" data-bs-dismiss="modal">Tutup</button>
+                        <button class="btn btn-primary" type="submit">Kirim</button>
                     </div>
                 </form>
             </div>

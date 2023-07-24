@@ -65,12 +65,26 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-lg-12 mb-2">
-				<div class="card">
-					<div class="card-body">
-
+			<div class="col-lg-12 mb-3">
+				<form action="/roster/daftar-pengingat" method="get">
+					@csrf
+					<div class="card">
+						<div class="card-body" style="overflow-x: auto;">
+							<label for="">Periode</label>
+							<input type="month" name="periode" class="form-control">
+							<div class="mt-2">
+								<button class="btn btn-sm btn-light text-primary" type="submit">
+									<i class="me-1" data-feather="search"></i>
+									Filter
+								</button>
+								<a class="btn btn-sm btn-light text-primary" data-bs-toggle="modal" data-bs-target="#modalDeleteEmployee">
+									<i class="me-1" data-feather="trash"></i>
+									Bersihkan filter
+								</a>
+							</div>
+						</div>
 					</div>
-				</div>
+				</form>
 			</div>
 			@foreach($datas as $data)
 			<div class="col-xl-4 mb-2">

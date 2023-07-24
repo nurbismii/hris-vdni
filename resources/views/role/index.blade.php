@@ -24,7 +24,7 @@
                             <i class="me-1" data-feather="user-plus"></i>
                             Tambahkan akses baru
                         </a>
-                        <a class="btn btn-sm btn-purple text-white" data-bs-toggle="modal" data-bs-target="#addAccess">
+                        <a class="btn btn-sm btn-light text-primary" data-bs-toggle="modal" data-bs-target="#addAccess">
                             <i class="me-1" data-feather="user-plus"></i>
                             Berikan akses
                         </a>
@@ -97,8 +97,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-light btn-sm" type="button" data-bs-dismiss="modal">Tutup</button>
-                        <button class="btn btn-primary btn-sm" type="submit">Simpan</button>
+                        <button class="btn btn-light" type="button" data-bs-dismiss="modal">Tutup</button>
+                        <button class="btn btn-primary" type="submit">Simpan</button>
                     </div>
                 </form>
             </div>

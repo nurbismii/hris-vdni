@@ -9,80 +9,81 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     @endpush
 
-    <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
-        <div class="container-xl px-s4">
-            <div class="page-header-content">
-                <div class="row align-items-center justify-content-between pt-3">
-                    <div class="col-auto mb-3">
+    <header class="page-header page-header-dark bg-gradient-primary-to-secondary pb-10">
+        <div class="container-xl px-4">
+            <div class="page-header-content pt-4">
+                <div class="row align-items-center justify-content-between">
+                    <div class="col-auto mt-4">
                         <h1 class="page-header-title">
                             <div class="page-header-icon"><i data-feather="user-plus"></i></div>
-                            Tambah Pengguna
+                            Pengguna
                         </h1>
-                    </div>
-                    <div class="col-12 col-xl-auto mb-3">
-                        <a class="btn btn-sm btn-light text-primary" href="/users">
-                            <i class="me-1" data-feather="arrow-left"></i>
-                            Kembali
-                        </a>
+                        <div class="page-header-subtitle">Pengguna bisa ditambahkan jika telah terdaftar sebagai karyawan</div>
                     </div>
                 </div>
             </div>
         </div>
     </header>
     <!-- Main page content-->
-    <div class="container-xl px-4 mt-4">
-        <div class="row">
-            <div class="col-xl-12">
-                <x-message />
-                <div class="card mb-4">
-                    <div class="card-header">Akun Baru</div>
-                    <div class="card-body">
-                        <form action="/users/store" method="POST">
-                            @csrf
-                            <div class="row gx-3 mb-3">
-                                <div class="col-md-6">
-                                    <label class="small mb-1">NIK</label>
-                                    <input class="form-control" type="text" name="nik_karyawan" placeholder="NIK Karyawan" />
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="small mb-1">Email</label>
-                                    <input class="form-control" name="email" type="email" placeholder="Enter your email" />
+    <div class="container-xl px-4 mt-n10">
+        <!-- Wizard card example with navigation-->
+        <div class="card">
+            <div class="card-body">
+                <div class="tab-content" id="cardTabContent">
+                    <form action="/users/store" method="POST">
+                        @csrf
+                        <div class="tab-pane py-5 py-xl-10 fade show active" id="wizard1" role="tabpanel" aria-labelledby="wizard1-tab">
+                            <div class="row justify-content-center">
+                                <div class="col-xxl-6 col-xl-8">
+                                    <h3 class="text-primary">Form Pengguna</h3>
+                                    <h5 class="card-title mb-4">Masukkan data pribadi pengguna</h5>
+                                    <form>
+                                        <div class="mb-3">
+                                            <label class="small mb-1">NIK</label>
+                                            <input class="form-control" type="text" name="nik_karyawan" placeholder="NIK Karyawan" />
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="small mb-1">Email</label>
+                                            <input class="form-control" name="email" type="email" placeholder="Email" />
+                                        </div>
+                                        <div class="row gx-3">
+                                            <div class="mb-3 col-md-6">
+                                                <label class="small mb-1">Kata Sandi</label>
+                                                <input class="form-control" name="password" type="password" placeholder="Kata Sandi" />
+                                            </div>
+                                            <div class="mb-3 col-md-6">
+                                                <label class="small mb-1">Konfirmasi Kata Sandi</label>
+                                                <input class="form-control" name="password_confirm" type="password" placeholder="Konfirmasi Kata Sandi" />
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="small mb-1">Status</label>
+                                            <select class="form-select" name="status">
+                                                <option selected disabled>Pilih status : </option>
+                                                <option value="aktif">Aktif</option>
+                                                <option value="tidak aktif">Tidak Aktif</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="small mb-1">Posisi</label>
+                                            <select class="form-select" name="role_id" aria-label="Default select example">
+                                                <option selected disabled>Pilih posisi :</option>
+                                                @foreach($roles as $role)
+                                                <option value="{{ $role->id }}">{{ $role->permission_role }}</option>
+                                                @endforeach
+                                                <option value="">User</option>
+                                            </select>
+                                        </div>
+                                        <hr class="my-4" />
+                                        <div class="d-flex justify-content-between">
+                                            <a href="{{ url()->previous() }}" class="btn btn-light" type="button">Kembali</a>
+                                            <button class="btn btn-primary" type="submit">Simpan</button>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
-                            <div class="row gx-3 mb-3">
-                                <div class="col-md-6">
-                                    <label class="small mb-1">Password</label>
-                                    <input class="form-control" name="password" type="password" placeholder="Enter your password" />
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="small mb-1">Password Confirm</label>
-                                    <input class="form-control" name="password_confirm" type="password" placeholder="Enter your password" />
-                                </div>
-                            </div>
-                            <div class="row gx-3 mb-3">
-                                <div class="col-md-6">
-                                    <label class="small mb-1">Status</label>
-                                    <select class="form-select" name="status">
-                                        <option selected disabled>Pilih status : </option>
-                                        <option value="aktif">Aktif</option>
-                                        <option value="tidak aktif">Tidak Aktif</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="small mb-1">Role</label>
-                                    <select class="form-select" name="role_id" aria-label="Default select example">
-                                        <option selected disabled>Select a role :</option>
-                                        @foreach($roles as $role)
-                                        <option value="{{ $role->id }}">{{ $role->permission_role }}</option>
-                                        @endforeach
-                                        <option value="">User</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <button class="btn btn-primary btn-sm" type="submit">Tambah Pengguna</button>
-                            <a href="/users" class="btn btn-danger btn-sm">Tutup</a>
-                        </form>
-                    </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

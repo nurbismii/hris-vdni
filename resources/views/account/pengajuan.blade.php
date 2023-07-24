@@ -1,4 +1,4 @@
-<x-app-layout title="Information">
+<x-app-layout title="Pengajuan Cuti">
 
     @push('styles')
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
@@ -37,7 +37,7 @@
         <x-message />
         <div class="row">
             @foreach($datas as $data)
-            <div class="col-xl-4 mb-2">
+            <div class="col-lg-12 mb-2">
                 <!-- Dashboard example card 3-->
                 <a class="card lift-sm h-100" data-bs-toggle="collapse" href="#collapsePengajuan{{$data->id}}" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">
                     <div class="card-body d-flex justify-content-center flex-column">
@@ -54,136 +54,98 @@
             </div>
             <div class="collapse multi-collapse" id="collapsePengajuan{{$data->id}}">
                 <div class="card card-body mb-2">
-                    <div class="timeline">
+                    <div class="timeline timeline">
                         <div class="timeline-item">
                             <div class="timeline-item-marker">
                                 <div class="timeline-item-marker-text">Pemohon</div>
-                                <div class="timeline-item-marker-indicator bg-primary-soft text-primary"><i data-feather="flag"></i></div>
-                            </div>
-                            <div class="timeline-item-content pt-0">
-                                <div class="card shadow-sm">
-                                    <div class="card-body">
-                                        <h5 class="text-primary">{{ $data->karyawan->nama_karyawan }}</h5>
-                                        {{ $data->keterangan }}
-                                    </div>
+                                <div class="timeline-item-marker-indicator">
+                                    @if($data->pemohon == 'Menunggu')
+                                    2
+                                    @else
+                                    <i data-feather="check"></i>
+                                    @endif
                                 </div>
                             </div>
+                            @if($data->pemohon == 'Menunggu')
+                            <div class="timeline-item-content">Saat ini...</div>
+                            @else
+                            <div class="timeline-item-content">Syarat terpenuhi.</div>
+                            @endif
                         </div>
-
-                        @if(strtolower($data->status_hrd) == 'diterima')
                         <div class="timeline-item">
                             <div class="timeline-item-marker">
-                                <div class="timeline-item-marker-text">Disetujui</div>
-                                <div class="timeline-item-marker-indicator bg-success-soft text-success"><i data-feather="edit-3"></i></div>
-                            </div>
-                            <div class="timeline-item-content pt-0">
-                                <div class="card shadow-sm">
-                                    <div class="card-body">
-                                        <h5 class="text-success">Human Resource</h5>
-                                        Telah disetujui dan diberikan izin cuti selama {{ $data->jumlah }} hari
-                                    </div>
+                                <div class="timeline-item-marker-text">HRD</div>
+                                <div class="timeline-item-marker-indicator">
+                                    @if($data->status_hrd == 'Menunggu')
+                                    2
+                                    @else
+                                    <i data-feather="check"></i>
+                                    @endif
                                 </div>
                             </div>
+                            @if($data->status_hrd == 'Menunggu')
+                            <div class="timeline-item-content">Saat ini...</div>
+                            @else
+                            <div class="timeline-item-content">Syarat terpenuhi.</div>
+                            @endif
                         </div>
-                        @else
                         <div class="timeline-item">
                             <div class="timeline-item-marker">
-                                <div class="timeline-item-marker-text">{{ ucfirst($data->status_hrd) == 'Menunggu' ? 'Menunggu' : 'Ditolak' }}</div>
-                                <div class="timeline-item-marker-indicator bg-success-soft text-success"><i data-feather="edit-3"></i></div>
-                            </div>
-                            <div class="timeline-item-content pt-0">
-                                <div class="card shadow-sm">
-                                    <div class="card-body">
-                                        <h5 class="text-success">Human Resource</h5>
-                                        {{ ucfirst($data->status_hrd) == 'Menunggu' ? 'Menunggu konfirmasi' : 'Pengajuan ditolak' }} dari Human Resource
-                                    </div>
+                                <div class="timeline-item-marker-text">HOD</div>
+                                <div class="timeline-item-marker-indicator">
+                                    @if($data->status_hod == 'Menunggu')
+                                    3
+                                    @else
+                                    <i data-feather="check"></i>
+                                    @endif
                                 </div>
                             </div>
+                            @if($data->status_hrd == 'Diterima' && $data->status_hod == 'Menunggu')
+                            <div class="timeline-item-content">Saat ini.</div>
+                            @elseif($data->status_hod == 'Diterima' && $data->status_hrd == 'Diterima')
+                            <div class="timeline-item-content">Syarat terpenuhi.</div>
+                            @else
+                            <div class="timeline-item-content">Langkah selanjutnya...</div>
+                            @endif
                         </div>
-                        @endif
-
-                        @if(strtolower($data->status_hod) == 'diterima')
                         <div class="timeline-item">
                             <div class="timeline-item-marker">
-                                <div class="timeline-item-marker-text">Disetujui</div>
-                                <div class="timeline-item-marker-indicator bg-secondary-soft text-secondary"><i data-feather="map"></i></div>
-                            </div>
-                            <div class="timeline-item-content pt-0">
-                                <div class="card shadow-sm">
-                                    <div class="card-body">
-                                        <h5 class="text-secondary">Head Of Departemen</h5>
-                                        Telah diberikan izin cuti dan berhak cuti pada tanggal {{ $data->tanggal_mulai }} dan masa cuti
-                                        akan berakhir pada tanggal {{ $data->tanggal_berakhir }}
-                                    </div>
+                                <div class="timeline-item-marker-text">Penanggung Jawab</div>
+                                <div class="timeline-item-marker-indicator">
+                                    @if($data->status_penanggung_jawab == 'Menunggu')
+                                    4
+                                    @else
+                                    <i data-feather="check"></i>
+                                    @endif
                                 </div>
                             </div>
+                            @if($data->status_hrd == 'Diterima' && $data->status_hod == 'Diterima' && $data->status_penanggung_jawab == 'Menunggu')
+                            <div class="timeline-item-content">Saat ini.</div>
+                            @elseif($data->status_hod == 'Menunggu' && $data->status_hrd == 'Menunggu' && $data->status_penanggung_jawab == 'Menunggu')
+                            <div class="timeline-item-content">Langkah selanjutnya...</div>
+                            @else
+                            <div class="timeline-item-content">Langkah selanjutnya...</div>
+                            @endif
                         </div>
-                        @else
-                        <div class="timeline-item">
-                            <div class="timeline-item-marker">
-                                <div class="timeline-item-marker-text">{{ ucfirst($data->status_hod) == 'Menunggu' ? 'Menunggu' : 'Ditolak' }}</div>
-                                <div class="timeline-item-marker-indicator bg-secondary-soft text-secondary"><i data-feather="map"></i></div>
-                            </div>
-                            <div class="timeline-item-content pt-0">
-                                <div class="card shadow-sm">
-                                    <div class="card-body">
-                                        <h5 class="text-secondary">Head Of Departemen</h5>
-                                        {{ ucfirst($data->status_hod) == 'Menunggu' ? 'Menunggu konfirmasi dari ' : 'Pengajuan ditolak ' }} Head of Departemen
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        @endif
-
-                        @if(strtolower($data->status_penanggung_jawab) == 'diterima')
-                        <div class="timeline-item">
-                            <div class="timeline-item-marker">
-                                <div class="timeline-item-marker-text">Disetujui</div>
-                                <div class="timeline-item-marker-indicator bg-danger-soft text-danger"><i data-feather="map"></i></div>
-                            </div>
-                            <div class="timeline-item-content pt-0">
-                                <div class="card shadow-sm">
-                                    <div class="card-body">
-                                        <h5 class="text-danger">Penanggung Jawab Site</h5>
-                                        Telah diberikan izin cuti dan berhak cuti pada tanggal {{ $data->tanggal_mulai }} dan masa cuti
-                                        akan berakhir pada tanggal {{ $data->tanggal_berakhir }}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        @else
-                        <div class="timeline-item">
-                            <div class="timeline-item-marker">
-                                <div class="timeline-item-marker-text">{{ ucfirst($data->status_penanggung_jawab) == 'Menunggu' ? 'Menunggu' : 'Ditolak' }}</div>
-                                <div class="timeline-item-marker-indicator bg-danger-soft text-danger"><i data-feather="map"></i></div>
-                            </div>
-                            <div class="timeline-item-content pt-0">
-                                <div class="card shadow-sm">
-                                    <div class="card-body">
-                                        <h5 class="text-danger">Penanggung Jawab Site</h5>
-                                        {{ ucfirst($data->status_penanggung_jawab) == 'Menunggu' ? 'Menunggu konfirmasi dari ' : 'Pengajuan ditolak ' }} Penanggung Jawab Site
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        @endif
-
-                        @if(strtolower($data->status_penanggung_jawab) == 'diterima' && strtolower($data->status_hod) == 'diterima' && strtolower($data->status_hrd) == 'diterima')
-                        <div class="timeline-item">
+                        <div class="timeline-item mb-3">
                             <div class="timeline-item-marker">
                                 <div class="timeline-item-marker-text">Selesai</div>
-                                <div class="timeline-item-marker-indicator bg-warning-soft text-warning"><i data-feather="send"></i></div>
-                            </div>
-                            <div class="timeline-item-content pt-0">
-                                <div class="card shadow-sm">
-                                    <div class="card-body">
-                                        <h5 class="text-warning">Pengajuan diterima</h5>
-                                        Cuti telah disetujui
-                                    </div>
+                                <div class="timeline-item-marker-indicator">
+                                    @if($data->status_penanggung_jawab == 'Menunggu')
+                                    5
+                                    @else
+                                    <i data-feather="check"></i>
+                                    @endif
                                 </div>
                             </div>
+                            @if($data->status_hrd == 'Diterima' && $data->status_hod == 'Diterima' && $data->status_penanggung_jawab == 'Diterima')
+                            <div class="timeline-item-content">Saat ini.</div>
+                            @elseif($data->status_hod == 'Menunggu' && $data->status_hrd == 'Menunggu' && $data->status_penanggung_jawab == 'Menunggu')
+                            <div class="timeline-item-content">Langkah selanjutnya...</div>
+                            @else
+                            <div class="timeline-item-content">Langkah selanjutnya...</div>
+                            @endif
                         </div>
-                        @endif
                     </div>
                 </div>
             </div>

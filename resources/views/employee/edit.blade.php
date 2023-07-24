@@ -66,7 +66,7 @@
                 <!-- Form Group (first name)-->
                 <div class="col-md-6">
                   <label class="small mb-1">NIK Karyawan</label>
-                  <input class="form-control" type="text" name="nik_karyawan" value="{{ $data->nik }}" readonly/>
+                  <input class="form-control" type="text" name="nik_karyawan" value="{{ $data->nik }}" readonly />
                 </div>
                 <!-- Form Group (last name)-->
                 <div class="col-md-6">
@@ -257,9 +257,10 @@
                   <input class="form-control" type="text" name="golongan_darah" value="{{ $data->golongan_darah }}" />
                 </div>
               </div>
-              <!-- Save changes button-->
-              <button onclick="history.back()" class="btn btn-light btn-sm" type="button">Kembali</button>
-              <button class="btn btn-primary btn-sm" type="submit">Simpan perubahan</button>
+              <div class="d-flex justify-content-between">
+                <button onclick="history.back()" class="btn btn-light" type="button">Kembali</button>
+                <button class="btn btn-primary" type="submit">Simpan</button>
+              </div>
             </form>
           </div>
         </div>

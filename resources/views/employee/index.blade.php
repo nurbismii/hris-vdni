@@ -21,11 +21,11 @@
                         </h1>
                     </div>
                     <div class="col-12 col-xl-auto mb-3">
-                        <a class="btn btn-sm btn-warning text-white" data-bs-toggle="modal" data-bs-target="#modalUpdateEmployee">
+                        <a class="btn btn-sm btn-light text-primary" data-bs-toggle="modal" data-bs-target="#modalUpdateEmployee">
                             <i class="me-1" data-feather="edit-3"></i>
                             Bulk Perbarui Karyawan
                         </a>
-                        <a class="btn btn-sm btn-danger text-white" data-bs-toggle="modal" data-bs-target="#modalDeleteEmployee">
+                        <a class="btn btn-sm btn-light text-primary" data-bs-toggle="modal" data-bs-target="#modalDeleteEmployee">
                             <i class="me-1" data-feather="trash"></i>
                             Bulk Hapus Karyawan
                         </a>
@@ -83,7 +83,10 @@
                                         <select class="form-control" name="divisi" id="divisi"></select>
                                     </div>
                                 </div>
-                                <a href="/employees" class="btn btn-sm btn-warning">Bersihkan filter</a>
+                                <a class="btn btn-sm btn-light text-primary" data-bs-toggle="modal" data-bs-target="#modalDeleteEmployee">
+                                    <i class="me-1" data-feather="trash"></i>
+                                    Bersihkan filter
+                                </a>
                             </div>
                         </form>
                     </div>

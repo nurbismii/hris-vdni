@@ -20,7 +20,7 @@
                         </h1>
                     </div>
                     <div class="col-12 col-xl-auto mb-3">
-                        <a class="btn btn-sm btn-purple text-white" href="/users/import">
+                        <a class="btn btn-sm btn-light text-primary" href="/users/import">
                             <i class="me-1" data-feather="users"></i>
                             Bulk Pengguna
                         </a>
@@ -91,7 +91,7 @@
                     <div class="modal-body">
                         @csrf
                         {{ method_field('delete') }}
-                        Yakin ingin menghapus pengguna ini ({{ $data->nama_karyawan }})?
+                        Yakin ingin menghapus pengguna ini ({{ $data->employee->nama_karyawan }})?
                     </div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">No</button>

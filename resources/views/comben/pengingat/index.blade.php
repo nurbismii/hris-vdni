@@ -40,8 +40,16 @@
                                 <option value="Proses">Proses</option>
                                 <option value="Selesai">Selesai</option>
                             </select>
-                            <button type="submit" class="btn btn-sm btn-primary mt-2">Filter Status</button>
-                            <a href="/roster/daftar-pengingat" class="btn btn-sm btn-purple mt-2">Buka Filter</a>
+                            <div class="mt-2">
+                                <button class="btn btn-sm btn-light text-primary" type="submit">
+                                    <i class="me-1" data-feather="search"></i>
+                                    Filter
+                                </button>
+                                <a class="btn btn-sm btn-light text-primary" data-bs-toggle="modal" data-bs-target="#modalDeleteEmployee">
+                                    <i class="me-1" data-feather="trash"></i>
+                                    Bersihkan filter
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </form>
