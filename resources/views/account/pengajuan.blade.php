@@ -78,6 +78,8 @@
                                 <div class="timeline-item-marker-indicator">
                                     @if($data->status_hrd == 'Menunggu')
                                     2
+                                    @elseif($data->status_hrd == 'Ditolak')
+                                    <i data-feather="x"></i>
                                     @else
                                     <i data-feather="check"></i>
                                     @endif
@@ -85,6 +87,8 @@
                             </div>
                             @if($data->status_hrd == 'Menunggu')
                             <div class="timeline-item-content">Saat ini...</div>
+                            @elseif($data->status_hrd == 'Ditolak')
+                            <div class="timeline-item-content">Syarat tidak terpenuhi.</div>
                             @else
                             <div class="timeline-item-content">Syarat terpenuhi.</div>
                             @endif
