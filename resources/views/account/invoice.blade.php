@@ -258,14 +258,14 @@
                 <div class="row">
                     <div class="col-md-6 col-lg-3 mb-4 mb-lg-0">
                         <!-- Invoice - sent to info-->
-                        <div class="small text-muted text-uppercase fw-700 mb-2">Transfer to :</div>
+                        <div class="small text-muted text-uppercase fw-700 mb-2">Transfer kepada :</div>
                         <div class="h6 mb-1">{{ Auth::user()->employee->nama_karyawan }}</div>
                         <div class="small">PT VDNI</div>
                         <div class="small">Puuruy, Kec. Bondoala, Kabupaten Konawe, Sulawesi Tenggara 93354</div>
                     </div>
                     <div class="col-md-6 col-lg-3 mb-4 mb-lg-0">
                         <!-- Invoice - sent from info-->
-                        <div class="small text-muted text-uppercase fw-700 mb-2">Created By : </div>
+                        <div class="small text-muted text-uppercase fw-700 mb-2">Payroll Sistem : </div>
                         <div class="h6 mb-1">PT VDNI</div>
                         <div class="small">Payroll</div>
                     </div>

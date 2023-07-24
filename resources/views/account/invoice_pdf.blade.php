@@ -203,22 +203,11 @@
                             </table>
                         </div>
                     </div>
-                    <div class="card-footer border-top-0">
-                        <div class="table-responsive">
-                            <table class="table table-borderless mb-3">
-                                <tbody>
-                                    <tr>
-                                        <td class="small text-muted text-uppercase fw-700 mb-1">To</td>
-                                        <td class="small text-muted text-uppercase fw-700 mb-1">From</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="h6 mb-1">{{ $karyawan->nama_karyawan }}</td>
-                                        <td class="h6 mb-1">Sistem Payroll VDNI</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                    <div class="text-left">
+                        <p class="mb-5 mx-4">Mengetahui,</p> <br> <br>
+                        <p class="mt-3 mx-4">Payroll Sistem VDNi</p>
                     </div>
+
                 </div>
         </main>
     </div>
