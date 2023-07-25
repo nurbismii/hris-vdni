@@ -112,7 +112,9 @@ class CutiIzinController extends Controller
 
     public function pengajuanKaryawanDestory($id)
     {
-        CutiIzin::where('id', $id)->first()->delete();
+        $data = CutiIzin::where('id', $id)->first();
+        unlink(public_path('dokumentasi/' . $data->nik_karyawan . '/' . $data->foto));
+        $data->delete();
         return back()->with('success', 'Pengajuan berhasil dihapus');
     }
 }
