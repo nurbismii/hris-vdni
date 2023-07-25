@@ -67,8 +67,12 @@
             return confirm('Kamu yakin ingin menyetujui pengajuan ini ?');
         }
 
-        function confirmDelete() {
+        function confirmReject() {
             return confirm('Kamu yakin ingin menolak pengajuan ini ?');
+        }
+
+        function confirmDestroy() {
+            return confirm('Kamu yakin ingin menghapus pengajuan ini ?');
         }
     </script>
 

@@ -186,6 +186,7 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
             route::get('/server-side', [CutiIzinController::class, 'serverSidePengajuan']);
             route::get('/update/diterima/{id}', [CutiIzinController::class, 'updatePengajuanKaryawanDiterima'])->name('pengajuan-karyawan-setuju/update');
             route::get('/update/ditolak/{id}', [CutiIzinController::class, 'updatePengajuanKaryawanDitolak'])->name('pengajuan-karyawan-ditolak/update');
+            route::get('/destroy/{id}', [CutiIzinController::class, 'pengajuanKaryawanDestory'])->name('pengajuan-karyawan/destroy');
         });
 
         Route::group(['prefix' => 'periode'], function () {
