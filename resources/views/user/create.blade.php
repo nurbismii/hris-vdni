@@ -29,6 +29,9 @@
         <!-- Wizard card example with navigation-->
         <div class="card">
             <div class="card-body">
+                <div class="col-lg-12">
+                    <x-message />
+                </div>
                 <div class="tab-content" id="cardTabContent">
                     <form action="/users/store" method="POST">
                         @csrf

@@ -29,6 +29,9 @@
         <!-- Wizard card example with navigation-->
         <div class="card">
             <div class="card-body">
+                <div class="col-lg-12">
+                    <x-message />
+                </div>
                 <div class="tab-content" id="cardTabContent">
                     <div class="tab-pane py-5 py-xl-10 fade show active" id="wizard1" role="tabpanel" aria-labelledby="wizard1-tab">
                         <div class="row justify-content-center">
@@ -66,11 +69,11 @@
                                     <div class="row gx-3 mb-2">
                                         <div class="col-md-5 mb-2">
                                             <label class="small mb-2">Tanggal Mulai Cuti</label>
-                                            <input class="form-control" name="tgl_mulai_cuti" type="date" required/>
+                                            <input class="form-control" name="tgl_mulai_cuti" type="date" required />
                                         </div>
                                         <div class="col-md-5 mb-2">
                                             <label class="small mb-2">Tanggal Akhir Cuti</label>
-                                            <input class="form-control" name="tgl_akhir_cuti" type="date" required/>
+                                            <input class="form-control" name="tgl_akhir_cuti" type="date" required />
                                         </div>
                                         <div class="col-md-2">
                                             <label class="small mb-2">Sisa Cuti</label>
