@@ -29,64 +29,65 @@
         <!-- Wizard card example with navigation-->
         <div class="card">
             <div class="card-body">
+                <div class="col-lg mb-3">
+                    <x-message />
+                </div>
                 <div class="tab-content" id="cardTabContent">
-                    <div class="tab-pane py-5 py-xl-10 fade show active" id="wizard1" role="tabpanel" aria-labelledby="wizard1-tab">
-                        <div class="row justify-content-center">
-                            <div class="col-xxl-6 col-xl-8">
-                                <h3 class="text-primary text-center">Formulir Cuti</h3>
-                                <h5 class="card-title mb-4">
-                                    <img src="{{ asset('assets/img/backgrounds/vdni-ikon.png') }}" style="height: 30px;" class="">Cuti Tahunan
-                                </h5>
-                                <form action="/pengajuan/store-cuti" method="POST" enctype="multipart/form-data">
-                                    @csrf
-                                    <div class="row gx-3 mb-2">
-                                        <div class="col-md-6 mb-2">
-                                            <label class="small mb-2">Nama</label>
-                                            <input class="form-control" type="text" name="nama" value="{{$data->nama_karyawan}}" readonly />
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label class="small mb-2">Departemen</label>
-                                            <input class="form-control" name="departemen" type="email" value="{{$data->divisi->departemen->departemen}}" readonly />
-                                        </div>
+                    <div class="row justify-content-center">
+                        <div class="col-xxl-6 col-xl-8">
+                            <h3 class="text-primary text-center">Formulir Cuti Tahunan</h3>
+                            <h5 class="card-title mb-4">
+                                <img src="{{ asset('assets/img/backgrounds/vdni-ikon.png') }}" style="height: 30px;" class="">
+                            </h5>
+                            <form action="/pengajuan/store-cuti" method="POST" enctype="multipart/form-data">
+                                @csrf
+                                <div class="row gx-3 mb-2">
+                                    <div class="col-md-6 mb-2">
+                                        <label class="small mb-2">Nama</label>
+                                        <input class="form-control" type="text" name="nama" value="{{$data->nama_karyawan}}" readonly />
                                     </div>
-                                    <div class="row gx-3 mb-2">
-                                        <div class="col-md-6 mb-2">
-                                            <label class="small mb-2">NIK</label>
-                                            <input class="form-control" name="nik" type="text" value="{{$data->nik}}" readonly />
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label class="small mb-2">Tanggal Pengajuan</label>
-                                            <input class="form-control" name="tanggal_pengajuan" type="text" value="{{ $tanggal_sekarang }}" readonly />
-                                        </div>
+                                    <div class="col-md-6">
+                                        <label class="small mb-2">Departemen</label>
+                                        <input class="form-control" name="departemen" type="email" value="{{$data->divisi->departemen->departemen}}" readonly />
                                     </div>
-                                    <div class="col-md-12 mb-2">
-                                        <label class="small mb-2">Alasan Cuti</label>
-                                        <textarea name="keterangan" class="form-control" cols="30" rows="10"></textarea>
+                                </div>
+                                <div class="row gx-3 mb-2">
+                                    <div class="col-md-6 mb-2">
+                                        <label class="small mb-2">NIK</label>
+                                        <input class="form-control" name="nik" type="text" value="{{$data->nik}}" readonly />
                                     </div>
-                                    <div class="row gx-3 mb-2">
-                                        <div class="col-md-5 mb-2">
-                                            <label class="small mb-2">Tanggal Mulai Cuti</label>
-                                            <input class="form-control" name="tgl_mulai_cuti" type="date" required/>
-                                        </div>
-                                        <div class="col-md-5 mb-2">
-                                            <label class="small mb-2">Tanggal Akhir Cuti</label>
-                                            <input class="form-control" name="tgl_akhir_cuti" type="date" required/>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <label class="small mb-2">Sisa Cuti</label>
-                                            <input name="sisa_cuti" class="form-control" type="number" value="4" max="12" disabled />
-                                        </div>
+                                    <div class="col-md-6">
+                                        <label class="small mb-2">Tanggal Pengajuan</label>
+                                        <input class="form-control" name="tanggal_pengajuan" type="text" value="{{ $tanggal_sekarang }}" readonly />
                                     </div>
-                                    <div class="col-md-12 mb-3">
-                                        <label class="small mb-2">Foto Pendukung</label>
-                                        <input type="file" name="foto_pendukung" class="form-control" required>
+                                </div>
+                                <div class="col-md-12 mb-2">
+                                    <label class="small mb-2">Alasan Cuti</label>
+                                    <textarea name="keterangan" class="form-control" cols="30" rows="10"></textarea>
+                                </div>
+                                <div class="row gx-3 mb-2">
+                                    <div class="col-md-5 mb-2">
+                                        <label class="small mb-2">Tanggal Mulai Cuti</label>
+                                        <input class="form-control" name="tgl_mulai_cuti" type="date" required />
                                     </div>
-                                    <hr class="my-4" />
-                                    <div class="d-grid">
-                                        <button class="btn btn-primary" type="submit">Simpan</button>
+                                    <div class="col-md-5 mb-2">
+                                        <label class="small mb-2">Tanggal Akhir Cuti</label>
+                                        <input class="form-control" name="tgl_akhir_cuti" type="date" required />
                                     </div>
-                                </form>
-                            </div>
+                                    <div class="col-md-2">
+                                        <label class="small mb-2">Sisa Cuti</label>
+                                        <input name="sisa_cuti" class="form-control" type="number" value="4" max="12" disabled />
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-3">
+                                    <label class="small mb-2">Foto Pendukung</label>
+                                    <input type="file" name="foto_pendukung" class="form-control" required>
+                                </div>
+                                <hr class="my-4" />
+                                <div class="d-grid">
+                                    <button class="btn btn-primary" type="submit">Simpan</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>

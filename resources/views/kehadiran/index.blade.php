@@ -67,7 +67,10 @@
             </div>
         </div>
         <div class="d-grid gap-2">
-            <button class="btn btn-block rounded-pill btn-primary text-white mb-3" data-bs-toggle="modal" onclick="getLocation()" data-bs-target="#addAbsen">ABSEN</button>
+            <button class="btn btn-block rounded-pill btn-primary text-white mb-3" data-bs-toggle="modal" onclick="getLocation()" data-bs-target="#addAbsen">
+                <i class="me-1" data-feather="map"></i>
+                Presensi
+            </button>
         </div>
         <div class="card">
             <div class="card-body" style="overflow-x: auto;">
@@ -100,7 +103,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Lokasi Map</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Lokasi saat ini</h5>
                     <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -111,7 +114,10 @@
                         <input type="hidden" name="lat" id="latStore">
                         <input type="hidden" name="lng" id="lngStore">
                         @if($jam_masuk == 'Belum Absen')
-                        <button type="submit" class="btn btn-success btn-sm" type="button">Masuk</button>
+                        <button class="btn btn-light text-primary" type="submit">
+                            <i class="me-1" data-feather="log-in"></i>
+                            Masuk
+                        </button>
                         @endif
                     </form>
                     @isset($absen_hari_ini->id)
@@ -121,7 +127,10 @@
                         <input type="hidden" name="nik_karyawan" value="{{ Auth::user()->nik_karyawan }}">
                         <input type="hidden" name="lat" id="latUpdate">
                         <input type="hidden" name="lng" id="lngUpdate">
-                        <button type="submit" class="btn btn-danger btn-sm" type="button">Keluar</button>
+                        <button class="btn btn-light text-primary" type="submit">
+                            <i class="me-1" data-feather="log-out"></i>
+                            Keluar
+                        </button>
                     </form>
                     @endisset
                 </div>

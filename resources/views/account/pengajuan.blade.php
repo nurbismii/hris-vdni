@@ -47,7 +47,7 @@
                                 <h5>Pengajuan {{ $data->tipe }} | {{ date('d-m-Y', strtotime($data->tanggal)) }}</h5>
                                 <div class="text-muted small">{{ $data->keterangan }}</div>
                             </div>
-                            <img src="{{ asset('dokumentasi/' . $data->nik_karyawan . '/' . $data->foto) }}" style="width: 8rem" />
+                            <img src="{{ url('/dokumentasi/' . $data->nik_karyawan . '/' . $data->foto) }}" style="width: 8rem" />
                         </div>
                     </div>
                 </a>
