@@ -33,60 +33,57 @@
                     <x-message />
                 </div>
                 <div class="tab-content" id="cardTabContent">
-                    <form action="/users/store" method="POST">
-                        @csrf
-                        <div class="tab-pane py-5 py-xl-10 fade show active" id="wizard1" role="tabpanel" aria-labelledby="wizard1-tab">
-                            <div class="row justify-content-center">
-                                <div class="col-xxl-6 col-xl-8">
-                                    <h3 class="text-primary">Form Pengguna</h3>
-                                    <h5 class="card-title mb-4">Masukkan data pribadi pengguna</h5>
-                                    <form>
-                                        <div class="mb-3">
-                                            <label class="small mb-1">NIK</label>
-                                            <input class="form-control" type="text" name="nik_karyawan" placeholder="NIK Karyawan" />
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="small mb-1">Email</label>
-                                            <input class="form-control" name="email" type="email" placeholder="Email" />
-                                        </div>
-                                        <div class="row gx-3">
-                                            <div class="mb-3 col-md-6">
-                                                <label class="small mb-1">Kata Sandi</label>
-                                                <input class="form-control" name="password" type="password" placeholder="Kata Sandi" />
-                                            </div>
-                                            <div class="mb-3 col-md-6">
-                                                <label class="small mb-1">Konfirmasi Kata Sandi</label>
-                                                <input class="form-control" name="password_confirm" type="password" placeholder="Konfirmasi Kata Sandi" />
-                                            </div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="small mb-1">Status</label>
-                                            <select class="form-select" name="status">
-                                                <option selected disabled>Pilih status : </option>
-                                                <option value="aktif">Aktif</option>
-                                                <option value="tidak aktif">Tidak Aktif</option>
-                                            </select>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="small mb-1">Posisi</label>
-                                            <select class="form-select" name="role_id" aria-label="Default select example">
-                                                <option selected disabled>Pilih posisi :</option>
-                                                @foreach($roles as $role)
-                                                <option value="{{ $role->id }}">{{ $role->permission_role }}</option>
-                                                @endforeach
-                                                <option value="">User</option>
-                                            </select>
-                                        </div>
-                                        <hr class="my-4" />
-                                        <div class="d-flex justify-content-between">
-                                            <a href="{{ url()->previous() }}" class="btn btn-light" type="button">Kembali</a>
-                                            <button class="btn btn-primary" type="submit">Simpan</button>
-                                        </div>
-                                    </form>
+
+                    <div class="row justify-content-center">
+                        <div class="col-xxl-6 col-xl-8">
+                            <h3 class="text-primary text-center">Form Pengguna</h3>
+                            <h5 class="card-title mb-4">Masukkan data pribadi pengguna</h5>
+                            <form action="/users/store" method="POST">
+                                @csrf
+                                <div class="mb-3">
+                                    <label class="small mb-1">NIK</label>
+                                    <input class="form-control" type="text" name="nik_karyawan" placeholder="NIK Karyawan" />
                                 </div>
-                            </div>
+                                <div class="mb-3">
+                                    <label class="small mb-1">Email</label>
+                                    <input class="form-control" name="email" type="email" placeholder="Email" />
+                                </div>
+                                <div class="row gx-3">
+                                    <div class="mb-3 col-md-6">
+                                        <label class="small mb-1">Kata Sandi</label>
+                                        <input class="form-control" name="password" type="password" placeholder="Kata Sandi" />
+                                    </div>
+                                    <div class="mb-3 col-md-6">
+                                        <label class="small mb-1">Konfirmasi Kata Sandi</label>
+                                        <input class="form-control" name="password_confirm" type="password" placeholder="Konfirmasi Kata Sandi" />
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="small mb-1">Status</label>
+                                    <select class="form-select" name="status">
+                                        <option selected disabled>Pilih status : </option>
+                                        <option value="aktif">Aktif</option>
+                                        <option value="tidak aktif">Tidak Aktif</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="small mb-1">Posisi</label>
+                                    <select class="form-select" name="role_id" aria-label="Default select example">
+                                        <option selected disabled>Pilih posisi :</option>
+                                        @foreach($roles as $role)
+                                        <option value="{{ $role->id }}">{{ $role->permission_role }}</option>
+                                        @endforeach
+                                        <option value="">User</option>
+                                    </select>
+                                </div>
+                                <hr class="my-4" />
+                                <div class="d-flex justify-content-between">
+                                    <a href="{{ url()->previous() }}" class="btn btn-light" type="button">Kembali</a>
+                                    <button class="btn btn-primary" type="submit">Simpan</button>
+                                </div>
+                            </form>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
