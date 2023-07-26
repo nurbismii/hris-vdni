@@ -9,6 +9,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet" />
     <link href="https://cdn.datatables.net/datetime/1.4.0/css/dataTables.dateTime.min.css" rel="stylesheet" />
+    <!-- Toastr -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     @endpush
 
     <header class="page-header page-header-dark bg-gradient-primary-to-secondary pb-10">
@@ -100,7 +104,6 @@
                 </div>
             </div>
         </div>
-        <x-message />
         <div class="row">
             <div class="col-xl-6 mb-4">
                 <div class="card card-header-actions h-100">
@@ -438,7 +441,7 @@
             });
         });
     </script>
-
+    <x-toastr />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="{{ asset('js/scripts.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" crossorigin="anonymous"></script>
@@ -456,5 +459,6 @@
 
     <script src="{{ asset('assets/vendors/chart.js/Chart.min.js')}}"></script>
     <script src="{{ asset('assets/js/chart.js')}}"></script>
+
     @endpush
 </x-app-layout>

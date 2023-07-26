@@ -7,6 +7,10 @@
     <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- Toastr -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     @endpush
 
     <header class="page-header page-header-dark bg-gradient-primary-to-secondary pb-10">
@@ -29,11 +33,7 @@
         <!-- Wizard card example with navigation-->
         <div class="card">
             <div class="card-body">
-                <div class="col-lg-12">
-                    <x-message />
-                </div>
                 <div class="tab-content" id="cardTabContent">
-
                     <div class="row justify-content-center">
                         <div class="col-xxl-6 col-xl-8">
                             <h3 class="text-primary text-center">Form Pengguna</h3>
@@ -88,6 +88,8 @@
             </div>
         </div>
     </div>
+    
+    <x-toastr />
 
     @push('scripts')
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
