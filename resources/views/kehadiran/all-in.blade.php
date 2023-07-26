@@ -6,10 +6,15 @@
     <link href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css" rel="stylesheet" />
     <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
+    <!-- google maps  -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
+    <!-- datatables -->
     <link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet" />
     <link href="https://cdn.datatables.net/datetime/1.4.0/css/dataTables.dateTime.min.css" rel="stylesheet" />
+    <!-- Toastr -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     @endpush
 
     <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
@@ -33,7 +38,7 @@
             <a class="nav-link {{ (request()->is('absen/detail')) ? 'active' : '' }} ms-0" href="/absen/detail">Import Data Absensi</a>
         </nav>
         <hr class="mt-0 mb-4" />
-        <x-message />
+
         <div class="card">
             <div class="card-body" style="overflow-x:auto;">
                 <table id="data-absensi" class="table table-hover" style="width: 100%;">
@@ -53,6 +58,7 @@
     </div>
 
     @push('scripts')
+    <x-toastr />
     <script src="{{ asset('js/scripts.js') }}"></script>
     <script src="{{ asset('js/chart.min.js') }}" crossorigin="anonymous"></script>
     <script src="{{ asset('js/datatables/datatables-simple-demo.js')}}"></script>

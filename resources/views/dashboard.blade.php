@@ -146,24 +146,6 @@
                             <!-- Dashboard Tab Pane 2-->
                             <div class="tab-pane fade show active" style="overflow-x:auto;" id="karyawan" role="tabpanel" aria-labelledby="activities-pill">
                                 <table class="table table-hover" id="table-karyawan-dashboard">
-                                    <!-- <div class="row mb-3">
-                                        <div class="mb-3 col-2 mt-2">
-                                            <label class="small mb-1">Rentang Umur</label>
-                                        </div>
-                                        <div class="mb-3 col-3">
-                                            <input type="number" name="umur_mulai" id="umur_mulai" placeholder="Awal" class="form-control">
-                                        </div>
-                                        <div class="mb-3 col-3">
-                                            <input type="number" name="umur_akhir" id="umur_akhir" placeholder="Akhir" class="form-control">
-                                        </div>
-                                        <div class="mb-3 col-4">
-                                            <select name="jenis_kelamin" class="form-select" id="jenis_kelamin">
-                                                <option value="" disabled selected>- Pilih Jenis Kelamin -</option>
-                                                <option value="L">Laki - Laki</option>
-                                                <option value="P">Perempuan</option>
-                                            </select>
-                                        </div>
-                                    </div> -->
                                     <thead>
                                         <tr>
                                             <th>NIK</th>
@@ -441,7 +423,9 @@
             });
         });
     </script>
+    
     <x-toastr />
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="{{ asset('js/scripts.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" crossorigin="anonymous"></script>

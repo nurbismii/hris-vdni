@@ -30,7 +30,6 @@
         </div>
     </header>
     <div class="container-xl px-4 mt-4">
-
         <div class="row">
             <div class="col-lg-12">
                 <div class="card text-white bg-primary mb-3">

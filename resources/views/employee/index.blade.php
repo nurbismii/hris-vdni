@@ -9,6 +9,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet" />
     <link href="https://cdn.datatables.net/datetime/1.4.0/css/dataTables.dateTime.min.css" rel="stylesheet" />
+    <!-- Toastr -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     @endpush
     <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
         <div class="container-fluid px-s4">
@@ -37,9 +41,6 @@
     <!-- Main page content-->
     <div class="container-fluid px-4">
         <div class="row">
-            <div class="col-lg-12">
-                <x-message />
-            </div>
             <div class="col-lg-12">
                 <div class="card card-collapsable mb-3">
                     <a class="card-header" href="#collapseFilterKaryawan" data-bs-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample">Filter Karyawan
@@ -169,6 +170,8 @@
     <!-- Modal delete emplooye maatwebsite end -->
 
     @push('scripts')
+    <x-toastr />
+
     <script src="{{ asset('js/scripts.js') }}"></script>
     <script src="{{ asset('js/chart.min.js') }}" crossorigin="anonymous"></script>
     <script src="{{ asset('js/datatables/datatables-simple-demo.js')}}"></script>

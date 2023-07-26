@@ -25,7 +25,6 @@
   </header>
   <!-- Main page content-->
   <div class="container-fluid px-4">
-    <x-message />
     <div class="card">
       <div class="card-body">
         <table id="datatablesSimple">
