@@ -84,7 +84,7 @@
                                         <select class="form-control" name="divisi" id="divisi"></select>
                                     </div>
                                 </div>
-                                <a class="btn btn-sm btn-light text-primary" data-bs-toggle="modal" data-bs-target="#modalDeleteEmployee">
+                                <a class="btn btn-sm btn-light text-primary" href="/employees">
                                     <i class="me-1" data-feather="trash"></i>
                                     Bersihkan filter
                                 </a>
