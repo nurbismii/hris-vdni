@@ -6,34 +6,36 @@ use App\Models\Absensi;
 use App\Models\Divisi;
 use App\Models\employee;
 use App\Models\LokasiAbsen;
-use App\Models\WaktuAbsen;
+use App\Repositories\Absensi\AbsensiRepository;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class AbsensiController extends Controller
 {
+    public $absensiRepo;
+
+    public function __construct(AbsensiRepository $absensiRepo)
+    {
+        $this->absensiRepo = $absensiRepo;
+    }
 
     public function index()
     {
-        $absen_hari_ini = Absensi::where('nik_karyawan', Auth::user()->employee->nik)->whereDate('created_at', Carbon::today())->latest()->first();
-        $datas = Absensi::orderBy('created_at', 'DESC')->where('nik_karyawan', Auth::user()->employee->nik)->get();
+        $datas = $this->absensiRepo->getAbsensiByNik();
+
+        $absen_hari_ini = $this->absensiRepo->getAbsensiHariIni();
         $jam_masuk = $absen_hari_ini->jam_masuk ?? 'Belum Absen';
         $jam_pulang = $absen_hari_ini->jam_pulang ?? 'Belum Absen';
-        $waktu_absen = WaktuAbsen::all();
-
-        if (!$absen_hari_ini) {
-            $cek_absen = '';
-        }
 
         return view('kehadiran.index', compact('datas', 'jam_pulang', 'jam_masuk', 'absen_hari_ini'))->with('no');
     }
 
     public function store(Request $request)
     {
-        $karyawan = employee::where('nik', $request->nik_karyawan)->first();
-        if ($karyawan) {
-            $divisi = Divisi::where('id', $karyawan->divisi_id)->first();
+        $check_karyawan = $this->absensiRepo->checkKaryawan($request->nik_karyawan);
+        if ($check_karyawan) {
+
+            $divisi = Divisi::where('id', $check_karyawan->divisi_id)->first();
             if ($divisi) {
 
                 $lokasi_absen = LokasiAbsen::where('divisi_id', $divisi->id)->first();
@@ -44,7 +46,9 @@ class AbsensiController extends Controller
                 if ($lokasi_absen->jarak_toleransi <= '50') {
                     $lokasi_absen->jarak_toleransi = 50;
                 }
+
                 $jarak_absen = Controller::getDistance($lokasi_absen->lat, $lokasi_absen->long, $request->lat, $request->lng);
+
                 if ($jarak_absen > $lokasi_absen->jarak_toleransi) {
                     $msg = ($jarak_absen - $lokasi_absen->jarak_toleransi);
                     return back()->with('error', 'Posisi kurang ' . $msg . ' meter dari titik absen');
