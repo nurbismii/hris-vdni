@@ -57,8 +57,12 @@
                                         <label class="small mb-1">Status Resign</label>
                                         <select class="form-select" id="status_resign">
                                             <option value="" disabled selected>- Pilih Status -</option>
-                                            <option value="Ya">Ya</option>
-                                            <option value="Tidak">Tidak</option>
+                                            <option value="Aktif">Aktif</option>
+                                            <option value="Resign">Resign</option>
+                                            <option value="Mutasi">Mutasi</option>
+                                            <option value="PHK">PHK</option>
+                                            <option value="Pengembalian">Pengembalian HRD</option>
+                                            <option value="Efisiensi">Efisiensi</option>
                                         </select>
                                     </div>
                                     <div class="mb-3 col-3">

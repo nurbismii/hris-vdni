@@ -46,7 +46,7 @@ class DashboardController extends Controller
             $terakhir_login = User::select('nik_karyawan', 'terakhir_login')->orderBy('terakhir_login', 'desc')->limit(6)->get();
             $data_contract = Contract::all();
 
-            $karyawan_resign = employee::select('tgl_resign', 'status_resign')->where('status_resign', 'Ya')->get();
+            $karyawan_resign = employee::select('tgl_resign', 'status_resign')->where('status_resign', 'Resign')->get();
             $data_karyawan = employee::select('nik', 'status_karyawan', 'provinsi_id', 'kabupaten_id', 'kecamatan_id', 'kelurahan_id', 'tgl_lahir')->get();
 
             /* Code for chart  */
