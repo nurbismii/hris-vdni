@@ -152,7 +152,7 @@
                     </div>
                     <div class="card-body">
                         <div class="tab-content" id="dashboardNavContent">
-                            <div class="tab-pane fade show active" id="rentang-umur" role="tabpanel" aria-labelledby="overview-pill">
+                            <div class="tab-pane fade" id="rentang-umur" role="tabpanel" aria-labelledby="overview-pill">
                                 <div class="chart-pie mb-4 mb-lg-0" style="height: 20rem"><canvas id="pieChart1" width="100%" height="0"></canvas></div>
                             </div>
                         </div>

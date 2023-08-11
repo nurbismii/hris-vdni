@@ -462,7 +462,7 @@ const d = new Date();
 
   if ($("#pieChart1").length) {
     var pieChartCanvas1 = $("#pieChart1").get(0).getContext("2d");
-    var pieChart = new Chart(pieChartCanvas1, {
+    var pieChart1 = new Chart(pieChartCanvas1, {
       type: 'pie',
       data: doughnutPieDataStatusKaryawan,
       options: doughnutPieOptions
