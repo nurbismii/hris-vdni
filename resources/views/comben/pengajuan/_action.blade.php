@@ -1,4 +1,9 @@
-<a href="{{ $url_update_diterima }}" title="{{ $data->nama_karyawan }}" class="btn btn-success btn-sm" onclick="return confirmApprove()">Setuju</a>
-<a href="{{ $url_update_ditolak }}" title="{{ $data->nama_karyawan }}" class="btn btn-primary btn-sm" onclick="return confirmReject()">Tidak</a>
-<a href="{{ $url_foto }}" target="_blank" title="{{ $data->nama_karyawan }}" class="btn btn-info btn-sm">Bukti</a>
-<a href="{{ $url_delete }}" title="{{ $data->nama_karyawan }}" class="btn btn-danger btn-sm" onclick="return confirmDestroy()">Hapus</a>
+<div class="dropdown">
+    <button class="btn btn-sm btn-primary dropdown-toggle" id="dropdownFadeIn" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Aksi</button>
+    <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownFadeIn">
+        <a href="{{ $url_update_diterima }}" class="dropdown-item" onclick="return confirmApprove()">Setuju</a>
+        <a href="{{ $url_update_ditolak }}" class="dropdown-item" onclick="return confirmReject()">Tidak</a>
+        <a href="{{ $url_foto }}" target="_blank" class="dropdown-item">Lihat Bukti</a>
+        <a href="{{ $url_delete }}" class="dropdown-item" onclick="return confirmDestroy()">Hapus</a>
+    </div>
+</div>

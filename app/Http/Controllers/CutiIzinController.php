@@ -75,7 +75,7 @@ class CutiIzinController extends Controller
             'nik_karyawan' => $request->nik,
             'tanggal' => $request->tanggal_pengajuan,
             'keterangan' => $request->keterangan,
-            'jumlah' => $akhir->diff($awal)->days == '0' ? '1' : '',
+            'jumlah' => $akhir->diff($awal)->days == '0' ? '1' : $akhir->diff($awal)->days ,
             'tanggal_mulai' => $request->tgl_mulai_cuti,
             'tanggal_berakhir' => $request->tgl_akhir_cuti,
             'status_pemohon' => 'ya',
@@ -85,7 +85,7 @@ class CutiIzinController extends Controller
             'tipe' => 'cuti',
         ]);
 
-        return back()->with('success', 'Berhasil melakukan pengajuan, untuk melihat status pengajuan silahkan ke profil >>> Akun >>> Pengajuan');
+        return back()->with('success', 'Berhasil melakukan pengajuan, untuk melihat status pengajuan silahkan ke profil >>> Akun >>> Cuti');
     }
 
     public function updatePengajuanKaryawanDiterima($id)

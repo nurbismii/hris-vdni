@@ -9,6 +9,11 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet" />
     <link href="https://cdn.datatables.net/datetime/1.4.0/css/dataTables.dateTime.min.css" rel="stylesheet" />
+
+    <!-- Toastr -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     @endpush
     <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
         <div class="container-fluid px-s4">
@@ -28,7 +33,6 @@
     <div class="container-fluid px-4">
         <div class="row">
             <div class="col-lg-12">
-                <x-message />
                 <div class="card">
                     <div class="card-body" style="overflow-x:auto;">
                         <table id="data-table-pengajuan" class="table table-hover" style="width: 100%;">
@@ -49,7 +53,8 @@
                                     <th>Mulai</th>
                                     <th>Selesai</th>
                                     <th>Cuti</th>
-                                    <th>Status</th>
+                                    <th>Status HOD</th>
+                                    <th>Status HRD</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -62,6 +67,8 @@
     </div>
 
     @push('scripts')
+    <x-toastr />
+
     <script type="text/javascript">
         function confirmApprove() {
             return confirm('Kamu yakin ingin menyetujui pengajuan ini ?');
@@ -134,6 +141,10 @@
                     {
                         data: 'jumlah',
                         name: 'jumlah'
+                    },
+                    {
+                        data: 'status_hod',
+                        name: 'status_hod'
                     },
                     {
                         data: 'status_hrd',

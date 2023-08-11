@@ -88,7 +88,7 @@
 			</div>
 			@foreach($datas as $data)
 			<div class="col-xl-4 mb-2">
-				<a class="card lift-sm h-100" href="{{ route('invoice', $data->id) }}" role="button">
+				<a class="card card-angles lift-sm h-100" href="{{ route('invoice', $data->id) }}" role="button">
 					<div class="card-body d-flex justify-content-center flex-column">
 						<div class="d-flex align-items-center justify-content-between">
 							<div class="me-3">

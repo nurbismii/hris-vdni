@@ -34,20 +34,19 @@
     <div class="container-xl px-4 mt-4">
         <x-nav-account />
         <hr class="mt-0 mb-4" />
-        <x-message />
         <div class="row">
             @foreach($datas as $data)
             <div class="col-lg-12 mb-2">
                 <!-- Dashboard example card 3-->
-                <a class="card lift-sm h-100" data-bs-toggle="collapse" href="#collapsePengajuan{{$data->id}}" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">
+                <a class="card card-waves lift-sm h-100" data-bs-toggle="collapse" href="#collapsePengajuan{{$data->id}}" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">
                     <div class="card-body d-flex justify-content-center flex-column">
                         <div class="d-flex align-items-center justify-content-between">
                             <div class="me-3">
-                                <i class="feather-xl text-primary mb-3" data-feather="layout"></i>
+                                <i class="feather-xl text-success mb-3" data-feather="layout"></i>
                                 <h5>Pengajuan {{ $data->tipe }} | {{ date('d-m-Y', strtotime($data->tanggal)) }}</h5>
                                 <div class="text-muted small">{{ $data->keterangan }}</div>
                             </div>
-                            <img src="{{ asset('/dokumentasi/' . $data->nik_karyawan . '/' . $data->foto) }}" style="width: 8rem" />
+                            <img src="{{ asset('assets/img/illustrations/windows.svg') }}" alt="..." style="width: 8rem" />
                         </div>
                     </div>
                 </a>
@@ -69,7 +68,26 @@
                             @if($data->pemohon == 'Menunggu')
                             <div class="timeline-item-content">Saat ini...</div>
                             @else
-                            <div class="timeline-item-content">Syarat terpenuhi.</div>
+                            <div class="timeline-item-content text-success">Syarat terpenuhi.</div>
+                            @endif
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-item-marker">
+                                <div class="timeline-item-marker-text">HOD</div>
+                                <div class="timeline-item-marker-indicator">
+                                    @if($data->status_hod == 'Menunggu')
+                                    2
+                                    @else
+                                    <i data-feather="check"></i>
+                                    @endif
+                                </div>
+                            </div>
+                            @if($data->status_hod == 'Menunggu')
+                            <div class="timeline-item-content">Saat ini.</div>
+                            @elseif($data->status_hod == 'Diterima')
+                            <div class="timeline-item-content text-success">Syarat terpenuhi.</div>
+                            @else
+                            <div class="timeline-item-content">Langkah selanjutnya...</div>
                             @endif
                         </div>
                         <div class="timeline-item">
@@ -85,29 +103,12 @@
                                     @endif
                                 </div>
                             </div>
-                            @if($data->status_hrd == 'Menunggu')
+                            @if($data->status_hrd == 'Menunggu' && $data->status_hod == 'Diterima')
                             <div class="timeline-item-content">Saat ini...</div>
+                            @elseif($data->status_hrd == 'Diterima' && $data->status_hod == 'Diterima')
+                            <div class="timeline-item-content text-success">Syarat terpenuhi.</div>
                             @elseif($data->status_hrd == 'Ditolak')
                             <div class="timeline-item-content">Syarat tidak terpenuhi.</div>
-                            @else
-                            <div class="timeline-item-content">Syarat terpenuhi.</div>
-                            @endif
-                        </div>
-                        <div class="timeline-item">
-                            <div class="timeline-item-marker">
-                                <div class="timeline-item-marker-text">HOD</div>
-                                <div class="timeline-item-marker-indicator">
-                                    @if($data->status_hod == 'Menunggu')
-                                    3
-                                    @else
-                                    <i data-feather="check"></i>
-                                    @endif
-                                </div>
-                            </div>
-                            @if($data->status_hrd == 'Diterima' && $data->status_hod == 'Menunggu')
-                            <div class="timeline-item-content">Saat ini.</div>
-                            @elseif($data->status_hod == 'Diterima' && $data->status_hrd == 'Diterima')
-                            <div class="timeline-item-content">Syarat terpenuhi.</div>
                             @else
                             <div class="timeline-item-content">Langkah selanjutnya...</div>
                             @endif
@@ -127,8 +128,8 @@
                             <div class="timeline-item-content">Saat ini.</div>
                             @elseif($data->status_hod == 'Menunggu' && $data->status_hrd == 'Menunggu' && $data->status_penanggung_jawab == 'Menunggu')
                             <div class="timeline-item-content">Langkah selanjutnya...</div>
-                            @else
-                            <div class="timeline-item-content">Langkah selanjutnya...</div>
+                            @elseif($data->status_hod == 'Diterima' && $data->status_hrd == 'Diterima' && $data->status_penanggung_jawab == 'Diterima')
+                            <div class="timeline-item-content text-success">Syarat terpenuhi.</div>
                             @endif
                         </div>
                         <div class="timeline-item mb-3">
@@ -143,7 +144,7 @@
                                 </div>
                             </div>
                             @if($data->status_hrd == 'Diterima' && $data->status_hod == 'Diterima' && $data->status_penanggung_jawab == 'Diterima')
-                            <div class="timeline-item-content">Saat ini.</div>
+                            <div class="timeline-item-content text-success">Pengajuan cuti izin tahunan selesai.</div>
                             @elseif($data->status_hod == 'Menunggu' && $data->status_hrd == 'Menunggu' && $data->status_penanggung_jawab == 'Menunggu')
                             <div class="timeline-item-content">Langkah selanjutnya...</div>
                             @else
