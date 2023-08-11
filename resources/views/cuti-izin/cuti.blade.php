@@ -79,10 +79,6 @@
                                     <input name="sisa_cuti" class="form-control" type="number" value="4" max="12" disabled />
                                 </div>
                             </div>
-                            <div class="col-md-12 mb-3">
-                                <label class="small mb-2">Foto Pendukung</label>
-                                <input type="file" name="foto_pendukung" class="form-control" required>
-                            </div>
                             <hr class="my-4" />
                             <div class="d-grid">
                                 <button class="btn btn-primary" type="submit">Simpan</button>

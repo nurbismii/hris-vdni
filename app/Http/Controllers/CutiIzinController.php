@@ -63,18 +63,19 @@ class CutiIzinController extends Controller
         if ($akhir->diff($awal)->days > $sisa_cuti) {
             return back()->with('info', 'Hak cuti kamu tidak mencukupi...');
         }
-        if ($request->hasFile('foto_pendukung')) {
-            $upload = $request->file('foto_pendukung');
-            $file_name = $request->nik . '-' . $upload->getClientOriginalName();
-            $path = public_path('/dokumentasi/' . $request->nik . '/');
-            $upload->move($path, $file_name);
-        }
+
+        // if ($request->hasFile('foto_pendukung')) {
+        //     $upload = $request->file('foto_pendukung');
+        //     $file_name = $request->nik . '-' . $upload->getClientOriginalName();
+        //     $path = public_path('/dokumentasi/' . $request->nik . '/');
+        //     $upload->move($path, $file_name);
+        // }
 
         CutiIzin::create([
             'nik_karyawan' => $request->nik,
             'tanggal' => $request->tanggal_pengajuan,
             'keterangan' => $request->keterangan,
-            'jumlah' => $akhir->diff($awal)->days,
+            'jumlah' => $akhir->diff($awal)->days == '0' ? '1' : '',
             'tanggal_mulai' => $request->tgl_mulai_cuti,
             'tanggal_berakhir' => $request->tgl_akhir_cuti,
             'status_pemohon' => 'ya',
@@ -82,7 +83,6 @@ class CutiIzinController extends Controller
             'status_hod' => 'Menunggu',
             'status_penanggung_jawab' => 'Menunggu',
             'tipe' => 'cuti',
-            'foto' => $file_name
         ]);
 
         return back()->with('success', 'Berhasil melakukan pengajuan, untuk melihat status pengajuan silahkan ke profil >>> Akun >>> Pengajuan');
