@@ -128,7 +128,7 @@
         </div>
         <div class="row">
             <div class="col-xxl-8">
-                <div class="card mb-3">
+                <div class="card card-angles mb-3">
                     <div class="card-header text-muted 75">
                         Rentang Umur
                     </div>
