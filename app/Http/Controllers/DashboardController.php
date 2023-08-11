@@ -27,9 +27,6 @@ class DashboardController extends Controller
 
     public function index(Request $request)
     {
-        $req_awal_prd = $request->mulai_periode ?? '';
-        $req_akhir_prd = $request->akhir_periode ?? '';
-
         $data = parameter_dashboard::where('status', '1')
             ->latest()
             ->first();
@@ -40,6 +37,12 @@ class DashboardController extends Controller
 
             $bulan_sekarang = date('Y-m', strtotime(Carbon::now()));
             $tahun_sekarang = date('Y', strtotime(Carbon::now()));
+
+            $tanggal_hari_ini = $bulan_sekarang . '-16';
+            $bulan_depan = date('Y-m-d', strtotime("$tanggal_hari_ini +1 Month -1 Day"));
+
+            $req_awal_prd = $request->mulai_periode != '' ? $request->mulai_periode : $tanggal_hari_ini;
+            $req_akhir_prd = $request->akhir_periode != '' ? $request->akhir_periode : $bulan_depan;
 
             $provinsi = Provinsi::all();
 
@@ -67,7 +70,7 @@ class DashboardController extends Controller
 
             $status_karyawan = employee::select('tgl_resign', 'status_resign')
                 ->where('status_resign', '!=', 'Aktif')
-                ->whereBetween('tgl_resign', array($request->mulai_periode, $request->akhir_periode))
+                ->whereBetween('tgl_resign', array($req_awal_prd, $req_akhir_prd))
                 ->get();
 
             /* Code for chart  */

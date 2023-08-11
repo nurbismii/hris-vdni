@@ -111,7 +111,7 @@
                         Karyawan Masuk
                     </div>
                     <div class="card-body">
-                        <div class="chart-area"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
+                        <div class="chart-area mb-4 mb-lg-0" style="height: 20rem;"><canvas id="myAreaChart" width="100%" height="40%"></canvas></div>
                     </div>
                 </div>
             </div>
@@ -121,7 +121,7 @@
                         Karyawan Keluar
                     </div>
                     <div class="card-body">
-                        <div class="chart-bar"><canvas id="barChart1" width="100%" height="40%"></canvas></div>
+                        <div class="chart-bar mb-4 mb-lg-0" style="height: 20rem;"><canvas id="barChart1" width="100%" height="0"></canvas></div>
                     </div>
                 </div>
             </div>
@@ -135,26 +135,25 @@
                     <div class="card-body">
                         <div class="tab-content" id="dashboardNavContent">
                             <div class="tab-pane fade show active" id="rentang-umur" role="tabpanel" aria-labelledby="overview-pill">
-                                <div class="chart-area mb-4 mb-lg-0" style="height: 20rem"><canvas id="barChart" width="100%" height="0"></canvas></div>
+                                <div class="chart-bar mb-4 mb-lg-0" style="height: 20rem"><canvas id="barChart" width="100%" height="0"></canvas></div>
                             </div>
                         </div>
                     </div>
                 </div>
-                @if($req_awal_prd && $req_akhir_prd)
-                <div class="alert alert-success text-center" role="alert">
-                    <h6  >Periode</h6>
-                    {{ date('d F Y', strtotime($req_awal_prd)) }} - {{ date('d F Y', strtotime($req_akhir_prd)) }}
-                </div>
-                @endif
                 <div class="card card-header-actions mb-4">
                     <div class="card-header text-muted 75">
                         Status Karyawan
+                        @if($req_awal_prd && $req_akhir_prd)
+                        <div>
+                            {{ date('d F Y', strtotime($req_awal_prd)) }} - {{ date('d F Y', strtotime($req_akhir_prd)) }}
+                        </div>
+                        @endif
                         <a class="btn btn-sm btn-primary-soft text-primary" data-bs-toggle="modal" data-bs-target="#selectPeriode">Cari periode</a>
                     </div>
                     <div class="card-body">
                         <div class="tab-content" id="dashboardNavContent">
                             <div class="tab-pane fade show active" id="rentang-umur" role="tabpanel" aria-labelledby="overview-pill">
-                                <div class="chart-area mb-4 mb-lg-0" style="height: 20rem"><canvas id="barChart2" width="100%" height="0"></canvas></div>
+                                <div class="chart-pie mb-4 mb-lg-0" style="height: 20rem"><canvas id="pieChart1" width="100%" height="0"></canvas></div>
                             </div>
                         </div>
                     </div>
@@ -192,9 +191,7 @@
                         <div class="card mb-4">
                             <div class="card-header text-muted 75">Status Kontrak</div>
                             <div class="card-body">
-                                <div class="chart-pie mb-4">
-                                    <canvas id="pieChart" width="100%" height="65"></canvas>
-                                </div>
+                                <div class="chart-pie mb-4 mb-lg-0" style="height: 20rem"><canvas id="pieChart" width="100%" height="0"></canvas></div>
                             </div>
                         </div>
                     </div>
