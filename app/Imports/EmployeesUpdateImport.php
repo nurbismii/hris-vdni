@@ -6,7 +6,6 @@ use App\Models\employee;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
-use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
 
@@ -28,27 +27,53 @@ class EmployeesUpdateImport implements ToCollection, WithHeadingRow, WithValidat
                 'no_sk_pkwtt' => $collect['no_sk_pkwtt'],
                 'nama_karyawan' => $collect['nama_karyawan'],
                 'nama_ibu_kandung' => $collect['nama_ibu_kandung'],
+                'nama_bapak' => $collect['nama_bapak'],
                 'agama' => $collect['agama'],
                 'no_ktp' => str_replace(["'", "`"], "", $collect['no_ktp']),
                 'no_kk' => str_replace(["'", "`"], "", $collect['no_kk']),
-                'jenis_kelamin' => $collect['jenis_kelamin'],
+                'kode_area_kerja' => $collect['kode_area_kerja'],
+                'jenis_kelamin' => strtolower($collect['jenis_kelamin']) == 'female' ? 'P' : 'L',
                 'status_perkawinan' => $collect['status_perkawinan'],
                 'status_karyawan' => $collect['status_karyawan'],
-                'tgl_resign' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(intVal($collect['tgl_resign']))) ?? null,
+                'tgl_resign' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(intVal($collect['tgl_resign']))),
+                'alasan_resign' => $collect['alasan_resign'],
+                'status_resign' => $collect['status_resign'] == 'PHK' ? $collect['status_resign'] : ucfirst($collect['status_resign']),
                 'no_telp' => $collect['no_telp'],
                 'tgl_lahir' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(intVal($collect['tgl_lahir']))),
+                'provinsi_id' => $collect['provinsi_id'],
+                'kabupaten_id' => $collect['kabupaten_id'],
+                'kecamatan_id' => $collect['kecamatan_id'],
+                'kelurahan_id' => $collect['kelurahan_id'],
+                'alamat_ktp' => $collect['alamat_ktp'],
+                'alamat_domisili' => $collect['alamat_domisili'],
+                'rt' => $collect['rt'],
+                'rw' => $collect['rw'],
+                'kode_pos' => $collect['kode_pos'],
                 'area_kerja' => $collect['area_kerja'],
                 'golongan_darah' => $collect['golongan_darah'],
                 'entry_date' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(intVal($collect['entry_date']))),
-                'npwp' => $collect['npwp'],
+                'npwp' => str_replace(array('-', '.'), "", $collect['npwp']),
+                'status_pajak' => $collect['status_pajak'],
                 'bpjs_kesehatan' => $collect['bpjs_kesehatan'],
                 'bpjs_tk' => $collect['bpjs_tk'],
                 'vaksin' => $collect['vaksin'],
                 'jam_kerja' => $collect['jam_kerja'],
-                'status_resign' => $collect['status_resign'],
                 'posisi' => $collect['posisi'],
                 'jabatan' => $collect['jabatan'],
-                'divisi_id' => $collect['divisi_id']
+                'divisi_id' => $collect['divisi_id'],
+                'tinggi' => $collect['tinggi'],
+                'berat' => $collect['berat'],
+                'hobi' => $collect['hobi'],
+                'no_jamsostek' => $collect['no_jamsostek'],
+                'no_asuransi' => $collect['no_asuransi'],
+                'no_kartu_asuransi' => $collect['no_kartu_asuransi'],
+                'nama_bank' => $collect['nama_bank'],
+                'no_rekening' => $collect['no_rekening'],
+                'nama_instansi_pendidikan' => $collect['nama_instansi_pendidikan'],
+                'pendidikan_terakhir' => $collect['pendidikan_terakhir'],
+                'jurusan' => $collect['jurusan'],
+                'tanggal_kelulusan' => $collect['tanggal_kelulusan'],
+                'tanggal_menikah' => $collect['tanggal_menikah']
             ]);
         }
     }
@@ -57,8 +82,6 @@ class EmployeesUpdateImport implements ToCollection, WithHeadingRow, WithValidat
     {
         return array(
             'nik' => 'required',
-            'no_ktp' => 'required|min:15|max:16',
-            'no_kk' => 'min:15|max:16'
         );
     }
 
@@ -66,9 +89,6 @@ class EmployeesUpdateImport implements ToCollection, WithHeadingRow, WithValidat
     {
         return array(
             'nik.required' => 'NIK Karyawan tidak boleh kosong',
-            'no_ktp.required' => 'NO KTP tidak boleh kosong',
-            'no_kk.min' => 'NO KTP tidak boleh kurang dari 15 angka',
-            'no_kk.max' => 'NO KK tidak boleh lebih dari 16 angka'
         );
     }
 }

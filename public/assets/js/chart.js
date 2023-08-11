@@ -81,6 +81,32 @@ $(function() {
     }]
   };
 
+  var status_karyawan = {
+    labels: ["Mutasi", "Resign", "PHK", "Efisiensi", "Pengembalian"],
+    datasets: [{
+      label: 'Total',
+      data: chart_status_karyawan,
+      backgroundColor: [
+        'rgba(255, 99, 132, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(255, 206, 86, 0.2)',
+        'rgba(75, 192, 192, 0.2)',
+        'rgba(153, 102, 255, 0.2)',
+        'rgba(255, 159, 64, 0.2)',
+      ],
+      borderColor: [
+        'rgba(255,99,132,1)',
+        'rgba(54, 162, 235, 1)',
+        'rgba(255, 206, 86, 1)',
+        'rgba(75, 192, 192, 1)',
+        'rgba(153, 102, 255, 1)',
+        'rgba(255, 159, 64, 1)',
+      ],
+      borderWidth: 1,
+      fill: false
+    }]
+  };
+
   var multiLineData = {
     labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
     datasets: [{
@@ -138,59 +164,19 @@ $(function() {
       }
     }
   };
-
-  var doughnutPieDataRentangUmur = {
-    datasets: [{
-      data: umur_karyawan,
-      backgroundColor: [
-        'rgba(255, 99, 132, 0.5)',
-        'rgba(54, 162, 235, 0.5)',
-        'rgba(255, 206, 86, 0.5)',
-        'rgba(75, 192, 192, 0.5)',
-        'rgba(153, 102, 255, 0.5)',
-        'rgba(255, 159, 64, 0.5)',
-        'rgba(54, 162, 235, 0.5)',
-        'rgba(75, 192, 192, 0.5)',
-        'rgba(255, 159, 64, 0.5)',
-      ],
-      borderColor: [
-        'rgba(255, 99, 132, 0.5)',
-        'rgba(54, 162, 235, 0.5)',
-        'rgba(255, 206, 86, 0.5)',
-        'rgba(75, 192, 192, 0.5)',
-        'rgba(153, 102, 255, 0.5)',
-        'rgba(255, 159, 64, 0.5)',
-        'rgba(54, 162, 235, 0.5)',
-        'rgba(75, 192, 192, 0.5)',
-        'rgba(255, 159, 64, 0.5)',
-      ],
-    }],
-
-    // These labels appear in the legend and in the tooltips when hovering different arcs
-    labels: [
-      "Umur 18-22", "Umur 23-27", "Umur 28-32", "Umur 33-37", "Umur 38-42" , "Umur 43-47", "Umur 48-52", "Umur 53-57", "Umur 58+"
-    ]
-  };
-
   
   var doughnutPieData = {
     datasets: [{
-      data: status_karyawan_record,
+      data: chart_status_kontrak,
       backgroundColor: [
         'rgba(255, 99, 132, 0.5)',
         'rgba(54, 162, 235, 0.5)',
         'rgba(255, 206, 86, 0.5)',
-        'rgba(75, 192, 192, 0.5)',
-        'rgba(153, 102, 255, 0.5)',
-        'rgba(255, 159, 64, 0.5)'
       ],
       borderColor: [
         'rgba(255,99,132,1)',
         'rgba(54, 162, 235, 1)',
         'rgba(255, 206, 86, 1)',
-        'rgba(75, 192, 192, 1)',
-        'rgba(153, 102, 255, 1)',
-        'rgba(255, 159, 64, 1)'
       ],
     }],
 
@@ -395,6 +381,7 @@ const d = new Date();
       }]
     }
   }
+
   // Get context with jQuery - using jQuery's .get() method.
   if ($("#barChart").length) {
     var barChartCanvas = $("#barChart").get(0).getContext("2d");
@@ -412,6 +399,16 @@ const d = new Date();
     var barChart1 = new Chart(barChartCanvas1, {
       type: 'bar',
       data: data_resign,
+      options: options
+    });
+  }
+
+  if ($("#barChart2").length) {
+    var barChartCanvas2 = $("#barChart2").get(0).getContext("2d");
+    // This will get the first returned node in the jQuery collection.
+    var barChart2 = new Chart(barChartCanvas2, {
+      type: 'bar',
+      data: status_karyawan,
       options: options
     });
   }
@@ -442,16 +439,7 @@ const d = new Date();
       options: multiAreaOptions
     });
   }
-
-  if ($("#pieChartRentangUmur").length) {
-    var pieChartCanvas1 = $("#pieChartRentangUmur").get(0).getContext("2d");
-    var pieChart1 = new Chart(pieChartCanvas1, {
-      type: 'pie',
-      data: doughnutPieDataRentangUmur,
-      options: doughnutPieOptions
-    });
-  }
-
+  
   if ($("#doughnutChart").length) {
     var doughnutChartCanvas = $("#doughnutChart").get(0).getContext("2d");
     var doughnutChart = new Chart(doughnutChartCanvas, {

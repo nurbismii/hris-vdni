@@ -106,7 +106,7 @@
         </div>
         <div class="row">
             <div class="col-xl-6 mb-4">
-                <div class="card card-header-actions h-100">
+                <div class="card card-waves card-header-actions h-100">
                     <div class="card-header text-muted 75">
                         Karyawan Masuk
                     </div>
@@ -116,71 +116,57 @@
                 </div>
             </div>
             <div class="col-xl-6 mb-4">
-                <div class="card card-header-actions h-100">
+                <div class="card card-angles card-header-actions h-100">
                     <div class="card-header text-muted 75">
                         Karyawan Keluar
                     </div>
                     <div class="card-body">
-                        <div class="chart-bar"><canvas id="barChart1" width="100%" height="40"></canvas></div>
+                        <div class="chart-bar"><canvas id="barChart1" width="100%" height="40%"></canvas></div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-xxl-8">
-                <!-- Tabbed dashboard card example-->
                 <div class="card mb-3">
-                    <div class="card-header border-bottom">
-                        <!-- Dashboard card navigation-->
-                        <ul class="nav nav-tabs card-header-tabs" id="dashboardNav" role="tablist">
-                            <li class="nav-item"><a class="nav-link" id="activities-pill" href="#karyawan" data-bs-toggle="tab" role="tab" aria-controls="activities" aria-selected="true">Karyawan</a></li>
-                            <li class="nav-item me-1"><a class="nav-link" id="overview-pill" href="#rentang-umur" data-bs-toggle="tab" role="tab" aria-controls="overview" aria-selected="false">Rentang Umur</a></li>
-                        </ul>
+                    <div class="card-header text-muted 75">
+                        Rentang Umur
                     </div>
                     <div class="card-body">
                         <div class="tab-content" id="dashboardNavContent">
-                            <!-- Dashboard Tab Pane 1-->
-                            <div class="tab-pane fade" id="rentang-umur" role="tabpanel" aria-labelledby="overview-pill">
+                            <div class="tab-pane fade show active" id="rentang-umur" role="tabpanel" aria-labelledby="overview-pill">
                                 <div class="chart-area mb-4 mb-lg-0" style="height: 20rem"><canvas id="barChart" width="100%" height="0"></canvas></div>
                             </div>
-                            <!-- Dashboard Tab Pane 2-->
-                            <div class="tab-pane fade show active" style="overflow-x:auto;" id="karyawan" role="tabpanel" aria-labelledby="activities-pill">
-                                <table class="table table-hover" id="table-karyawan-dashboard">
-                                    <thead>
-                                        <tr>
-                                            <th>NIK</th>
-                                            <th>Nama</th>
-                                            <th>Jenis Kelamin</th>
-                                            <th>Tanggal Lahir</th>
-                                            <th>Umur</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody> </tbody>
-                                </table>
+                        </div>
+                    </div>
+                </div>
+                @if($req_awal_prd && $req_akhir_prd)
+                <div class="alert alert-success text-center" role="alert">
+                    <h6  >Periode</h6>
+                    {{ date('d F Y', strtotime($req_awal_prd)) }} - {{ date('d F Y', strtotime($req_akhir_prd)) }}
+                </div>
+                @endif
+                <div class="card card-header-actions mb-4">
+                    <div class="card-header text-muted 75">
+                        Status Karyawan
+                        <a class="btn btn-sm btn-primary-soft text-primary" data-bs-toggle="modal" data-bs-target="#selectPeriode">Cari periode</a>
+                    </div>
+                    <div class="card-body">
+                        <div class="tab-content" id="dashboardNavContent">
+                            <div class="tab-pane fade show active" id="rentang-umur" role="tabpanel" aria-labelledby="overview-pill">
+                                <div class="chart-area mb-4 mb-lg-0" style="height: 20rem"><canvas id="barChart2" width="100%" height="0"></canvas></div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-xl-8 mb-4">
-                        <!-- Dashboard activity timeline example-->
+                    <div class="col-xl-12 mb-4">
                         <div class="card card-header-actions h-100">
                             <div class="card-header text-muted 75">
                                 Presensi Terbaru
-                                <!-- <div class="dropdown no-caret">
-                                    <button class="btn btn-transparent-dark btn-icon dropdown-toggle" id="dropdownMenuButton" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="text-gray-500" data-feather="more-vertical"></i></button>
-                                    <div class="dropdown-menu dropdown-menu-end animated--fade-in-up" aria-labelledby="dropdownMenuButton">
-                                        <h6 class="dropdown-header">Filter Activity:</h6>
-                                        <a class="dropdown-item" href="#!"><span class="badge bg-green-soft text-green my-1">Commerce</span></a>
-                                        <a class="dropdown-item" href="#!"><span class="badge bg-blue-soft text-blue my-1">Reporting</span></a>
-                                        <a class="dropdown-item" href="#!"><span class="badge bg-yellow-soft text-yellow my-1">Server</span></a>
-                                        <a class="dropdown-item" href="#!"><span class="badge bg-purple-soft text-purple my-1">Users</span></a>
-                                    </div>
-                                </div> -->
                             </div>
                             <div class="card-body">
                                 <div class="timeline timeline-xs">
-                                    <!-- Timeline Item 1-->
                                     @foreach($presensi_terakhir as $row)
                                     <div class="timeline-item">
                                         <div class="timeline-item-marker">
@@ -198,11 +184,55 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-4 mb-4">
+                </div>
+            </div>
+            <div class="col-xxl-4">
+                <div class="row">
+                    <div class="col-xl-6 col-xxl-12">
+                        <div class="card mb-4">
+                            <div class="card-header text-muted 75">Status Kontrak</div>
+                            <div class="card-body">
+                                <div class="chart-pie mb-4">
+                                    <canvas id="pieChart" width="100%" height="65"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-xxl-12">
+                        <div class="card card-header-actions mb-4">
+                            <div class="card-header text-muted 75">
+                                {{ ucwords(strtolower(getNamaKabupaten($kabupaten->kabupaten_id))) ?? 'Tidak ditemukan'}}
+                                <a class="btn btn-sm btn-primary-soft text-primary" data-bs-toggle="modal" data-bs-target="#selectDaerah">Pilih Lokasi</a>
+                            </div>
+                            <div class="card-body">
+                                <div class="d-flex align-items-center justify-content-between small mb-1">
+                                    <div class="fw-bold">{{ $daerah[0]['kecamatan'] ?? 'Tidak tersedia'}}</div>
+                                    <div class="small">{{ $daerah[0]['total'] ?? '0'}} Karyawan</div>
+                                </div>
+                                <div class="progress mb-3">
+                                    <div class="progress-bar bg-danger-soft text-danger" role="progressbar" style="width: {{number_format($persen_daerah_1)}}%" aria-valuenow="{{number_format($persen_daerah_1)}}" aria-valuemin="0" aria-valuemax="100">{{ number_format($persen_daerah_1, 2) }}%</div>
+                                </div>
+                                <div class="d-flex align-items-center justify-content-between small mb-1">
+                                    <div class="fw-bold">{{ $daerah[1]['kecamatan'] ?? 'Tidak tersedia' }}</div>
+                                    <div class="small">{{ $daerah[1]['total'] ?? '0'}} Karyawan</div>
+                                </div>
+                                <div class="progress mb-3">
+                                    <div class="progress-bar bg-warning-soft text-warning" role="progressbar" style="width: {{number_format($persen_daerah_2)}}%" aria-valuenow="{{number_format($persen_daerah_1)}}" aria-valuemin="0" aria-valuemax="100">{{ number_format($persen_daerah_2, 2) }}%</div>
+                                </div>
+                                <div class="d-flex align-items-center justify-content-between small mb-1">
+                                    <div class="fw-bold">{{ $daerah[2]['kecamatan'] ?? 'Tidak tersedia'}}</div>
+                                    <div class="small">{{ $daerah[2]['total'] ?? '0'}} Karyawan</div>
+                                </div>
+                                <div class="progress mb-3">
+                                    <div class="progress-bar bg-primary-soft text-primary" role="progressbar" style="width: {{number_format($persen_daerah_3)}}%" aria-valuenow="{{number_format($persen_daerah_1)}}" aria-valuemin="0" aria-valuemax="100">{{ number_format($persen_daerah_3, 2) }}%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-xxl-12">
                         <div class="card h-100">
                             <div class="card-header text-muted 75">Terakhir Aktif</div>
                             <div class="card-body">
-                                <!-- Item 1-->
                                 @foreach($terakhir_login as $d)
                                 <div class="d-flex align-items-center justify-content-between mb-4">
                                     <div class="d-flex align-items-center flex-shrink-0 me-3">
@@ -219,93 +249,38 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xxl-4">
-                <div class="row">
-                    <div class="col-xl-6 col-xxl-12">
-                        <!-- Team members / people dashboard card example-->
-                        <div class="card mb-4">
-                            <div class="card-header text-muted 75">Status Karyawan</div>
-                            <div class="card-body">
-                                <div class="chart-pie mb-4">
-                                    <canvas id="pieChart" width="100%" height="68"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-6 col-xxl-12">
-                        <!-- Project tracker card example-->
-                        <div class="card card-header-actions mb-4">
-                            <div class="card-header text-muted 75">
-                                {{ ucwords(strtolower(getNamaKabupaten($kabupaten->kabupaten_id))) ?? 'Tidak ditemukan'}}
-                                <a class="btn btn-sm btn-primary-soft text-primary" data-bs-toggle="modal" data-bs-target="#selectDaerah">Pilih Lokasi</a>
-                            </div>
-                            <div class="card-body">
-                                <!-- Progress item 1-->
-                                <div class="d-flex align-items-center justify-content-between small mb-1">
-                                    <div class="fw-bold">{{ $daerah[0]['kecamatan'] ?? 'Tidak tersedia'}}</div>
-                                    <div class="small">{{ $daerah[0]['total'] ?? '0'}} Karyawan</div>
-                                </div>
-                                <div class="progress mb-3">
-                                    <div class="progress-bar bg-danger-soft text-danger" role="progressbar" style="width: {{number_format($persen_daerah_1)}}%" aria-valuenow="{{number_format($persen_daerah_1)}}" aria-valuemin="0" aria-valuemax="100">{{ number_format($persen_daerah_1, 2) }}%</div>
-                                </div>
-                                <!-- Progress item 2-->
-                                <div class="d-flex align-items-center justify-content-between small mb-1">
-                                    <div class="fw-bold">{{ $daerah[1]['kecamatan'] ?? 'Tidak tersedia' }}</div>
-                                    <div class="small">{{ $daerah[1]['total'] ?? '0'}} Karyawan</div>
-                                </div>
-                                <div class="progress mb-3">
-                                    <div class="progress-bar bg-warning-soft text-warning" role="progressbar" style="width: {{number_format($persen_daerah_2)}}%" aria-valuenow="{{number_format($persen_daerah_1)}}" aria-valuemin="0" aria-valuemax="100">{{ number_format($persen_daerah_2, 2) }}%</div>
-                                </div>
-                                <!-- Progress item 3-->
-                                <div class="d-flex align-items-center justify-content-between small mb-1">
-                                    <div class="fw-bold">{{ $daerah[2]['kecamatan'] ?? 'Tidak tersedia'}}</div>
-                                    <div class="small">{{ $daerah[2]['total'] ?? '0'}} Karyawan</div>
-                                </div>
-                                <div class="progress mb-3">
-                                    <div class="progress-bar bg-primary-soft text-primary" role="progressbar" style="width: {{number_format($persen_daerah_3)}}%" aria-valuenow="{{number_format($persen_daerah_1)}}" aria-valuemin="0" aria-valuemax="100">{{ number_format($persen_daerah_3, 2) }}%</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-6 col-xxl-12">
-                        <!-- Project tracker card example-->
-                        <div class="card card-header-actions mb-4">
-                            <div class="card-header text-muted 75">
-                                Respon Permintaan
-                            </div>
-                            <div class="card-body">
-                                <!-- Progress item 1-->
-                                <div class="d-flex align-items-center justify-content-between small mb-1">
-                                    <div class="fw-bold">Berhasil</div>
-                                    <div class="small">{{ number_format($audit_200) ?? '0'}}%</div>
-                                </div>
-                                <div class="progress mb-3">
-                                    <div class="progress-bar" role="progressbar" style="background-color: rgba(75, 192, 192, 0.5);  width: {{number_format($audit_200)}}%" aria-valuenow="{{number_format($audit_200)}}" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                                <!-- Progress item 2-->
-                                <div class="d-flex align-items-center justify-content-between small mb-1">
-                                    <div class="fw-bold">Internal Server Error</div>
-                                    <div class="small">{{ number_format($audit_500) ?? '0'}}%</div>
-                                </div>
-                                <div class="progress mb-3">
-                                    <div class="progress-bar bg-danger" role="progressbar" style="background-color: rgba(255, 99, 132, 0.5); width: {{number_format($audit_500)}}%" aria-valuenow="{{number_format($audit_500)}}" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                                <!-- Progress item 3-->
-                                <div class="d-flex align-items-center justify-content-between small mb-1">
-                                    <div class="fw-bold">Page Expired</div>
-                                    <div class="small">{{ number_format($audit_419) ?? '0'}}%</div>
-                                </div>
-                                <div class="progress mb-3">
-                                    <div class="progress-bar bg-primary" role="progressbar" style="background-color: rgba(54, 162, 235, 0.5); width: {{number_format($audit_419)}}%" aria-valuenow="{{number_format($audit_419)}}" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
     @endif
+
+    <div class="modal fade" id="selectPeriode" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Filter periode</h5>
+                    </h5>
+                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{{ url('dashboard') }}" method="GET" class="nav flex-column" id="stickyNav">
+                    <div class="modal-body">
+                        @csrf
+                        <div class="mb-3">
+                            <label class="small mb-1">Mulai Periode</label>
+                            <input type="date" name="mulai_periode" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label class="small mb-1">Akhir Periode</label>
+                            <input type="date" name="akhir_periode" class="form-control">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-light btn-sm" type="button" data-bs-dismiss="modal">Tutup</button>
+                        <button class="btn btn-primary btn-sm" type="submit">Filter</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <div class="modal fade" id="selectDaerah" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -344,7 +319,8 @@
     <script>
         var rekrutmen_record = JSON.parse('{!! json_encode($chart_rekrut) !!}');
         var resign_record = JSON.parse('{!! json_encode($chart_resign) !!}');
-        var status_karyawan_record = JSON.parse('{!! json_encode($chart_status_karyawan) !!}');
+        var chart_status_kontrak = JSON.parse('{!! json_encode($chart_status_kontrak) !!}');
+        var chart_status_karyawan = JSON.parse('{!! json_encode($chart_status_karyawan) !!}');
         var umur_karyawan = JSON.parse('{!! json_encode($umur_karyawan) !!}');
     </script>
     <script>
@@ -423,7 +399,7 @@
             });
         });
     </script>
-    
+
     <x-toastr />
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>

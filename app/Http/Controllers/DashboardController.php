@@ -17,7 +17,6 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
 
 class DashboardController extends Controller
 {
@@ -28,7 +27,12 @@ class DashboardController extends Controller
 
     public function index(Request $request)
     {
-        $data = parameter_dashboard::where('status', '1')->latest()->first();
+        $req_awal_prd = $request->mulai_periode ?? '';
+        $req_akhir_prd = $request->akhir_periode ?? '';
+
+        $data = parameter_dashboard::where('status', '1')
+            ->latest()
+            ->first();
 
         if (strtolower(Auth::user()->job->permission_role ?? '') == 'administrator') {
 
@@ -38,55 +42,72 @@ class DashboardController extends Controller
             $tahun_sekarang = date('Y', strtotime(Carbon::now()));
 
             $provinsi = Provinsi::all();
-            $total_karyawan = employee::where('status_resign', '!=', 'Ya')->count();
-            $total_pwkt1_perbulan = Contract::where('tanggal_mulai_kontrak', 'like', '%' . $bulan_sekarang . '%')->count();
+
+            $data_contract = Contract::all();
+            $total_pwkt1_perbulan = Contract::where('tanggal_mulai_kontrak', 'like', '%' . $bulan_sekarang . '%')
+                ->count();
+
             $total_pengguna = User::count();
+            $terakhir_login = User::select('nik_karyawan', 'terakhir_login')
+                ->orderBy('terakhir_login', 'desc')
+                ->limit(6)
+                ->get();
+
             $total_divisi = Divisi::count();
 
-            $terakhir_login = User::select('nik_karyawan', 'terakhir_login')->orderBy('terakhir_login', 'desc')->limit(6)->get();
-            $data_contract = Contract::all();
+            $karyawan_resign = employee::select('tgl_resign', 'status_resign')
+                ->where('status_resign', 'Resign')
+                ->get();
 
-            $karyawan_resign = employee::select('tgl_resign', 'status_resign')->where('status_resign', 'Resign')->get();
-            $data_karyawan = employee::select('nik', 'status_karyawan', 'provinsi_id', 'kabupaten_id', 'kecamatan_id', 'kelurahan_id', 'tgl_lahir')->get();
+            $data_karyawan = employee::select('nik', 'status_karyawan', 'provinsi_id', 'kabupaten_id', 'kecamatan_id', 'kelurahan_id', 'tgl_lahir')
+                ->get();
+
+            $total_karyawan = employee::where('status_resign', '!=', 'Ya')
+                ->count();
+
+            $status_karyawan = employee::select('tgl_resign', 'status_resign')
+                ->where('status_resign', '!=', 'Aktif')
+                ->whereBetween('tgl_resign', array($request->mulai_periode, $request->akhir_periode))
+                ->get();
 
             /* Code for chart  */
             $chart_rekrut = getDataRekrut($data_contract, $tahun_sekarang);
-            $chart_resign = getDataResign($karyawan_resign, $tahun_sekarang);
-            $chart_status_karyawan = getDataStatusKaryawan($data_karyawan);
 
-            $persentase = getDataStatusKaryawanPersentase($data_karyawan);
-            $persen_pkwtt = $persentase['pkwtt'] / count($data_karyawan) * 100;
-            $persen_pkwt = $persentase['pkwt'] / count($data_karyawan) * 100;
-            $persen_training = $persentase['training'] / count($data_karyawan) * 100;
+            $chart_resign = getDataResign($karyawan_resign, $tahun_sekarang);
+
+            $chart_status_kontrak = getDataStatusKaryawan($data_karyawan);
+
+            $chart_status_karyawan = getDataStatus($status_karyawan);
+
+            if (count($data_karyawan) > 0) {
+                $persentase = getDataStatusKaryawanPersentase($data_karyawan);
+                $persen_pkwtt = $persentase['pkwtt'] / count($data_karyawan) * 100;
+                $persen_pkwt = $persentase['pkwt'] / count($data_karyawan) * 100;
+                $persen_training = $persentase['training'] / count($data_karyawan) * 100;
+            }
 
             $umur_karyawan = getUmur($data_karyawan);
             /* Code for chart  end */
 
             $kabupaten_id = $request->kabupaten ?? '7403';
-            $kabupaten = employee::select('provinsi_id', 'kabupaten_id', 'kecamatan_id', 'kelurahan_id')->where('kabupaten_id', $kabupaten_id)->first();
+            $kabupaten = employee::select('provinsi_id', 'kabupaten_id', 'kecamatan_id', 'kelurahan_id')
+                ->where('kabupaten_id', $kabupaten_id)
+                ->first();
 
             if (!$kabupaten) {
                 return redirect('dashboard')->with('error', 'Data dari kabupaten yang kamu inginkan, belum tersedia');
             }
 
-            $data_karyawan_kabupaten = employee::select('provinsi_id', 'kabupaten_id', 'kecamatan_id', 'kelurahan_id')->where('kabupaten_id', $kabupaten_id)->get()->pluck('kecamatan_id')->toArray();
+            $data_karyawan_kabupaten = employee::select('provinsi_id', 'kabupaten_id', 'kecamatan_id', 'kelurahan_id')
+                ->where('kabupaten_id', $kabupaten_id)
+                ->get()
+                ->pluck('kecamatan_id')
+                ->toArray();
+
             $daerah = getJumlahPekerjaDaerah($data_karyawan_kabupaten);
             $persen_daerah_1 = $this->checkVariabelDaerah1($daerah, $data_karyawan_kabupaten);
             $persen_daerah_2 = $this->checkVariabelDaerah2($daerah, $data_karyawan_kabupaten);
             $persen_daerah_3 = $this->checkVariabelDaerah3($daerah, $data_karyawan_kabupaten);
-
-            $data_audit = AuditTrail::count();
-            $audit_200 = AuditTrail::where([
-                'response' => '200',
-                'response' => 'null',
-                'response' => ''
-            ])->count();
-            $audit_419 = AuditTrail::where('response', '419')->count();
-            $audit_500 = AuditTrail::where('response', '500')->count();
-
-            $audit_200 = $audit_200 / $data_audit * 100;
-            $audit_419 = $audit_419 / $data_audit * 100;
-            $audit_500 = $audit_500 / $data_audit * 100;
 
             $presensi_terakhir = Absensi::orderBy('created_at', 'desc')->limit(5)->get();
 
@@ -99,6 +120,7 @@ class DashboardController extends Controller
                 'total_divisi',
                 'chart_rekrut',
                 'chart_resign',
+                'chart_status_kontrak',
                 'chart_status_karyawan',
                 'persen_daerah_1',
                 'persen_daerah_2',
@@ -112,9 +134,8 @@ class DashboardController extends Controller
                 'provinsi',
                 'kabupaten',
                 'presensi_terakhir',
-                'audit_200',
-                'audit_419',
-                'audit_500',
+                'req_awal_prd',
+                'req_akhir_prd'
             ));
         }
 

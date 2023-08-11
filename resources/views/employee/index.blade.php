@@ -54,7 +54,7 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="mb-3 col-3">
-                                        <label class="small mb-1">Status Resign</label>
+                                        <label class="small mb-1">Status</label>
                                         <select class="form-select" id="status_resign">
                                             <option value="" disabled selected>- Pilih Status -</option>
                                             <option value="Aktif">Aktif</option>
@@ -66,7 +66,7 @@
                                         </select>
                                     </div>
                                     <div class="mb-3 col-3">
-                                        <label class="small mb-1">Status Karyawan</label>
+                                        <label class="small mb-1">Kontrak</label>
                                         <select class="form-select" id="status_karyawan">
                                             <option value="">- Pilih Status -</option>
                                             <option value="PKWTT">PKWTT</option>
@@ -109,8 +109,9 @@
                                     <th>Departemen</th>
                                     <th>Divisi</th>
                                     <th>NPWP</th>
-                                    <th>Status Karyawan</th>
-                                    <th>Status Resign</th>
+                                    <th>Kontrak</th>
+                                    <th>Tanggal</th>
+                                    <th>Status </th>
                                 </tr>
                             </thead>
                             <tbody> </tbody>
@@ -243,6 +244,10 @@
                     {
                         data: 'status_karyawan',
                         name: 'status_karyawan'
+                    },
+                    {
+                        data: 'tgl_resign',
+                        name: 'tgl_resign'
                     },
                     {
                         data: 'status_resign',
