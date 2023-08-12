@@ -83,8 +83,8 @@
                 <div class="collapse" id="collapseKelolaCuti" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav">
                         <a class="nav-link" href="/roster">Data Roster</a>
-                        <a class="nav-link" href="/pengajuan-karyawan">Data Pengajuan Cuti</a>
-                        <a class="nav-link" href="/roster/aktif">Data Pengingat Cuti</a>
+                        <a class="nav-link" href="/pengajuan-karyawan">Data Pengajuan</a>
+                        <a class="nav-link" href="/roster/aktif">Data Pengingat</a>
                         <a class="nav-link" href="/absen/detail/all-in">Data Absensi</a>
                     </nav>
                 </div>
@@ -98,14 +98,14 @@
 
                 <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseCuti" aria-expanded="false" aria-controls="collapseCuti">
                     <div class="nav-link-icon"><i data-feather="edit-3"></i></div>
-                    Cuti
+                    Pengajuan
                     <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
                 <div class="collapse" id="collapseCuti" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav">
                         <a class="nav-link" href="/pengajuan/cuti">Cuti Tahunan</a>
-                        <a class="nav-link" href="">Izin Dibayarkan</a>
-                        <a class="nav-link" href="">Izin Tidak Dibayarkan</a>
+                        <a class="nav-link" href="/pengajuan/izin-dibayarkan">Izin Dibayarkan</a>
+                        <a class="nav-link" href="/pengajuan/izin-tidak-dibayarkan">Izin Tidak Dibayarkan</a>
                     </nav>
                 </div>
                 @if(strtolower(Auth::user()->job->permission_role ?? '') == 'administrator')

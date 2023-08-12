@@ -73,6 +73,12 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
     Route::group(['prefix' => 'pengajuan'], function () {
         route::get('/cuti', [CutiIzinController::class, 'cutiIzin']);
         route::post('/store-cuti', [CutiIzinController::class, 'storeCutiIzin']);
+
+        route::get('/izin-dibayarkan', [CutiIzinController::class, 'izinDibayar']);
+        route::post('/store-izin-dibayarkan', [CutiIzinController::class, 'storeIzinDibayarkan']);
+
+        route::get('izin-tidak-dibayarkan', [CutiIzinController::class, 'izinTidakDibayarkan']);
+        route::post('/store-izin-tidak-dibayarkan', [CutiIzinController::class, 'storeIzinTidakDibayarkan']);
     });
 
     Route::group(['middleware' => 'isAdmin'], function () {
@@ -186,7 +192,7 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
             route::get('/server-side', [CutiIzinController::class, 'serverSidePengajuan']);
             route::get('/update/diterima/{id}', [CutiIzinController::class, 'updatePengajuanKaryawanDiterima'])->name('pengajuan-karyawan-setuju/update');
             route::get('/update/ditolak/{id}', [CutiIzinController::class, 'updatePengajuanKaryawanDitolak'])->name('pengajuan-karyawan-ditolak/update');
-            route::get('/destroy/{id}', [CutiIzinController::class, 'pengajuanKaryawanDestory'])->name('pengajuan-karyawan/destroy');
+            route::get('/destroy/{id}', [CutiIzinController::class, 'pengajuanKaryawanDestroy'])->name('pengajuan-karyawan/destroy');
         });
 
         Route::group(['prefix' => 'periode'], function () {

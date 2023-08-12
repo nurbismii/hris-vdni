@@ -34,6 +34,12 @@ class CutiIzinController extends Controller
                 if ($request->status_hrd == 'Diterima' || $request->status_hrd == 'Ditolak' || $request->status_hrd == 'Menunggu') {
                     $instance->where('status_hrd', $request->get('status_hrd'));
                 }
+                if ($request->tipe == 'Cuti' || $request->tipe == 'Izin Dibayarkan' || $request->tipe == 'Izin Tidak Dibayarkan') {
+                    $instance->where('tipe', $request->get('tipe'));
+                }
+                if ($request->status_hod == 'Diterima' || $request->status_hod == 'Menunggu') {
+                    $instance->where('status_hod', $request->get('status_hod'));
+                }
                 if (!empty($request->get('search'))) {
                     $instance->where(function ($w) use ($request) {
                         $search = $request->get('search');
@@ -64,28 +70,21 @@ class CutiIzinController extends Controller
             return back()->with('info', 'Hak cuti kamu tidak mencukupi...');
         }
 
-        // if ($request->hasFile('foto_pendukung')) {
-        //     $upload = $request->file('foto_pendukung');
-        //     $file_name = $request->nik . '-' . $upload->getClientOriginalName();
-        //     $path = public_path('/dokumentasi/' . $request->nik . '/');
-        //     $upload->move($path, $file_name);
-        // }
-
         CutiIzin::create([
             'nik_karyawan' => $request->nik,
             'tanggal' => $request->tanggal_pengajuan,
             'keterangan' => $request->keterangan,
-            'jumlah' => $akhir->diff($awal)->days == '0' ? '1' : $akhir->diff($awal)->days ,
+            'jumlah' => $akhir->diff($awal)->days == '0' ? '1' : $akhir->diff($awal)->days,
             'tanggal_mulai' => $request->tgl_mulai_cuti,
             'tanggal_berakhir' => $request->tgl_akhir_cuti,
             'status_pemohon' => 'ya',
             'status_hrd' => 'Menunggu',
             'status_hod' => 'Menunggu',
             'status_penanggung_jawab' => 'Menunggu',
-            'tipe' => 'cuti',
+            'tipe' => 'Cuti',
         ]);
 
-        return back()->with('success', 'Berhasil melakukan pengajuan, untuk melihat status pengajuan silahkan ke profil >>> Akun >>> Cuti');
+        return back()->with('success', 'Berhasil melakukan pengajuan, untuk melihat status pengajuan silahkan ke profil >> Akun >> Cuti');
     }
 
     public function updatePengajuanKaryawanDiterima($id)
@@ -110,11 +109,87 @@ class CutiIzinController extends Controller
         return back()->with('success', 'Pengajuan berhasil diperbarui');
     }
 
-    public function pengajuanKaryawanDestory($id)
+    public function pengajuanKaryawanDestroy($id)
     {
         $data = CutiIzin::where('id', $id)->first();
-        unlink(public_path('dokumentasi/' . $data->nik_karyawan . '/' . $data->foto));
+        if (!$data->foto) {
+            $data->delete();
+            return back()->with('success', 'Pengajuan berhasil dihapus');
+        }
+        unlink(public_path('izin-dibayarkan/' . $data->nik_karyawan . '/' . $data->foto));
         $data->delete();
         return back()->with('success', 'Pengajuan berhasil dihapus');
+    }
+
+    public function izinDibayar()
+    {
+        $data = employee::where('nik', Auth::user()->employee->nik)->first();
+        $tanggal_sekarang = date('Y-m-d', strtotime(Carbon::now()));
+        return view('cuti-izin.izin-dibayarkan', compact('data', 'tanggal_sekarang'));
+    }
+
+    public function storeIzinDibayarkan(Request $request)
+    {
+        $awal = new DateTime($request->tgl_mulai_cuti);
+        $akhir = new DateTime($request->tgl_akhir_cuti);
+
+        $sisa_cuti = 5;
+
+        if ($akhir->diff($awal)->days > $sisa_cuti) {
+            return back()->with('info', 'Hak cuti kamu tidak mencukupi...');
+        }
+
+        if ($request->hasFile('foto')) {
+            $upload = $request->file('foto');
+            $file_name = $request->nik . '-' . $upload->getClientOriginalName();
+            $path = public_path('/izin-dibayarkan/' . $request->nik . '/');
+            $upload->move($path, $file_name);
+        }
+
+        CutiIzin::create([
+            'nik_karyawan' => $request->nik,
+            'tanggal' => $request->tanggal_pengajuan,
+            'keterangan' => $request->tipe_izin,
+            'jumlah' => $akhir->diff($awal)->days == '0' ? '1' : $akhir->diff($awal)->days + 1,
+            'tanggal_mulai' => $request->tgl_mulai_cuti,
+            'tanggal_berakhir' => $request->tgl_akhir_cuti,
+            'status_pemohon' => 'ya',
+            'status_hrd' => 'Menunggu',
+            'status_hod' => 'Menunggu',
+            'status_penanggung_jawab' => 'Menunggu',
+            'tipe' => 'Izin Dibayarkan',
+            'foto' => $file_name
+        ]);
+
+        return back()->with('success', 'Berhasil melakukan pengajuan, untuk melihat status pengajuan silahkan ke profil >> Akun >> Izin');
+    }
+
+    public function izinTidakDibayarkan()
+    {
+        $data = employee::where('nik', Auth::user()->employee->nik)->first();
+        $tanggal_sekarang = date('Y-m-d', strtotime(Carbon::now()));
+        return view('cuti-izin.izin-tidak-dibayarkan', compact('data', 'tanggal_sekarang'));
+    }
+
+    public function storeIzinTidakDibayarkan(Request $request)
+    {
+        $awal = new DateTime($request->tgl_mulai_cuti);
+        $akhir = new DateTime($request->tgl_akhir_cuti);
+
+        CutiIzin::create([
+            'nik_karyawan' => $request->nik,
+            'tanggal' => $request->tanggal_pengajuan,
+            'keterangan' => $request->keterangan,
+            'jumlah' => $akhir->diff($awal)->days == '0' ? '1' : $akhir->diff($awal)->days,
+            'tanggal_mulai' => $request->tgl_mulai_cuti,
+            'tanggal_berakhir' => $request->tgl_akhir_cuti,
+            'status_pemohon' => 'ya',
+            'status_hrd' => 'Menunggu',
+            'status_hod' => 'Menunggu',
+            'status_penanggung_jawab' => 'Menunggu',
+            'tipe' => 'Izin Tidak Dibayarkan',
+        ]);
+
+        return back()->with('success', 'Berhasil melakukan pengajuan, untuk melihat status pengajuan silahkan ke profil >> Akun >> Cuti');
     }
 }

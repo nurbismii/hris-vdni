@@ -36,23 +36,40 @@
                 <div class="card">
                     <div class="card-body" style="overflow-x:auto;">
                         <table id="data-table-pengajuan" class="table table-hover" style="width: 100%;">
-                            <div class="mb-3 col-3">
-                                <select name="status_hrd" class="form-select" id="status_hrd">
-                                    <option value="" selected>- Pilih status pengajuan-</option>
-                                    <option value="Menunggu">Menunggu</option>
-                                    <option value="Diterima">Diterima</option>
-                                    <option value="Ditolak">Ditolak</option>
-                                </select>
+                            <div class="row">
+                                <div class="mb-3 col-4">
+                                    <select name="status_hrd" class="form-select" id="status_hrd">
+                                        <option value="" selected>- Pilih status pengajuan -</option>
+                                        <option value="Menunggu">Menunggu</option>
+                                        <option value="Diterima">Diterima</option>
+                                        <option value="Ditolak">Ditolak</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3 col-4">
+                                    <select name="status_hrd" class="form-select" id="tipe">
+                                        <option value="" selected>- Pilih tipe pengajuan -</option>
+                                        <option value="Cuti">Cuti</option>
+                                        <option value="Izin Dibayarkan">Izin Dibayarkan</option>
+                                        <option value="Izin Tidak Dibayarkan">Izin Tidak Dibayarkan</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3 col-4">
+                                    <select name="status_hrd" class="form-select" id="status_hod">
+                                        <option value="" selected>- Status HOD -</option>
+                                        <option value="Diterima">Diterima</option>
+                                        <option value="Menunggu">Menunggu</option>
+                                    </select>
+                                </div>
                             </div>
                             <hr class="mt-0 mb-4" />
                             <thead>
                                 <tr>
                                     <th>NIK</th>
                                     <th>Nama</th>
-                                    <th>Tanggal</th>
                                     <th>Mulai</th>
                                     <th>Selesai</th>
-                                    <th>Cuti</th>
+                                    <th>Jumlah</th>
+                                    <th>Tipe</th>
                                     <th>Status HOD</th>
                                     <th>Status HRD</th>
                                     <th>Aksi</th>
@@ -115,6 +132,8 @@
                     url: "pengajuan-karyawan/server-side",
                     data: function(d) {
                         d.status_hrd = $('#status_hrd').val(),
+                            d.tipe = $('#tipe').val(),
+                            d.status_hod = $('#status_hod').val(),
                             d.search = $('input[type="search"]').val()
                     }
                 },
@@ -127,10 +146,6 @@
                         name: 'nama_karyawan',
                     },
                     {
-                        data: 'tanggal',
-                        name: 'tanggal',
-                    },
-                    {
                         data: 'tanggal_mulai',
                         name: 'tanggal_mulai'
                     },
@@ -141,6 +156,10 @@
                     {
                         data: 'jumlah',
                         name: 'jumlah'
+                    },
+                    {
+                        data: 'tipe',
+                        name: 'tipe'
                     },
                     {
                         data: 'status_hod',
@@ -162,6 +181,14 @@
             });
 
             $('#status_hrd').change(function() {
+                table.draw();
+            });
+
+            $('#tipe').change(function() {
+                table.draw();
+            });
+
+            $('#status_hod').change(function() {
                 table.draw();
             });
         });

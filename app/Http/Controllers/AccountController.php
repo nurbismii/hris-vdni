@@ -95,7 +95,7 @@ class AccountController extends Controller
 
     public function pengajuan()
     {
-        $datas = CutiIzin::orderBy('tanggal', 'DESC')->where('nik_karyawan', Auth::user()->nik_karyawan)->limit(6)->get();
+        $datas = CutiIzin::orderBy('created_at', 'DESC')->where('nik_karyawan', Auth::user()->nik_karyawan)->limit(6)->get();
         return view('account.pengajuan', compact('datas'));
     }
 }

@@ -46,6 +46,7 @@
                                 <h5>Pengajuan {{ $data->tipe }} | {{ date('d-m-Y', strtotime($data->tanggal)) }}</h5>
                                 <div class="text-muted small">{{ $data->keterangan }}</div>
                             </div>
+                            @if(!$data->foto)
                             <img src="{{ asset('assets/img/illustrations/windows.svg') }}" alt="..." style="width: 8rem" />
                         </div>
                     </div>
