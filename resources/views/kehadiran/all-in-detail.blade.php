@@ -189,7 +189,7 @@
                                                     <td>{{ $row->keterangan_izin }}</td>
                                                     <td>{{ ucwords($row->status_izin) }}</td>
                                                     <td>
-                                                        <a type="submit" class="btn btn-datatable btn-icon btn-transparent-dark" data-bs-toggle="modal" data-bs-target="#deleteKetAbsen{{ $row->id }}"><i data-feather="trash-2"></i></a>
+                                                        <a type="submit" class="btn btn-datatable btn-icon btn-transparent-dark" data-bs-toggle="modal" data-bs-target="#deleteKetAbsen{{$row->id}}"><i data-feather="trash-2"></i></a>
                                                     </td>
                                                 </tr>
                                                 @endif
@@ -209,11 +209,11 @@
 
     <!-- Modal delete user -->
     @foreach($keterangan_absen as $data)
-    <div class="modal fade" id="deleteKetAbsen{{$row->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="deleteKetAbsen{{$data->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">New Role</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Peringatan</h5>
                     <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form action="{{ route('destroy.ket', $data->id) }}" method="POST" enctype="application/x-www-form-urlencoded" class="nav flex-column" id="stickyNav">
