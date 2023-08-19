@@ -60,6 +60,7 @@
                 <div class="collapse" id="collapseCoreHr" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav">
                         <a class="nav-link" href="/contract">Data PKWT 1</a>
+                        <a class="nav-link" href="">Data PB PHK</a>
                     </nav>
                 </div>
                 <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapsePayroll" aria-expanded="false" aria-controls="collapsePayroll">

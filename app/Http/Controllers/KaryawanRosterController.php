@@ -84,20 +84,20 @@ class KaryawanRosterController extends Controller
         // $datas = Pengingat::with('periode')->where('tanggal_cuti', '>=', date('Y-m-d', strtotime(Carbon::now()->subDays(14)->toDateString())))->where('flg_kirim', '1')->orderBy('tanggal_cuti', 'ASC')->get();
         if ($request->filled('status_pengajuan')) {
             if ($request->status_pengajuan == 'Selesai') {
-                $datas = Pengingat::with('periode')->where('flg_kirim', '2')->where('status_pengajuan', $request->status_pengajuan)->orderBy('tanggal_cuti', 'desc')->get();
+                $datas = Pengingat::with('periode')->where('flg_kirim', '2')->where('status_pengajuan', $request->status_pengajuan)->orderBy('tanggal_cuti', 'desc')->limit(100)->get();
             }
             if ($request->status_pengajuan == 'Proses') {
-                $datas = Pengingat::with('periode')->where('flg_kirim', '1')->where('status_pengajuan', $request->status_pengajuan)->orderBy('tanggal_cuti', 'desc')->get();
+                $datas = Pengingat::with('periode')->where('flg_kirim', '1')->where('status_pengajuan', $request->status_pengajuan)->orderBy('tanggal_cuti', 'desc')->limit(100)->get();
             }
             if ($request->status_pengajuan == 'Jatuh Tempo') {
-                $datas = Pengingat::with('periode')->where('flg_kirim', '1')->where('tanggal_cuti', '<=', date('Y-m-d'))->orderBy('tanggal_cuti', 'desc')->get();
+                $datas = Pengingat::with('periode')->where('flg_kirim', '1')->where('tanggal_cuti', '<', date('Y-m-d'))->orderBy('tanggal_cuti', 'desc')->limit(100)->get();
             }
             if ($request->status_pengajuan == 'Belum Pengajuan') {
-                $datas = Pengingat::with('periode')->where('flg_kirim', '1')->where('status_pengajuan', NULL)->orderBy('tanggal_cuti', 'desc')->get();
+                $datas = Pengingat::with('periode')->where('flg_kirim', '1')->where('status_pengajuan', NULL)->orderBy('tanggal_cuti', 'desc')->limit(100)->get();
             }
             return view('comben.pengingat.index', compact('datas'))->with('no');
         }
-        $datas = Pengingat::with('periode')->where('flg_kirim', '1')->orderBy('tanggal_cuti', 'desc')->get();
+        $datas = Pengingat::with('periode')->where('flg_kirim', '1')->orderBy('tanggal_cuti', 'desc')->limit(100)->get();
         return view('comben.pengingat.index', compact('datas'))->with('no');
     }
 
