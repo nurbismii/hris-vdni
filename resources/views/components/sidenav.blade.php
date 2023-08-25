@@ -83,7 +83,6 @@
                 </a>
                 <div class="collapse" id="collapseKelolaCuti" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav">
-                        <a class="nav-link" href="/roster">Data Roster</a>
                         <a class="nav-link" href="/pengajuan-karyawan">Data Pengajuan</a>
                         <a class="nav-link" href="/roster/aktif">Data Pengingat</a>
                         <a class="nav-link" href="/absen/detail/all-in">Data Absensi</a>

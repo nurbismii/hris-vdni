@@ -42,7 +42,6 @@ class KaryawanRosterController extends Controller
                     ];
                     $rosters = $data->karyawanRoster;
                 }
-                $url = prev_segments(url()->current());
                 return view('comben.karyawan_roster.index', compact('periode', 'rosters', 'list_periode', 'pengingat'));
             }
         }

@@ -66,7 +66,7 @@
         }
 
         function googleTranslateElementInit() {
-            setCookie('googtrans', '/id/ch', 1);
+            setCookie('googtrans', '/id/ch', 60);
             new google.translate.TranslateElement({
                 pageLanguage: 'id_ID'
             }, 'google_translate_element');
