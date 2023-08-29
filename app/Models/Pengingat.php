@@ -15,4 +15,9 @@ class Pengingat extends Model
     {
         return $this->hasOne(PeriodeRoster::class, 'id', 'periode_id');
     }
+
+    public function karyawan()
+    {
+        return $this->hasOne(employee::class, 'nik', 'nik_karyawan');
+    }
 }

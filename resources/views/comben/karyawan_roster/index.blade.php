@@ -10,9 +10,6 @@
 
     <link href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" rel="stylesheet" />
     <link href="https://cdn.datatables.net/datetime/1.4.0/css/dataTables.dateTime.min.css" rel="stylesheet" />
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.2.0/js/bootstrap-datepicker.min.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.2.0/css/datepicker.min.css" rel="stylesheet">
     @endpush
 
     <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
@@ -53,50 +50,22 @@
                 <hr class="mt-0 mb-4" />
                 <div class="card">
                     <div class="card-body" style="overflow-x: auto;">
-                        <table id="datatables" class="table table-hover" style="width: 100%;">
-                            <thead>
-                                <tr class="text-center">
-                                    <th>Awal Periode</th>
-                                    <th>Akhir Periode</th>
-                                    <th>Pengingat</th>
-                                    <th>Periode</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($list_periode as $data)
-                                @if($periode['awal_periode'] == $data->awal_periode)
-                                <tr class="table-warning text-center">
-                                    <td>{{ $data->awal_periode }}</td>
-                                    <td>{{ $data->akhir_periode }}</td>
-                                    @isset($pengingat['periode_id'])
-                                    @if($pengingat['periode_id'] == $periode['id'])
-                                    <td>&radic;</td>
-                                    @endif
-                                    @endisset
-                                    <td></td>
-                                </tr>
-                                @endif
-                                @if($periode['awal_periode'] != $data->awal_periode)
-                                <tr>
-                                    <td>{{ $data->awal_periode }}</td>
-                                    <td>{{ $data->akhir_periode }}</td>
-                                    <td></td>
-                                    <td>
-                                        <form action="{{ url('roster') }}" method="GET" class="nav flex-column" id="stickyNav">
-                                            @csrf
-                                            <input name="awal_periode" id="date_awal" class="form-control" type="hidden" value="{{ $data->awal_periode }}" required>
-                                            <input name="akhir_periode" id="date_awal" class="form-control" type="hidden" value="{{ $data->akhir_periode }}" required>
-                                            <button class="btn btn-primary btn-sm" type="submit">Lihat</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                                @endif
-                                @endforeach
-                            </tbody>
-                        </table>
+                        <form action="{{ url('roster') }}" method="get">
+                            <div class="mb-3">
+                                <label for="periode">Periode</label>
+                                <select name="periode_id" id="" class="form-select">
+                                    <option value="" disabled selected>- Pilih periode roster -</option>
+                                    @foreach($periode as $value)
+                                    <option value="{{ $value->id }}">{{ $value->awal_periode }} - {{ $value->akhir_periode }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-sm">Filter</button>
+                        </form>
                     </div>
                 </div>
             </div>
+
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body" style="overflow-x:auto;">
@@ -110,18 +79,20 @@
                                     <th>III</th>
                                     <th>IV</th>
                                     <th>V</th>
+                                    <th>Periode</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($rosters as $data)
+                                @foreach($datas as $data)
                                 <tr>
                                     <td>{{ $data->nik_karyawan }}</td>
-                                    <td>{{ getName($data->nik_karyawan) }}</td>
+                                    <td>{{ $data->karyawan->nama_karyawan ?? '' }}</td>
                                     <td>{{ date('d F Y', strtotime($data->minggu_pertama)) }}</td>
                                     <td>{{ date('d F Y', strtotime($data->minggu_kedua)) }}</td>
                                     <td>{{ date('d F Y', strtotime($data->minggu_ketiga)) }}</td>
                                     <td>{{ date('d F Y', strtotime($data->minggu_keempat)) }}</td>
                                     <td>{{ date('d F Y', strtotime($data->minggu_kelima)) }}</td>
+                                    <td>{{ $data->awal_periode }} - {{ $data->akhir_periode }}</td>
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -181,41 +152,6 @@
     </div>
 
     @push('scripts')
-    <script>
-        $("#date_awal").datepicker({
-            format: "yyyy",
-            viewMode: "years",
-            minViewMode: "years",
-            autoclose: true //to close picker once year is selected
-        });
-
-        $("#date_akhir").datepicker({
-            format: "yyyy",
-            viewMode: "years",
-            minViewMode: "years",
-            autoclose: true //to close picker once year is selected
-        });
-
-        $("#date-pick-awal").datepicker({
-            format: "yyyy",
-            viewMode: "years",
-            minViewMode: "years",
-            autoclose: true //to close picker once year is selected
-        });
-
-        $("#date-pick-akhir").datepicker({
-            format: "yyyy",
-            viewMode: "years",
-            minViewMode: "years",
-            autoclose: true //to close picker once year is selected
-        });
-
-        const dataPeriode = document.getElementById('dataPeriode');
-        if (dataCuti) {
-            new simpleDatatables.DataTable(dataPeriode);
-        }
-    </script>
-
     <script src="{{ asset('js/scripts.js') }}"></script>
     <script src="{{ asset('js/chart.min.js') }}" crossorigin="anonymous"></script>
     <script src="{{ asset('js/datatables/datatables-simple-demo.js')}}"></script>
@@ -224,10 +160,5 @@
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/bundle.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.2/moment.min.js"></script>
-    <script src="https://cdn.datatables.net/datetime/1.4.0/js/dataTables.dateTime.min.js"></script>
     @endpush
 </x-app-layout>

@@ -18,6 +18,6 @@ class KaryawanRoster extends Model
 
     public function karyawan()
     {
-        return $this->hasOne(employee::class, 'nik_karyawan', 'nik');
+        return $this->hasOne(employee::class, 'nik', 'nik_karyawan');
     }
 }

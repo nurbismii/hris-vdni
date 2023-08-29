@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Imports\KaryawanRosterDeleteImport;
 use App\Imports\KaryawanRosterImport;
+use App\Models\KaryawanRoster;
 use App\Models\Pengingat;
 use App\Models\PeriodeRoster;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 
 class KaryawanRosterController extends Controller
@@ -20,50 +22,23 @@ class KaryawanRosterController extends Controller
      */
     public function index(Request $request)
     {
-        $rosters = [];
-        $periode = [];
-        $list_periode = PeriodeRoster::orderBy('id', 'ASC')->limit(3)->get();
-        if ($request->filled('awal_periode')) {
-            $cek_filter = $request->akhir_periode - $request->awal_periode;
-            if ($cek_filter == 1) {
-                $datas = PeriodeRoster::with('karyawanRoster', 'pengingat')->where([
-                    'awal_periode' => $request->awal_periode,
-                    'akhir_periode' => $request->akhir_periode,
-                ])->get();
+        $periode = PeriodeRoster::orderBy('id', 'desc')->get();
 
-                foreach ($datas as $data) {
-                    $periode = [
-                        'id' => $data->id,
-                        'awal_periode' => $data->awal_periode,
-                        'akhir_periode' => $data->akhir_periode,
-                    ];
-                    $pengingat = [
-                        'periode_id' => $data->pengingat->periode_id ?? null,
-                    ];
-                    $rosters = $data->karyawanRoster;
-                }
-                return view('comben.karyawan_roster.index', compact('periode', 'rosters', 'list_periode', 'pengingat'));
-            }
+        if ($request->filled('periode_id')) {
+
+            $datas = KaryawanRoster::with('karyawan')
+                ->leftjoin('periode_rosters', 'periode_rosters.id', '=', 'karyawan_rosters.periode_id')
+                ->where('periode_rosters.id', $request->periode_id)
+                ->get();
+
+            return view('comben.karyawan_roster.index', compact('datas', 'periode'));
         }
 
-        $datas = PeriodeRoster::with('karyawanRoster', 'pengingat')->where([
-            'awal_periode' => date('Y', strtotime("-1 year")),
-            'akhir_periode' => date('Y', strtotime(Carbon::now()))
-        ])->get();
+        $datas = KaryawanRoster::with('karyawan')
+            ->leftjoin('periode_rosters', 'periode_rosters.id', '=', 'karyawan_rosters.periode_id')
+            ->get();
 
-        foreach ($datas as $data) {
-            $periode = [
-                'id' => $data->id,
-                'awal_periode' => $data->awal_periode,
-                'akhir_periode' => $data->akhir_periode,
-            ];
-            $pengingat = [
-                'periode_id' => $data->pengingat->periode_id ?? null,
-            ];
-
-            $rosters = $data->karyawanRoster;
-        }
-        return view('comben.karyawan_roster.index', compact('periode', 'rosters', 'list_periode', 'pengingat'));
+        return view('comben.karyawan_roster.index', compact('datas', 'periode'));
     }
 
     public function importKaryawanRoster(Request $request)
@@ -80,23 +55,27 @@ class KaryawanRosterController extends Controller
 
     public function reminder(Request $request)
     {
-        // $datas = Pengingat::with('periode')->where('tanggal_cuti', '>=', date('Y-m-d', strtotime(Carbon::now()->subDays(14)->toDateString())))->where('flg_kirim', '1')->orderBy('tanggal_cuti', 'ASC')->get();
         if ($request->filled('status_pengajuan')) {
+
             if ($request->status_pengajuan == 'Selesai') {
-                $datas = Pengingat::with('periode')->where('flg_kirim', '2')->where('status_pengajuan', $request->status_pengajuan)->orderBy('tanggal_cuti', 'desc')->limit(100)->get();
+                $datas = Pengingat::with('periode', 'karyawan')->where('flg_kirim', '2')->where('status_pengajuan', $request->status_pengajuan)->orderBy('tanggal_cuti', 'desc')->get();
             }
+
             if ($request->status_pengajuan == 'Proses') {
-                $datas = Pengingat::with('periode')->where('flg_kirim', '1')->where('status_pengajuan', $request->status_pengajuan)->orderBy('tanggal_cuti', 'desc')->limit(100)->get();
+                $datas = Pengingat::with('periode', 'karyawan')->where('flg_kirim', '1')->where('status_pengajuan', $request->status_pengajuan)->orderBy('tanggal_cuti', 'desc')->get();
             }
+
             if ($request->status_pengajuan == 'Jatuh Tempo') {
-                $datas = Pengingat::with('periode')->where('flg_kirim', '1')->where('tanggal_cuti', '<', date('Y-m-d'))->orderBy('tanggal_cuti', 'desc')->limit(100)->get();
+                $datas = Pengingat::with('periode', 'karyawan')->where('flg_kirim', '1')->where('tanggal_cuti', '<', date('Y-m-d'))->orderBy('tanggal_cuti', 'desc')->get();
             }
+
             if ($request->status_pengajuan == 'Belum Pengajuan') {
-                $datas = Pengingat::with('periode')->where('flg_kirim', '1')->where('status_pengajuan', NULL)->orderBy('tanggal_cuti', 'desc')->limit(100)->get();
+                $datas = Pengingat::with('periode', 'karyawan')->where('flg_kirim', '1')->where('status_pengajuan', NULL)->orderBy('tanggal_cuti', 'desc')->get();
             }
+
             return view('comben.pengingat.index', compact('datas'))->with('no');
         }
-        $datas = Pengingat::with('periode')->where('flg_kirim', '1')->orderBy('tanggal_cuti', 'desc')->limit(100)->get();
+        $datas = Pengingat::with('periode', 'karyawan')->where('flg_kirim', '1')->orderBy('tanggal_cuti', 'desc')->get();
         return view('comben.pengingat.index', compact('datas'))->with('no');
     }
 

@@ -140,7 +140,7 @@
                                             <button type="submit" class="btn btn-success btn-sm">Selesai</button>
                                         </form>
                                     </td>
-                                    <td>{{ getName($data->nik_karyawan) }}</td>
+                                    <td>{{ $data->karyawan->nama_karyawan ?? '' }}</td>
                                     <td>{{ $data->pesan }}</td>
                                     <td>{{ $data->tanggal_cuti }}</td>
                                     <td>Cuti Ke-{{ $data->periode_mingguan }}</td>
