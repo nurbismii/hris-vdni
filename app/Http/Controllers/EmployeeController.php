@@ -32,7 +32,8 @@ class EmployeeController extends Controller
     public function serverSideEmployee(Request $request)
     {
         $data = employee::leftjoin('divisis', 'divisis.id', '=', 'employees.divisi_id')
-            ->leftjoin('departemens', 'departemens.id', '=', 'divisis.departemen_id')->select(DB::raw("*, tgl_lahir, (year(curdate())-year(tgl_lahir)) as umur"));
+            ->leftjoin('departemens', 'departemens.id', '=', 'divisis.departemen_id')
+            ->select(DB::raw("*, tgl_lahir, (year(curdate())-year(tgl_lahir)) as umur"));
         return DataTables::of($data)
             ->addIndexColumn()
             ->addColumn('action', function ($data) {
@@ -80,7 +81,12 @@ class EmployeeController extends Controller
     {
         try {
             $data = employee::where('nik', $nik)->first();
-            $level_vaksin = $data->vaksin == '0' ? 'Belum Vaksin' : ($data->vaksin == '1' ? 'Vaksin 1' : ($data->vaksin == '2' ? 'Vaksin 2' : ($data->vaksin == '3' ? 'Booster 1' : ($data->vaksin == '4' ? 'Booster 2' : 'Tidak diketahui'))));
+            $level_vaksin = $data->vaksin == '0' ? 'Belum Vaksin'
+                : ($data->vaksin == '1' ? 'Vaksin 1'
+                    : ($data->vaksin == '2' ? 'Vaksin 2'
+                        : ($data->vaksin == '3' ? 'Booster 1'
+                            : ($data->vaksin == '4' ? 'Booster 2'
+                                : 'Tidak diketahui'))));
             return view('employee.edit', compact('data', 'level_vaksin'));
         } catch (\Throwable $e) {
             return back()->with('error', 'Terjadi kesalahan');

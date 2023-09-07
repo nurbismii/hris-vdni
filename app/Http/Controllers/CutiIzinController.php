@@ -19,7 +19,9 @@ class CutiIzinController extends Controller
 
     public function serverSidePengajuan(Request $request)
     {
-        $data = CutiIzin::leftjoin('employees', 'employees.nik', '=', 'cuti_izin.nik_karyawan');
+        $data = CutiIzin::leftjoin('employees', 'employees.nik', '=', 'cuti_izin.nik_karyawan')
+            ->orderBy('cuti_izin.created_at', 'desc')
+            ->select('cuti_izin.*', 'employees.nama_karyawan');
         return DataTables::of($data)
             ->addIndexColumn()
             ->addColumn('action', function ($data) {
@@ -74,7 +76,7 @@ class CutiIzinController extends Controller
             'nik_karyawan' => $request->nik,
             'tanggal' => $request->tanggal_pengajuan,
             'keterangan' => $request->keterangan,
-            'jumlah' => $akhir->diff($awal)->days == '0' ? '1' : $akhir->diff($awal)->days,
+            'jumlah' => $akhir->diff($awal)->days == '0' ? '1' : $akhir->diff($awal)->days + '1',
             'tanggal_mulai' => $request->tgl_mulai_cuti,
             'tanggal_berakhir' => $request->tgl_akhir_cuti,
             'status_pemohon' => 'ya',
