@@ -161,7 +161,7 @@
                                     <i class="me-1" data-feather="search"></i>
                                     Cari
                                 </button>
-                                <a class="btn btn-sm btn-light text-primary" href="/dahsboard">
+                                <a class="btn btn-sm btn-light text-primary" href="/dashboard">
                                     <i class="me-1" data-feather="trash"></i>
                                     Hapus
                                 </a>

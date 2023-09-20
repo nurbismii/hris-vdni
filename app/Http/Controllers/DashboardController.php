@@ -116,6 +116,8 @@ class DashboardController extends Controller
 
             $jumlah_pekerja_by_kelurahan = jumlahPekerjaByKelurahan($res_kelurahan);
 
+            return $res_kelurahan;
+
             $daftar_nama_kelurahan = daftarNamaKelurahan($res_kelurahan);
 
             $presensi_terakhir = Absensi::orderBy('created_at', 'desc')->limit(5)->get();
