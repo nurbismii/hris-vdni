@@ -30,6 +30,7 @@ Route::post('/new-register', [RegisterController::class, 'register'])->name('reg
 Route::get('/', [DashboardController::class, 'index'])->middleware('email.verify');
 Route::get('dashboard/fetch-kabupaten/{id}', [DashboardController::class, 'fetchKabupaten']);
 Route::get('dashboard/fetch-kecamatan/{id}', [DashboardController::class, 'fetchKecamatan']);
+Route::get('dashboard/fetch-kelurahan/{id}', [DashboardController::class, 'fetchKelurahan']);
 
 Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], function () {
 
@@ -131,6 +132,7 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
         Route::group(['prefix' => 'employees'], function () {
 
             route::get('/', [EmployeeController::class, 'index'])->name('karyawan.index');
+            route::get('/karyawan/data-lanjut', [EmployeeController::class, 'dataLanjut'])->name('karyawan.data-lanjut');
             route::get('/create', [EmployeeController::class, 'create']);
             route::patch('update/{id}', [EmployeeController::class, 'update'])->name('update.employee');
             route::get('/edit/{nik}', [EmployeeController::class, 'edit'])->name('employee.edit');

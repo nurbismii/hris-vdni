@@ -40,6 +40,11 @@
     </header>
     <!-- Main page content-->
     <div class="container-fluid px-4">
+        <nav class="nav nav-borders">
+            <a class="nav-link {{ (request()->segment(1) == 'employees') ? 'active' : '' }} ms-0" href="/employees">Data Karyawan</a>
+            <a class="nav-link {{ (request()->segment(1) == 'information') ? 'active' : '' }} ms-0" href="/">Data Lanjut</a>
+        </nav>
+        <hr class="mt-0 mb-4" />
         <div class="row">
             <div class="col-lg-12">
                 <div class="card card-collapsable mb-3">
@@ -52,11 +57,11 @@
                         <form action="{{ route('karyawan.index') }}" method="get">
                             @csrf
                             <div class="card-body">
-                                <div class="row">
-                                    <div class="mb-3 col-3">
+                                <div class="row gx-3 mb-3">
+                                    <div class="col-md-3 mb-2">
                                         <label class="small mb-1">Status</label>
                                         <select class="form-select" id="status_resign">
-                                            <option value="" disabled selected>- Pilih Status -</option>
+                                            <option value="">- Pilih Status -</option>
                                             <option value="Aktif">Aktif</option>
                                             <option value="Resign">Resign</option>
                                             <option value="Mutasi">Mutasi</option>
@@ -65,16 +70,16 @@
                                             <option value="Efisiensi">Efisiensi</option>
                                         </select>
                                     </div>
-                                    <div class="mb-3 col-3">
+                                    <div class="col-md-3 mb-2">
                                         <label class="small mb-1">Kontrak</label>
                                         <select class="form-select" id="status_karyawan">
-                                            <option value="">- Pilih Status -</option>
+                                            <option value="">- Pilih Kontrak -</option>
                                             <option value="PKWTT">PKWTT</option>
                                             <option value="PKWT">PKWT</option>
                                             <option value="TRAINING">TRAINING</option>
                                         </select>
                                     </div>
-                                    <div class="mb-3 col-3">
+                                    <div class="col-md-3 mb-2">
                                         <label class="small mb-1">Departemen</label>
                                         <select class="form-select" id="departemen">
                                             <option value="">- Pilih Departemen -</option>
@@ -83,7 +88,7 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="mb-3 col-3">
+                                    <div class="col-md-3 mb-2">
                                         <label class="small mb-1">Divisi</label>
                                         <select class="form-control" name="divisi" id="divisi"></select>
                                     </div>

@@ -127,6 +127,72 @@
                     </div>
                 </div>
             </div>
+            <div class="col-xl-12 mb-1">
+                <div class="card card-angles card-collapsable mb-3">
+                    <a class="card-header" href="#collapseFilterKaryawan" data-bs-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample">Filter daerah
+                        <div class="card-collapsable-arrow">
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                    </a>
+                    <div class="collapse show" id="collapseFilterKaryawan">
+                        <form action="{{ url('dashboard') }}" method="get">
+                            @csrf
+                            <div class="card-body">
+                                <div class="row gx-3 mb-3">
+                                    <div class="col-md-4 mb-2">
+                                        <label class="small mb-1">Provinsi</label>
+                                        <select name="provinsi_id" class="form-select" id="provinsi_id">
+                                            <option value="" disabled selected>- Pilih provinsi -</option>
+                                            @foreach($provinsi as $row)
+                                            <option value="{{ $row->id }}">{{ $row->provinsi }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4 mb-2">
+                                        <label class="small mb-1">Kabupaten</label>
+                                        <select name="kabupaten" class="form-select" id="kabupaten_id"></select>
+                                    </div>
+                                    <div class="col-md-4 mb-2">
+                                        <label class="small mb-1">Kecamatan</label>
+                                        <select name="kecamatan" class="form-select" id="kecamatan_id"></select>
+                                    </div>
+                                </div>
+                                <button class="btn btn-sm btn-light text-primary" type="submit">
+                                    <i class="me-1" data-feather="search"></i>
+                                    Cari
+                                </button>
+                                <a class="btn btn-sm btn-light text-primary" href="/dahsboard">
+                                    <i class="me-1" data-feather="trash"></i>
+                                    Hapus
+                                </a>
+                                <div class="mb-2 mt-4">
+                                    <b>Hasil pencarian :</b>
+                                    <div class="p-3">
+                                        <table>
+                                            <tr>
+                                                <th>Provinsi</th>
+                                                <td>:</td>
+                                                <td>{{ $prov_res->provinsi }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Kabupaten</th>
+                                                <td>:</td>
+                                                <td>{{ $kab_res->kabupaten }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Kecamatan</th>
+                                                <td>:</td>
+                                                <td>{{ $kec_res->kecamatan }}</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="chart-bar mb-4 mb-lg-0" style="height: 30rem;"><canvas id="pieKelurahan" width="100%" height="0"></canvas></div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="row">
             <div class="col-xxl-8">
@@ -198,37 +264,6 @@
                         </div>
                     </div>
                     <div class="col-xl-6 col-xxl-12">
-                        <div class="card card-header-actions mb-4">
-                            <div class="card-header text-muted 75">
-                                {{ ucwords(strtolower(getNamaKabupaten($kabupaten->kabupaten_id))) ?? 'Tidak ditemukan'}}
-                                <a class="btn btn-sm btn-primary-soft text-primary" data-bs-toggle="modal" data-bs-target="#selectDaerah">Pilih Lokasi</a>
-                            </div>
-                            <div class="card-body">
-                                <div class="d-flex align-items-center justify-content-between small mb-1">
-                                    <div class="fw-bold">{{ $daerah[0]['kecamatan'] ?? 'Tidak tersedia'}}</div>
-                                    <div class="small">{{ $daerah[0]['total'] ?? '0'}} Karyawan</div>
-                                </div>
-                                <div class="progress mb-3">
-                                    <div class="progress-bar bg-danger-soft text-danger" role="progressbar" style="width: {{number_format($persen_daerah_1)}}%" aria-valuenow="{{number_format($persen_daerah_1)}}" aria-valuemin="0" aria-valuemax="100">{{ number_format($persen_daerah_1, 2) }}%</div>
-                                </div>
-                                <div class="d-flex align-items-center justify-content-between small mb-1">
-                                    <div class="fw-bold">{{ $daerah[1]['kecamatan'] ?? 'Tidak tersedia' }}</div>
-                                    <div class="small">{{ $daerah[1]['total'] ?? '0'}} Karyawan</div>
-                                </div>
-                                <div class="progress mb-3">
-                                    <div class="progress-bar bg-warning-soft text-warning" role="progressbar" style="width: {{number_format($persen_daerah_2)}}%" aria-valuenow="{{number_format($persen_daerah_1)}}" aria-valuemin="0" aria-valuemax="100">{{ number_format($persen_daerah_2, 2) }}%</div>
-                                </div>
-                                <div class="d-flex align-items-center justify-content-between small mb-1">
-                                    <div class="fw-bold">{{ $daerah[2]['kecamatan'] ?? 'Tidak tersedia'}}</div>
-                                    <div class="small">{{ $daerah[2]['total'] ?? '0'}} Karyawan</div>
-                                </div>
-                                <div class="progress mb-3">
-                                    <div class="progress-bar bg-primary-soft text-primary" role="progressbar" style="width: {{number_format($persen_daerah_3)}}%" aria-valuenow="{{number_format($persen_daerah_1)}}" aria-valuemin="0" aria-valuemax="100">{{ number_format($persen_daerah_3, 2) }}%</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-6 col-xxl-12">
                         <div class="card h-100">
                             <div class="card-header text-muted 75">Terakhir Aktif</div>
                             <div class="card-body">
@@ -294,10 +329,7 @@
                         <div class="mb-3">
                             <label class="small mb-1">Provinsi</label>
                             <select name="provinsi_id" class="form-select" id="provinsi_id">
-                                <option value="" disabled selected>- Pilih Lokasi -</option>
-                                @foreach($provinsi as $row)
-                                <option value="{{ $row->id }}">{{ $row->provinsi }}</option>
-                                @endforeach
+
                             </select>
                         </div>
                         <div class="mb-3">
@@ -317,10 +349,18 @@
     @push('scripts')
     <script>
         var rekrutmen_record = JSON.parse('{!! json_encode($chart_rekrut) !!}');
+
         var resign_record = JSON.parse('{!! json_encode($chart_resign) !!}');
+
         var chart_status_kontrak = JSON.parse('{!! json_encode($chart_status_kontrak) !!}');
+
         var chart_status_karyawan = JSON.parse('{!! json_encode($chart_status_karyawan) !!}');
+
         var umur_karyawan = JSON.parse('{!! json_encode($umur_karyawan) !!}');
+
+        var jumlah_pekerja_by_kelurahan = JSON.parse('{!! json_encode($jumlah_pekerja_by_kelurahan)!!}')
+
+        var daftar_nama_kelurahan = JSON.parse('{!! json_encode($daftar_nama_kelurahan)!!}')
     </script>
     <script>
         $(document).ready(function() {
@@ -383,7 +423,7 @@
                         success: function(data) {
                             if (data) {
                                 $('#kabupaten_id').empty();
-                                $('#kabupaten_id').append('<option hidden>- Pilih Kabupaten -</option>');
+                                $('#kabupaten_id').append('<option hidden>- Pilih kabupaten -</option>');
                                 $.each(data, function(id, kabupaten) {
                                     $('select[name="kabupaten"]').append('<option value="' + kabupaten.id + '">' + kabupaten.kabupaten + '</option>');
                                 });
@@ -394,6 +434,57 @@
                     });
                 } else {
                     $('#kabupaten').empty();
+                }
+            });
+
+            $('#kabupaten_id').on('change', function() {
+                var kabupatenID = $(this).val();
+                if (kabupatenID) {
+                    $.ajax({
+                        url: 'dashboard/fetch-kecamatan/' + kabupatenID,
+                        type: "GET",
+                        data: {
+                            "_token": "{{ csrf_token() }}"
+                        },
+                        dataType: "json",
+                        success: function(data) {
+                            if (data) {
+                                $('#kecamatan_id').empty();
+                                $('#kecamatan_id').append('<option hidden>- Pilih kecamatan -</option>');
+                                $.each(data, function(id, kecamatan) {
+                                    $('select[name="kecamatan"]').append('<option value="' + kecamatan.id + '">' + kecamatan.kecamatan + '</option>');
+                                })
+                            } else {
+                                $('#kecamatan').empty();
+                            }
+                        }
+                    });
+                }
+            });
+
+            $('#kecamatan_id').on('change', function() {
+                var kecamatanID = $(this).val();
+                if (kecamatanID) {
+                    $.ajax({
+                        url: 'dashboard/fetch-kelurahan/' + kecamatanID,
+                        type: "GET",
+                        data: {
+                            "_token": "{{ csrf_token() }}"
+                        },
+                        dataType: "json",
+                        success: function(data) {
+                            if (data) {
+                                $('#kelurahan_id').empty();
+                                $('#kelurahan_id').append('<option hidden>- Pilih kelurahan/desa -</option>');
+                                console.log(data);
+                                $.each(data, function(id, kelurahan) {
+                                    $('select[name="kelurahan"]').append('<option value="' + kelurahan.id + '">' + kelurahan.kelurahan + '</option>');
+                                })
+                            } else {
+                                $('#kelurahan').empty();
+                            }
+                        }
+                    });
                 }
             });
         });
