@@ -202,7 +202,6 @@ if (!function_exists('getDataResign')) {
     }
 }
 
-
 if (!function_exists('getDataStatus')) {
     function getDataStatus($status_karyawan)
     {
@@ -504,7 +503,7 @@ if (!function_exists('getJumlahPekerjaByKelurahan')) {
         foreach ($counted as $key => $val) {
             $data[] = [
                 'id' => $key == "" ? 'Tidak diketahui' : $key,
-                'kelurahan' => getNamaKelurahan($key) == "" ? 'Tidak diketahui' : getNamaKelurahan($key),
+                'kelurahan' => Kelurahan::where('id', $key)->pluck('kelurahan')->implode(""),
                 'total' => $val,
             ];
         }
