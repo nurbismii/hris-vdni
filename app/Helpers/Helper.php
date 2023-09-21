@@ -25,52 +25,32 @@ if (!function_exists('getName')) {
 if (!function_exists('getNamaProvinsi')) {
     function getNamaProvinsi($id)
     {
-        $name = Provinsi::where('id', $id)->first();
-        if ($name === null) {
-            $retval = "";
-        } else {
-            $retval = $name->provinsi;
-        }
-        return $retval;
+        $provinsi = Provinsi::where('id', $id)->pluck('provinsi')->implode("");
+        return $provinsi;
     }
 }
 
 if (!function_exists('getNamaKabupaten')) {
     function getNamaKabupaten($id)
     {
-        $name = Kabupaten::where('id', $id)->first();
-        if ($name === null) {
-            $retval = "";
-        } else {
-            $retval = $name->kabupaten;
-        }
-        return $retval;
+        $kabupaten = Kecamatan::where('id', $id)->pluck('kabupaten')->implode("");
+        return $kabupaten;
     }
 }
 
 if (!function_exists('getNamaKecamatan')) {
     function getNamaKecamatan($id)
     {
-        $name = Kecamatan::where('id', $id)->first();
-        if ($name === null) {
-            $retval = "";
-        } else {
-            $retval = $name->kecamatan;
-        }
-        return $retval;
+        $kecamatan = Kecamatan::where('id', $id)->pluck('kecamatan')->implode("");
+        return $kecamatan;
     }
 }
 
 if (!function_exists('getNamaKelurahan')) {
     function getNamaKelurahan($id)
     {
-        $name = Kelurahan::where('id', $id)->first();
-        if ($name === null) {
-            $retval = "Tidak diketahui";
-        } else {
-            $retval = $name->kelurahan;
-        }
-        return $retval;
+        $kelurahan = Kelurahan::where('id', $id)->pluck('kelurahan')->implode("");
+        return $kelurahan;
     }
 }
 
@@ -503,7 +483,7 @@ if (!function_exists('getJumlahPekerjaByKelurahan')) {
         foreach ($counted as $key => $val) {
             $data[] = [
                 'id' => $key == "" ? 'Tidak diketahui' : $key,
-                'kelurahan' => $key,
+                'kelurahan' => getNamaKelurahan($key),
                 'total' => $val,
             ];
         }
