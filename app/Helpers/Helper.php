@@ -66,7 +66,7 @@ if (!function_exists('getNamaKelurahan')) {
     {
         $name = Kelurahan::where('id', $id)->first();
         if ($name === null) {
-            $retval = "";
+            $retval = "Tidak diketahui";
         } else {
             $retval = $name->kelurahan;
         }
@@ -503,7 +503,7 @@ if (!function_exists('getJumlahPekerjaByKelurahan')) {
         foreach ($counted as $key => $val) {
             $data[] = [
                 'id' => $key == "" ? 'Tidak diketahui' : $key,
-                'kelurahan' => Kelurahan::where('id', $key)->pluck('kelurahan')->implode(""),
+                'kelurahan' => getNamaKelurahan($key),
                 'total' => $val,
             ];
         }
