@@ -19,6 +19,7 @@ use App\Http\Controllers\Role\RoleController;
 use App\Http\Controllers\SalaryController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\WaktuAbsenController;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -203,5 +204,10 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
             route::patch('/update/{id}', [PeriodeRosterController::class, 'update'])->name('update.periodeRoster');
             route::delete('/delete/{id}', [PeriodeRosterController::class, 'destroy'])->name('destroy.periodeRoster');
         });
+    });
+
+    Route::get('/clear-cache', function () {
+        Artisan::call('cache:clear');
+        return "All cache cleared";
     });
 });
