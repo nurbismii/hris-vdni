@@ -110,11 +110,11 @@ class DashboardController extends Controller
                 ->where('kabupaten_id', $kabupaten_id)
                 ->get();
 
-            return Kelurahan::where('id', '7403104002')->first();
-            
             $kelurahan = $data_karyawan_by_kab->pluck('kelurahan_id')->toArray();
 
             $res_kelurahan = getJumlahPekerjaByKelurahan($kelurahan);
+
+            return $res_kelurahan;
 
             $jumlah_pekerja_by_kelurahan = jumlahPekerjaByKelurahan($res_kelurahan);
 
