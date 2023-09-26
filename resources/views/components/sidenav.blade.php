@@ -65,13 +65,13 @@
                 </div>
                 <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapsePayroll" aria-expanded="false" aria-controls="collapsePayroll">
                     <div class="nav-link-icon"><i data-feather="credit-card"></i></div>
-                    Slip Gaji
+                    Daftar Gaji
                     <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
                 <div class="collapse" id="collapsePayroll" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav">
-                        <a class="nav-link" href="/salary/slip-gaji">Data Slip Gaji</a>
-                        <a class="nav-link" href="/salary">Impor Slip Gaji</a>
+                        <a class="nav-link" href="/salary/slip-gaji">Slip Gaji</a>
+                        <a class="nav-link" href="/salary/gaji-karyawan">Gaji Karyawan</a>
                         <a class="nav-link" href="/salary/history">Riwayat Impor</a>
                     </nav>
                 </div>

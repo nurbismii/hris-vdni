@@ -60,24 +60,25 @@
                         <tr>
                             <th>NIK</th>
                             <th>Nama</th>
-                            <th>Gaji</th>
-                            <th>Status</th>
-                            <th>Total Diterima</th>
-                            <th>Detail</th>
+                            <th>Sakit</th>
+                            <th>Izin</th>
+                            <th>Off</th>
+                            <th>Cuti</th>
+                            <th>Libur</th>
+                            <th>Total</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($datas as $data)
+                        @foreach($datas as $row)
                         <tr>
-                            <td class="fw-bold">{{ $data->employee_id }}</td>
-                            <td>{{ getName($data->employee_id) }}</td>
-                            <td>Rp{{ number_format($data->gaji_pokok) }}</td>
-                            <td>{{ $data->status_gaji }}</td>
-                            <td>Rp{{ number_format($data->total_diterima) }}</td>
-                            <td>
-                                <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="{{ route('edit.user', $data->employee_id) }}"><i data-feather="edit"></i></a>
-                                <a type="submit" class="btn btn-datatable btn-icon btn-transparent-dark" data-bs-toggle="modal" data-bs-target="#deleteUser{{$data->employee_id}}"><i data-feather="trash-2"></i></a>
-                            </td>
+                            <td>{{ $row->nik }}</td>
+                            <td>{{ $row->nama_karyawan }}</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>{{ count($row->absensi) }}</td>
                         </tr>
                         @endforeach
                     </tbody>

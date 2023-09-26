@@ -103,7 +103,7 @@ class DashboardController extends Controller
                 ->first();
 
             if (!$check_request) {
-                return redirect('dashboard')->with('error', 'Data dari kabupaten yang kamu inginkan, belum tersedia');
+                return redirect('dashboard')->with('error', 'Data dari yang kamu inginkan, belum tersedia');
             }
 
             $data_karyawan_by_kab = employee::select('provinsi_id', 'kabupaten_id', 'kecamatan_id', 'kelurahan_id')

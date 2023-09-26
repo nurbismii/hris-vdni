@@ -4,7 +4,6 @@ use App\Http\Controllers\AbsensiController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\ContractController;
-use App\Http\Controllers\CutiIzin;
 use App\Http\Controllers\CutiIzinController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DepartemenController;
@@ -156,6 +155,9 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
             route::get('/slip-gaji', [SalaryController::class, 'slipgaji'])->name('salary.slipgaji');
             route::post('/import-salarys', [SalaryController::class, 'importSalary'])->name('import.salary');
             route::get('/show/{id}', [SalaryController::class, 'show'])->name('payslip.show');
+            route::get('/gaji-karyawan', [SalaryController::class, 'gajikaryawan']);
+            route::get('/detail-karyawan/{nik}', [SalaryController::class, 'fetchDetailKaryawan']);
+            route::post('/store/gaji-karyawan', [SalaryController::class, 'storeGajiKaryawan'])->name('store/gaji-karyawan');
         });
 
         Route::group(['prefix' => 'contract'], function () {

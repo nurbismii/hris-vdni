@@ -12,13 +12,8 @@ use Illuminate\Support\Facades\Auth;
 if (!function_exists('getName')) {
     function getName($id)
     {
-        $data = employee::where('nik', $id)->first('nama_karyawan');
-        if ($data === null) {
-            $retval = "";
-        } else {
-            $retval = $data->nama_karyawan;
-        }
-        return $retval;
+        $nama = employee::where('nik', $id)->pluck('nama_karyawan')->implode("");
+        return $nama;
     }
 }
 
@@ -483,7 +478,7 @@ if (!function_exists('getJumlahPekerjaByKelurahan')) {
         foreach ($counted as $key => $val) {
             $data[] = [
                 'id' => $key == "" ? 'Tidak diketahui' : $key,
-                'kelurahan' => getNamaKelurahan($key),
+                'kelurahan' => getNamaKelurahan($key) == '' ? 'Tidak diketahui' : getNamaKelurahan($key),
                 'total' => $val,
             ];
         }

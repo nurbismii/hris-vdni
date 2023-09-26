@@ -52,4 +52,9 @@ class employee extends Model
     {
         return $this->hasOne(Kelurahan::class, 'id', 'kelurahan_id');
     }
+
+    public function absensi()
+    {
+        return $this->hasMany(Absensi::class, 'nik_karyawan', 'nik');
+    }
 }

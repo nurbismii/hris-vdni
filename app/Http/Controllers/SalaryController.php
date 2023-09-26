@@ -3,18 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Exports\ExportSalaries;
+use App\Http\Requests\StoreGajiKaryawanRequest;
 use App\Imports\ImportSalaries;
+use App\Models\Absensi;
+use App\Models\employee;
 use App\Models\fileSalary;
+use App\Models\GajiKaryawan;
 use App\Models\salary;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
-use Yajra\DataTables\DataTables;
 
 class SalaryController extends Controller
 {
+    public $start;
+
     public function index()
     {
         return view('payslip.index');
@@ -22,8 +27,15 @@ class SalaryController extends Controller
 
     public function slipgaji(Request $request)
     {
-        $periode = date('Y-m', strtotime($request->periode));
-        $datas = salary::where('akhir_periode', 'like', '%' . $periode . '%')->get();
+        $start = '2023-08'. '-16';
+        $end = date('Y-m-d', strtotime("$start +1 Month -1 Day"));
+
+        $datas = employee::with(['absensi' => function ($query) use ($start, $end){
+            $query->whereBetween('jam_masuk', [$start . " 00:00:00", $end . " 23:59:59"]);
+        }])->where('nik', '15040001')->get();
+
+        return $datas;
+
         return view('payslip.slipgaji', compact('datas'));
     }
 
@@ -66,5 +78,40 @@ class SalaryController extends Controller
     public function exportSalary(Request $request)
     {
         return Excel::download(new ExportSalaries, 'Salary-Template.xlsx');
+    }
+
+    public function gajiKaryawan()
+    {
+        $karyawan = employee::select('nik', 'nama_karyawan')->orderBy('nik', 'ASC')->get();
+        return view('payslip.gaji-karyawan', compact('karyawan'));
+    }
+
+    public function fetchDetailKaryawan($nik)
+    {
+        $data = employee::leftjoin('divisis', 'divisis.id', '=', 'employees.divisi_id')
+            ->leftjoin('departemens', 'departemens.id', '=', 'divisis.departemen_id')
+            ->select(DB::raw("*"))
+            ->where('employees.nik', $nik)->first();
+        return response()->json($data);
+    }
+
+    public function storeGajiKaryawan(StoreGajiKaryawanRequest $request)
+    {
+        GajiKaryawan::updateOrCreate([
+            'nik_karyawan' => $request->nik_karyawan,
+        ], [
+            'status_gaji' => $request->status_gaji,
+            'jumlah_hari_kerja' => $request->jumlah_hari_kerja,
+            'tunj_umum' => $request->tunj_umum ?? 0,
+            'tunj_pengawas' => $request->tunj_pengawas ?? 0,
+            'tunj_transport_pulsa' => $request->tunj_transport_pulsa ?? 0,
+            'tunj_masa_kerja' => $request->tunj_masa_kerja ?? 0,
+            'tunj_koefisien_jabatan' => $request->tunj_koefisien_jabatan ?? 0,
+            'tunj_lap' => $request->tunj_lap ?? 0,
+            'tunj_makan' => str_replace(array('Rp', '.'), "", $request->tunj_makan),
+            'gaji_pokok' => str_replace(array('Rp', '.'), "", $request->gaji_pokok)
+        ]);
+
+        return back()->with('success', 'Penyesuaian gaji NIK : ' . $request->nik . ' berhasil dilakukan');
     }
 }

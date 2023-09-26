@@ -7,6 +7,7 @@ use App\Models\Contract;
 use App\Models\CutiIzin;
 use App\Models\Divisi;
 use App\Models\employee;
+use App\Models\GajiKaryawan;
 use App\Models\salary;
 use App\Models\User;
 use PDF;
@@ -28,17 +29,18 @@ class AccountController extends Controller
 
     public function billing()
     {
-        try {
+        try{
             $datas = salary::orderBy('akhir_periode', 'DESC')->where('employee_id', Auth::user()->nik_karyawan)->limit(6)->get();
-            $salary = salary::orderBy('akhir_periode', 'DESC')->where('employee_id', Auth::user()->nik_karyawan)->latest()->first('gaji_pokok');
-            if (!$salary) {
+            $gaji_karyawan = GajiKaryawan::where('nik_karyawan', Auth::user()->nik_karyawan)->first();
+            if (!$gaji_karyawan) {
                 return back()->with('info', 'Informasi yang kamu minta belum tersedia');
             }
             $contract = Contract::where('nik', Auth::user()->nik_karyawan)->latest()->first('tanggal_berakhir_kontrak');
-            return view('account.billing', compact('datas', 'salary', 'contract'));
-        } catch (\Throwable $e) {
-            return back()->with('error', 'Terjadi kesalahan');
+            return view('account.billing', compact('datas', 'gaji_karyawan', 'contract'));
+        }catch(\Throwable $e){
+            return back()->with('error', 'Terjadi kesalaham');
         }
+        
     }
 
     public function show($id)

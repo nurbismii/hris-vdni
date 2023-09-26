@@ -268,6 +268,10 @@
                 table.draw();
             });
 
+            $('#status_resign').change(function() {
+                table.draw();
+            });
+
             $('#departemen').change(function() {
                 table.draw();
             });
@@ -276,9 +280,7 @@
                 table.draw();
             });
 
-            $('#status_resign').change(function() {
-                table.draw();
-            });
+
         });
     </script>
 
