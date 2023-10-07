@@ -13,7 +13,7 @@
                 </div>
                 <div class="card-opacation shadow-lg border-0 rounded-lg mt-5">
                     <div class="card-header text-center">
-                        <h3 class="fw-light my-2 text-light">Masuk</h3>
+                        <h3 class="fw-light my-2 text-light">LOGIN PAGE</h3>
                         <img src="{{ asset('assets/img/backgrounds/icon.png') }}" class="text-center" style="height: 55px;" alt="">
                     </div>
                     <div class="card-body">
@@ -24,19 +24,19 @@
                                 <input class="form-control-login @error('email') is-invalid @enderror" type="email" name="email" placeholder="Email" />
                             </div>
                             <div class="mb-3">
-                                <label class="small mb-1 text-light">Kata Sandi</label>
+                                <label class="small mb-1 text-light">Password</label>
                                 <input class="form-control-login @error('password') is-invalid @enderror" type="password" name="password" placeholder="Kata Sandi" />
                             </div>
                             <div class="d-flex align-items-center justify-content-between mt-2 mb-3">
-                                <a class="small text-light" href="#">Lupa Kata Sandi ?</a>
+                                <a class="small text-light" href="#">Forgot Password ?</a>
                             </div>
                             <div class="text-center d-grid">
-                                <button type="submit" class="btn btn-success text-light">Masuk</button>
+                                <button type="submit" class="btn btn-success text-light">Login</button>
                             </div>
                         </form>
                     </div>
                     <div class="card-footer text-center">
-                        <div class="small text-light"><a class="text-light" href="{{ route('register') }}">Buat akun baru</a></div>
+                        <div class="small text-light">New employee? <a class="text-primary" href="{{ route('register') }}">Sign up Now !</a></div>
                     </div>
                 </div>
             </div>

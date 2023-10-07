@@ -99,7 +99,7 @@
                                 <div class="timeline-item-marker-text">HRD</div>
                                 <div class="timeline-item-marker-indicator">
                                     @if($data->status_hrd == 'Menunggu')
-                                    2
+                                    3
                                     @elseif($data->status_hrd == 'Ditolak')
                                     <i data-feather="x"></i>
                                     @else
@@ -128,8 +128,8 @@
                                     @endif
                                 </div>
                             </div>
-                            @if($data->status_hrd == 'Diterima' && $data->status_hod == 'Diterima' && $data->status_penanggung_jawab == 'Menunggu')
-                            <div class="timeline-item-content">Saat ini.</div>
+                            @if($data->status_hod == 'Diterima' && $data->status_hrd == 'Menunggu' && $data->status_penanggung_jawab == 'Menunggu')
+                            <div class="timeline-item-content">Langkah selanjutnya...</div>
                             @elseif($data->status_hod == 'Menunggu' && $data->status_hrd == 'Menunggu' && $data->status_penanggung_jawab == 'Menunggu')
                             <div class="timeline-item-content">Langkah selanjutnya...</div>
                             @elseif($data->status_hod == 'Diterima' && $data->status_hrd == 'Diterima' && $data->status_penanggung_jawab == 'Diterima')

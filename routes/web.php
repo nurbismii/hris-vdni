@@ -150,14 +150,20 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
 
         Route::group(['prefix' => 'salary'], function () {
             route::get('/', [SalaryController::class, 'index']);
+
             route::get('/history', [SalaryController::class, 'history']);
             route::get('/export-template', [SalaryController::class, 'exportSalary'])->name('export.salary');
-            route::get('/slip-gaji', [SalaryController::class, 'slipgaji'])->name('salary.slipgaji');
+            route::get('/payslip', [SalaryController::class, 'slipgaji'])->name('salary.slipgaji');
             route::post('/import-salarys', [SalaryController::class, 'importSalary'])->name('import.salary');
-            route::get('/show/{id}', [SalaryController::class, 'show'])->name('payslip.show');
-            route::get('/gaji-karyawan', [SalaryController::class, 'gajikaryawan']);
-            route::get('/detail-karyawan/{nik}', [SalaryController::class, 'fetchDetailKaryawan']);
+            route::get('/show/{id}', [SalaryController::class, 'show'])->name('salary.show');
+
+            route::get('/employee', [SalaryController::class, 'gajikaryawan'])->name('salary.employee');
             route::post('/store/gaji-karyawan', [SalaryController::class, 'storeGajiKaryawan'])->name('store/gaji-karyawan');
+
+            route::get('/server-side', [SalaryController::class, 'serverSideSalary']);
+            route::get('/detail-karyawan/{id}', [SalaryController::class, 'fetchKaryawan']);
+
+            route::post('/generate/payslip/{nik}', [SalaryController::class, 'generateSlip'])->name('generate.slip');
         });
 
         Route::group(['prefix' => 'contract'], function () {

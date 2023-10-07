@@ -54,8 +54,6 @@ class ImportSalaries implements ToCollection, WithHeadingRow, WithValidation
             ];
         }
 
-
-
         foreach (array_chunk($datas, 1000) as $chunk) {
             salary::insert($chunk);
         }

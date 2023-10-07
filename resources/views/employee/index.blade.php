@@ -113,6 +113,7 @@
                                     <th>Nama</th>
                                     <th>Departemen</th>
                                     <th>Divisi</th>
+                                    <th>Posisi</th>
                                     <th>NPWP</th>
                                     <th>Kontrak</th>
                                     <th>Tanggal</th>
@@ -241,6 +242,10 @@
                     {
                         data: 'nama_divisi',
                         name: 'nama_divisi',
+                    },
+                    {
+                        data: 'posisi',
+                        name: 'posisi',
                     },
                     {
                         data: 'npwp',

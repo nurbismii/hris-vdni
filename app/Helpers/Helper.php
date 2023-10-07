@@ -511,3 +511,103 @@ if (!function_exists('daftarNamaKelurahan')) {
         return $nama_kelurahan;
     }
 }
+
+if (!function_exists('jmlHariMinggu')) {
+    function jmlHariMinggu($start, $end)
+    {
+        $date1 = $start;
+        $date2 = $end;
+        // memecah bagian-bagian dari tanggal $date1
+        $pecahTgl1 = explode("-", $date1);
+
+        // membaca bagian-bagian dari $date1
+        $tgl1 = $pecahTgl1[0];
+        $bln1 = $pecahTgl1[1];
+        $thn1 = $pecahTgl1[2];
+
+        // counter looping
+        $i = 0;
+
+        // counter untuk jumlah hari minggu
+        $sum = 0;
+
+        do {
+            // mengenerate tanggal berikutnya
+            $tanggal = date("d-m-Y", mktime(0, 0, 0, $bln1, $tgl1 + $i, $thn1));
+
+            // cek jika harinya minggu, maka counter $sum bertambah satu, lalu tampilkan tanggalnya
+            if (date("w", mktime(0, 0, 0, $bln1, $tgl1 + $i, $thn1)) == 0) {
+                $sum++;
+                echo $tanggal . "<br>";
+            }
+            // increment untuk counter looping
+            $i++;
+        } while ($tanggal != $date2);
+
+        // looping di atas akan terus dilakukan selama tanggal yang digenerate tidak sama dengan $date2.
+
+        // tampilkan jumlah hari Minggu
+        return $sum;
+    }
+}
+
+if (!function_exists('first')) {
+    function first($array)
+    {
+        $counter = 0;
+
+        // Loop starts from here
+        foreach ($array as $item) {
+
+            // Check condition if count is 0 then 
+            // it is the first iteration
+            if ($counter == 0) {
+
+                return $item;
+            }
+
+            if ($counter == count($array) - 1) {
+
+                // Print the array content
+                print($item);
+                print(": Last iteration");
+            }
+
+            $counter = $counter + 1;
+        }
+    }
+}
+
+if (!function_exists('last')) {
+    function last($array)
+    {
+        $counter = 0;
+        // Loop starts from here
+        foreach ($array as $item) {
+
+            if ($counter == count($array) - 1) {
+
+                return $item;
+            }
+
+            $counter = $counter + 1;
+        }
+    }
+}
+
+if (!function_exists('mealAllowance')) {
+    function mealAllowance($data, $attendance)
+    {
+        $meal_allowance = $data->tunj_makan * count($attendance);
+        return $meal_allowance;
+    }
+}
+
+if (!function_exists('dailySalary')) {
+    function dailySalary($data, $attendance)
+    {
+        $daily_salary = $data->gaji_pokok / $data->jumlah_hari_kerja;
+        $daily_salary = $daily_salary * count($attendance);
+        return $daily_salary;
+    }
+}

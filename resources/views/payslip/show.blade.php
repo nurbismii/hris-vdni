@@ -1,4 +1,4 @@
-<x-app-layout title="Slip-Gaji">
+<x-app-layout title="PaySlip">
 
     @push('styles')
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
@@ -17,17 +17,20 @@
                     <div class="col-auto mb-3">
                         <h1 class="page-header-title">
                             <div class="page-header-icon"><i data-feather="credit-card"></i></div>
-                            Detail Gaji
+                            PaySlip
                         </h1>
                     </div>
                     <div class="col-12 col-xl-auto mb-3">
-                        <a class="btn btn-sm btn-light text-blue" href="/salary/slip-gaji">
+                        <form action="{{ route('generate.slip', $data['employee']['nik']) }}" method="post">
+                            @csrf
+                            <button class="btn btn-sm btn-light text-blue" type="submit">
+                                <i class="me-1" data-feather="upload-cloud"></i>
+                                Generate payslip
+                            </button>
+                        </form>
+                        <a class="btn btn-sm btn-light text-blue" href="/salary/employee">
                             <i class="me-1" data-feather="arrow-left"></i>
-                            Kembali
-                        </a>
-                        <a class="btn btn-sm btn-light text-blue" href="{{ route('slipgaji', $data->id) }}">
-                            <i class="me-1" data-feather="printer"></i>
-                            Print
+                            Back
                         </a>
                     </div>
                 </div>
@@ -40,38 +43,38 @@
         <!-- Invoice-->
         <div class="card invoice">
             <div class="card-body p-2 p-md-4">
-                <div class="text-center lh-1 mb-2">
+                <div class="text-center lh-1 mb-3">
                     <h4 class="fw-bold">PT VDNI</h4> <br>
                     <img src="{{ asset('assets/img/backgrounds/vdni-ikon.png') }}" style="height: 50px;" alt=""><br> <br>
-                    <span class="fw-normal mb-2">SLIP GAJI </span> <br> <br>
-                    <span class="fw-normal"> Periode ({{ date('F Y', strtotime($data->mulai_periode)) }} - {{ date('F Y', strtotime($data->akhir_periode)) }})</span>
+                    <span class="fw-normal mb-2"> PaySlip </span> <br> <br>
+                    <span class="fw-normal"> Period ({{ date('d F Y', strtotime($start)) }} - {{ date('d F Y', strtotime($end)) }})</span>
                 </div>
                 <div class="table-responsive">
-                    <table class="table table-borderless mb-0">
+                    <table class="table table-borderless">
                         <tbody>
                             <tr>
-                                <th scope="row">NIK Karyawan</th>
-                                <td>{{ $data->employee_id }}</td>
-                                <td>Total Hari Kerja</td>
-                                <td>{{ $data->jumlah_hari_kerja }}</td>
+                                <th scope="row">Employee ID</th>
+                                <td>{{ $data['employee']['nik'] }}</td>
+                                <td>Payable/Working days</td>
+                                <td>{{count($absensis) }} / {{ $data['salary']['jumlah_hari_kerja'] }} </td>
                             </tr>
                             <tr>
-                                <th scope="row">Nama Karyawan</th>
-                                <td>{{ Auth::user()->employee->nama_karyawan }}</td>
-                                <td>Status Gaji</td>
-                                <td>{{ ucfirst($data->status_gaji) }}</td>
+                                <th scope="row">Employee Name</th>
+                                <td>{{ $data['employee']['nama_karyawan'] }}</td>
+                                <td>Salary status</td>
+                                <td>{{ ucfirst($data['salary']['status_gaji']) }}</td>
                             </tr>
                             <tr>
-                                <th scope="row">Departemen</th>
+                                <th scope="row">Departement</th>
                                 <td>{{ Auth::user()->employee->divisi->departemen->departemen }}</td>
                                 <td>Divisi</td>
                                 <td>{{ ucfirst(Auth::user()->employee->divisi->nama_divisi) }}</td>
                             </tr>
                             <tr>
-                                <th scope="row">Posisi</th>
-                                <td>{{ $data->posisi }}</td>
-                                <td>Hour Machine</td>
-                                <td>{{ $data->jumlah_hour_machine }}</td>
+                                <th scope="row">Position</th>
+                                <td>{{ $data['employee']['posisi'] }}</td>
+                                <td>Overtime</td>
+                                <td>0</td>
                             </tr>
                         </tbody>
                     </table>
@@ -82,49 +85,49 @@
                         <table class="table table-borderless mb-0">
                             <thead class="border-bottom">
                                 <tr class="small text-uppercase text-muted">
-                                    <th scope="col">Detail Gaji</th>
+                                    <th scope="col">Salary Detail</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr class="border-bottom">
                                     <td>
-                                        <div class="fw-bold">Gaji</div>
+                                        <div class="fw-bold">Salary</div>
                                     </td>
                                     <td class="text-end fw-bold">:</td>
                                     <td class="text-end fw-bold">Rp.</td>
-                                    <td class="text-end fw-bold">{{ number_format($data->gaji_pokok, 0, ",", ".") }}</td>
+                                    <td class="text-end fw-bold">{{ number_format($data['daily_salary'], 2, ",", ".") }}</td>
                                 </tr>
                                 <tr class="border-bottom">
                                     <td>
-                                        <div class="fw-bold">Uang Makan</div>
+                                        <div class="fw-bold">Meal allowance</div>
                                     </td>
                                     <td class="text-end fw-bold">:</td>
                                     <td class="text-end fw-bold">Rp.</td>
-                                    <td class="text-end fw-bold">{{ number_format($data->tunjangan_umum, 0, ",", ".") }}</td>
+                                    <td class="text-end fw-bold">{{ number_format($data['meal_allowance'], 0, ",", ".") }}</td>
                                 </tr>
                                 <tr class="border-bottom">
                                     <td>
-                                        <div class="fw-bold">Tunj. Pengawas</div>
+                                        <div class="fw-bold">Supervisor allowance</div>
                                     </td>
                                     <td class="text-end fw-bold">:</td>
                                     <td class="text-end fw-bold">Rp.</td>
-                                    <td class="text-end fw-bold">{{ number_format($data->tunjangan_pengawas) }}</td>
+                                    <td class="text-end fw-bold">{{ number_format($data['salary']['tunj_pengawas']) }}</td>
                                 </tr>
                                 <tr class="border-bottom">
                                     <td>
-                                        <div class="fw-bold">Tunj. Masa Kerja</div>
+                                        <div class="fw-bold">Service year allowance</div>
                                     </td>
                                     <td class="text-end fw-bold">:</td>
                                     <td class="text-end fw-bold">Rp.</td>
-                                    <td class="text-end fw-bold">{{ number_format($data->tunjangan_mk) }}</td>
+                                    <td class="text-end fw-bold">{{ number_format($data['salary']['tunj_masa_kerja']) }}</td>
                                 </tr>
                                 <tr class="border-bottom">
                                     <td>
-                                        <div class="fw-bold">Lembur</div>
+                                        <div class="fw-bold">Overtime</div>
                                     </td>
                                     <td class="text-end fw-bold">:</td>
                                     <td class="text-end fw-bold">Rp.</td>
-                                    <td class="text-end fw-bold">{{ number_format($data->overtime) }}</td>
+                                    <td class="text-end fw-bold">0</td>
                                 </tr>
                                 <tr class="border-bottom">
                                     <td>
@@ -132,7 +135,7 @@
                                     </td>
                                     <td class="text-end fw-bold">:</td>
                                     <td class="text-end fw-bold">Rp.</td>
-                                    <td class="text-end fw-bold">{{ number_format($data->jumlah_hour_machine) }}</td>
+                                    <td class="text-end fw-bold">0</td>
                                 </tr>
                                 <tr class="border-bottom">
                                     <td>
@@ -140,7 +143,7 @@
                                     </td>
                                     <td class="text-end fw-bold">:</td>
                                     <td class="text-end fw-bold">Rp.</td>
-                                    <td class="text-end fw-bold">{{ number_format($data->rapel) }}</td>
+                                    <td class="text-end fw-bold">0</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -160,7 +163,7 @@
                                     </td>
                                     <td class="text-end fw-bold">:</td>
                                     <td class="text-end fw-bold">Rp.</td>
-                                    <td class="text-end fw-bold">{{ number_format($data->jht, 0, ",", ".") }}</td>
+                                    <td class="text-end fw-bold">{{ number_format($data['jht'], 0, ",", ".") }}</td>
                                 </tr>
                                 <tr class="border-bottom">
                                     <td>
@@ -168,7 +171,7 @@
                                     </td>
                                     <td class="text-end fw-bold">:</td>
                                     <td class="text-end fw-bold">Rp.</td>
-                                    <td class="text-end fw-bold">{{ number_format($data->jp, 0, ",", ".") }}</td>
+                                    <td class="text-end fw-bold">{{ number_format($data['jp'], 0, ",", ".") }}</td>
                                 </tr>
                                 <tr class="border-bottom">
                                     <td>
@@ -176,7 +179,7 @@
                                     </td>
                                     <td class="text-end fw-bold">:</td>
                                     <td class="text-end fw-bold">Rp.</td>
-                                    <td class="text-end fw-bold">{{ number_format($data->bpjs_kesehatan) }}</td>
+                                    <td class="text-end fw-bold">{{ number_format($data['bpjs_kesehatan']) }}</td>
                                 </tr>
                                 <tr class="border-bottom">
                                     <td>
@@ -184,22 +187,22 @@
                                     </td>
                                     <td class="text-end fw-bold">:</td>
                                     <td class="text-end fw-bold">Rp.</td>
-                                    <td class="text-end fw-bold">{{ number_format($data->deduction) }}</td>
+                                    <td class="text-end fw-bold">{{ number_format($data['deduction_unpaid_leave']) }}</td>
                                 </tr>
                                 <tr class="border-bottom">
                                     <td>
-                                        <div class="fw-bold">deduction PPH 21</div>
+                                        <div class="fw-bold">Deduction PPH 21</div>
                                     </td>
                                     <td class="text-end fw-bold">:</td>
                                     <td class="text-end fw-bold">Rp.</td>
-                                    <td class="text-end fw-bold">{{ number_format($data->deduction_pph21) }}</td>
+                                    <td class="text-end fw-bold">{{ number_format($data['deduction_pph21']) }}</td>
                                 </tr>
                                 <tr>
                                     <td class="text-end pb-0" colspan="3">
-                                        <div class="text-uppercase small fw-700 text-muted">Total Penghasilan:</div>
+                                        <div class="text-uppercase small fw-700 text-muted">Total income :</div>
                                     </td>
                                     <td class="text-end pb-0">
-                                        <div class="h5 mb-0 fw-700">Rp.{{ number_format($total_diterima, 0, ",",".") }}</div>
+                                        <div class="h5 mb-0 fw-700">Rp.{{ number_format($data['total_diterima'], 0, ",",".") }}</div>
                                     </td>
                                 </tr>
                                 <tr>
@@ -207,15 +210,15 @@
                                         <div class="text-uppercase small fw-700 text-muted">Total Deduction :</div>
                                     </td>
                                     <td class="text-end pb-0">
-                                        <div class="h5 mb-0 fw-700 text-red"> - Rp.{{ number_format($total_deduction, 0, ",",".") }}</div>
+                                        <div class="h5 mb-0 fw-700 text-red"> - Rp.{{ number_format($data['total_deduction'], 0, ",",".") }}</div>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="text-end pb-0" colspan="3">
-                                        <div class="text-uppercase small fw-700 text-muted">Gaji Bersih:</div>
+                                        <div class="text-uppercase small fw-700 text-muted">Net salary :</div>
                                     </td>
                                     <td class="text-end pb-0">
-                                        <div class="h5 mb-0 fw-700 text-green">Rp.{{ number_format($gaji_bersih, 0, ",", ".") }}</div>
+                                        <div class="h5 mb-0 fw-700 text-green">Rp.{{ number_format($data['gaji_bersih'], 0, ",", ".") }}</div>
                                     </td>
                                 </tr>
                             </tbody>
@@ -243,7 +246,7 @@
                     <div class="col-lg-6">
                         <!-- Invoice - additional notes-->
                         <div class="small text-muted text-uppercase fw-700 mb-2">Note</div>
-                        <div class="small mb-0">{{ $data->note }}</div>
+                        <div class="small mb-0">Test Note</div>
                     </div>
                 </div>
             </div>

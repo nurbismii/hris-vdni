@@ -57,4 +57,14 @@ class employee extends Model
     {
         return $this->hasMany(Absensi::class, 'nik_karyawan', 'nik');
     }
+
+    public function cutiIzin()
+    {
+        return $this->hasMany(CutiIzin::class, 'nik_karyawan', 'nik');
+    }
+
+    public function gajiKaryawan()
+    {
+        return $this->hasOne(GajiKaryawan::class, 'nik_karyawan', 'nik');
+    }
 }

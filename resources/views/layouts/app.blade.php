@@ -66,9 +66,9 @@
         }
 
         function googleTranslateElementInit() {
-            setCookie('googtrans', '/id/ch', 60);
+            setCookie('googtrans', '/en/ch', 60);
             new google.translate.TranslateElement({
-                pageLanguage: 'id_ID'
+                pageLanguage: 'en_US'
             }, 'google_translate_element');
         }
 

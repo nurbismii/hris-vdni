@@ -42,14 +42,14 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="me-3">
-                                <div class="text-white-75 small">Rekrutmen (Bulanan)</div>
+                                <div class="text-white-75 small">Recruitmen (Monthly)</div>
                                 <div class="text-lg fw-bold">{{ $total_pwkt1_perbulan }}</div>
                             </div>
                             <i class="feather-xl text-white-50" data-feather="user-plus"></i>
                         </div>
                     </div>
                     <div class="card-footer d-flex align-items-center justify-content-between small">
-                        <a class="text-white stretched-link" href="/contract">Selengkapnya...</a>
+                        <a class="text-white stretched-link" href="/contract">More...</a>
                         <div class="text-white"><i class="fas fa-angle-right"></i></div>
                     </div>
                 </div>
@@ -59,14 +59,14 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="me-3">
-                                <div class="text-white-75 small">Karyawan</div>
+                                <div class="text-white-75 small">Employees</div>
                                 <div class="text-lg fw-bold">{{ $total_karyawan }}</div>
                             </div>
                             <i class="feather-xl text-white-50" data-feather="users"></i>
                         </div>
                     </div>
                     <div class="card-footer d-flex align-items-center justify-content-between small">
-                        <a class="text-white stretched-link" href="/employees">Selengkapnya...</a>
+                        <a class="text-white stretched-link" href="/employees">More...</a>
                         <div class="text-white"><i class="fas fa-angle-right"></i></div>
                     </div>
                 </div>
@@ -83,7 +83,7 @@
                         </div>
                     </div>
                     <div class="card-footer d-flex align-items-center justify-content-between small">
-                        <a class="text-white stretched-link" href="/departemen">Selengkapnya...</a>
+                        <a class="text-white stretched-link" href="/departemen">More...</a>
                         <div class="text-white"><i class="fas fa-angle-right"></i></div>
                     </div>
                 </div>
@@ -93,14 +93,14 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="me-3">
-                                <div class="text-white-75 small">Pengguna</div>
+                                <div class="text-white-75 small">Users</div>
                                 <div class="text-lg fw-bold">{{ $total_pengguna }}</div>
                             </div>
                             <i class="feather-xl text-white-50" data-feather="user-check"></i>
                         </div>
                     </div>
                     <div class="card-footer d-flex align-items-center justify-content-between small">
-                        <a class="text-white stretched-link" href="users">Selengkapnya...</a>
+                        <a class="text-white stretched-link" href="users">More...</a>
                         <div class="text-white"><i class="fas fa-angle-right"></i></div>
                     </div>
                 </div>
@@ -110,7 +110,7 @@
             <div class="col-xl-6 mb-4">
                 <div class="card card-waves card-header-actions h-100">
                     <div class="card-header text-muted 75">
-                        Karyawan Masuk
+                        Recruitmen
                     </div>
                     <div class="card-body">
                         <div class="chart-area mb-4 mb-lg-0" style="height: 20rem;"><canvas id="myAreaChart" width="100%" height="40%"></canvas></div>
@@ -120,7 +120,7 @@
             <div class="col-xl-6 mb-4">
                 <div class="card card-angles card-header-actions h-100">
                     <div class="card-header text-muted 75">
-                        Karyawan Keluar
+                        Resign
                     </div>
                     <div class="card-body">
                         <div class="chart-bar mb-4 mb-lg-0" style="height: 20rem;"><canvas id="barChart1" width="100%" height="0"></canvas></div>
@@ -129,7 +129,7 @@
             </div>
             <div class="col-xl-12 mb-1">
                 <div class="card card-angles card-collapsable mb-3">
-                    <a class="card-header" href="#collapseFilterKaryawan" data-bs-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample">Filter daerah
+                    <a class="card-header" href="#collapseFilterKaryawan" data-bs-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample">Filter area
                         <div class="card-collapsable-arrow">
                             <i class="fas fa-chevron-down"></i>
                         </div>
@@ -140,47 +140,47 @@
                             <div class="card-body">
                                 <div class="row gx-3 mb-3">
                                     <div class="col-md-4 mb-2">
-                                        <label class="small mb-1">Provinsi</label>
+                                        <label class="small mb-1">Province</label>
                                         <select name="provinsi_id" class="form-select" id="provinsi_id">
-                                            <option value="" disabled selected>- Pilih provinsi -</option>
+                                            <option value="" disabled selected>- Select Province -</option>
                                             @foreach($provinsi as $row)
                                             <option value="{{ $row->id }}">{{ $row->provinsi }}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                     <div class="col-md-4 mb-2">
-                                        <label class="small mb-1">Kabupaten</label>
+                                        <label class="small mb-1">Regency</label>
                                         <select name="kabupaten" class="form-select" id="kabupaten_id"></select>
                                     </div>
                                     <div class="col-md-4 mb-2">
-                                        <label class="small mb-1">Kecamatan</label>
+                                        <label class="small mb-1">District</label>
                                         <select name="kecamatan" class="form-select" id="kecamatan_id"></select>
                                     </div>
                                 </div>
                                 <button class="btn btn-sm btn-light text-primary" type="submit">
                                     <i class="me-1" data-feather="search"></i>
-                                    Cari
+                                    Search
                                 </button>
                                 <a class="btn btn-sm btn-light text-primary" href="/dashboard">
                                     <i class="me-1" data-feather="trash"></i>
-                                    Hapus
+                                    Clear
                                 </a>
                                 <div class="mb-2 mt-4">
-                                    <b>Hasil pencarian :</b>
+                                    <b>Result :</b>
                                     <div class="p-3">
                                         <table>
                                             <tr>
-                                                <th>Provinsi</th>
+                                                <th>Province</th>
                                                 <td>:</td>
                                                 <td>{{ $prov_res->provinsi }}</td>
                                             </tr>
                                             <tr>
-                                                <th>Kabupaten</th>
+                                                <th>Regency</th>
                                                 <td>:</td>
                                                 <td>{{ $kab_res->kabupaten }}</td>
                                             </tr>
                                             <tr>
-                                                <th>Kecamatan</th>
+                                                <th>District</th>
                                                 <td>:</td>
                                                 <td>{{ $kec_res->kecamatan }}</td>
                                             </tr>
@@ -198,7 +198,7 @@
             <div class="col-xxl-8">
                 <div class="card card-angles mb-3">
                     <div class="card-header text-muted 75">
-                        Rentang Umur
+                        Age range
                     </div>
                     <div class="card-body">
                         <div class="tab-content" id="dashboardNavContent">
@@ -210,13 +210,13 @@
                 </div>
                 <div class="card card-header-actions mb-4">
                     <div class="card-header text-muted 75">
-                        Status Karyawan
+                        Contract status
                         @if($req_awal_prd && $req_akhir_prd)
                         <div>
                             {{ date('d F Y', strtotime($req_awal_prd)) }} - {{ date('d F Y', strtotime($req_akhir_prd)) }}
                         </div>
                         @endif
-                        <a class="btn btn-sm btn-primary-soft text-primary" data-bs-toggle="modal" data-bs-target="#selectPeriode">Cari periode</a>
+                        <a class="btn btn-sm btn-primary-soft text-primary" data-bs-toggle="modal" data-bs-target="#selectPeriode">Period search</a>
                     </div>
                     <div class="card-body">
                         <div class="tab-content" id="dashboardNavContent">
@@ -230,7 +230,7 @@
                     <div class="col-xl-12 mb-4">
                         <div class="card card-header-actions h-100">
                             <div class="card-header text-muted 75">
-                                Presensi Terbaru
+                                Latest precense
                             </div>
                             <div class="card-body">
                                 <div class="timeline timeline-xs">
@@ -241,9 +241,9 @@
                                             <div class="timeline-item-marker-indicator bg-green"></div>
                                         </div>
                                         <div class="timeline-item-content">
-                                            Presensi terbaru
+                                            Latest precense
                                             <a class="fw-bold text-dark" href="#!">{{ getName($row->nik_karyawan) }}</a>
-                                            Berhasil melakukan presensi
+                                            Succeeded in precense
                                         </div>
                                     </div>
                                     @endforeach
@@ -257,7 +257,7 @@
                 <div class="row">
                     <div class="col-xl-6 col-xxl-12">
                         <div class="card mb-4">
-                            <div class="card-header text-muted 75">Status Kontrak</div>
+                            <div class="card-header text-muted 75">Contract status</div>
                             <div class="card-body">
                                 <div class="chart-pie mb-4 mb-lg-0" style="height: 20rem"><canvas id="pieChart" width="100%" height="0"></canvas></div>
                             </div>
@@ -265,7 +265,7 @@
                     </div>
                     <div class="col-xl-6 col-xxl-12">
                         <div class="card h-100">
-                            <div class="card-header text-muted 75">Terakhir Aktif</div>
+                            <div class="card-header text-muted 75">Last active</div>
                             <div class="card-body">
                                 @foreach($terakhir_login as $d)
                                 <div class="d-flex align-items-center justify-content-between mb-4">
@@ -291,7 +291,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Filter periode</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Period filter</h5>
                     </h5>
                     <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -299,47 +299,17 @@
                     <div class="modal-body">
                         @csrf
                         <div class="mb-3">
-                            <label class="small mb-1">Mulai Periode</label>
+                            <label class="small mb-1">Period start</label>
                             <input type="date" name="mulai_periode" class="form-control">
                         </div>
                         <div class="mb-3">
-                            <label class="small mb-1">Akhir Periode</label>
+                            <label class="small mb-1">Period end</label>
                             <input type="date" name="akhir_periode" class="form-control">
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-light btn-sm" type="button" data-bs-dismiss="modal">Tutup</button>
+                        <button class="btn btn-light btn-sm" type="button" data-bs-dismiss="modal">Close</button>
                         <button class="btn btn-primary btn-sm" type="submit">Filter</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="selectDaerah" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Pilih lokasi</h5>
-                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form action="{{ url('dashboard') }}" method="GET" class="nav flex-column" id="stickyNav">
-                    <div class="modal-body">
-                        @csrf
-                        <div class="mb-3">
-                            <label class="small mb-1">Provinsi</label>
-                            <select name="provinsi_id" class="form-select" id="provinsi_id">
-
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label class="small mb-1">Kabupaten</label>
-                            <select name="kabupaten" class="form-select" id="kabupaten_id"></select>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-light btn-sm" type="button" data-bs-dismiss="modal">Tutup</button>
-                        <button class="btn btn-primary btn-sm" type="submit">Cari</button>
                     </div>
                 </form>
             </div>

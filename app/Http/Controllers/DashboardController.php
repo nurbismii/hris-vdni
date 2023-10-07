@@ -40,7 +40,8 @@ class DashboardController extends Controller
             $tahun_sekarang = date('Y', strtotime(Carbon::now()));
 
             $tanggal_hari_ini = $bulan_sekarang . '-16';
-            $bulan_depan = date('Y-m-d', strtotime("$tanggal_hari_ini +1 Month -1 Day"));
+            $tanggal_hari_ini = date('Y-m-d', strtotime("$tanggal_hari_ini -1 Month -1 Day"));
+            $bulan_depan = date('Y-m-d', strtotime("$tanggal_hari_ini +1 Month +1 Day"));
 
             $provinsi = Provinsi::all();
 
@@ -159,10 +160,10 @@ class DashboardController extends Controller
         );
         $hari_ini = $dayList[$day];
 
-        $datas = User::with('employee')->where('nik_karyawan', Auth::user()->nik_karyawan)->first();
-        $divisi = Divisi::with('departemen')->where('id', $datas->employee->divisi_id)->first();
+        $karyawan = User::with('employee')->where('nik_karyawan', Auth::user()->nik_karyawan)->first();
+        $divisi = Divisi::with('departemen')->where('id', $karyawan->employee->divisi_id)->first();
 
-        return view('dashboard-user', compact('hari_ini', 'divisi'));
+        return view('dashboard-user', compact('data', 'hari_ini', 'divisi'));
     }
 
     public function settingDashboard(Request $request)

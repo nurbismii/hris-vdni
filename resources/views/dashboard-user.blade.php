@@ -27,7 +27,7 @@
                 <div class="row align-items-center justify-content-between">
                     <div class="col">
                         <h2 class="text-primary">Selamat Datang {{ ucwords(strtolower((Auth::user()->employee->nama_karyawan))) }}, Dashboard kamu sudah siap!</h2>
-                        <!-- <p class="text-gray-700">Great job, your affiliate dashboard is ready to go! You can view sales, generate links, prepare coupons, and download affiliate reports using this dashboard.</p> -->
+                        <p class="text-gray-700">{{ $data->description }}.</p>
                     </div>
                     <div class="col d-none d-lg-block mt-xxl-n4"><img class="img-fluid px-xl-4 mt-xxl-n5" src="assets/img/illustrations/statistics.svg" /></div>
                 </div>

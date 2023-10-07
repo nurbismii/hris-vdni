@@ -36,8 +36,8 @@
                 <div class="card">
                     <div class="card-body" style="overflow-x:auto;">
                         <table id="data-table-pengajuan" class="table table-hover" style="width: 100%;">
-                            <div class="row">
-                                <div class="mb-3 col-4">
+                            <div class="row gx-3 mb-3">
+                                <div class="col-md-4 mb-3">
                                     <select name="status_hrd" class="form-select" id="status_hrd">
                                         <option value="" selected>- Pilih status pengajuan -</option>
                                         <option value="Menunggu">Menunggu</option>
@@ -45,7 +45,7 @@
                                         <option value="Ditolak">Ditolak</option>
                                     </select>
                                 </div>
-                                <div class="mb-3 col-4">
+                                <div class="col-md-4 mb-3">
                                     <select name="status_hrd" class="form-select" id="tipe">
                                         <option value="" selected>- Pilih tipe pengajuan -</option>
                                         <option value="Cuti">Cuti</option>
@@ -53,7 +53,7 @@
                                         <option value="Izin Tidak Dibayarkan">Izin Tidak Dibayarkan</option>
                                     </select>
                                 </div>
-                                <div class="mb-3 col-4">
+                                <div class="col-md-4 mb-3">
                                     <select name="status_hrd" class="form-select" id="status_hod">
                                         <option value="" selected>- Status HOD -</option>
                                         <option value="Diterima">Diterima</option>

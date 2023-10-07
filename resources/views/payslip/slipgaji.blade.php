@@ -34,110 +34,48 @@
     <div class="container-fluid px-4">
         <div class="col-xl-12">
             <div class="card mb-3">
-                <form action="{{ url('salary/slip-gaji') }}" method="get">
+                <form action="{{ url('salary/payslip') }}" method="get">
                     @csrf
                     <div class="card-body">
-                        <div class="row gx-3 mb-3">
-                            <div class="col-10">
-                                <input class="form-control" name="periode" type="month" required />
+                        <div class="row gx-3">
+                            <div class="col-md-12 mb-2">
+                                <label for="" class="mb-2">Select period</label>
+                                <input class="form-control" name="period" type="month" required />
                             </div>
-                            <div class="col-2">
-                                <div class="text-center d-grid">
-                                    <button class="btn btn-facebook">
-                                        <i class="fa fa-search"></i> Periode Slip Gaji
-                                    </button>
-                                </div>
+                            <div class="text-center d-grid">
+                                <button class="btn btn-light text-primary" type="submit">
+                                    <i class="me-1" data-feather="search"></i>
+                                    Search
+                                </button>
                             </div>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
-        <div class="card">
-            <div class="card-body" style="overflow-x:auto;">
-                <table id="datatablesSimple" class="table table-hover" style="width: 100%;">
-                    <thead>
-                        <tr>
-                            <th>NIK</th>
-                            <th>Nama</th>
-                            <th>Sakit</th>
-                            <th>Izin</th>
-                            <th>Off</th>
-                            <th>Cuti</th>
-                            <th>Libur</th>
-                            <th>Total</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($datas as $row)
-                        <tr>
-                            <td>{{ $row->nik }}</td>
-                            <td>{{ $row->nama_karyawan }}</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>{{ count($row->absensi) }}</td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body" style="overflow-x:auto;">
+                    <table id="datatablesSimple" class="table table-hover" style="width: 100%;">
+                        <thead>
+                            <tr>
+                                <th>Employee</th>
+                                <th>Employee ID</th>
+                                <th>Email</th>
+                                <th>Join Date</th>
+                                <th>Salary</th>
+                                <th>PaySlip</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
 
-    <!-- Modal update employee maatwebsite -->
-    <div class="modal fade" id="modalUpdateEmployee" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Upload employee data change</h5>
-                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </tbody>
+                    </table>
                 </div>
-                <form action="{{ route('updateImport.employee') }}" method="POST" enctype="multipart/form-data" class="nav flex-column" id="stickyNav">
-                    <div class="modal-body">
-                        @csrf
-                        <div class="mb-3">
-                            <label class="form-label">Select a file</label>
-                            <input class="form-control" type="file" name="file" id="formFile">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
-                        <button class="btn btn-success" type="submit">Send</button>
-                    </div>
-                </form>
             </div>
         </div>
     </div>
-    <!-- Modal update emplooye maatwebsite end -->
-
-    <!-- Modal delete emplooye maatwebsite -->
-    <div class="modal fade" id="modalDeleteEmployee" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Upload delete employee data</h5>
-                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form action="{{ route('destroyImport.employee') }}" method="POST" enctype="multipart/form-data" class="nav flex-column" id="stickyNav">
-                    <div class="modal-body">
-                        @csrf
-                        <div class="mb-3">
-                            <label class="form-label">Select a file</label>
-                            <input class="form-control" name="file" type="file" id="formFile">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
-                        <button class="btn btn-success" type="submit">Send</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    <!-- Modal delete emplooye maatwebsite end -->
 
     @push('scripts')
     <x-toastr />

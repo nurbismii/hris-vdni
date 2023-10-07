@@ -92,11 +92,17 @@ class CutiIzinController extends Controller
     public function updatePengajuanKaryawanDiterima($id)
     {
         $data = [
-            'status_hrd' => 'Diterima'
+            'status_hrd' => 'Diterima',
+            'status_penanggung_jawab' => 'Diterima'
         ];
 
-        CutiIzin::where('id', $id)->update($data);
+        $checkIzin = CutiIzin::where('id', $id)->first();
 
+        if ($checkIzin->status_hod != 'Diterima') {
+            return back()->with('warning', 'Tidak dapat diperbarui, belum mendapatkan izin dari HOD');
+        }
+
+        CutiIzin::where('id', $id)->update($data);
         return back()->with('success', 'Pengajuan berhasil diperbarui');
     }
 
@@ -105,6 +111,12 @@ class CutiIzinController extends Controller
         $data = [
             'status_hrd' => 'Ditolak'
         ];
+
+        $checkIzin = CutiIzin::where('id', $id)->first();
+
+        if ($checkIzin->status_hod = 'Menunggu') {
+            return back()->with('warning', 'Tidak dapat diperbarui, status HOD masih menunggu');
+        }
 
         CutiIzin::where('id', $id)->update($data);
 

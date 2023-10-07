@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\Exports\ExportSalaries;
 use App\Http\Requests\StoreGajiKaryawanRequest;
 use App\Imports\ImportSalaries;
-use App\Models\Absensi;
+use Yajra\DataTables\DataTables;
+use App\Models\Departemen;
 use App\Models\employee;
 use App\Models\fileSalary;
 use App\Models\GajiKaryawan;
@@ -15,6 +16,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
+use Ramsey\Uuid\Uuid;
 
 class SalaryController extends Controller
 {
@@ -27,26 +29,332 @@ class SalaryController extends Controller
 
     public function slipgaji(Request $request)
     {
-        $start = '2023-08'. '-16';
-        $end = date('Y-m-d', strtotime("$start +1 Month -1 Day"));
+        if ($request->filled('period')) {
+            $start = $request->period . '-16';
+            $end = date('Y-m-d', strtotime("$start +1 Month -1 Day"));
 
-        $datas = employee::with(['absensi' => function ($query) use ($start, $end){
-            $query->whereBetween('jam_masuk', [$start . " 00:00:00", $end . " 23:59:59"]);
-        }])->where('nik', '15040001')->get();
+            $datas = employee::with([
+                'cutiIzin' => function ($query) use ($start, $end) {
+                    $query->whereBetween('tanggal_mulai', [$start, $end]);
+                },
+                'absensi' => function ($query) use ($start, $end) {
+                    $query->whereBetween('jam_masuk', [$start . " 00:00:00", $end . " 23:59:59"]);
+                }
+            ])->get();
 
-        return $datas;
+            return $datas;
 
+            return view('payslip.slipgaji', compact('datas'));
+        } else {
+            $datas = [];
+        }
         return view('payslip.slipgaji', compact('datas'));
     }
 
-    public function show($id)
+    public function gajiKaryawan(Request $request)
     {
-        $data = salary::findOrFail($id);
-        $total_deduction = $data->jht + $data->jp + $data->bpjs_kesehatan + $data->deduction_unpaid_leave + $data->deduction_php21;
-        $total_diterima = ($data->gaji_pokok + $data->tunjangan_umum + $data->tunjangan_pengawas + $data->tunjangan_transport + $data->tunjangan_mk + $data->tunjangan_koefisien + $data->rapel + $data->insentif + $data->tunjangan_lap);
-        $gaji_bersih = ($total_diterima - $total_deduction);
+        $karyawan = employee::select('nik', 'nama_karyawan')->get();
+        $departement = Departemen::all();
 
-        return view('payslip.show', compact('data', 'total_diterima', 'total_deduction', 'gaji_bersih'));
+        return view('payslip.gaji-karyawan', compact('karyawan', 'departement'));
+    }
+
+    public function serverSideSalary(Request $request)
+    {
+        $data = employee::join('divisis', 'divisis.id', '=', 'employees.divisi_id')
+            ->join('departemens', 'departemens.id', '=', 'divisis.departemen_id')
+            ->join('gaji_karyawan', 'gaji_karyawan.nik_karyawan', '=', 'employees.nik');
+        return DataTables::of($data)
+            ->addIndexColumn()
+            ->addColumn('action', function ($data) {
+                return view('payslip._action', [
+                    'data' => $data,
+                    'url_show' => route('salary.show', $data->nik),
+                ]);
+            })->filter(function ($instance) use ($request) {
+                if ($request->get('departemen') != '') {
+                    $instance->where('departemen_id', $request->get('departemen'));
+                }
+                if ($request->get('nama_divisi') != '') {
+                    $instance->where('divisi_id', $request->get('nama_divisi'));
+                }
+                if (!empty($request->get('search'))) {
+                    $instance->where(function ($w) use ($request) {
+                        $search = $request->get('search');
+                        $w->orWhere('nik', 'LIKE', "%$search%")
+                            ->orWhere('nama_karyawan', 'LIKE', "%$search%");
+                    });
+                }
+            })
+            ->rawColumns(['action'])
+            ->make(true);
+    }
+
+    public function show(Request $request, $id)
+    {
+        $data = gajiKaryawan::with('employee')->where('nik_karyawan', $id)->first();
+
+        $leave = [];
+        $salary = [];
+        $absensis = [];
+
+        if ($request->filled('period')) {
+            $start = $request->period . '-16';
+            $end = date('Y-m-d', strtotime("$start +1 Month -1 Day"));
+
+            $salaries = employee::with([
+                'gajiKaryawan',
+                'cutiIzin' => function ($query) use ($start, $end) {
+                    $query->whereBetween('tanggal_mulai', [$start, $end]);
+                },
+                'absensi' => function ($query) use ($start, $end) {
+                    $query->whereBetween('jam_masuk', [$start . " 00:00:00", $end . " 23:59:59"]);
+                }
+            ])->where('nik', $id)->first();
+
+
+
+            foreach ($salaries->cutiIzin as $row) {
+
+                $leave[] = $row;
+            }
+
+            foreach ($salaries->absensi as $row) {
+
+                $absensis[] = $row;
+            }
+
+            $daily_salary = dailySalary($data, $absensis);
+
+            $meal_allowance = mealAllowance($data, $absensis);
+
+            $jht = $data->gaji_pokok * 0.02;
+
+            $jp = $data->gaji_pokok * 0.01;
+
+            $bpjs_kesehatan = $data->gaji_pokok * 0.01;
+
+            $deduction_unpaid_leave = 0;
+
+            $deduction_pph21 = 0;
+
+            $total_deduction = $jht + $jp + $bpjs_kesehatan + $deduction_unpaid_leave + $deduction_pph21;
+
+            $total_diterima = $daily_salary + $data->tunj_umum + $data->tunj_pengawas + $data->tunj_transport_pulsa + $data->tunj_masa_kerja + $data->tunj_koefisien_jabatan + $data->tunj_lap + $meal_allowance;
+
+            $gaji_bersih = $total_diterima - $total_deduction;
+
+            $data = [
+                'salary' => $data,
+                'employee' => $data->employee,
+                'jht' => $jht,
+                'jp' => $jp,
+                'bpjs_kesehatan' => $bpjs_kesehatan,
+                'daily_salary' => $daily_salary,
+                'meal_allowance' => $meal_allowance,
+                'deduction_unpaid_leave' => $deduction_unpaid_leave,
+                'deduction_pph21' => $deduction_pph21,
+                'total_deduction' => $total_deduction,
+                'total_diterima' => $total_diterima,
+                'gaji_bersih' => $gaji_bersih,
+            ];
+
+            return view('payslip.show', compact('data', 'absensis', 'start', 'end'));
+        }
+
+        $current_month = date('Y-m', strtotime(Carbon::now()));
+
+        $start = $current_month . '-16';
+        $start = date('Y-m-d', strtotime("$start -1 Month -1 Day"));
+        $end = date('Y-m-d', strtotime("$start +1 Month +1 Day"));
+
+        $salaries = employee::with([
+            'gajiKaryawan',
+            'cutiIzin' => function ($query) use ($start, $end) {
+                $query->whereBetween('tanggal_mulai', [$start, $end]);
+            },
+            'absensi' => function ($query) use ($start, $end) {
+                $query->whereBetween('jam_masuk', [$start . " 00:00:00", $end . " 23:59:59"]);
+            }
+        ])->where('nik', $id)->first();
+
+
+        foreach ($salaries->cutiIzin as $row) {
+
+            $leave[] = $row;
+        }
+
+        foreach ($salaries->absensi as $row) {
+
+            $absensis[] = $row;
+        }
+
+        $daily_salary = dailySalary($data, $absensis);
+
+        $meal_allowance = mealAllowance($data, $absensis);
+
+        $jht = $data->gaji_pokok * 0.02;
+
+        $jp = $data->gaji_pokok * 0.01;
+
+        $bpjs_kesehatan = $data->gaji_pokok * 0.01;
+
+        $deduction_unpaid_leave = 0;
+
+        $deduction_pph21 = 0;
+
+        $total_deduction = $jht + $jp + $bpjs_kesehatan + $deduction_unpaid_leave + $deduction_pph21;
+
+        $total_diterima = $daily_salary + $data->tunj_umum + $data->tunj_pengawas + $data->tunj_transport_pulsa + $data->tunj_masa_kerja + $data->tunj_koefisien_jabatan + $data->tunj_lap + $meal_allowance;
+
+        $gaji_bersih = $total_diterima - $total_deduction;
+
+        $data = [
+            'salary' => $data,
+            'employee' => $data->employee,
+            'jht' => $jht,
+            'jp' => $jp,
+            'bpjs_kesehatan' => $bpjs_kesehatan,
+            'daily_salary' => $daily_salary,
+            'meal_allowance' => $meal_allowance,
+            'deduction_unpaid_leave' => $deduction_unpaid_leave,
+            'deduction_pph21' => $deduction_pph21,
+            'total_deduction' => $total_deduction,
+            'total_diterima' => $total_diterima,
+            'gaji_bersih' => $gaji_bersih,
+        ];
+        return view('payslip.show', compact('data', 'absensis', 'start', 'end'));
+    }
+
+    public function generateSlip(Request $request, $nik)
+    {
+        $data = gajiKaryawan::with('employee')->where('nik_karyawan', $nik)->first();
+
+        $leave = [];
+        $absensis = [];
+        $start = $request->period . '-16';
+        $end = date('Y-m-d', strtotime("$start +1 Month -1 Day"));
+
+        $salaries = employee::with([
+            'gajiKaryawan',
+            'cutiIzin' => function ($query) use ($start, $end) {
+                $query->whereBetween('tanggal_mulai', [$start, $end]);
+            },
+            'absensi' => function ($query) use ($start, $end) {
+                $query->whereBetween('jam_masuk', [$start . " 00:00:00", $end . " 23:59:59"]);
+            }
+        ])->where('nik', $nik)->first();
+
+        foreach ($salaries->cutiIzin as $row) {
+            $leave[] = $row;
+        }
+
+        foreach ($salaries->absensi as $row) {
+            $absensis[] = $row;
+        }
+
+        $daily_salary = dailySalary($data, $absensis);
+
+        $meal_allowance = mealAllowance($data, $absensis);
+
+        $jht = $data->gaji_pokok * 0.02;
+
+        $jp = $data->gaji_pokok * 0.01;
+
+        $bpjs_kesehatan = $data->gaji_pokok * 0.01;
+
+        $deduction_unpaid_leave = 0;
+
+        $deduction_pph21 = 0;
+
+        $total_deduction = $jht + $jp + $bpjs_kesehatan + $deduction_unpaid_leave + $deduction_pph21;
+
+        $total_diterima = $daily_salary + $data->tunj_umum + $data->tunj_pengawas + $data->tunj_transport_pulsa + $data->tunj_masa_kerja + $data->tunj_koefisien_jabatan + $data->tunj_lap + $meal_allowance;
+
+        $gaji_bersih = $total_diterima - $total_deduction;
+
+        $data = [
+            'salary' => $data,
+            'employee' => $data->employee,
+            'jht' => $jht,
+            'jp' => $jp,
+            'bpjs_kesehatan' => $bpjs_kesehatan,
+            'daily_salary' => $daily_salary,
+            'meal_allowance' => $meal_allowance,
+            'deduction_unpaid_leave' => $deduction_unpaid_leave,
+            'deduction_pph21' => $deduction_pph21,
+            'total_deduction' => $total_deduction,
+            'total_diterima' => $total_diterima,
+            'gaji_bersih' => $gaji_bersih,
+        ];
+
+        salary::create([
+            'id' => Uuid::uuid4()->getHex(),
+            'employee_id' => $data['salary']['nik_karyawan'],
+            'posisi' => $data['employee']['posisi'],
+            'durasi_sp' => '2015-01-01' ?? null,
+            'status_gaji' => $data['salary']['status_gaji'],
+            'jumlah_hari_kerja' => $data['salary']['jumlah_hari_kerja'],
+            'jumlah_hour_machine' => 0,
+            'gaji_pokok' => $data['daily_salary'],
+            'tunjangan_umum' => $data['salary']['tunj_umum'],
+            'tunjangan_pengawas' => $data['salary']['tunj_pengawas'],
+            'tunjangan_transport' => $data['salary']['tunj_transport_pulsa'],
+            'tunjangan_mk' => $data['salary']['tunj_masa_kerja'],
+            'tunjangan_koefisien' => $data['salary']['tunj_koefisien_jabatan'],
+            'ot' => 0,
+            'hm' => 0,
+            'rapel' => 0,
+            'insentif' => 0,
+            'tunjangan_lap' => 0,
+            'bonus' => 0,
+            'jht' => $data['jht'],
+            'jp' => $data['jp'],
+            'bpjs_kesehatan' => $data['bpjs_kesehatan'],
+            'unpaid_leave' => $data['deduction_unpaid_leave'],
+            'deduction' => 0,
+            'total_diterima' => $data['gaji_bersih'],
+            'account_number' => $data['employee']['no_rekening'],
+            'bank' => $data['employee']['nama_bank'],
+            'mulai_periode' => $start,
+            'akhir_periode' => $end,
+            'deduction_pph21' => $data['deduction_pph21'],
+            'thr' => 0,
+            'note' => 'Test',
+            'created_by' => Auth::user()->nik_karyawan
+        ]);
+
+        return back()->with('success', 'Generate success');
+    }
+
+    public function fetchKaryawan($id)
+    {
+        $data = employee::leftjoin('divisis', 'divisis.id', '=', 'employees.divisi_id')
+            ->leftjoin('departemens', 'departemens.id', '=', 'divisis.departemen_id')
+            ->select(DB::raw("*"))
+            ->where('employees.nik', $id)->first();
+
+        return response()->json($data);
+    }
+
+    public function storeGajiKaryawan(StoreGajiKaryawanRequest $request)
+    {
+        GajiKaryawan::updateOrCreate([
+            'nik_karyawan' => $request->nik_karyawan,
+        ], [
+            'status_gaji' => $request->status_gaji,
+            'jumlah_hari_kerja' => $request->jumlah_hari_kerja,
+            'tunj_umum' => $request->tunj_umum ?? 0,
+            'tunj_pengawas' => $request->tunj_pengawas ?? 0,
+            'tunj_transport_pulsa' => $request->tunj_transport_pulsa ?? 0,
+            'tunj_masa_kerja' => $request->tunj_masa_kerja ?? 0,
+            'tunj_koefisien_jabatan' => $request->tunj_koefisien_jabatan ?? 0,
+            'tunj_lap' => $request->tunj_lap ?? 0,
+            'tunj_makan' => str_replace(array('Rp', '.'), "", $request->tunj_makan),
+            'gaji_pokok' => str_replace(array('Rp', '.'), "", $request->gaji_pokok)
+        ]);
+
+        return back()->with('success', 'Penyesuaian gaji NIK : ' . $request->nik . ' berhasil dilakukan');
     }
 
     public function history()
@@ -78,40 +386,5 @@ class SalaryController extends Controller
     public function exportSalary(Request $request)
     {
         return Excel::download(new ExportSalaries, 'Salary-Template.xlsx');
-    }
-
-    public function gajiKaryawan()
-    {
-        $karyawan = employee::select('nik', 'nama_karyawan')->orderBy('nik', 'ASC')->get();
-        return view('payslip.gaji-karyawan', compact('karyawan'));
-    }
-
-    public function fetchDetailKaryawan($nik)
-    {
-        $data = employee::leftjoin('divisis', 'divisis.id', '=', 'employees.divisi_id')
-            ->leftjoin('departemens', 'departemens.id', '=', 'divisis.departemen_id')
-            ->select(DB::raw("*"))
-            ->where('employees.nik', $nik)->first();
-        return response()->json($data);
-    }
-
-    public function storeGajiKaryawan(StoreGajiKaryawanRequest $request)
-    {
-        GajiKaryawan::updateOrCreate([
-            'nik_karyawan' => $request->nik_karyawan,
-        ], [
-            'status_gaji' => $request->status_gaji,
-            'jumlah_hari_kerja' => $request->jumlah_hari_kerja,
-            'tunj_umum' => $request->tunj_umum ?? 0,
-            'tunj_pengawas' => $request->tunj_pengawas ?? 0,
-            'tunj_transport_pulsa' => $request->tunj_transport_pulsa ?? 0,
-            'tunj_masa_kerja' => $request->tunj_masa_kerja ?? 0,
-            'tunj_koefisien_jabatan' => $request->tunj_koefisien_jabatan ?? 0,
-            'tunj_lap' => $request->tunj_lap ?? 0,
-            'tunj_makan' => str_replace(array('Rp', '.'), "", $request->tunj_makan),
-            'gaji_pokok' => str_replace(array('Rp', '.'), "", $request->gaji_pokok)
-        ]);
-
-        return back()->with('success', 'Penyesuaian gaji NIK : ' . $request->nik . ' berhasil dilakukan');
     }
 }
