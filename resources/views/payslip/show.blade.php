@@ -8,6 +8,10 @@
     <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- Toastr -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     @endpush
 
     <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
@@ -21,13 +25,11 @@
                         </h1>
                     </div>
                     <div class="col-12 col-xl-auto mb-3">
-                        <form action="{{ route('generate.slip', $data['employee']['nik']) }}" method="post">
-                            @csrf
-                            <button class="btn btn-sm btn-light text-blue" type="submit">
-                                <i class="me-1" data-feather="upload-cloud"></i>
-                                Generate payslip
-                            </button>
-                        </form>
+                        @csrf
+                        <a class="btn btn-sm btn-light text-primary" data-bs-toggle="modal" data-bs-target="#modalGenerate{{$data['salary']['nik_karyawan']}}">
+                            <i class="me-1" data-feather="upload-cloud"></i>
+                            Generate payslip
+                        </a>
                         <a class="btn btn-sm btn-light text-blue" href="/salary/employee">
                             <i class="me-1" data-feather="arrow-left"></i>
                             Back
@@ -56,7 +58,7 @@
                                 <th scope="row">Employee ID</th>
                                 <td>{{ $data['employee']['nik'] }}</td>
                                 <td>Payable/Working days</td>
-                                <td>{{count($absensis) }} / {{ $data['salary']['jumlah_hari_kerja'] }} </td>
+                                <td>{{count($absensis)}} / {{ $data['salary']['jumlah_hari_kerja'] }} </td>
                             </tr>
                             <tr>
                                 <th scope="row">Employee Name</th>
@@ -253,7 +255,36 @@
         </div>
     </div>
 
+    <!-- Modal add salary -->
+    <div class="modal fade" id="modalGenerate{{$data['salary']['nik_karyawan']}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Salary period</h5>
+                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{{ route('generate.slip', $data['salary']['nik_karyawan']) }}" method="POST" enctype="multipart/form-data" class="nav flex-column" id="stickyNav">
+                    <div class="modal-body">
+                        @csrf
+                        <div class="row gx-3 mb-2">
+                            <div class="col-md-12 mb-2">
+                                <label for="">Select period</label>
+                                <input type="month" class="form-control" name="period">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-sm btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
+                        <button class="btn btn-sm btn-success" type="submit">Generate</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Modal add salary end -->
+
     @push('scripts')
+    <x-toastr />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="{{ asset('js/scripts.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" crossorigin="anonymous"></script>

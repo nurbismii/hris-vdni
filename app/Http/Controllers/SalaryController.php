@@ -254,23 +254,14 @@ class SalaryController extends Controller
         }
 
         $daily_salary = dailySalary($data, $absensis);
-
         $meal_allowance = mealAllowance($data, $absensis);
-
         $jht = $data->gaji_pokok * 0.02;
-
         $jp = $data->gaji_pokok * 0.01;
-
         $bpjs_kesehatan = $data->gaji_pokok * 0.01;
-
         $deduction_unpaid_leave = 0;
-
         $deduction_pph21 = 0;
-
         $total_deduction = $jht + $jp + $bpjs_kesehatan + $deduction_unpaid_leave + $deduction_pph21;
-
         $total_diterima = $daily_salary + $data->tunj_umum + $data->tunj_pengawas + $data->tunj_transport_pulsa + $data->tunj_masa_kerja + $data->tunj_koefisien_jabatan + $data->tunj_lap + $meal_allowance;
-
         $gaji_bersih = $total_diterima - $total_deduction;
 
         $data = [
@@ -288,43 +279,49 @@ class SalaryController extends Controller
             'gaji_bersih' => $gaji_bersih,
         ];
 
-        salary::create([
-            'id' => Uuid::uuid4()->getHex(),
-            'employee_id' => $data['salary']['nik_karyawan'],
-            'posisi' => $data['employee']['posisi'],
-            'durasi_sp' => '2015-01-01' ?? null,
-            'status_gaji' => $data['salary']['status_gaji'],
-            'jumlah_hari_kerja' => $data['salary']['jumlah_hari_kerja'],
-            'jumlah_hour_machine' => 0,
-            'gaji_pokok' => $data['daily_salary'],
-            'tunjangan_umum' => $data['salary']['tunj_umum'],
-            'tunjangan_pengawas' => $data['salary']['tunj_pengawas'],
-            'tunjangan_transport' => $data['salary']['tunj_transport_pulsa'],
-            'tunjangan_mk' => $data['salary']['tunj_masa_kerja'],
-            'tunjangan_koefisien' => $data['salary']['tunj_koefisien_jabatan'],
-            'ot' => 0,
-            'hm' => 0,
-            'rapel' => 0,
-            'insentif' => 0,
-            'tunjangan_lap' => 0,
-            'bonus' => 0,
-            'jht' => $data['jht'],
-            'jp' => $data['jp'],
-            'bpjs_kesehatan' => $data['bpjs_kesehatan'],
-            'unpaid_leave' => $data['deduction_unpaid_leave'],
-            'deduction' => 0,
-            'total_diterima' => $data['gaji_bersih'],
-            'account_number' => $data['employee']['no_rekening'],
-            'bank' => $data['employee']['nama_bank'],
-            'mulai_periode' => $start,
-            'akhir_periode' => $end,
-            'deduction_pph21' => $data['deduction_pph21'],
-            'thr' => 0,
-            'note' => 'Test',
-            'created_by' => Auth::user()->nik_karyawan
-        ]);
-
-        return back()->with('success', 'Generate success');
+        try {
+            DB::beginTransaction();
+            salary::create([
+                'id' => Uuid::uuid4()->getHex(),
+                'employee_id' => $data['salary']['nik_karyawan'],
+                'posisi' => $data['employee']['posisi'],
+                'durasi_sp' => '2015-01-01' ?? null,
+                'status_gaji' => $data['salary']['status_gaji'],
+                'jumlah_hari_kerja' => count($absensis),
+                'jumlah_hour_machine' => 0,
+                'gaji_pokok' => $data['daily_salary'],
+                'tunjangan_umum' => $data['salary']['tunj_umum'],
+                'tunjangan_pengawas' => $data['salary']['tunj_pengawas'],
+                'tunjangan_transport' => $data['salary']['tunj_transport_pulsa'],
+                'tunjangan_mk' => $data['salary']['tunj_masa_kerja'],
+                'tunjangan_koefisien' => $data['salary']['tunj_koefisien_jabatan'],
+                'ot' => 0,
+                'hm' => 0,
+                'rapel' => 0,
+                'insentif' => 0,
+                'tunjangan_lap' => 0,
+                'bonus' => 0,
+                'jht' => $data['jht'],
+                'jp' => $data['jp'],
+                'bpjs_kesehatan' => $data['bpjs_kesehatan'],
+                'unpaid_leave' => $data['deduction_unpaid_leave'],
+                'deduction' => 0,
+                'total_diterima' => $data['gaji_bersih'],
+                'account_number' => $data['employee']['no_rekening'],
+                'bank' => $data['employee']['nama_bank'],
+                'mulai_periode' => $start,
+                'akhir_periode' => $end,
+                'deduction_pph21' => $data['deduction_pph21'],
+                'thr' => 0,
+                'note' => 'Test',
+                'created_by' => Auth::user()->nik_karyawan
+            ]);
+            DB::commit();
+            return back()->with('success', 'Generate success');
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            return back()->with('error', 'Generate failed');
+        }
     }
 
     public function fetchKaryawan($id)

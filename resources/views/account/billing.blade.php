@@ -1,4 +1,4 @@
-<x-app-layout title="Information">
+<x-app-layout title="Payslip">
 
 	@push('styles')
 	<link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
@@ -21,13 +21,13 @@
 					<div class="col-auto mb-3">
 						<h1 class="page-header-title">
 							<div class="page-header-icon"><i data-feather="user"></i></div>
-							Informasi
+							Payslip
 						</h1>
 					</div>
 					<div class="col-12 col-xl-auto mb-3">
 						<a class="btn btn-sm btn-light text-blue" href="/account/profile">
 							<i class="me-1" data-feather="x"></i>
-							Tutup
+							Close
 						</a>
 					</div>
 				</div>
@@ -43,7 +43,7 @@
 				<!-- Billing card 1-->
 				<div class="card h-100 border-start-lg border-start-primary">
 					<div class="card-body">
-						<div class="small text-muted">Gaji saat ini</div>
+						<div class="small text-muted">Current salary</div>
 						<div class="h3">Rp.{{ number_format($gaji_karyawan->gaji_pokok) ?? 'Tidak diketahui'}}</div>
 						<a class="text-arrow-icon small" href="#!">
 							Detail
@@ -56,7 +56,7 @@
 				<!-- Billing card 3-->
 				<div class="card h-100 border-start-lg border-start-success">
 					<div class="card-body">
-						<div class="small text-muted">Kontrak Berakhir</div>
+						<div class="small text-muted">Contract expired</div>
 						@if($contract)
 						<div class="h3">{{ date('d F Y', strtotime($contract->tanggal_berakhir_kontrak)) ?? 'Belum di proses' }}</div>
 						@endif
@@ -72,7 +72,7 @@
 					@csrf
 					<div class="card">
 						<div class="card-body" style="overflow-x: auto;">
-							<label for="">Periode</label>
+							<label for="">Period</label>
 							<input type="month" name="periode" class="form-control">
 							<div class="mt-2">
 								<button class="btn btn-sm btn-light text-primary" type="submit">
@@ -81,7 +81,7 @@
 								</button>
 								<a class="btn btn-sm btn-light text-primary" data-bs-toggle="modal" data-bs-target="#modalDeleteEmployee">
 									<i class="me-1" data-feather="trash"></i>
-									Bersihkan filter
+									Remove filter
 								</a>
 							</div>
 						</div>
@@ -95,7 +95,7 @@
 						<div class="d-flex align-items-center justify-content-between">
 							<div class="me-3">
 								<i class="feather-xl text-green mb-3" data-feather="dollar-sign"></i>
-								<h5>#{{ strtoupper(substr($data->id, 0, 4)) }} | {{ date('d F Y', strtotime($data->akhir_periode)) }}</h5>
+								<h5>#{{ strtoupper(substr($data->id, 0, 4)) }} | {{ date('d F Y', strtotime($data->mulai_periode)) }} - {{ date('d F Y', strtotime($data->akhir_periode)) }}</h5>
 								<div class="text-muted small mb-2">Rp.{{ number_format($data->gaji_pokok, 0, ".", ",") ?? '#####'}}</div>
 								<div<span class="badge bg-success">Success</span>
 							</div>

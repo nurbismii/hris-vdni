@@ -29,7 +29,7 @@ class CutiIzinController extends Controller
                     'data' => $data,
                     'url_update_diterima' => route('pengajuan-karyawan-setuju/update', $data->id),
                     'url_update_ditolak' => route('pengajuan-karyawan-ditolak/update', $data->id),
-                    'url_foto' => 'dokumentasi/' . $data->nik_karyawan . '/' . $data->foto,
+                    'url_foto' => 'izin-dibayarkan/' . $data->nik_karyawan . '/' . $data->foto,
                     'url_delete' => route('pengajuan-karyawan/destroy', $data->id)
                 ]);
             })->filter(function ($instance) use ($request) {

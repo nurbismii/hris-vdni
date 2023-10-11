@@ -13,7 +13,7 @@
                 </div>
                 <div class="card-opacation shadow-lg border-0 rounded-lg mt-5">
                     <div class="card-header text-center">
-                        <h3 class="fw-light my-2 text-light">LOGIN PAGE</h3>
+                        <h3 class="fw-light my-2 text-light">LOGIN HR CORNER</h3>
                         <img src="{{ asset('assets/img/backgrounds/icon.png') }}" class="text-center" style="height: 55px;" alt="">
                     </div>
                     <div class="card-body">

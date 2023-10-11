@@ -29,7 +29,7 @@ class AccountController extends Controller
 
     public function billing()
     {
-        try{
+        try {
             $datas = salary::orderBy('akhir_periode', 'DESC')->where('employee_id', Auth::user()->nik_karyawan)->limit(6)->get();
             $gaji_karyawan = GajiKaryawan::where('nik_karyawan', Auth::user()->nik_karyawan)->first();
             if (!$gaji_karyawan) {
@@ -37,20 +37,20 @@ class AccountController extends Controller
             }
             $contract = Contract::where('nik', Auth::user()->nik_karyawan)->latest()->first('tanggal_berakhir_kontrak');
             return view('account.billing', compact('datas', 'gaji_karyawan', 'contract'));
-        }catch(\Throwable $e){
+        } catch (\Throwable $e) {
             return back()->with('error', 'Terjadi kesalaham');
         }
-        
     }
 
     public function show($id)
     {
         $data = salary::where('id', $id)->first();
+        $gaji_karyawan = GajiKaryawan::where('nik_karyawan', $data->employee_id)->first();
         $total_deduction = $data->jht + $data->jp + $data->bpjs_kesehatan + $data->deduction_unpaid_leave + $data->deduction_php21;
         $total_diterima = ($data->gaji_pokok + $data->tunjangan_umum + $data->tunjangan_pengawas + $data->tunjangan_transport + $data->tunjangan_mk + $data->tunjangan_koefisien + $data->rapel + $data->insentif + $data->tunjangan_lap);
         $gaji_bersih = ($total_diterima - $total_deduction);
 
-        return view('account.invoice', compact('data', 'total_diterima', 'total_deduction', 'gaji_bersih'));
+        return view('account.invoice', compact('data', 'total_diterima', 'total_deduction', 'gaji_bersih', 'gaji_karyawan'));
     }
 
     public function update(AccountUpdateRequest $request, $id)
