@@ -21,6 +21,7 @@ use App\Http\Controllers\SeverancepayController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\WaktuAbsenController;
 use App\Http\Controllers\ApiController;
+use App\Http\Controllers\ReportSpController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -183,6 +184,14 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
             route::get('/severance-pay', [SeverancepayController::class, 'index']);
             route::get('/severance-pay/create', [SeverancepayController::class, 'create'])->name('severance.create');
             route::post('/severance-pay/store', [SeverancepayController::class, 'store'])->name('severance.store');
+
+            route::get('/sp-report', [ReportSpController::class, 'index']);
+            route::get('/sp-report/create', [ReportSpController::class, 'create'])->name('spreport.create');
+            route::post('/sp-report/store', [ReportSpController::class, 'store'])->name('spreport.store');
+            route::get('/sp-report/import', [ReportSpController::class, 'importView'])->name('spreport.import');
+            route::post('/sp-report/import/store', [ReportSpController::class, 'importStore'])->name('spreport.import.store');
+            route::post('/sp-report/import/update', [ReportSpController::class, 'importUpdate'])->name('spreport.import.update');
+            route::post('/sp-report/import/destroy', [ReportSpController::class, 'importDestroy'])->name('spreport.import.destroy');
         });
 
         Route::group(['prefix' => 'departemen'], function () {
@@ -228,10 +237,5 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
             route::get('search-employee', [ApiController::class, 'searchEmployee']);
             route::get('/detail-employee/{id}', [ApiController::class, 'getEmployeeById']);
         });
-    });
-
-    Route::get('/clear-cache', function () {
-        Artisan::call('cache:clear');
-        return "All cache cleared";
     });
 });

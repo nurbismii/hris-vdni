@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Severancepay extends Model
+class SpReport extends Model
 {
     use HasFactory;
-    protected $table = 'severance_pay';
+    protected $table = 'sp_report';
     protected $guarded = [];
 }
 
