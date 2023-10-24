@@ -1,4 +1,4 @@
-<x-app-layout title="Daftar Pengingat">
+<x-app-layout title="Reminder">
     @push('styles')
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css" rel="stylesheet" />
@@ -16,7 +16,7 @@
                     <div class="col-auto mb-3">
                         <h1 class="page-header-title">
                             <div class="page-header-icon"><i data-feather="user"></i></div>
-                            Data Pengingat
+                            Reminder
                         </h1>
                     </div>
                 </div>
@@ -27,8 +27,8 @@
     <div class="container-fluid px-4">
         <x-message />
         <nav class="nav nav-borders">
-            <a class="nav-link {{ (request()->segment(2) == 'daftar-pengingat') ? 'active' : '' }} ms-0" href="/roster/daftar-pengingat">Data Pengingat</a>
-            <a class="nav-link {{ (request()->is('roster')) ? 'active' : '' }} ms-0" href="/roster">Data Roster</a>
+            <a class="nav-link {{ (request()->segment(2) == 'daftar-pengingat') ? 'active' : '' }} ms-0" href="/roster/daftar-pengingat">Reminder</a>
+            <a class="nav-link {{ (request()->is('roster')) ? 'active' : '' }} ms-0" href="/roster">Roster</a>
         </nav>
         <hr class="mt-0 mb-4" />
         <div class="row">
@@ -39,20 +39,20 @@
                     <div class="card">
                         <div class="card-body" style="overflow-x: auto;">
                             <select name="status_pengajuan" id="" class="form-select">
-                                <option value="" disabled selected>Pilih Status Pengajuan :</option>
-                                <option value="Belum Pengajuan">Belum Pengajuan</option>
-                                <option value="Jatuh Tempo">Jatuh Tempo</option>
+                                <option value="" disabled selected>Select Submission Status :</option>
+                                <option value="Belum Pengajuan">Not submit</option>
+                                <option value="Jatuh Tempo">Due date</option>
                                 <option value="Proses">Proses</option>
-                                <option value="Selesai">Selesai</option>
+                                <option value="Selesai">Completed</option>
                             </select>
                             <div class="mt-2">
                                 <button class="btn btn-sm btn-light text-primary" type="submit">
                                     <i class="me-1" data-feather="search"></i>
                                     Filter
                                 </button>
-                                <a class="btn btn-sm btn-light text-primary" data-bs-toggle="modal" data-bs-target="#modalDeleteEmployee">
+                                <a class="btn btn-sm btn-light text-primary" href="/roster/daftar-pengingat">
                                     <i class="me-1" data-feather="trash"></i>
-                                    Bersihkan filter
+                                    Clean filters
                                 </a>
                             </div>
                         </div>
@@ -68,13 +68,13 @@
                                 <tr>
                                     @if(strtolower(Auth::user()->job->permission_role ?? '') == 'administrator')
                                     <th>No</th>
-                                    <th>NIK</th>
-                                    <th>Proses</th>
-                                    <th>Nama Karyawan</th>
-                                    <th>Pesan</th>
-                                    <th>Tgl Cuti</th>
-                                    <th>Cuti</th>
-                                    <th>Tahun</th>
+                                    <th>ID</th>
+                                    <th>Action</th>
+                                    <th>Employee name</th>
+                                    <th>Msg</th>
+                                    <th>Leave date</th>
+                                    <th>Paid leave</th>
+                                    <th>Period</th>
                                     @endif
                                 </tr>
                                 @if(strtolower(Auth::user()->job->permission_role ?? '') != 'administrator')
@@ -107,22 +107,22 @@
                                     <td>
                                         {{ $data->nik_karyawan }} <br>
                                         @if($data->status_pengajuan === NULL)
-                                        <span class="badge bg-warning-soft text-warning">Belum Pengajuan</span>
+                                        <span class="badge bg-warning-soft text-warning">Not submitted</span>
                                         @endif
                                         @if((strtolower($data->status_pengajuan) === 'proses') && ($tgl_jt_tempo > 0))
                                         <span class="badge bg-primary-soft text-primary">Proses</span>
                                         @endif
                                         @if(strtolower($data->status_pengajuan) == 'selesai' && $tgl_jt_tempo > 0)
-                                        <span class="badge bg-success-soft text-success">Selesai</span>
+                                        <span class="badge bg-success-soft text-success">Completed</span>
                                         @endif
                                         @if($data->status_pengajuan == NULL || strtolower($data->status_pengajuan) && $tgl_jt_tempo > 0 && strtolower($data->status_pengajuan) != 'selesai')
                                         @if($tgl_jt_tempo >= 14 && $tahun > 0)
-                                        <span class="badge bg-danger-soft text-danger">Expired {{ $tahun }} tahun {{ $bulan }} bulan</span>
+                                        <span class="badge bg-danger-soft text-danger">Expired {{ $tahun }} years {{ $bulan }} months</span>
                                         @endif
-                                        @if($tgl_cuti < $tgl_sekarang && $tgl_jt_tempo < 365) <span class="badge bg-danger-soft text-danger">Expired {{ $tgl_jt_tempo }} hari lalu</span>
+                                        @if($tgl_cuti < $tgl_sekarang && $tgl_jt_tempo < 365) <span class="badge bg-danger-soft text-danger">Expired {{ $tgl_jt_tempo }} day ago</span>
                                             @endif
                                             @if($tgl_cuti > $tgl_sekarang)
-                                            <span class="badge bg-info-soft text-info">Expired {{ $tgl_jt_tempo }} hari lagi</span>
+                                            <span class="badge bg-info-soft text-info">Expired in {{ $tgl_jt_tempo }} days</span>
                                             @endif
                                             @endif
                                     </td>
@@ -137,7 +137,7 @@
                                             @csrf
                                             {{ @method_field('patch') }}
                                             <input type="hidden" name="status_pengajuan" value="Selesai">
-                                            <button type="submit" class="btn btn-success btn-sm">Selesai</button>
+                                            <button type="submit" class="btn btn-success btn-sm">Complete</button>
                                         </form>
                                     </td>
                                     <td>{{ $data->karyawan->nama_karyawan ?? '' }}</td>
@@ -153,22 +153,22 @@
                                     <td>{{ ++$no }}
                                         <br>
                                         @if($data->status_pengajuan === NULL)
-                                        <span class="badge bg-warning-soft text-warning">Belum Pengajuan</span>
+                                        <span class="badge bg-warning-soft text-warning">Not submitted</span>
                                         @endif
                                         @if((strtolower($data->status_pengajuan) === 'proses') && ($tgl_jt_tempo > 0))
                                         <span class="badge bg-primary-soft text-primary">Proses</span>
                                         @endif
                                         @if(strtolower($data->status_pengajuan) == 'selesai' && $tgl_jt_tempo > 0)
-                                        <span class="badge bg-success-success text-success">Selesai</span>
+                                        <span class="badge bg-success-success text-success">Completed</span>
                                         @endif
                                         @if($data->status_pengajuan == NULL || strtolower($data->status_pengajuan) && $tgl_jt_tempo > 0 && strtolower($data->status_pengajuan) != 'selesai')
                                         @if($tgl_jt_tempo >= 14 && $tahun > 0)
-                                        <span class="badge bg-danger-soft text-danger">Expired {{ $tahun }} tahun {{ $bulan }} bulan</span>
+                                        <span class="badge bg-danger-soft text-danger">Expired {{ $tahun }} years {{ $bulan }} months</span>
                                         @endif
-                                        @if($tgl_cuti < $tgl_sekarang && $tgl_jt_tempo < 365) <span class="badge bg-danger">Expired {{ $tgl_jt_tempo }} hari lalu</span>
+                                        @if($tgl_cuti < $tgl_sekarang && $tgl_jt_tempo < 365) <span class="badge bg-danger">Expired {{ $tgl_jt_tempo }} day ago</span>
                                             @endif
                                             @if($tgl_cuti > $tgl_sekarang)
-                                            <span class="badge bg-info-soft text-info">Expired {{ $tgl_jt_tempo }} hari lagi</span>
+                                            <span class="badge bg-info-soft text-info">Expired in{{ $tgl_jt_tempo }} days</span>
                                             @endif
                                             @endif
                                     </td>

@@ -20,7 +20,6 @@ class ImportSalaries implements ToCollection, WithHeadingRow, WithValidation
             $datas[] = [
                 'id' => Uuid::uuid4()->getHex(),
                 'employee_id' => $collect['nik'],
-                'posisi' => $collect['posisi'],
                 'durasi_sp' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(intVal($collect['durasi_sp']))) ?? null,
                 'status_gaji' => $collect['status_gaji'],
                 'jumlah_hari_kerja' => $collect['jumlah_hari_kerja'],

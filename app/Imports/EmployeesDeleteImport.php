@@ -3,6 +3,9 @@
 namespace App\Imports;
 
 use App\Models\employee;
+use App\Models\KaryawanRoster;
+use App\Models\Pengingat;
+use App\Models\salary;
 use App\Models\User;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
@@ -27,6 +30,21 @@ class EmployeesDeleteImport implements ToModel, WithHeadingRow, WithValidation
         User::where('nik_karyawan', $row['nik'])->chunkById(1000, function ($users){
             foreach($users as $user){
                 $user->delete();
+            }
+        });
+        salary::where('employee_id', $row['nik'])->chunkById(1000, function ($salary){
+            foreach($salary as $salary){
+                $salary->delete();
+            }
+        });
+        Pengingat::where('nik_karyawan', $row['nik'])->chunkById(1000, function ($reminders){
+            foreach($reminders as $reminder){
+                $reminder->delete();
+            }
+        });
+        KaryawanRoster::where('nik_karyawan', $row['nik'])->chunkById(1000, function ($karyawanRoster){
+            foreach($karyawanRoster as $kr){
+                $kr->delete();
             }
         });
     }

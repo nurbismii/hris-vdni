@@ -90,7 +90,7 @@ class KaryawanRosterController extends Controller
             'status_pengajuan' => $request->status_pengajuan,
             'flg_kirim' => $request->status_pengajuan == 'Selesai' ? '2' : '1'
         ]);
-        return back()->with('success', 'Status Pengajuan berhasil diperbarui');
+        return back()->with('success', 'Submission Status updated successfully');
     }
 
     public function rosterAktif()

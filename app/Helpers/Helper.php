@@ -62,7 +62,7 @@ if (!function_exists('getNotifPengingat')) {
     function getNotifPengingat()
     {
         $datas = [];
-        $datas = Pengingat::orderBy('tanggal_cuti', 'ASC')->where('tanggal_cuti', '>', date('Y-m-d', strtotime(Carbon::now()->subDays(14)->toDateString())))->where('flg_kirim', '1')->where('nik_karyawan', Auth::user()->employee->nik)->limit(4)->get();
+        $datas = Pengingat::orderBy('tanggal_cuti', 'ASC')->where('tanggal_cuti', '>', date('Y-m-d', strtotime(Carbon::now()->subDays(14)->toDateString())))->where('flg_kirim', '1')->where('nik_karyawan', Auth::user()->employee->nik ?? '')->limit(4)->get();
         return $datas;
     }
 }
@@ -323,12 +323,12 @@ if (!function_exists('getDataStatusKaryawan')) {
         $data_training = [];
 
         foreach ($data_karyawan as $data) {
-            if ($data->status_karyawan == 'PKWTT') {
+            if ($data->status_karyawan == 'PKWTT 固定工') {
                 $data_pkwtt[] = [
                     'nik' => $data->nik
                 ];
             }
-            if ($data->status_karyawan == 'PKWT') {
+            if ($data->status_karyawan == 'PKWT 合同工') {
                 $data_pkwt[] = [
                     'nik' => $data->nik
                 ];
@@ -439,12 +439,12 @@ if (!function_exists('getDataStatusKaryawanPersentase')) {
         $data_training = [];
 
         foreach ($data_karyawan as $data) {
-            if ($data->status_karyawan == 'PKWTT') {
+            if ($data->status_karyawan == 'PKWTT 固定工') {
                 $data_pkwtt[] = [
                     'nik' => $data->nik
                 ];
             }
-            if ($data->status_karyawan == 'PKWT') {
+            if ($data->status_karyawan == 'PKWT 合同工') {
                 $data_pkwt[] = [
                     'nik' => $data->nik
                 ];
@@ -471,6 +471,7 @@ if (!function_exists('getJumlahPekerjaByKelurahan')) {
     {
         $data = [];
         $array = $kelurahan;
+        $array = array_replace($array, array_fill_keys(array_keys($array, null), ''));
         $counted = array_count_values($array);
 
         arsort($counted);

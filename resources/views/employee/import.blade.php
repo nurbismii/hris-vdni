@@ -20,7 +20,7 @@
                     <div class="col-auto mt-4">
                         <h3 class="page-header-title">
                             <div class="page-header-icon"><i data-feather="file"></i></div>
-                            Bulk Karyawan
+                            Bulk
                         </h3>
                     </div>
                 </div>
@@ -73,7 +73,7 @@
                             <input class="form-control" name="file" type="file" id="formFile" required>
                         </div>
                         <div class="mb-3 col-3">
-                            <button class="btn btn-primary" type="submit">Kirim file</button>
+                            <button class="btn btn-primary" type="submit">Send file</button>
                         </div>
                     </div>
                 </form>
@@ -95,5 +95,4 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js"></script>
     @endpush
-
 </x-app-layout>

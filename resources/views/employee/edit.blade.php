@@ -133,11 +133,11 @@
               <div class="row gx-3">
                 <div class="col-md-6 mb-3">
                   <label class="small mb-1">Departemen</label>
-                  <input class="form-control" type="text" name="nik_karyawan" value="{{ $data->divisi->departemen->departemen }}" />
+                  <input class="form-control" type="text" name="nik_karyawan" value="{{ isset($data->divisi->departemen->departemen) != '' ? $data->divisi->departemen->departemen : ''}}" />
                 </div>
                 <div class="col-md-6 mb-3">
                   <label class="small mb-1">Divisi</label>
-                  <input class="form-control" type="text" name="no_ktp" value="{{ $data->divisi->nama_divisi }}" />
+                  <input class="form-control" type="text" name="no_ktp" value="{{ isset($data->divisi->nama_divisi) != '' ? $data->divisi->nama_divisi : ''}}" />
                 </div>
               </div>
 

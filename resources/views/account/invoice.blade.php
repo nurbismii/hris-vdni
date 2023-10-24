@@ -116,6 +116,16 @@
                                     <td class="text-end fw-bold">{{ number_format($data->tunjangan_pengawas) }}</td>
                                 </tr>
                                 @endif
+                                @if($data->tunjangan_transport > 0)
+                                <tr class="border-bottom">
+                                    <td>
+                                        <div class="fw-bold">Overtime</div>
+                                    </td>
+                                    <td class="text-end fw-bold">:</td>
+                                    <td class="text-end fw-bold">Rp.</td>
+                                    <td class="text-end fw-bold">{{ number_format($data->tunjangan_transport) }}</td>
+                                </tr>
+                                @endif
                                 @if($data->tunjangan_mk > 0)
                                 <tr class="border-bottom">
                                     <td>
@@ -124,6 +134,16 @@
                                     <td class="text-end fw-bold">:</td>
                                     <td class="text-end fw-bold">Rp.</td>
                                     <td class="text-end fw-bold">{{ number_format($data->tunjangan_mk) }}</td>
+                                </tr>
+                                @endif
+                                @if($data->tunjangan_koefisien > 0)
+                                <tr class="border-bottom">
+                                    <td>
+                                        <div class="fw-bold">Allowance service year</div>
+                                    </td>
+                                    <td class="text-end fw-bold">:</td>
+                                    <td class="text-end fw-bold">Rp.</td>
+                                    <td class="text-end fw-bold">{{ number_format($data->tunjangan_koefisien) }}</td>
                                 </tr>
                                 @endif
                                 @if($data->overtime > 0)

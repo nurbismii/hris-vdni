@@ -1,4 +1,4 @@
-<x-app-layout title="Pengguna">
+<x-app-layout title="Users">
     @push('styles')
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css" rel="stylesheet" />
@@ -21,17 +21,17 @@
                     <div class="col-auto mb-3">
                         <h1 class="page-header-title">
                             <div class="page-header-icon"><i data-feather="user"></i></div>
-                            Data Pengguna
+                            Users
                         </h1>
                     </div>
                     <div class="col-12 col-xl-auto mb-3">
                         <a class="btn btn-sm btn-light text-primary" href="/users/import">
                             <i class="me-1" data-feather="users"></i>
-                            Bulk Pengguna
+                            Bulk
                         </a>
                         <a class="btn btn-sm btn-light text-primary" href="/users/create">
                             <i class="me-1" data-feather="user-plus"></i>
-                            Tambah Pengguna
+                            Add
                         </a>
                     </div>
                 </div>
@@ -45,11 +45,11 @@
                 <table id="datatablesSimple">
                     <thead>
                         <tr>
-                            <th>Pengguna</th>
-                            <th>Jabatan</th>
+                            <th>User</th>
+                            <th>Position</th>
                             <th>Status</th>
-                            <th>Tanggal Join</th>
-                            <th>Aksi</th>
+                            <th>Entry date</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>

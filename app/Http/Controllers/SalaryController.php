@@ -90,6 +90,11 @@ class SalaryController extends Controller
             ->make(true);
     }
 
+    public function createSalary()
+    {
+        return view('/payslip/create-gaji-karyawan');
+    }
+
     public function show(Request $request, $id)
     {
         $data = gajiKaryawan::with('employee')->where('nik_karyawan', $id)->first();
@@ -324,17 +329,8 @@ class SalaryController extends Controller
         }
     }
 
-    public function fetchKaryawan($id)
-    {
-        $data = employee::leftjoin('divisis', 'divisis.id', '=', 'employees.divisi_id')
-            ->leftjoin('departemens', 'departemens.id', '=', 'divisis.departemen_id')
-            ->select(DB::raw("*"))
-            ->where('employees.nik', $id)->first();
 
-        return response()->json($data);
-    }
-
-    public function storeGajiKaryawan(StoreGajiKaryawanRequest $request)
+    public function storeGajiKaryawan(Request $request)
     {
         GajiKaryawan::updateOrCreate([
             'nik_karyawan' => $request->nik_karyawan,

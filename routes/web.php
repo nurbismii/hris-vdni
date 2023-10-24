@@ -13,11 +13,14 @@ use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\KaryawanRosterController;
 use App\Http\Controllers\KeteranganAbsensiController;
 use App\Http\Controllers\LokasiAbsenController;
+use App\Http\Controllers\PasalController;
 use App\Http\Controllers\PeriodeRosterController;
 use App\Http\Controllers\Role\RoleController;
 use App\Http\Controllers\SalaryController;
+use App\Http\Controllers\SeverancepayController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\WaktuAbsenController;
+use App\Http\Controllers\ApiController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -102,6 +105,11 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
             route::post('/store/lokasi-absen', [LokasiAbsenController::class, 'store'])->name('store.lokasi');
             route::patch('/update/lokasi-absen/{id}', [LokasiAbsenController::class, 'update'])->name('update.lokasi');
             route::delete('/delete/lokasi-absen/{id}', [LokasiAbsenController::class, 'destroy'])->name('delete.lokasi');
+
+            route::get('/pasal', [PasalController::class, 'index']);
+            route::post('/store/pasal', [PasalController::class, 'store'])->name('store.pasal');
+            route::patch('/update/pasal/{id}', [PasalController::class, 'update'])->name('update.pasal');
+            route::delete('/destroy/pasal/{id}', [PasalController::class, 'destroy'])->name('destroy.pasal');
         });
 
         Route::group(['prefix' => 'users'], function () {
@@ -156,13 +164,10 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
             route::get('/payslip', [SalaryController::class, 'slipgaji'])->name('salary.slipgaji');
             route::post('/import-salarys', [SalaryController::class, 'importSalary'])->name('import.salary');
             route::get('/show/{id}', [SalaryController::class, 'show'])->name('salary.show');
-
             route::get('/employee', [SalaryController::class, 'gajikaryawan'])->name('salary.employee');
+            route::get('/create/salary', [SalaryController::class, 'createSalary'])->name('create.salary');
             route::post('/store/gaji-karyawan', [SalaryController::class, 'storeGajiKaryawan'])->name('store/gaji-karyawan');
-
             route::get('/server-side', [SalaryController::class, 'serverSideSalary']);
-            route::get('/detail-karyawan/{id}', [SalaryController::class, 'fetchKaryawan']);
-
             route::post('/generate/payslip/{nik}', [SalaryController::class, 'generateSlip'])->name('generate.slip');
         });
 
@@ -172,6 +177,12 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
             route::post('/import-pkwt', [ContractController::class, 'importContract']);
             route::post('/destroy-import-pkwt', [ContractController::class, 'destroyImportContract'])->name('destroyImport.contract');
             route::get('/show/{nik}', [ContractController::class, 'show'])->name('contract.show');
+        });
+
+        Route::group(['prefix' => 'industrial-relations'], function () {
+            route::get('/severance-pay', [SeverancepayController::class, 'index']);
+            route::get('/severance-pay/create', [SeverancepayController::class, 'create'])->name('severance.create');
+            route::post('/severance-pay/store', [SeverancepayController::class, 'store'])->name('severance.store');
         });
 
         Route::group(['prefix' => 'departemen'], function () {
@@ -211,6 +222,11 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
             route::post('/store', [PeriodeRosterController::class, 'store'])->name('store.periodeRoster');
             route::patch('/update/{id}', [PeriodeRosterController::class, 'update'])->name('update.periodeRoster');
             route::delete('/delete/{id}', [PeriodeRosterController::class, 'destroy'])->name('destroy.periodeRoster');
+        });
+
+        Route::group(['prefix' => 'api/hrcorner/'], function () {
+            route::get('search-employee', [ApiController::class, 'searchEmployee']);
+            route::get('/detail-employee/{id}', [ApiController::class, 'getEmployeeById']);
         });
     });
 

@@ -1,4 +1,4 @@
-<x-app-layout title="Karyawan">
+<x-app-layout title="Employees">
     @push('styles')
     <link href="{{ asset('css/styles.css')}}" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/favicon.png')}}" />
@@ -21,17 +21,17 @@
                     <div class="col-auto mb-3">
                         <h1 class="page-header-title">
                             <div class="page-header-icon"><i data-feather="users"></i></div>
-                            Data Karyawan
+                            Data employee
                         </h1>
                     </div>
                     <div class="col-12 col-xl-auto mb-3">
                         <a class="btn btn-sm btn-light text-primary" data-bs-toggle="modal" data-bs-target="#modalUpdateEmployee">
                             <i class="me-1" data-feather="edit-3"></i>
-                            Bulk Perbarui Karyawan
+                            Bulk update
                         </a>
                         <a class="btn btn-sm btn-light text-primary" data-bs-toggle="modal" data-bs-target="#modalDeleteEmployee">
                             <i class="me-1" data-feather="trash"></i>
-                            Bulk Hapus Karyawan
+                            Bulk destroy
                         </a>
                     </div>
                 </div>
@@ -41,14 +41,14 @@
     <!-- Main page content-->
     <div class="container-fluid px-4">
         <nav class="nav nav-borders">
-            <a class="nav-link {{ (request()->segment(1) == 'employees') ? 'active' : '' }} ms-0" href="/employees">Data Karyawan</a>
-            <a class="nav-link {{ (request()->segment(1) == 'information') ? 'active' : '' }} ms-0" href="/">Data Lanjut</a>
+            <a class="nav-link {{ (request()->segment(1) == 'employees') ? 'active' : '' }} ms-0" href="/employees">Employees</a>
+            <a class="nav-link {{ (request()->segment(1) == 'information') ? 'active' : '' }} ms-0" href="/">Information</a>
         </nav>
         <hr class="mt-0 mb-4" />
         <div class="row">
             <div class="col-lg-12">
                 <div class="card card-collapsable mb-3">
-                    <a class="card-header" href="#collapseFilterKaryawan" data-bs-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample">Filter Karyawan
+                    <a class="card-header" href="#collapseFilterKaryawan" data-bs-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample">Filter
                         <div class="card-collapsable-arrow">
                             <i class="fas fa-chevron-down"></i>
                         </div>
@@ -61,8 +61,8 @@
                                     <div class="col-md-3 mb-2">
                                         <label class="small mb-1">Status</label>
                                         <select class="form-select" id="status_resign">
-                                            <option value="">- Pilih Status -</option>
-                                            <option value="Aktif">Aktif</option>
+                                            <option value="">- Select a status -</option>
+                                            <option value="Aktif">Active</option>
                                             <option value="Resign">Resign</option>
                                             <option value="Mutasi">Mutasi</option>
                                             <option value="PHK">PHK</option>
@@ -71,18 +71,18 @@
                                         </select>
                                     </div>
                                     <div class="col-md-3 mb-2">
-                                        <label class="small mb-1">Kontrak</label>
+                                        <label class="small mb-1">Contract</label>
                                         <select class="form-select" id="status_karyawan">
-                                            <option value="">- Pilih Kontrak -</option>
-                                            <option value="PKWTT">PKWTT</option>
-                                            <option value="PKWT">PKWT</option>
+                                            <option value="">- Select a contract -</option>
+                                            <option value="PKWTT 固定工">PKWTT 固定工</option>
+                                            <option value="PKWT 合同工">PKWT 合同工</option>
                                             <option value="TRAINING">TRAINING</option>
                                         </select>
                                     </div>
                                     <div class="col-md-3 mb-2">
                                         <label class="small mb-1">Departemen</label>
                                         <select class="form-select" id="departemen">
-                                            <option value="">- Pilih Departemen -</option>
+                                            <option value="">- Select a departement -</option>
                                             @foreach($depts as $d)
                                             <option value="{{ $d->id }}">{{ $d->departemen }}</option>
                                             @endforeach
@@ -95,7 +95,7 @@
                                 </div>
                                 <a class="btn btn-sm btn-light text-primary" href="/employees">
                                     <i class="me-1" data-feather="trash"></i>
-                                    Bersihkan filter
+                                    Clear
                                 </a>
                             </div>
                         </form>
@@ -109,15 +109,14 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>NIK</th>
-                                    <th>Nama</th>
-                                    <th>Departemen</th>
+                                    <th>Emp ID</th>
+                                    <th>Name</th>
+                                    <th>Departement</th>
                                     <th>Divisi</th>
-                                    <th>Posisi</th>
-                                    <th>NPWP</th>
-                                    <th>Kontrak</th>
-                                    <th>Tanggal</th>
-                                    <th>Status </th>
+                                    <th>Position</th>
+                                    <th>Contract</th>
+                                    <th>Join</th>
+                                    <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody> </tbody>
@@ -248,16 +247,12 @@
                         name: 'posisi',
                     },
                     {
-                        data: 'npwp',
-                        name: 'npwp'
-                    },
-                    {
                         data: 'status_karyawan',
                         name: 'status_karyawan'
                     },
                     {
-                        data: 'tgl_resign',
-                        name: 'tgl_resign'
+                        data: 'entry_date',
+                        name: 'entry_date'
                     },
                     {
                         data: 'status_resign',

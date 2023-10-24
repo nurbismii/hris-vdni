@@ -13,7 +13,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-
+    <!-- Select2 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+    <style>
+        span.select2.select2-container.select2-container--classic {
+            width: 100% !important;
+        }
+    </style>
     @endpush
     <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
         <div class="container-fluid px-s4">
@@ -27,11 +33,10 @@
                     </div>
                     <div class="col-12 col-xl-auto mb-3">
                         <a class="btn btn-sm btn-light text-primary" data-bs-toggle="modal" data-bs-target="#modalGenerate">
-                            
                             <i class="me-1" data-feather="upload-cloud"></i>
                             Genarate Slip
                         </a>
-                        <a class="btn btn-sm btn-light text-primary" data-bs-toggle="modal" data-bs-target="#modalAddSalary">
+                        <a class="btn btn-sm btn-light text-primary" href="{{ route('create.salary') }}">
                             <i class="me-1" data-feather="plus"></i>
                             Add Salary
                         </a>
@@ -109,111 +114,7 @@
                     <h5 class="modal-title" id="exampleModalLabel">Add salary</h5>
                     <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('store/gaji-karyawan') }}" method="POST" enctype="multipart/form-data" class="nav flex-column" id="stickyNav">
-                    <div class="modal-body">
-                        @csrf
-                        <div class="row gx-3 mb-2">
-                            <div class="col-md-12 mb-2">
-                                <label class="small mb-2">Nama Karyawan</label>
-                                <select class="form-select" name="nama_karyawan" id="karyawan">
-                                    <option value="" disabled selected>- Select employee -</option>
-                                    @foreach($karyawan as $row)
-                                    <option value="{{ $row->nik }}">{{ $row->nik }} | {{ $row->nama_karyawan }}</option>
-                                    @endforeach
-                                </select>
-                                @error('employee')
-                                <span class="invalid-feedback">{{ $message }}</span>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="row gx-3 mb-2">
-                            <div class="col-md-6">
-                                <label class="small mb-2">Departemen</label>
-                                <input class="form-control" name="departemen" type="text" id="departemen" readonly />
-                            </div>
-                            <div class="col-md-6">
-                                <label class="small mb-2">Divisi</label>
-                                <input class="form-control" name="divisi" type="text" id="divisi" readonly />
-                            </div>
-                        </div>
-                        <div class="row gx-3 mb-2">
-                            <div class="col-md-6">
-                                <label class="small mb-2">Posisi</label>
-                                <input class="form-control" name="posisi" type="text" id="posisi" readonly />
-                            </div>
-                            <div class="col-md-6">
-                                <label class="small mb-2">Jabatan</label>
-                                <input class="form-control" name="jabatan" type="text" id="jabatan" readonly />
-                            </div>
-                        </div>
-                        <div class="row gx-3 mb-2">
-                            <div class="col-md-6">
-                                <label class="small mb-2">Status Gaji</label>
-                                <select class="form-select" name="status_gaji" id="">
-                                    <option value="">-</option>
-                                    <option value="all-in">All In</option>
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="small mb-2">Jumlah Hari Kerja</label>
-                                <input class="form-control @error('jumlah_hari_kerja') is-invalid @enderror " name="jumlah_hari_kerja" type="number" />
-                                @error('jumlah_hari_kerja')
-                                <span class="invalid-feedback">{{ $message }}</span>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="row gx-3 mb-2">
-                            <div class="col-md-6">
-                                <label class="small mb-2">Tunjangan Umum</label>
-                                <input class="form-control" name="tunj_umum" type="email" />
-                            </div>
-                            <div class="col-md-6">
-                                <label class="small mb-2">Tunjangan Pengawas</label>
-                                <input class="form-control" name="tunj_pengawas" type="email" />
-                            </div>
-                        </div>
-                        <div class="row gx-3 mb-2">
-                            <div class="col-md-6">
-                                <label class="small mb-2">Tunjangan Transport Pulsa</label>
-                                <input class="form-control" name="tunj_transport_pulsa" type="email" />
-                            </div>
-                            <div class="col-md-6">
-                                <label class="small mb-2">Tunjangan Masa Kerja</label>
-                                <input class="form-control" name="tunj_masa_kerja" type="email" />
-                            </div>
-                        </div>
-                        <div class="row gx-3 mb-2">
-                            <div class="col-md-6 mb-2">
-                                <label class="small mb-2">Tunjangan Koefisien Jabatan</label>
-                                <input class="form-control" name="tunj_koefisien_jabatan" type="text" />
-                            </div>
-                            <div class="col-md-6">
-                                <label class="small mb-2">Tunjangan Lapangan</label>
-                                <input class="form-control" name="tunj_lap" type="text" />
-                            </div>
-                        </div>
-                        <div class="row gx-3 mb-2">
-                            <div class="col-md-6 mb-2">
-                                <label class="small mb-2">Tunjangan Uang Makan</label>
-                                <input class="form-control @error('tunj_makan') is-invalid @enderror" name="tunj_makan" id="rupiah_makan" type="text" />
-                                @error('tunj_makan')
-                                <span class="invalid-feedback">{{ $message }}</span>
-                                @enderror
-                            </div>
-                            <div class="col-md-6">
-                                <label class="small mb-2">Gaji Pokok</label>
-                                <input class="form-control @error('gaji_pokok') is-invalid @enderror" name="gaji_pokok" id="rupiah_gaji" type="text" />
-                                @error('gaji_pokok')
-                                <span class="invalid-feedback">{{ $message }}</span>
-                                @enderror
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
-                        <button class="btn btn-success" type="submit">Send</button>
-                    </div>
-                </form>
+                
             </div>
         </div>
     </div>
@@ -329,32 +230,6 @@
                 }
             });
         });
-
-        $(document).ready(function() {
-            $('#karyawan').on('change', function() {
-                var id = $(this).val();
-                if (id) {
-                    $.ajax({
-                        url: '/salary/detail-karyawan/' + id,
-                        type: "GET",
-                        data: {
-                            "_token": "{{ csrf_token() }}"
-                        },
-                        dataType: "json",
-                        success: function(data) {
-                            console.log(data)
-                            if (data) {
-                                $('#departemen').val(data.departemen);
-                                $('#divisi').val(data.nama_divisi);
-                                $('#posisi').val(data.posisi);
-                                $('#jabatan').val(data.jabatan);
-                            }
-                        }
-                    });
-                }
-            });
-        });
-
 
         var rupiah_makan = document.getElementById("rupiah_makan");
         rupiah_makan.addEventListener("keyup", function(e) {

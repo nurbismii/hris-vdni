@@ -42,7 +42,7 @@ class EmployeeController extends Controller
                     'url_show' => route('employee.edit', $data->nik),
                 ]);
             })->filter(function ($instance) use ($request) {
-                if ($request->get('status_karyawan') == 'PKWTT' || $request->get('status_karyawan') == 'PKWT' || $request->get('status_karyawan') == 'TRAINING') {
+                if ($request->get('status_karyawan') == 'PKWTT 固定工' || $request->get('status_karyawan') == 'PKWT 合同工' || $request->get('status_karyawan') == 'TRAINING') {
                     $instance->where('status_karyawan', $request->get('status_karyawan'));
                 }
                 if ($request->get('departemen') != '') {

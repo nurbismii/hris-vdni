@@ -1,4 +1,4 @@
-<x-app-layout title="Tambah Pengguna">
+<x-app-layout title="Add user">
     @push('styles')
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css" rel="stylesheet" />
@@ -16,9 +16,8 @@
                     <div class="col-auto mt-4">
                         <h1 class="page-header-title">
                             <div class="page-header-icon"><i data-feather="user-plus"></i></div>
-                            Perubahan data pengguna
+                            Edit user
                         </h1>
-                        <div class="page-header-subtitle">Pengguna bisa perbarui jika telah terdaftar sebagai karyawan</div>
                     </div>
                 </div>
             </div>
@@ -33,20 +32,19 @@
                     <div class="tab-pane py-5 py-xl-10 fade show active" id="wizard1" role="tabpanel" aria-labelledby="wizard1-tab">
                         <div class="row justify-content-center">
                             <div class="col-xxl-6 col-xl-8">
-                                <h3 class="text-primary">Form Pengguna</h3>
-                                <h5 class="card-title mb-4">Perubahan data pribadi pengguna</h5>
+                                <h3 class="text-primary text-center">Form user</h3>
                                 <form action="{{ route('update.user', $data->nik_karyawan) }}" method="POST">
                                     @csrf
                                     {{ method_field('patch') }}
                                     <div class="mb-3">
-                                        <label class="small mb-1">NIK Karyawan</label>
+                                        <label class="small mb-1">Emplooye ID</label>
                                         <input class="form-control @error('nik_karyawan') is-invalid @enderror" type="text" value="{{ $data->nik_karyawan }}" readonly />
                                         @error('nik_karyawan')
                                         <span class="invalid-feedback">{{ $message }}</span>
                                         @enderror
                                     </div>
                                     <div class="mb-3">
-                                        <label class="small mb-1">Nama Karyawan</label>
+                                        <label class="small mb-1">Employee name</label>
                                         <input class="form-control @error('name') is-invalid @enderror" type="text" value="{{ $data->employee->nama_karyawan }}" readonly />
                                         @error('name')
                                         <span class="invalid-feedback">{{ $message }}</span>
@@ -61,14 +59,14 @@
                                     </div>
                                     <div class="row gx-3 mb-3">
                                         <div class="mb-3 col-md-6">
-                                            <label class="small mb-1">Password Baru</label>
+                                            <label class="small mb-1">New password</label>
                                             <input class="form-control @error('password') is-invalid @enderror" name="password" type="password" placeholder="*****" />
                                             @error('password')
                                             <span class="invalid-feedback">{{ $message }}</span>
                                             @enderror
                                         </div>
                                         <div class="mb-3 col-md-6">
-                                            <label class="small mb-1">Konfirmasi Password</label>
+                                            <label class="small mb-1">Password confirm</label>
                                             <input class="form-control @error('konfirmasi_password') is-invalid @enderror" name="konfirmasi_password" type="password" placeholder="*****" />
                                             @error('konfirmasi_password')
                                             <span class="invalid-feedback">{{ $message }}</span>
@@ -80,16 +78,16 @@
                                         <select name="status" class="form-select">
                                             <option value="{{ $data->status }}" selected>{{ ucfirst($data->status) }}</option>
                                             @if(strtolower($data->status) == 'tidak aktif')
-                                            <option value="aktif">Aktif</option>
+                                            <option value="aktif">Active</option>
                                             @else
-                                            <option value="tidak aktif">Tidak Aktif</option>
+                                            <option value="tidak aktif">Not active</option>
                                             @endif
                                         </select>
                                     </div>
                                     <hr class="my-4" />
                                     <div class="d-flex justify-content-between">
-                                        <a href="{{ url()->previous() }}" class="btn btn-light" type="button">Kembali</a>
-                                        <button class="btn btn-primary" type="submit">Simpan</button>
+                                        <a href="{{ url()->previous() }}" class="btn btn-light" type="button">Back</a>
+                                        <button class="btn btn-primary" type="submit">Submit</button>
                                     </div>
                                 </form>
                             </div>

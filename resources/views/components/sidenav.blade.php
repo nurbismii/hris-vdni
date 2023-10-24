@@ -59,8 +59,9 @@
                 </a>
                 <div class="collapse" id="collapseCoreHr" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav">
-                        <a class="nav-link" href="/contract">Data PKWT 1</a>
-                        <a class="nav-link" href="">Data PB PHK</a>
+                        <a class="nav-link" href="/contract">PKWT 1</a>
+                        <a class="nav-link" href="/industrial-relations/severance-pay">Severance pay</a>
+                        <a class="nav-link" href="#">SP Report</a>
                     </nav>
                 </div>
                 <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapsePayroll" aria-expanded="false" aria-controls="collapsePayroll">
@@ -122,6 +123,7 @@
                         <a class="nav-link" href="/setting/lokasi-absen">Precense location</a></a>
                         <a class="nav-link" href="/periode">Roster period</a>
                         <a class="nav-link" href="/setting/waktu-absen">Working time</a>
+                        <a class="nav-link" href="/setting/pasal">Pasal</a>
                 </div>
                 @endif
             </div>

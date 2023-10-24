@@ -25,7 +25,7 @@ class EmployeesImport implements ToCollection, WithHeadingRow, WithValidation
                 'no_ktp' => str_replace(["'", "`"], "", $collect['no_ktp']),
                 'no_kk' => str_replace(["'", "`"], "", $collect['no_kk']),
                 'kode_area_kerja' => $collect['kode_area_kerja'],
-                'jenis_kelamin' => strtolower($collect['jenis_kelamin']) == 'female' ? 'P' : 'L',
+                'jenis_kelamin' => strtoupper($collect['jenis_kelamin']),
                 'status_perkawinan' => $collect['status_perkawinan'],
                 'status_karyawan' => $collect['status_karyawan'],
                 'tgl_resign' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(intVal($collect['tgl_resign']))),
@@ -65,11 +65,11 @@ class EmployeesImport implements ToCollection, WithHeadingRow, WithValidation
                 'nama_instansi_pendidikan' => $collect['nama_instansi_pendidikan'],
                 'pendidikan_terakhir' => $collect['pendidikan_terakhir'],
                 'jurusan' => $collect['jurusan'],
-                'tanggal_kelulusan' => $collect['tanggal_kelulusan'],
-                'tanggal_menikah' => $collect['tanggal_menikah']
+                'tanggal_kelulusan' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(intVal($collect['tanggal_kelulusan']))),
+                'tanggal_menikah' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(intVal($collect['tanggal_menikah']))),
             );
         }
-        foreach (array_chunk($datas, 1000) as $chunk) {
+        foreach (array_chunk($datas, 500) as $chunk) {
             employee::insert($chunk);
         }
     }
