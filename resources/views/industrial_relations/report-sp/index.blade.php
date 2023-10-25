@@ -29,10 +29,6 @@
               <i class="me-1" data-feather="upload-cloud"></i>
               Bulk
             </a>
-            <a class="btn btn-sm btn-light text-primary" href="{{ route('spreport.create') }}">
-              <i class="me-1" data-feather="upload"></i>
-              Add
-            </a>
           </div>
         </div>
       </div>
@@ -46,23 +42,25 @@
           <thead>
             <tr>
               <th>No SP</th>
+              <th>Employee ID</th>
               <th>Employee name</th>
               <th>Level SP</th>
               <th>Start date</th>
               <th>End date</th>
-              <th>Aksi</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
             @foreach($datas as $row)
             <tr>
               <td>{{ $row->no_sp }}</td>
+              <td>{{ $row->nik_karyawan }}</td>
               <td>{{ getName($row->nik_karyawan) }}</td>
               <td>{{ $row->level_sp }}</td>
               <td>{{ $row->tgl_mulai }}</td>
               <td>{{ $row->tgl_berakhir }}</td>
               <td>
-                <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href=""><i data-feather="edit"></i></a>
+                <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="{{ route('spreport.edit', $row->id) }}"><i data-feather="edit"></i></a>
                 <a type="submit" class="btn btn-datatable btn-icon btn-transparent-dark" data-bs-toggle="modal" data-bs-target="#deleteUser"><i data-feather="trash-2"></i> </a>
               </td>
             </tr>
@@ -72,7 +70,6 @@
       </div>
     </div>
   </div>
-
 
   @push('scripts')
   <x-toastr />

@@ -21,7 +21,7 @@ class ApiController extends Controller
 
 	public function getEmployeeById($id)
 	{
-		$data = employee::leftjoin('salaries', 'salaries.employee_id', '=', 'employees.nik')
+		$data = employee::with('spreport')->leftjoin('salaries', 'salaries.employee_id', '=', 'employees.nik')
 			->leftjoin('divisis', 'divisis.id', '=', 'employees.divisi_id')
 			->leftjoin('departemens', 'departemens.id', '=', 'divisis.departemen_id')
 			->leftjoin('master_provinsi', 'master_provinsi.id', '=', 'employees.provinsi_id')

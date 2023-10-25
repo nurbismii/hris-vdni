@@ -186,8 +186,7 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
             route::post('/severance-pay/store', [SeverancepayController::class, 'store'])->name('severance.store');
 
             route::get('/sp-report', [ReportSpController::class, 'index']);
-            route::get('/sp-report/create', [ReportSpController::class, 'create'])->name('spreport.create');
-            route::post('/sp-report/store', [ReportSpController::class, 'store'])->name('spreport.store');
+            route::get('/sp-report/edit/{id}', [ReportSpController::class, 'edit'])->name('spreport.edit');
             route::get('/sp-report/import', [ReportSpController::class, 'importView'])->name('spreport.import');
             route::post('/sp-report/import/store', [ReportSpController::class, 'importStore'])->name('spreport.import.store');
             route::post('/sp-report/import/update', [ReportSpController::class, 'importUpdate'])->name('spreport.import.update');
@@ -235,7 +234,7 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
 
         Route::group(['prefix' => 'api/hrcorner/'], function () {
             route::get('search-employee', [ApiController::class, 'searchEmployee']);
-            route::get('/detail-employee/{id}', [ApiController::class, 'getEmployeeById']);
+            route::get('detail-employee/{id}', [ApiController::class, 'getEmployeeById']);
         });
     });
 });

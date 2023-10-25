@@ -67,4 +67,9 @@ class employee extends Model
     {
         return $this->hasOne(GajiKaryawan::class, 'nik_karyawan', 'nik');
     }
+
+    public function spreport()
+    {
+        return $this->hasOne(SpReport::class, 'nik_karyawan', 'nik')->orderBy('no_sp', 'desc');
+    }
 }
