@@ -90,7 +90,7 @@
                                     </div>
                                     <div class="col-md-3 mb-2">
                                         <label class="small mb-1">Divisi</label>
-                                        <select class="form-control" name="divisi" id="divisi"></select>
+                                        <select class="form-select" name="divisi" id="divisi"></select>
                                     </div>
                                 </div>
                                 <a class="btn btn-sm btn-light text-primary" href="/employees">

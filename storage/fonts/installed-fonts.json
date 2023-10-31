@@ -30,6 +30,20 @@
         "normal": "glyphicons_halflings_normal_91a063d0f3772b152f606edc0383c99d"
     },
     "firefly sung": {
-        "normal": "firefly_sung_normal_1bf217f55e33d2575e9966105a60136e"
+        "normal": "C:\\xampp\\htdocs\\hris-vdni\\storage\\fonts\/firefly_sung_normal_1bf217f55e33d2575e9966105a60136e",
+        "600": "C:\\xampp\\htdocs\\hris-vdni\\storage\\fonts\/firefly_sung_600_1bf217f55e33d2575e9966105a60136e",
+        "800": "C:\\xampp\\htdocs\\hris-vdni\\storage\\fonts\/firefly_sung_800_1bf217f55e33d2575e9966105a60136e",
+        "200": "firefly_sung_200_1bf217f55e33d2575e9966105a60136e"
+    },
+    "sans-serif": {
+        "normal": "sans_serif_normal_1bf217f55e33d2575e9966105a60136e",
+        "bold": "C:\\xampp\\htdocs\\hris-vdni\\vendor\\dompdf\\dompdf\/lib\/fonts\/Helvetica-Bold",
+        "italic": "C:\\xampp\\htdocs\\hris-vdni\\vendor\\dompdf\\dompdf\/lib\/fonts\/Helvetica-Oblique",
+        "bold_italic": "C:\\xampp\\htdocs\\hris-vdni\\vendor\\dompdf\\dompdf\/lib\/fonts\/Helvetica-BoldOblique"
+    },
+    "times new roman": {
+        "200": "C:\\xampp\\htdocs\\hris-vdni\\storage\\fonts\/times_new_roman_200_1bf217f55e33d2575e9966105a60136e",
+        "normal": "C:\\xampp\\htdocs\\hris-vdni\\storage\\fonts\/times_new_roman_normal_1bf217f55e33d2575e9966105a60136e",
+        "600": "times_new_roman_600_1bf217f55e33d2575e9966105a60136e"
     }
 }

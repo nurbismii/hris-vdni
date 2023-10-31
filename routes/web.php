@@ -159,11 +159,12 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
 
         Route::group(['prefix' => 'salary'], function () {
             route::get('/', [SalaryController::class, 'index']);
-
             route::get('/history', [SalaryController::class, 'history']);
-            route::get('/export-template', [SalaryController::class, 'exportSalary'])->name('export.salary');
-            route::get('/payslip', [SalaryController::class, 'slipgaji'])->name('salary.slipgaji');
+            route::get('/components/{id}', [SalaryController::class, 'downloadSalaryComponent'])->name('components.donwload');
+            route::get('/payslip', [SalaryController::class, 'payslip'])->name('salary.payslip');
+            route::get('/payslip/print/{id}', [SalaryController::class, 'printPayslip'])->name('payslip.print');
             route::post('/import-salarys', [SalaryController::class, 'importSalary'])->name('import.salary');
+            route::get('/export-template', [SalaryController::class, 'exportSalary'])->name('export.salary');
             route::get('/show/{id}', [SalaryController::class, 'show'])->name('salary.show');
             route::get('/employee', [SalaryController::class, 'gajikaryawan'])->name('salary.employee');
             route::get('/create/salary', [SalaryController::class, 'createSalary'])->name('create.salary');
@@ -184,6 +185,7 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
             route::get('/severance-pay', [SeverancepayController::class, 'index']);
             route::get('/severance-pay/create', [SeverancepayController::class, 'create'])->name('severance.create');
             route::post('/severance-pay/store', [SeverancepayController::class, 'store'])->name('severance.store');
+            route::get('/severance-pay/print/{id}', [SeverancepayController::class, 'print'])->name('severance.print');
 
             route::get('/sp-report', [ReportSpController::class, 'index']);
             route::get('/sp-report/edit/{id}', [ReportSpController::class, 'edit'])->name('spreport.edit');

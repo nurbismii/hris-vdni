@@ -9,11 +9,14 @@ class Kernel extends ConsoleKernel
 {
     protected $command = [
         Command\Pengingat::class,
+        Command\SeverancePay::class
     ];
 
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('Pengingat:cron')
+            ->everyMinute();
+        $schedule->command('severance:cron')
             ->everyMinute();
     }
 

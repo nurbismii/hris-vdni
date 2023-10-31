@@ -40,7 +40,7 @@
             @foreach($datas as $row)
             <tr>
               <td>{{ ++$no }}</td>
-              <td><a href="{{ url($row->path) }}" target="_blank" rel="noopener noreferrer">{{ $row->path }}</a></td>
+              <td><a href="{{route('components.donwload', $row->id)}}" target="_blank" rel="noopener noreferrer">{{ $row->path }}</a></td>
               <td>{{ $row->user->name ?? ''}}</td>
               <td>{{ date('d F Y', strtotime($row->created_at)) }}</td>
             </tr>

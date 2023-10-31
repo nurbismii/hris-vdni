@@ -53,7 +53,7 @@
                                 <th scope="row">Employee ID</th>
                                 <td>{{ $data->employee_id }}</td>
                                 <td>Payable/Working Days</td>
-                                <td>{{ $data->jumlah_hari_kerja }}/{{ $gaji_karyawan->jumlah_hari_kerja }}</td>
+                                <td>{{ $data->jumlah_hari_kerja }}</td>
                             </tr>
                             <tr>
                                 <th scope="row">Employee Name</th>

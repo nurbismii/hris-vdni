@@ -21,7 +21,7 @@
                     <div class="col-auto mb-3">
                         <h1 class="page-header-title">
                             <div class="page-header-icon"><i data-feather="user"></i></div>
-                            Presensi
+                            Precense
                         </h1>
                     </div>
                 </div>
@@ -37,7 +37,7 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="me-3">
-                                <div class="text-white-75 small">Jam Masuk</div>
+                                <div class="text-white-75 small">In</div>
                                 @if($jam_masuk == 'Belum Absen')
                                 <div class="text-lg fw-bold"> -- : -- : -- </div>
                                 @endif
@@ -55,7 +55,7 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="me-3">
-                                <div class="text-white-75 small">Jam Keluar</div>
+                                <div class="text-white-75 small">Out</div>
                                 @if($jam_pulang == 'Belum Absen')
                                 <div class="text-lg fw-bold"> -- : -- : -- </div>
                                 @endif
@@ -72,7 +72,7 @@
         <div class="d-grid gap-2 mb-3">
             <button class="btn btn-primary text-white" data-bs-toggle="modal" onclick="getLocation()" data-bs-target="#addAbsen">
                 <i class="me-1" data-feather="map"></i>
-                Presensi
+                Precense
             </button>
         </div>
         <div class="card">
@@ -80,9 +80,9 @@
                 <table id="datatablesSimple">
                     <thead>
                         <tr>
-                            <th>Tanggal</th>
-                            <th>Jam Masuk</th>
-                            <th>Jam Keluar</th>
+                            <th>Date</th>
+                            <th>In</th>
+                            <th>Out</th>
                             <th>Status</th>
                         </tr>
                     </thead>
@@ -106,7 +106,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Lokasi saat ini</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Current location</h5>
                     <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -119,7 +119,7 @@
                         @if($jam_masuk == 'Belum Absen')
                         <button class="btn btn-light text-primary" type="submit">
                             <i class="me-1" data-feather="log-in"></i>
-                            Masuk
+                            In
                         </button>
                         @endif
                     </form>
@@ -132,13 +132,13 @@
                         <input type="hidden" name="lng" id="lngUpdate">
                         <button class="btn btn-light text-primary" type="submit">
                             <i class="me-1" data-feather="log-out"></i>
-                            Keluar
+                            Out
                         </button>
                     </form>
                     @endisset
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-light text-blue btn-sm" type="button" data-bs-dismiss="modal">Tutup</button>
+                    <button class="btn btn-light text-blue btn-sm" type="button" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>

@@ -71,7 +71,7 @@
                 </a>
                 <div class="collapse" id="collapsePayroll" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav">
-                        <a class="nav-link" href="/salary/employee">Employee Salary</a>
+                        <!-- <a class="nav-link" href="/salary/employee">Employee Salary</a> -->
                         <a class="nav-link" href="/salary/payslip">PaySlip</a>
                         <a class="nav-link" href="/salary">Import PaySlip</a>
                         <a class="nav-link" href="/salary/history">Import history</a>

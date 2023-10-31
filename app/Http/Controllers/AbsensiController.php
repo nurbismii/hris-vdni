@@ -65,7 +65,7 @@ class AbsensiController extends Controller
         if (!$cek_absen) {
             Absensi::create([
                 'nik_karyawan' => $request->nik_karyawan,
-                'jam_masuk' => date('H:i:s', strtotime(Carbon::now()))
+                'jam_masuk' => date('Y-m-d H:i:s', strtotime(Carbon::now()))
             ]);
             return back()->with('success', 'Berhasil melakukan absen masuk');
         }
@@ -112,7 +112,7 @@ class AbsensiController extends Controller
         if ($cek_absen->jam_keluar < '16:00:00') {
             Absensi::where('id', $id)->update([
                 'nik_karyawan' => $request->nik_karyawan,
-                'jam_pulang' => date('H:i:s', strtotime(Carbon::now()))
+                'jam_pulang' => date('Y-m-d H:i:s', strtotime(Carbon::now()))
             ]);
             return back()->with('success', 'Berhasil melakukan absen keluar');
         }

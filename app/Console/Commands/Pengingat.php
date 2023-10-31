@@ -40,8 +40,6 @@ class Pengingat extends Command
      */
     public function handle()
     {
-        Log::info('Pengingat berjalan dengan baik.');
-
         $data = ModelsPengingat::orderBy('tanggal_cuti', 'ASC')->where('tanggal_cuti', '<=', date('Y-m-d', strtotime("+ 14 days")))->where('flg_kirim', '==', '0')->get();
         Log::info($data);
         foreach($data as $row){

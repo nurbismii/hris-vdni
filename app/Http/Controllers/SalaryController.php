@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use Ramsey\Uuid\Uuid;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class SalaryController extends Controller
 {
@@ -27,28 +28,28 @@ class SalaryController extends Controller
         return view('payslip.index');
     }
 
-    public function slipgaji(Request $request)
+    public function payslip(Request $request)
     {
         if ($request->filled('period')) {
+
             $start = $request->period . '-16';
-            $end = date('Y-m-d', strtotime("$start +1 Month -1 Day"));
-
-            $datas = employee::with([
-                'cutiIzin' => function ($query) use ($start, $end) {
-                    $query->whereBetween('tanggal_mulai', [$start, $end]);
-                },
-                'absensi' => function ($query) use ($start, $end) {
-                    $query->whereBetween('jam_masuk', [$start . " 00:00:00", $end . " 23:59:59"]);
-                }
-            ])->get();
-
-            return $datas;
+            $datas = salary::orderBy('employee_id', 'desc')->whereDate('mulai_periode', $start)->get();
 
             return view('payslip.slipgaji', compact('datas'));
         } else {
             $datas = [];
         }
         return view('payslip.slipgaji', compact('datas'));
+    }
+
+    public function printPayslip($id)
+    {
+        $data = salary::with('employee')->where('id', $id)->first();
+        $total_deduction = $data->jht + $data->jp + $data->bpjs_kesehatan + $data->deduction_unpaid_leave + $data->deduction_php21;
+        $total_diterima = ($data->gaji_pokok + $data->tunjangan_umum + $data->tunjangan_pengawas + $data->tunjangan_transport + $data->tunjangan_mk + $data->tunjangan_koefisien + $data->rapel + $data->insentif + $data->tunjangan_lap);
+        $gaji_bersih = ($total_diterima - $total_deduction);
+
+        return view('payslip.payslip-print', compact('data', 'total_diterima', 'total_deduction', 'gaji_bersih'));
     }
 
     public function gajiKaryawan(Request $request)
@@ -356,14 +357,21 @@ class SalaryController extends Controller
         return view('payslip.history', compact('datas'))->with('no');
     }
 
+
+
+    public function downloadSalaryComponent($id)
+    {
+        $data = fileSalary::where('id', $id)->first();
+        return response()->download(public_path('salaries/' . $data->path));
+    }
+
     public function importSalary(Request $request)
     {
         if ($request->hasFile('file')) {
-            $current_time = date('Y-m-d', strtotime(Carbon::now()));
             $file = $request->file('file');
-            $file_name = 'KOMPONEN GAJI (' . $current_time . ')' . '.' . $file->getClientOriginalExtension();
+            $file_name = $file->getClientOriginalName();
             $file->move('salaries', $file_name);
-            $path = 'public/salaries/' . $file_name;
+            $path = $file_name;
 
             DB::beginTransaction();
             fileSalary::create([

@@ -49,27 +49,27 @@
 							<th>Employee name</th>
 							<th>Entry date</th>
 							<th>Jabatan</th>
-							<th>Violations</th>
 							<th>Termination date</th>
-							<th>Status</th>
 							<th>Severance pay</th>
 							<th>Pasal</th>
-							<th>Aksi</th>
+							<th>Payroll period</th>
+							<th>Action</th>
 						</tr>
 					</thead>
 					<tbody>
 						@foreach($datas as $row)
 						<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
+							<td>{{ $row->nik_karyawan }}</td>
+							<td>{{ getName($row->nik_karyawan) }}</td>
+							<td>{{ $row->employee->entry_date }}</td>
+							<td>{{ $row->employee->posisi  }}</td>
+							<td>{{ $row->termination_date }}</td>
+							<td><b>{{ $row->total_severance }}</b></td>
+							<td>{{ $row->pasal  }}</td>
+							<td>{{ date('F Y', strtotime($row->payroll_period)) }}</td>
 							<td>
-								<a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href=""><i data-feather="edit"></i></a>
+								<a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="{{ route('severance.print', $row->id) }}"><i data-feather="printer"></i></a>
+								<a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="#"><i data-feather="edit"></i></a>
 								<a type="submit" class="btn btn-datatable btn-icon btn-transparent-dark" data-bs-toggle="modal" data-bs-target="#deleteUser"><i data-feather="trash-2"></i> </a>
 							</td>
 						</tr>

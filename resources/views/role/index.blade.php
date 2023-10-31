@@ -20,17 +20,17 @@
                     <div class="col-auto mb-3">
                         <h1 class="page-header-title">
                             <div class="page-header-icon"><i data-feather="user"></i></div>
-                            Daftar akses
+                            Access list
                         </h1>
                     </div>
                     <div class="col-12 col-xl-auto mb-3">
                         <a class="btn btn-sm btn-light text-primary" href="/roles/create">
                             <i class="me-1" data-feather="user-plus"></i>
-                            Tambahkan akses baru
+                            Add access
                         </a>
                         <a class="btn btn-sm btn-light text-primary" data-bs-toggle="modal" data-bs-target="#addAccess">
                             <i class="me-1" data-feather="user-plus"></i>
-                            Berikan akses
+                            Allow access
                         </a>
                     </div>
                 </div>
@@ -44,10 +44,10 @@
                 <table id="datatablesSimple">
                     <thead>
                         <tr>
-                            <th>Nama</th>
+                            <th>Name</th>
                             <th>Email</th>
-                            <th>Izin</th>
-                            <th>Posisi</th>
+                            <th>Permission</th>
+                            <th>Position</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -81,18 +81,18 @@
                     <div class="modal-body">
                         @csrf
                         <div class="mb-3">
-                            <label class="small mb-1">Pengguna</label>
+                            <label class="small mb-1">User</label>
                             <select name="nik_karyawan" class="form-select">
-                                <option disabled selected>Kepada pengguna :</option>
+                                <option disabled selected>To user :</option>
                                 @foreach($users as $row)
                                 <option value="{{ $row->nik_karyawan }}">{{ $row->employee->nama_karyawan ?? ''}}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label class="small mb-1">Posisi</label>
+                            <label class="small mb-1">Access</label>
                             <select name="role_id" class="form-select">
-                                <option disabled selected>Izin yang diberikan : </option>
+                                <option disabled selected>Permits granted : </option>
                                 @foreach($datas as $permit)
                                 <option value="{{ $permit->id }}">{{ $permit->permission_role }}</option>
                                 @endforeach
@@ -100,8 +100,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-light" type="button" data-bs-dismiss="modal">Tutup</button>
-                        <button class="btn btn-primary" type="submit">Simpan</button>
+                        <button class="btn btn-light" type="button" data-bs-dismiss="modal">Close</button>
+                        <button class="btn btn-primary" type="submit">Submit</button>
                     </div>
                 </form>
             </div>
