@@ -10,6 +10,8 @@ use App\Imports\EmployeesUpdateImport;
 use App\Models\Departemen;
 use App\Models\Divisi;
 use App\Models\employee;
+use App\Models\Mutasi;
+use App\Models\PosisiLama;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
@@ -80,14 +82,15 @@ class EmployeeController extends Controller
     public function edit($nik)
     {
         try {
-            $data = employee::where('nik', $nik)->first();
+            $data = employee::with('cutiIzin', 'spreportMany')->where('nik', $nik)->first();
+            $mutasi = Mutasi::with('posisi_lama')->where('nik_karyawan', $data->nik)->get();
             $level_vaksin = $data->vaksin == '0' ? 'Belum Vaksin'
                 : ($data->vaksin == '1' ? 'Vaksin 1'
                     : ($data->vaksin == '2' ? 'Vaksin 2'
                         : ($data->vaksin == '3' ? 'Booster 1'
                             : ($data->vaksin == '4' ? 'Booster 2'
                                 : 'Tidak diketahui'))));
-            return view('employee.edit', compact('data', 'level_vaksin'));
+            return view('employee.edit', compact('data', 'mutasi', 'level_vaksin'));
         } catch (\Throwable $e) {
             return back()->with('error', 'Terjadi kesalahan');
         }
@@ -97,29 +100,18 @@ class EmployeeController extends Controller
     {
         try {
             employee::where('nik', $id)->update([
-                'no_sk_pkwtt' => $request['no_sk_pkwtt'],
                 'nama_karyawan' => $request['nama_karyawan'],
                 'nama_ibu_kandung' => $request['nama_ibu_kandung'],
-                'nama_bapak' => $request['nama_bapak'],
                 'agama' => $request['agama'],
                 'kode_area_kerja' => $request['kode_area_kerja'],
                 'no_ktp' => $request['no_ktp'],
                 'no_kk' => $request['no_kk'],
                 'jenis_kelamin' => $request['jenis_kelamin'],
                 'status_perkawinan' => $request['status_perkawinan'],
-                'status_karyawan' => $request['status_karyawan'],
                 'tgl_resign' => $request->tgl_resign ?? null,
                 'no_telp' => $request['no_telp'],
                 'tgl_lahir' => $request->tgl_lahir ?? null,
-                // 'provinsi_id' => $request['provinsi_id'],
-                // 'kabupaten_id' => $request['kabupaten_id'],
-                // 'kecamatan_id' => $request['kecamatan_id'],
-                // 'kelurahan_id' => $request['kelurahan_id'],
                 'alamat_ktp' => $request['alamat_ktp'],
-                // 'alamat_domisili' => $request['alamat_domisili'],
-                // 'rt' => $request['rt'],
-                // 'rw' => $request['rw'],
-                // 'kode_pos' => $request['kode_pos'],
                 'area_kerja' => $request['area_kerja'],
                 'golongan_darah' => $request['golongan_darah'],
                 'entry_date' => $request->entry_date ?? null,
@@ -128,25 +120,26 @@ class EmployeeController extends Controller
                 'bpjs_tk' => $request['bpjs_tk'],
                 'vaksin' => $request['vaksin'],
                 'jam_kerja' => $request['jam_kerja'],
-                'status_resign' => $request['status_resign'],
                 'posisi' => $request['posisi'],
                 'jabatan' => $request['jabatan'],
-                // 'divisi_id' => $request['divisi_id'],
-                // 'tinggi' => $request['tinggi'],
-                // 'berat' => $request['berat'],
-                // 'hobi' => $request['hobi'],
-                // 'no_jamsostek' => $request['no_jamsostek'],
-                // 'no_asuransi' => $request['no_asuransi'],
-                // 'no_kartu_asuransi' => $request['no_kartu_asuransi'],
-                // 'nama_bank' => $request['nama_bank'],
-                // 'no_rekening' => $request['no_rekening'],
-                // 'nama_instansi_pendidikan' => $request['nama_instansi_pendidikan'],
-                // 'pendidikan_terakhir' => $request['pendidikan_terakhir'],
-                // 'jurusan' => $request['jurusan'],
-                // 'tanggal_kelulusan' => $request['tanggal_kelulusan'],
-                // 'tanggal_menikah' => $request['tanggal_menikah']
             ]);
             return redirect('employees')->with('success', 'Data karyawan berhasil diperbarui');
+        } catch (\Throwable $e) {
+            return redirect('employees')->with('error', 'Terjadi kesalahan!');
+        }
+    }
+
+    public function updateKontrak(Request $request, $id)
+    {
+
+        try {
+            employee::where('nik', $id)->update([
+                'no_sk_pkwtt' => $request['no_sk_pkwtt'],
+                'status_karyawan' => $request['status_karyawan'],
+                'status_resign' => $request['status_resign'],
+                'kategori_keluar' => $request['kategori_keluar'],
+            ]);
+            return back()->with('success', 'Data kontrak berhasil diperbarui');
         } catch (\Throwable $e) {
             return redirect('employees')->with('error', 'Terjadi kesalahan!');
         }
@@ -188,5 +181,69 @@ class EmployeeController extends Controller
     {
         Excel::import(new EmployeesDeleteImport, $request->file('file'));
         return back()->with('success', 'Data Karyawan Berhasil dihapus');
+    }
+
+    public function mutasi()
+    {
+        $depts = Departemen::all();
+        return view('employee.mutasi', compact('depts'));
+    }
+
+    public function mutasiUpdate(Request $request)
+    {
+        try {
+        } catch (\Throwable $e) {
+            DB::rollBack();
+        }
+        $data = employee::where('nik', $request->nik)->first();
+
+        $cek_file = Mutasi::where('nik_karyawan', $request->nik)->first();
+
+        if ($request->hasFile('file')) {
+            $upload = $request->file('file');
+            $file_name = $request->nik . ' - ' . $upload->getClientOriginalName();
+            $path = public_path('/mutasi/' . $request->nik . '/' . $request->tanggal_mutasi . '/');
+            if (file_exists($path)) {
+                unlink($path . $cek_file->file);
+            }
+            $upload->move($path, $file_name);
+
+            DB::beginTransaction();
+            $mutasi = Mutasi::create([
+                'nik_karyawan' => $request->nik,
+                'departemen_id' => $request->departemen_id,
+                'divisi_id' => $request->divisi_id,
+                'jabatan' => $request->posisi,
+                'tanggal_mutasi' => date('Y-m-d', strtotime($request->tanggal_mutasi)),
+                'area_kerja' => $request->area_kerja,
+                'alasan_mutasi' => $request->alasan_mutasi,
+                'berkas_pendukung' => $file_name
+            ]);
+
+            $posisi_lama = PosisiLama::create([
+                'mutasi_id' => $mutasi->id,
+                'departemen_lama_id' => $mutasi->departemen_id,
+                'divisi_lama_id' => $data->divisi_id,
+                'area_kerja_lama' => $data->area_kerja,
+                'jabatan_lama' => $data->posisi,
+            ]);
+
+            if ($mutasi->area_kerja != 'VDNI') {
+                $data->update([
+                    'divisi_id' => $mutasi->divisi_id,
+                    'posisi' => $mutasi->posisi,
+                    'area_kerja' => $mutasi->area_kerja,
+                    'status_resign' => 'Mutasi'
+                ]);
+            } else {
+                $data->update([
+                    'divisi_id' => $mutasi->divisi_id,
+                    'posisi' => $mutasi->jabatan,
+                    'area_kerja' => $mutasi->area_kerja,
+                ]);
+            }
+            DB::commit();
+            return back()->with('success', 'Berhasil melakukan mutasi');
+        }
     }
 }

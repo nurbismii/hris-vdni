@@ -1,4 +1,4 @@
-<x-app-layout title="PaySlip">
+<x-app-layout title="Slip gaji">
     @push('styles')
     <link href="{{ asset('css/styles.css')}}" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/favicon.png')}}" />
@@ -19,7 +19,7 @@
                     <div class="col-auto mb-3">
                         <h1 class="page-header-title">
                             <div class="page-header-icon"><i data-feather="calendar"></i></div>
-                            PaySlip
+                            Slip gaji
                         </h1>
                     </div>
                 </div>
@@ -35,7 +35,7 @@
                     <div class="card-body">
                         <div class="row gx-3">
                             <div class="col-md-1">
-                                <label for="">Select period</label>
+                                <label for="">Pilih periode</label>
                             </div>
                             <div class="col-md-8 mb-2">
                                 <input class="form-control" name="period" type="month" required />
@@ -43,7 +43,7 @@
                             <div class="d-grid col-md-3 mb-2">
                                 <button class="btn btn-light text-primary" type="submit">
                                     <i class="me-1" data-feather="search"></i>
-                                    Search
+                                    Cari
                                 </button>
                             </div>
                         </div>
@@ -51,6 +51,9 @@
                 </form>
             </div>
         </div>
+        @if(!empty($req_date))
+        <div class="alert alert-green text-center" role="alert">{{tgl_indo($req_date->mulai_periode)}} - {{tgl_indo($req_date->akhir_periode)}}</div>
+        @endif
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body" style="overflow-x:auto;">
@@ -58,9 +61,9 @@
                         <thead>
                             <tr>
                                 <th>Trx ID</th>
-                                <th>Employee ID</th>
-                                <th>Working days</th>
-                                <th>Net salary</th>
+                                <th>NIK</th>
+                                <th>Hari Kerja</th>
+                                <th>Gaji bersih</th>
                             </tr>
                         </thead>
                         <tbody>

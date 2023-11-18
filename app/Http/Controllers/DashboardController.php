@@ -40,8 +40,8 @@ class DashboardController extends Controller
             $tahun_sekarang = date('Y', strtotime(Carbon::now()));
 
             $tanggal_hari_ini = $bulan_sekarang . '-16';
-            $tanggal_hari_ini = date('Y-m-d', strtotime("$tanggal_hari_ini -1 Month -1 Day"));
-            $bulan_depan = date('Y-m-d', strtotime("$tanggal_hari_ini +1 Month +1 Day"));
+            $tanggal_hari_ini = date('Y-m-d', strtotime("$tanggal_hari_ini -1 Month"));
+            $bulan_depan = date('Y-m-d', strtotime("$tanggal_hari_ini +1 Month -1 Day"));
 
             $provinsi = Provinsi::all();
 
@@ -55,16 +55,18 @@ class DashboardController extends Controller
                 ->limit(6)
                 ->get();
 
-            $total_divisi = Divisi::count();
-
             $karyawan_resign = employee::select('tgl_resign', 'status_resign')
-                ->where('status_resign', 'Resign')
+                ->where('status_resign', '!=', 'Aktif')
                 ->get();
 
-            $data_karyawan = employee::select('nik', 'status_karyawan', 'provinsi_id', 'kabupaten_id', 'kecamatan_id', 'kelurahan_id', 'tgl_lahir')
+            $data_karyawan = employee::select('nik', 'status_resign', 'status_karyawan', 'provinsi_id', 'kabupaten_id', 'kecamatan_id', 'kelurahan_id', 'tgl_lahir')
+                ->where('status_resign', 'Aktif')
                 ->get();
 
-            $total_karyawan = employee::where('status_resign', '!=', 'Ya')
+            $total_karyawan_vdni = employee::where('status_resign', 'Aktif')->where('area_kerja', 'VDNI')
+                ->count();
+
+            $total_karyawan_vdnip = employee::where('status_resign', 'Aktif')->where('area_kerja', 'VDNIP')
                 ->count();
 
             $req_awal_prd = $request->mulai_periode != '' ? $request->mulai_periode : $tanggal_hari_ini;
@@ -110,7 +112,7 @@ class DashboardController extends Controller
             $data_karyawan_by_kab = employee::select('provinsi_id', 'kabupaten_id', 'kecamatan_id', 'kelurahan_id')
                 ->where('kabupaten_id', $kabupaten_id)
                 ->get();
-            
+
             $kelurahan = $data_karyawan_by_kab->pluck('kelurahan_id')->toArray();
 
             $res_kelurahan = getJumlahPekerjaByKelurahan($kelurahan);
@@ -123,11 +125,11 @@ class DashboardController extends Controller
 
             return view('dashboard', compact(
                 'data',
-                'total_karyawan',
+                'total_karyawan_vdni',
+                'total_karyawan_vdnip',
                 'total_pwkt1_perbulan',
                 'total_pengguna',
                 'role',
-                'total_divisi',
                 'chart_rekrut',
                 'chart_resign',
                 'chart_status_kontrak',

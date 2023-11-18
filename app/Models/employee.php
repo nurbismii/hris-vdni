@@ -60,7 +60,7 @@ class employee extends Model
 
     public function cutiIzin()
     {
-        return $this->hasMany(CutiIzin::class, 'nik_karyawan', 'nik');
+        return $this->hasMany(CutiIzin::class, 'nik_karyawan', 'nik')->orderBy('tanggal', 'desc');
     }
 
     public function gajiKaryawan()
@@ -70,6 +70,11 @@ class employee extends Model
 
     public function spreport()
     {
-        return $this->hasOne(SpReport::class, 'nik_karyawan', 'nik')->orderBy('no_sp', 'desc');
+        return $this->hasOne(SpReport::class, 'nik_karyawan', 'nik')->orderBy('no_sp', 'desc')->limit(5);
+    }
+
+    public function spreportMany()
+    {
+        return $this->hasMany(SpReport::class, 'nik_karyawan', 'nik')->orderBy('no_sp', 'desc')->limit(5);
     }
 }

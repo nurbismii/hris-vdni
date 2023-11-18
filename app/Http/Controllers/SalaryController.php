@@ -34,12 +34,14 @@ class SalaryController extends Controller
 
             $start = $request->period . '-16';
             $datas = salary::orderBy('employee_id', 'desc')->whereDate('mulai_periode', $start)->get();
+            $req_date = salary::select('mulai_periode', 'akhir_periode')->whereDate('mulai_periode', $start)->first();
 
-            return view('payslip.slipgaji', compact('datas'));
+            return view('payslip.slipgaji', compact('datas', 'req_date'));
         } else {
             $datas = [];
+            $req_date = '';
         }
-        return view('payslip.slipgaji', compact('datas'));
+        return view('payslip.slipgaji', compact('datas', 'req_date'));
     }
 
     public function printPayslip($id)

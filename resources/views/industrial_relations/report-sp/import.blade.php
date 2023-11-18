@@ -35,9 +35,9 @@
 						<div class="row">
 							<form action="{{ route('spreport.import.store') }}" enctype="multipart/form-data" method="post">
 								@csrf
-								<label class="form-label">Bulk insert SP report :</label>
+								<label class="form-label">Bulk laporan peringatan :</label>
 								<input class="form-control" type="file" name="file" id="formFile">
-								<button type="submit" class="btn btn-light text-primary btn-sm mt-2">Submit</button>
+								<button type="submit" class="btn btn-light text-primary btn-sm mt-2">Simpan</button>
 							</form>
 						</div>
 					</div>
@@ -49,7 +49,7 @@
 						<div class="row">
 							<form action="{{ route('spreport.import.update') }}" enctype="multipart/form-data" method="post">
 								@csrf
-								<label class="form-label">Bulk update SP report :</label>
+								<label class="form-label">Bulk update peringatan :</label>
 								<input class="form-control" type="file" name="file" id="formFile">
 								<button type="submit" class="btn btn-light text-primary btn-sm mt-2">Submit</button>
 							</form>
@@ -63,7 +63,7 @@
 						<div class="row">
 							<form action="{{ route('spreport.import.destroy') }}" enctype="multipart/form-data" method="post">
 								@csrf
-								<label class="form-label">Bulk destroy report :</label>
+								<label class="form-label">Bulk hapus peringatan :</label>
 								<input class="form-control" type="file" name="file" id="formFile">
 								<button type="submit" class="btn btn-danger btn-sm mt-2">Submit</button>
 							</form>

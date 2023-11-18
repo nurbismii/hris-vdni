@@ -22,7 +22,7 @@ use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\WaktuAbsenController;
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\ReportSpController;
-use Illuminate\Support\Facades\Artisan;
+use App\Http\Controllers\ResignController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -41,6 +41,26 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
     Route::get('/dashboard', [DashboardController::class, 'index']);
     Route::post('/store/absen', [WaktuAbsenController::class, 'storeAbsen'])->name('store.absen');
     route::get('/lihat-pengingat', [KaryawanRosterController::class, 'pengingatPribadi']);
+
+    Route::group(['prefix' => 'admin/roster/'], function () {
+        route::get('', [KaryawanRosterController::class, 'viewAdminDept']);
+        route::get('pengajuan/{id}', [KaryawanRosterController::class, 'viewAdminDeptFormCuti'])->name('admindept.formcuti');
+        route::get('pengajuan/print/{id}', [KaryawanRosterController::class, 'viewAdminPrint'])->name('admindept.print');
+        route::post('/pengajuan/store', [KaryawanRosterController::class, 'adminDeptStore'])->name('admindept.cuti.store');
+        route::get('/permohonan', [KaryawanRosterController::class, 'adminDeptListCetak'])->name('admindept.listcetak');
+    });
+
+    Route::group(['prefix' => 'admin/cuti/'], function () {
+        route::get('/', [CutiIzinController::class, 'viewAdminDeptCuti']);
+        route::get('/tahunan', [CutiIzinController::class, 'viewAdminDeptCutiTahunan']);
+        route::post('/tahunan/store', [CutiIzinController::class, 'adminDeptstoreCutiTahunan']);
+        route::get('/paidleave', [CutiIzinController::class, 'viewAdminDeptPaidLeave']);
+        route::post('/paidleave/store', [CutiIzinController::class, 'viewAdminStorePaidLeave']);
+        route::get('unpaidleave', [CutiIzinController::class, 'viewAdminDeptUnpaidLeave']);
+        route::post('/unpaidleave/store', [CutiIzinController::class, 'viewAdminStoreUnpaidLeave']);
+        route::get('/update/status/{id}', [CutiIzinController::class, 'adminUpdateStatusPengajuan'])->name('adminupdate.statuspengajuan');
+        route::get('/server-side', [CutiIzinController::class, 'serversideAdminCuti']);
+    });
 
     Route::group(['prefix' => 'absen'], function () {
         route::get('/', [AbsensiController::class, 'index']);
@@ -75,21 +95,14 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
         route::get('/slip-gaji/{id}', [AccountController::class, 'cetak_pdf'])->name('slipgaji');
     });
 
-    Route::group(['prefix' => 'pengajuan'], function () {
-        route::get('/cuti', [CutiIzinController::class, 'cutiIzin']);
-        route::post('/store-cuti', [CutiIzinController::class, 'storeCutiIzin']);
-
-        route::get('/izin-dibayarkan', [CutiIzinController::class, 'izinDibayar']);
-        route::post('/store-izin-dibayarkan', [CutiIzinController::class, 'storeIzinDibayarkan']);
-
-        route::get('izin-tidak-dibayarkan', [CutiIzinController::class, 'izinTidakDibayarkan']);
-        route::post('/store-izin-tidak-dibayarkan', [CutiIzinController::class, 'storeIzinTidakDibayarkan']);
+    Route::group(['prefix' => 'tiket'], function () {
+        route::get('/', [AccountController::class, 'tiket']);
+        route::get('/download/{id}', [CutiIzinController::class, 'downloadTiketPesawat'])->name('karyawan.download.tiket');
     });
 
     Route::group(['middleware' => 'isAdmin'], function () {
 
         Route::get('/audit-trails', [DashboardController::class, 'auditTrails']);
-
         Route::group(['prefix' => 'setting'], function () {
             route::get('/dashboard', [DashboardController::class, 'settingDashboard']);
             route::post('/store', [DashboardController::class, 'store'])->name('store.dashboard');
@@ -139,15 +152,17 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
         });
 
         Route::group(['prefix' => 'employees'], function () {
-
             route::get('/', [EmployeeController::class, 'index'])->name('karyawan.index');
             route::get('/karyawan/data-lanjut', [EmployeeController::class, 'dataLanjut'])->name('karyawan.data-lanjut');
             route::get('/create', [EmployeeController::class, 'create']);
             route::patch('update/{id}', [EmployeeController::class, 'update'])->name('update.employee');
+            route::patch('/update/kontrak/{id}', [EmployeeController::class, 'updateKontrak'])->name('update.kontrak');
             route::get('/edit/{nik}', [EmployeeController::class, 'edit'])->name('employee.edit');
             route::delete('/destroy/{id}', [EmployeeController::class, 'destroy'])->name('destroy.employee');
             route::get('/server-side', [EmployeeController::class, 'serverSideEmployee']);
             route::get('/divisi/{id}', [EmployeeController::class, 'fetchDivisi'])->name('fetch/divisi');
+            route::get('/mutasi', [EmployeeController::class, 'mutasi']);
+            route::post('/mutasi/update', [EmployeeController::class, 'mutasiUpdate'])->name('mutasi.update');
             // Maatwebsite excel 
             route::get('/import', [EmployeeController::class, 'import']);
             route::get('/download-example', [EmployeeController::class, 'downloadExample'])->name('download.example');
@@ -166,7 +181,7 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
             route::post('/import-salarys', [SalaryController::class, 'importSalary'])->name('import.salary');
             route::get('/export-template', [SalaryController::class, 'exportSalary'])->name('export.salary');
             route::get('/show/{id}', [SalaryController::class, 'show'])->name('salary.show');
-            route::get('/employee', [SalaryController::class, 'gajikaryawan'])->name('salary.employee');
+            // route::get('/employee', [SalaryController::class, 'gajikaryawan'])->name('salary.employee');
             route::get('/create/salary', [SalaryController::class, 'createSalary'])->name('create.salary');
             route::post('/store/gaji-karyawan', [SalaryController::class, 'storeGajiKaryawan'])->name('store/gaji-karyawan');
             route::get('/server-side', [SalaryController::class, 'serverSideSalary']);
@@ -186,6 +201,8 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
             route::get('/severance-pay/create', [SeverancepayController::class, 'create'])->name('severance.create');
             route::post('/severance-pay/store', [SeverancepayController::class, 'store'])->name('severance.store');
             route::get('/severance-pay/print/{id}', [SeverancepayController::class, 'print'])->name('severance.print');
+            route::get('/severance-pay/import', [SeverancepayController::class, 'import'])->name('severance.import');
+            route::post('/severance-pay/import/store', [SeverancepayController::class, 'importStore'])->name('severance.import.store');
 
             route::get('/sp-report', [ReportSpController::class, 'index']);
             route::get('/sp-report/edit/{id}', [ReportSpController::class, 'edit'])->name('spreport.edit');
@@ -193,6 +210,16 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
             route::post('/sp-report/import/store', [ReportSpController::class, 'importStore'])->name('spreport.import.store');
             route::post('/sp-report/import/update', [ReportSpController::class, 'importUpdate'])->name('spreport.import.update');
             route::post('/sp-report/import/destroy', [ReportSpController::class, 'importDestroy'])->name('spreport.import.destroy');
+
+            route::get('/server-side/resign', [ResignController::class, 'serverSideResign']);
+            route::get('/resign/edit/{id}', [ResignController::class, 'edit'])->name('resign.edit');
+
+            route::get('/resign/surat/{id}', [ResignController::class, 'surat'])->name('resign.surat');
+
+            route::get('/resign', [ResignController::class, 'index']);
+            route::get('/resign/import', [ResignController::class, 'importView']);
+            route::post('/resign/import/store', [ResignController::class, 'importStore'])->name('resign.import.store');
+            route::post('/resign/import/update', [ResignController::class, 'importUpdate'])->name('resign.import.update');
         });
 
         Route::group(['prefix' => 'departemen'], function () {
@@ -211,7 +238,7 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
         });
 
         Route::group(['prefix' => 'roster'], function () {
-            route::get('/', [KaryawanRosterController::class, 'index']);
+            route::get('/kalender', [KaryawanRosterController::class, 'index']);
             route::post('/import-karyawan-roster', [KaryawanRosterController::class, 'importKaryawanRoster'])->name('import.karyawanRoster');
             route::post('/import-delete-karyawan-roster', [KaryawanRosterController::class, 'importDeleteKaryawanRoster'])->name('import.deleteKaryawanRoster');
             route::get('/daftar-pengingat', [KaryawanRosterController::class, 'reminder']);
@@ -222,9 +249,29 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
         Route::group(['prefix' => 'pengajuan-karyawan'], function () {
             route::get('/', [CutiIzinController::class, 'index']);
             route::get('/server-side', [CutiIzinController::class, 'serverSidePengajuan']);
-            route::get('/update/diterima/{id}', [CutiIzinController::class, 'updatePengajuanKaryawanDiterima'])->name('pengajuan-karyawan-setuju/update');
-            route::get('/update/ditolak/{id}', [CutiIzinController::class, 'updatePengajuanKaryawanDitolak'])->name('pengajuan-karyawan-ditolak/update');
+            route::get('/import', [CutiIzinController::class, 'importViewPengajuan'])->name('import.pengajuan');
+            route::post('/import/store', [CutiIzinController::class, 'importStorePengajuan'])->name('import.store.pengajuan');
+            route::get('/cuti', [CutiIzinController::class, 'cutiIzin']);
+            route::post('/store-cuti', [CutiIzinController::class, 'storeCutiIzin']);
+            route::get('/izin-dibayarkan', [CutiIzinController::class, 'izinDibayar']);
+            route::post('/store-izin-dibayarkan', [CutiIzinController::class, 'storeIzinDibayarkan']);
+            route::get('izin-tidak-dibayarkan', [CutiIzinController::class, 'izinTidakDibayarkan']);
+            route::post('/store-izin-tidak-dibayarkan', [CutiIzinController::class, 'storeIzinTidakDibayarkan']);
+            route::get('/update/status-diterima/{id}', [CutiIzinController::class, 'updateStatusPengajuanDiterima'])->name('update.statuspengajuan.diterima');
+            route::get('/update/status-ditolak/{id}', [CutiIzinController::class, 'updateStatusPengajuanDitolak'])->name('update.statuspengajuan.ditolak');
             route::get('/destroy/{id}', [CutiIzinController::class, 'pengajuanKaryawanDestroy'])->name('pengajuan-karyawan/destroy');
+        });
+
+        Route::group(['prefix' => 'roster'], function () {
+            route::get('/', [CutiIzinController::class, 'cutiRoster']);
+            route::get('/server-side', [CutiIzinController::class, 'serverSideCutiRoster']);
+            route::get('/create', [CutiIzinController::class, 'cutiRosterCreate']);
+            route::post('/store', [CutiIzinController::class, 'cutiRosterStore'])->name('cutiroster.store');
+            route::post('/update/{id}', [CutiIzinController::class, 'cutiRosterUpdate'])->name('cutiroster.update');
+            route::get('/detail/{id}', [CutiIzinController::class, 'cutiRosterShow'])->name('cutiroster.show');
+            route::post('/upload/tiket/{id}', [CutiIzinController::class, 'uploadTiketPesawat'])->name('cutiroster.upload.tiket');
+            route::post('/download/tiket/{id}', [CutiIzinController::class, 'downloadTiketPesawat'])->name('cutiroster.download.tiket');
+            route::get('/download/berkas/{id}', [CutiIzinController::class, 'downloadBerkas'])->name('cutiroster.download');
         });
 
         Route::group(['prefix' => 'periode'], function () {
@@ -233,10 +280,11 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
             route::patch('/update/{id}', [PeriodeRosterController::class, 'update'])->name('update.periodeRoster');
             route::delete('/delete/{id}', [PeriodeRosterController::class, 'destroy'])->name('destroy.periodeRoster');
         });
-
-        Route::group(['prefix' => 'api/hrcorner/'], function () {
-            route::get('search-employee', [ApiController::class, 'searchEmployee']);
-            route::get('detail-employee/{id}', [ApiController::class, 'getEmployeeById']);
-        });
+    });
+    Route::group(['prefix' => 'api/hrcorner/'], function () {
+        route::get('search-employee', [ApiController::class, 'searchEmployee']);
+        route::get('detail-employee/{id}', [ApiController::class, 'getEmployeeById']);
+        route::get('airports', [ApiController::class, 'getAirport']);
+        route::get('divisi/{id}', [ApiController::class, 'getDivisi']);
     });
 });

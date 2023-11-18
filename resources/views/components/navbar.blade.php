@@ -12,7 +12,7 @@
         <div class="dropdown-menu dropdown-menu-end border-0 animated--fade-in-up" aria-labelledby="navbarDropdownAlerts">
             <h6 class="dropdown-header dropdown-notifications-header">
                 <i class="me-2" data-feather="bell"></i>
-                Reminder
+                Pengingat
             </h6>
             @foreach(getNotifPengingat() as $data)
             <a class="dropdown-item dropdown-notifications-item" data-bs-toggle="modal" data-bs-target="#pengingat{{$data->id}}">
@@ -32,9 +32,9 @@
         <div class="dropdown-menu dropdown-menu-end border-0 animated--fade-in-up" aria-labelledby="navbarDropdownMessages">
             <h6 class="dropdown-header dropdown-notifications-header">
                 <i class="me-2" data-feather="globe"></i>
-                Select language
+                Pilih bahasa
             </h6>
-            <a class="lang-select dropdown-item dropdown-notifications-item" data-lang="id" href="#googtrans(en|en)">
+            <a class="lang-select dropdown-item dropdown-notifications-item" data-lang="id" href="#googtrans(en|id)">
                 <div class="dropdown-notifications-item-content">
                     <div class="dridopdown-notifications-item-content-text">Default</div>
                 </div>
@@ -66,12 +66,12 @@
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="/account/profile">
                 <div class="dropdown-item-icon"><i data-feather="settings"></i></div>
-                Account
+                Akun
             </a>
             <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                 document.getElementById('logout-form').submit();">
                 <div class="dropdown-item-icon"><i data-feather="log-out"></i></div>
-                Sign out
+                Keluar
             </a>
             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                 @csrf

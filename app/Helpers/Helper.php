@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Departemen;
+use App\Models\Divisi;
 use App\Models\employee;
 use App\Models\Kabupaten;
 use App\Models\Kecamatan;
@@ -13,6 +15,22 @@ if (!function_exists('getName')) {
     function getName($id)
     {
         $nama = employee::where('nik', $id)->pluck('nama_karyawan')->implode("");
+        return $nama;
+    }
+}
+
+if (!function_exists('getNamaDivisi')) {
+    function getNamaDivisi($id)
+    {
+        $nama = Divisi::where('id', $id)->pluck('nama_divisi')->implode("");
+        return $nama;
+    }
+}
+
+if (!function_exists('getNamaDepartemen')) {
+    function getNamaDepartemen($id)
+    {
+        $nama = Departemen::where('id', $id)->pluck('departemen')->implode("");
         return $nama;
     }
 }
@@ -188,6 +206,7 @@ if (!function_exists('getDataStatus')) {
         $pengembalian = array();
 
         foreach ($status_karyawan as $row) {
+
             $data_status[] = [
                 'status' => $row->status_resign,
                 'tanggal' => $row->tgl_resign
@@ -197,7 +216,14 @@ if (!function_exists('getDataStatus')) {
         for ($i = 0; $i < count($data_status); $i++) {
 
             $mutasi[] = $data_status[$i]['status'] == "Mutasi" ? $data_status[$i]['status'] : [];
-            $resign[] = $data_status[$i]['status'] == "Resign" ? $data_status[$i]['status'] : [];
+
+            $resign[] = $data_status[$i]['status'] == "Resign" ? $data_status[$i]['status']
+                : ($data_status[$i]['status'] == "BAIK" ? $data_status[$i]['status']
+                    : ($data_status[$i]['status'] == "KABUR" ? $data_status[$i]['status']
+                        : ($data_status[$i]['status'] == "PASAL (50)" ? $data_status[$i]['status']
+                            : ($data_status[$i]['status'] == "PB RESIGN" ? $data_status[$i]['status']
+                                : ($data_status[$i]['status'] == "PUTUS KONTRAK" ? $data_status[$i]['status'] : [])))));
+
             $phk[] = $data_status[$i]['status'] == "PHK" ? $data_status[$i]['status'] : [];
             $efisiensi[] = $data_status[$i]['status'] == "Efisiensi" ? $data_status[$i]['status'] : [];
             $pengembalian[] = $data_status[$i]['status']  == "Pengembalian" ? $data_status[$i]['status'] : [];
@@ -610,5 +636,99 @@ if (!function_exists('dailySalary')) {
         $daily_salary = $data->gaji_pokok / $data->jumlah_hari_kerja;
         $daily_salary = $daily_salary * count($attendance);
         return $daily_salary;
+    }
+}
+
+if (!function_exists('tgl_indo')) {
+    function tgl_indo($tanggal)
+    {
+        if (isset($tanggal)) {
+            $bulan = array(
+                1 =>   'Januari',
+                'Februari',
+                'Maret',
+                'April',
+                'Mei',
+                'Juni',
+                'Juli',
+                'Agustus',
+                'September',
+                'Oktober',
+                'November',
+                'Desember'
+            );
+            $pecahkan = explode('-', $tanggal);
+
+            // variabel pecahkan 0 = tanggal
+            // variabel pecahkan 1 = bulan
+            // variabel pecahkan 2 = tahun
+
+            return $pecahkan[2] . ' ' . $bulan[(int)$pecahkan[1]] . ' ' . $pecahkan[0];
+        }
+        return '';
+    }
+}
+
+if (!function_exists('bulan_romawi')) {
+    function bulan_romawi($bln)
+    {
+        switch ($bln) {
+
+            case '1':
+                return "I";
+                break;
+            case '2':
+                return "II";
+                break;
+            case '3':
+                return "III";
+                break;
+            case '4':
+                return "IV";
+                break;
+            case '5':
+                return "V";
+                break;
+            case '6':
+                return "VI";
+                break;
+            case '7':
+                return "VII";
+                break;
+            case '8':
+                return "VIII";
+                break;
+            case '9':
+                return "IX";
+                break;
+            case '10':
+                return "X";
+                break;
+            case '11':
+                return "XI";
+                break;
+            case '12':
+                return "XII";
+                break;
+        }
+    }
+}
+
+if (!function_exists('no_urut_surat')) {
+    function no_urut_surat($nomor)
+    {
+        $nomor += 1;
+        if (strlen($nomor) == '1') {
+            return  '000' . $nomor;
+        }
+        if (strlen($nomor) == '2') {
+            return '00' . $nomor;
+        }
+        if (strlen($nomor) == '3') {
+            return '0' . $nomor;
+        }
+        if (strlen($nomor) == '3') {
+            return $nomor;
+        }
     }
 }

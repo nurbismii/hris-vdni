@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AccountUpdateRequest;
 use App\Models\Contract;
 use App\Models\CutiIzin;
+use App\Models\CutiRoster;
 use App\Models\Divisi;
 use App\Models\employee;
 use App\Models\GajiKaryawan;
@@ -31,7 +32,7 @@ class AccountController extends Controller
     {
         try {
             $datas = salary::orderBy('akhir_periode', 'DESC')->where('employee_id', Auth::user()->nik_karyawan)->limit(6)->get();
-            $gaji_karyawan = GajiKaryawan::where('nik_karyawan', Auth::user()->nik_karyawan)->first();
+            $gaji_karyawan = salary::where('employee_id', Auth::user()->nik_karyawan)->first();
             if (!$gaji_karyawan) {
                 return back()->with('info', 'Informasi yang kamu minta belum tersedia');
             }
@@ -99,5 +100,11 @@ class AccountController extends Controller
     {
         $datas = CutiIzin::orderBy('created_at', 'DESC')->where('nik_karyawan', Auth::user()->nik_karyawan)->limit(6)->get();
         return view('account.pengajuan', compact('datas'));
+    }
+
+    public function tiket()
+    {
+        $datas = CutiRoster::where('nik_karyawan', Auth::user()->employee->nik)->get();
+        return view('tiket.index', compact('datas'));
     }
 }

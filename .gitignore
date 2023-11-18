@@ -3,7 +3,9 @@
 /public/storage
 /public/dokumentasi
 /public/salaries
+/public/cuti-roster
 /public/izin-dibayarkan
+/public/mutasi
 /storage/*.key
 /public/import/employee
 /vendor

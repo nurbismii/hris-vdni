@@ -1,4 +1,4 @@
-<x-app-layout title="Karyawan">
+<x-app-layout title="Cuti & izin">
     @push('styles')
     <link href="{{ asset('css/styles.css')}}" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/favicon.png')}}" />
@@ -22,8 +22,18 @@
                     <div class="col-auto mb-3">
                         <h1 class="page-header-title">
                             <div class="page-header-icon"><i data-feather="users"></i></div>
-                            Data Pengajuan Karyawan
+                            Data Pengajuan Cuti, Paid leave dan Unpaid leave
                         </h1>
+                    </div>
+                    <div class="col-12 col-xl-auto mb-3">
+                        <a class="btn btn-sm btn-light text-primary" href="pengajuan-karyawan/cuti">
+                            <i class="me-1" data-feather="plus"></i>
+                            Tambah
+                        </a>
+                        <a class="btn btn-sm btn-light text-primary" href="{{ route('import.pengajuan') }}">
+                            <i class="me-1" data-feather="upload-cloud"></i>
+                            Bulk
+                        </a>
                     </div>
                 </div>
             </div>
@@ -37,27 +47,12 @@
                     <div class="card-body" style="overflow-x:auto;">
                         <table id="data-table-pengajuan" class="table table-hover" style="width: 100%;">
                             <div class="row gx-3 mb-3">
-                                <div class="col-md-4 mb-3">
-                                    <select name="status_hrd" class="form-select" id="status_hrd">
-                                        <option value="" selected>- Pilih status pengajuan -</option>
-                                        <option value="Menunggu">Menunggu</option>
-                                        <option value="Diterima">Diterima</option>
-                                        <option value="Ditolak">Ditolak</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-4 mb-3">
+                                <div class="col-md-12 mb-3">
                                     <select name="status_hrd" class="form-select" id="tipe">
                                         <option value="" selected>- Pilih tipe pengajuan -</option>
-                                        <option value="Cuti">Cuti</option>
-                                        <option value="Izin Dibayarkan">Izin Dibayarkan</option>
-                                        <option value="Izin Tidak Dibayarkan">Izin Tidak Dibayarkan</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <select name="status_hrd" class="form-select" id="status_hod">
-                                        <option value="" selected>- Status HOD -</option>
-                                        <option value="Diterima">Diterima</option>
-                                        <option value="Menunggu">Menunggu</option>
+                                        <option value="cuti">Cuti</option>
+                                        <option value="izin dibayarkan">Izin Dibayarkan</option>
+                                        <option value="izin tidak dibayarkan">Izin Tidak Dibayarkan</option>
                                     </select>
                                 </div>
                             </div>
@@ -131,9 +126,7 @@
                 ajax: {
                     url: "pengajuan-karyawan/server-side",
                     data: function(d) {
-                        d.status_hrd = $('#status_hrd').val(),
-                            d.tipe = $('#tipe').val(),
-                            d.status_hod = $('#status_hod').val(),
+                        d.tipe = $('#tipe').val(),
                             d.search = $('input[type="search"]').val()
                     }
                 },
@@ -159,15 +152,63 @@
                     },
                     {
                         data: 'tipe',
-                        name: 'tipe'
+                        name: 'tipe',
+                        render: function(data, type, row) {
+                            badge = '';
+                            switch (data) {
+                                case 'cuti':
+                                    badge = '<span class="badge bg-success">' + data + '</span>';
+                                    break;
+                                case 'izin dibayarkan':
+                                    badge = '<span class="badge bg-primary">' + data + '</span>';
+                                    break;
+                                case 'izin tidak dibayarkan':
+                                    badge = '<span class="badge bg-secondary">' + data + '</span>';
+                                    break;
+
+                            }
+                            return badge;
+                        }
                     },
                     {
                         data: 'status_hod',
-                        name: 'status_hod'
+                        name: 'status_hod',
+                        render: function(data, type, row) {
+                            badge = '';
+                            switch (data) {
+                                case 'Diterima':
+                                    badge = '<span class="badge bg-success">' + data + '</span>';
+                                    break;
+                                case 'Ditolak':
+                                    badge = '<span class="badge bg-red">' + data + '</span>';
+                                    break;
+                                case 'Menunggu':
+                                    badge = '<span class="badge bg-warning">' + data + '</span>';
+                                    break;
+
+                            }
+                            return badge;
+                        }
                     },
                     {
                         data: 'status_hrd',
-                        name: 'status_hrd'
+                        name: 'status_hrd',
+                        render: function(data, type, row) {
+                            badge = '';
+                            switch (data) {
+                                case 'Diterima':
+                                    badge = '<span class="badge bg-success">' + data + '</span>';
+                                    break;
+                                case 'Ditolak':
+                                    badge = '<span class="badge bg-red">' + data + '</span>';
+                                    break;
+                                case 'Menunggu':
+                                    badge = '<span class="badge bg-warning">' + data + '</span>';
+                                    break;
+
+                            }
+                            return badge;
+                        }
                     },
                     {
                         data: 'action',
@@ -180,15 +221,7 @@
                 ]
             });
 
-            $('#status_hrd').change(function() {
-                table.draw();
-            });
-
             $('#tipe').change(function() {
-                table.draw();
-            });
-
-            $('#status_hod').change(function() {
                 table.draw();
             });
         });

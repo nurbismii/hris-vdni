@@ -1,4 +1,4 @@
-<x-app-layout title="Reminder">
+<x-app-layout title="Pengingat">
     @push('styles')
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css" rel="stylesheet" />
@@ -16,7 +16,7 @@
                     <div class="col-auto mb-3">
                         <h1 class="page-header-title">
                             <div class="page-header-icon"><i data-feather="user"></i></div>
-                            Reminder
+                            Pengingat
                         </h1>
                     </div>
                 </div>
@@ -27,8 +27,8 @@
     <div class="container-fluid px-4">
         <x-message />
         <nav class="nav nav-borders">
-            <a class="nav-link {{ (request()->segment(2) == 'daftar-pengingat') ? 'active' : '' }} ms-0" href="/roster/daftar-pengingat">Reminder</a>
-            <a class="nav-link {{ (request()->is('roster')) ? 'active' : '' }} ms-0" href="/roster">Roster</a>
+            <a class="nav-link {{ (request()->segment(2) == 'daftar-pengingat') ? 'active' : '' }} ms-0" href="/roster/daftar-pengingat">Pengingat</a>
+            <a class="nav-link {{ (request()->is('roster')) ? 'active' : '' }} ms-0" href="/roster/kalender">Roster</a>
         </nav>
         <hr class="mt-0 mb-4" />
         <div class="row">
@@ -39,11 +39,9 @@
                     <div class="card">
                         <div class="card-body" style="overflow-x: auto;">
                             <select name="status_pengajuan" id="" class="form-select">
-                                <option value="" disabled selected>Select Submission Status :</option>
-                                <option value="Belum Pengajuan">Not submit</option>
-                                <option value="Jatuh Tempo">Due date</option>
-                                <option value="Proses">Proses</option>
-                                <option value="Selesai">Completed</option>
+                                <option value="" disabled selected>Pilih status pengajuan :</option>
+                                <option value="Belum Pengajuan">Belum pengajuan</option>
+                                <option value="Jatuh Tempo">Jatuh tempo</option>
                             </select>
                             <div class="mt-2">
                                 <button class="btn btn-sm btn-light text-primary" type="submit">
@@ -52,7 +50,7 @@
                                 </button>
                                 <a class="btn btn-sm btn-light text-primary" href="/roster/daftar-pengingat">
                                     <i class="me-1" data-feather="trash"></i>
-                                    Clean filters
+                                    Bersihkan
                                 </a>
                             </div>
                         </div>
@@ -65,18 +63,18 @@
                     <div class="card-body" style="overflow-x: auto;">
                         <table id="datatablesSimple" class="table table-hover">
                             <thead>
+                                @if(strtolower(Auth::user()->job->permission_role ?? '') == 'administrator')
                                 <tr>
-                                    @if(strtolower(Auth::user()->job->permission_role ?? '') == 'administrator')
                                     <th>No</th>
-                                    <th>ID</th>
-                                    <th>Action</th>
-                                    <th>Employee name</th>
-                                    <th>Msg</th>
-                                    <th>Leave date</th>
-                                    <th>Paid leave</th>
-                                    <th>Period</th>
-                                    @endif
+                                    <th>NIK</th>
+                                    <th>Nama</th>
+                                    <th>Pesan</th>
+                                    <th>Tanggal cuti</th>
+                                    <th>Periode</th>
+                                    <th>Tahun</th>
+                                    <th>Form</th>
                                 </tr>
+                                @endif
                                 @if(strtolower(Auth::user()->job->permission_role ?? '') != 'administrator')
                                 <tr>
                                     <th>No</th>
@@ -106,45 +104,25 @@
                                     <td>{{ ++$no }}</td>
                                     <td>
                                         {{ $data->nik_karyawan }} <br>
-                                        @if($data->status_pengajuan === NULL)
-                                        <span class="badge bg-warning-soft text-warning">Not submitted</span>
-                                        @endif
-                                        @if((strtolower($data->status_pengajuan) === 'proses') && ($tgl_jt_tempo > 0))
-                                        <span class="badge bg-primary-soft text-primary">Proses</span>
-                                        @endif
-                                        @if(strtolower($data->status_pengajuan) == 'selesai' && $tgl_jt_tempo > 0)
-                                        <span class="badge bg-success-soft text-success">Completed</span>
-                                        @endif
                                         @if($data->status_pengajuan == NULL || strtolower($data->status_pengajuan) && $tgl_jt_tempo > 0 && strtolower($data->status_pengajuan) != 'selesai')
                                         @if($tgl_jt_tempo >= 14 && $tahun > 0)
-                                        <span class="badge bg-danger-soft text-danger">Expired {{ $tahun }} years {{ $bulan }} months</span>
+                                        <span class="badge bg-danger-soft text-danger">jatuh tempo {{ $tahun }} tahun {{ $bulan }} bulan</span>
                                         @endif
-                                        @if($tgl_cuti < $tgl_sekarang && $tgl_jt_tempo < 365) <span class="badge bg-danger-soft text-danger">Expired {{ $tgl_jt_tempo }} day ago</span>
+                                        @if($tgl_cuti < $tgl_sekarang && $tgl_jt_tempo < 365) <span class="badge bg-danger-soft text-danger">Jatuh tempo {{ $tgl_jt_tempo }} hari yang lalu</span>
                                             @endif
                                             @if($tgl_cuti > $tgl_sekarang)
-                                            <span class="badge bg-info-soft text-info">Expired in {{ $tgl_jt_tempo }} days</span>
+                                            <span class="badge bg-info-soft text-info">Jatuh tempo {{ $tgl_jt_tempo }} hari lagi</span>
                                             @endif
                                             @endif
-                                    </td>
-                                    <td>
-                                        <form action="{{ route('update.statusPengajuan', $data->id) }}" method="POST">
-                                            @csrf
-                                            {{ @method_field('patch') }}
-                                            <input type="hidden" name="status_pengajuan" value="Proses">
-                                            <button type="submit" class="btn btn-primary btn-sm mb-2">Proses</button>
-                                        </form>
-                                        <form action="{{ route('update.statusPengajuan', $data->id) }}" method="POST">
-                                            @csrf
-                                            {{ @method_field('patch') }}
-                                            <input type="hidden" name="status_pengajuan" value="Selesai">
-                                            <button type="submit" class="btn btn-success btn-sm">Complete</button>
-                                        </form>
                                     </td>
                                     <td>{{ $data->karyawan->nama_karyawan ?? '' }}</td>
                                     <td>{{ $data->pesan }}</td>
                                     <td>{{ $data->tanggal_cuti }}</td>
                                     <td>Cuti Ke-{{ $data->periode_mingguan }}</td>
                                     <td>{{ $data->periode->awal_periode }} - {{ $data->periode->akhir_periode }}</td>
+                                    <td>
+                                        <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href=""><i data-feather="printer"></i></a>
+                                    </td>
                                 </tr>
                                 @endif
 
@@ -152,27 +130,21 @@
                                 <tr>
                                     <td>{{ ++$no }}
                                         <br>
-                                        @if($data->status_pengajuan === NULL)
-                                        <span class="badge bg-warning-soft text-warning">Not submitted</span>
-                                        @endif
-                                        @if((strtolower($data->status_pengajuan) === 'proses') && ($tgl_jt_tempo > 0))
-                                        <span class="badge bg-primary-soft text-primary">Proses</span>
-                                        @endif
-                                        @if(strtolower($data->status_pengajuan) == 'selesai' && $tgl_jt_tempo > 0)
-                                        <span class="badge bg-success-success text-success">Completed</span>
-                                        @endif
                                         @if($data->status_pengajuan == NULL || strtolower($data->status_pengajuan) && $tgl_jt_tempo > 0 && strtolower($data->status_pengajuan) != 'selesai')
                                         @if($tgl_jt_tempo >= 14 && $tahun > 0)
-                                        <span class="badge bg-danger-soft text-danger">Expired {{ $tahun }} years {{ $bulan }} months</span>
+                                        <span class="badge bg-danger-soft text-danger">Jatuh tempo {{ $tahun }} tahun {{ $bulan }} bulan</span>
                                         @endif
-                                        @if($tgl_cuti < $tgl_sekarang && $tgl_jt_tempo < 365) <span class="badge bg-danger">Expired {{ $tgl_jt_tempo }} day ago</span>
+                                        @if($tgl_cuti < $tgl_sekarang && $tgl_jt_tempo < 365) <span class="badge bg-danger">Jatuh tempo {{ $tgl_jt_tempo }} hari yang lalu</span>
                                             @endif
                                             @if($tgl_cuti > $tgl_sekarang)
-                                            <span class="badge bg-info-soft text-info">Expired in{{ $tgl_jt_tempo }} days</span>
+                                            <span class="badge bg-info-soft text-info">Jatuh tempo {{ $tgl_jt_tempo }} hari lagi</span>
                                             @endif
                                             @endif
                                     </td>
                                     <td>{{ $data->pesan }}</td>
+                                    <td>
+                                        <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href=""><i data-feather="printer"></i></a>
+                                    </td>
                                 </tr>
                                 @endif
 

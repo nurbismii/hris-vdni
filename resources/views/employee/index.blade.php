@@ -13,6 +13,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <style>
+        td {
+            text-transform: uppercase
+        }
+    </style>
     @endpush
     <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
         <div class="container-fluid px-s4">
@@ -21,17 +26,21 @@
                     <div class="col-auto mb-3">
                         <h1 class="page-header-title">
                             <div class="page-header-icon"><i data-feather="users"></i></div>
-                            Data employee
+                            Data karyawan
                         </h1>
                     </div>
                     <div class="col-12 col-xl-auto mb-3">
+                        <a href="/employees/mutasi" class="btn btn-sm btn-light text-primary">
+                            <i class="me-1" data-feather="plus"></i>
+                            Mutasi
+                        </a>
                         <a class="btn btn-sm btn-light text-primary" data-bs-toggle="modal" data-bs-target="#modalUpdateEmployee">
                             <i class="me-1" data-feather="edit-3"></i>
-                            Bulk update
+                            Bulk perbarui
                         </a>
                         <a class="btn btn-sm btn-light text-primary" data-bs-toggle="modal" data-bs-target="#modalDeleteEmployee">
                             <i class="me-1" data-feather="trash"></i>
-                            Bulk destroy
+                            Bulk hapus
                         </a>
                     </div>
                 </div>
@@ -41,8 +50,8 @@
     <!-- Main page content-->
     <div class="container-fluid px-4">
         <nav class="nav nav-borders">
-            <a class="nav-link {{ (request()->segment(1) == 'employees') ? 'active' : '' }} ms-0" href="/employees">Employees</a>
-            <a class="nav-link {{ (request()->segment(1) == 'information') ? 'active' : '' }} ms-0" href="/">Information</a>
+            <a class="nav-link {{ (request()->segment(1) == 'employees') ? 'active' : '' }} ms-0" href="/employees">Karyawan</a>
+            <a class="nav-link {{ (request()->segment(1) == 'information') ? 'active' : '' }} ms-0" href="/">Informasi</a>
         </nav>
         <hr class="mt-0 mb-4" />
         <div class="row">
@@ -59,19 +68,16 @@
                             <div class="card-body">
                                 <div class="row gx-3 mb-3">
                                     <div class="col-md-3 mb-2">
-                                        <label class="small mb-1">Status</label>
+                                        <label class="small mb-1">Status keluar</label>
                                         <select class="form-select" id="status_resign">
                                             <option value="">- Select a status -</option>
-                                            <option value="Aktif">Active</option>
+                                            <option value="Aktif">Aktif</option>
                                             <option value="Resign">Resign</option>
                                             <option value="Mutasi">Mutasi</option>
-                                            <option value="PHK">PHK</option>
-                                            <option value="Pengembalian">Pengembalian HRD</option>
-                                            <option value="Efisiensi">Efisiensi</option>
                                         </select>
                                     </div>
                                     <div class="col-md-3 mb-2">
-                                        <label class="small mb-1">Contract</label>
+                                        <label class="small mb-1">Kontrak</label>
                                         <select class="form-select" id="status_karyawan">
                                             <option value="">- Select a contract -</option>
                                             <option value="PKWTT 固定工">PKWTT 固定工</option>
@@ -108,15 +114,15 @@
                         <table id="data-table-karyawan" class="table table-hover" style="width: 100%;">
                             <thead>
                                 <tr>
-                                    <th>#</th>
-                                    <th>Emp ID</th>
-                                    <th>Name</th>
-                                    <th>Departement</th>
+                                    <th>NIK</th>
+                                    <th>Nama</th>
+                                    <th>Departemen</th>
                                     <th>Divisi</th>
-                                    <th>Position</th>
-                                    <th>Contract</th>
-                                    <th>Join</th>
-                                    <th>Status</th>
+                                    <th>Posisi</th>
+                                    <th>Kontrak</th>
+                                    <th>Masuk</th>
+                                    <th>Status Keluar</th>
+                                    <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody> </tbody>
@@ -132,7 +138,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Upload employee data change</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Perbarui data karyawan</h5>
                     <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form action="{{ route('updateImport.employee') }}" method="POST" enctype="multipart/form-data" class="nav flex-column" id="stickyNav">
@@ -158,7 +164,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Upload delete employee data</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Hapus data karyawan</h5>
                     <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form action="{{ route('destroyImport.employee') }}" method="POST" enctype="multipart/form-data" class="nav flex-column" id="stickyNav">
@@ -178,10 +184,8 @@
         </div>
     </div>
     <!-- Modal delete emplooye maatwebsite end -->
-
     @push('scripts')
     <x-toastr />
-
     <script src="{{ asset('js/scripts.js') }}"></script>
     <script src="{{ asset('js/chart.min.js') }}" crossorigin="anonymous"></script>
     <script src="{{ asset('js/datatables/datatables-simple-demo.js')}}"></script>
@@ -190,7 +194,6 @@
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/bundle.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.2/moment.min.js"></script>
@@ -198,7 +201,6 @@
 
     <script>
         $(function() {
-
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -222,11 +224,6 @@
                     }
                 },
                 columns: [{
-                        data: 'action',
-                        name: 'action',
-                        orderable: false
-                    },
-                    {
                         data: 'nik',
                         name: 'nik'
                     },
@@ -256,7 +253,42 @@
                     },
                     {
                         data: 'status_resign',
-                        name: 'status_resign'
+                        name: 'status_resign',
+                        render: function(data, type, row) {
+                            badge = '';
+                            switch (data) {
+                                case 'Aktif':
+                                    badge = '<span class="badge bg-success">' + data + '</span>';
+                                    break;
+                                case 'Resign':
+                                    badge = '<span class="badge bg-red">' + data + '</span>';
+                                    break;
+                                case 'Mutasi':
+                                    badge = '<span class="badge bg-warning">' + data + '</span>';
+                                    break;
+                                case 'PHK':
+                                    badge = '<span class="badge bg-red">' + data + '</span>';
+                                    break;
+                                case 'BAIK':
+                                    badge = '<span class="badge bg-primary">' + data + '</span>';
+                                    break;
+                                case 'PUTUS KONTRAK':
+                                    badge = '<span class="badge bg-secondary">' + data + '</span>';
+                                    break;
+                                case 'PASAL (50)':
+                                    badge = '<span class="badge bg-info">' + data + '</span>';
+                                    break;
+                                case 'PB RESIGN':
+                                    badge = '<span class="badge bg-red">' + data + '</span>';
+                                    break;
+                            }
+                            return badge;
+                        }
+                    },
+                    {
+                        data: 'action',
+                        name: 'action',
+                        orderable: false
                     },
                 ],
                 order: [
@@ -283,7 +315,6 @@
 
         });
     </script>
-
     <script>
         $(document).ready(function() {
             $('#departemen').on('change', function() {

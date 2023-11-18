@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\PesangonImport;
 use App\Models\Pasal;
 use App\Models\employee;
 use App\Models\Severancepay;
 use PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SeverancepayController extends Controller
 {
@@ -60,6 +62,17 @@ class SeverancepayController extends Controller
             DB::rollBack();
             return back()->with('error', 'Failed to add data');
         }
+    }
+
+    public function import()
+    {
+        return view('industrial_relations.severance-pay.import');
+    }
+
+    public function importStore(Request $request)
+    {
+        Excel::import(new PesangonImport, $request->file('file'));
+        return back()->with('success', 'Import data pesangon berhasil');
     }
 
     public function print($id)

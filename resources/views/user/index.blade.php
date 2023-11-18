@@ -1,4 +1,4 @@
-<x-app-layout title="Users">
+<x-app-layout title="Pengguna">
     @push('styles')
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css" rel="stylesheet" />
@@ -21,7 +21,7 @@
                     <div class="col-auto mb-3">
                         <h1 class="page-header-title">
                             <div class="page-header-icon"><i data-feather="user"></i></div>
-                            Users
+                            Pengguna
                         </h1>
                     </div>
                     <div class="col-12 col-xl-auto mb-3">
@@ -31,7 +31,7 @@
                         </a>
                         <a class="btn btn-sm btn-light text-primary" href="/users/create">
                             <i class="me-1" data-feather="user-plus"></i>
-                            Add
+                            Tambah
                         </a>
                     </div>
                 </div>
@@ -45,11 +45,11 @@
                 <table id="datatablesSimple">
                     <thead>
                         <tr>
-                            <th>User</th>
-                            <th>Position</th>
+                            <th>Pengguna</th>
+                            <th>Posisi</th>
                             <th>Status</th>
-                            <th>Entry date</th>
-                            <th>Action</th>
+                            <th>Tangga masuk</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -64,7 +64,7 @@
                             </td>
                             <td>{{ $row->role->permission_role ?? 'User' }}</td>
                             <td>{{ ucfirst($row->status) }}</td>
-                            <td>{{ date('d F Y', strtotime($row->employee->entry_date ?? ''))}}</td>
+                            <td>{{ tgl_indo($row->employee->entry_date) ?? '' }}</td>
                             <td>
                                 <form action="{{ route('destroy.user', $row->nik_karyawan) }}" method="POST">
                                     @csrf
