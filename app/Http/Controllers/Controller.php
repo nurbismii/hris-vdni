@@ -34,9 +34,7 @@ class Controller extends BaseController
 
     public function namaKelurahan($key)
     {
-        $data = Kelurahan::where('id', $key)->first();
-        if ($data) {
-            return $data->kelurahan;
-        }
+        $kelurahan = Kelurahan::where('id', $key)->pluck('kelurahan')->implode("");
+        return $kelurahan;
     }
 }
