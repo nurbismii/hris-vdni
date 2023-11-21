@@ -62,8 +62,11 @@ if (!function_exists('getNamaKecamatan')) {
 if (!function_exists('getNamaKelurahan')) {
     function getNamaKelurahan($key)
     {
-        $kelurahan = Kelurahan::where('id', $key)->pluck('kelurahan')->implode("");
-        return $kelurahan;
+        $data = Kelurahan::where('id', $key)->first();
+        if ($data) {
+            return $data->kelurahan;
+        }
+        return 'Tidak diketahui';
     }
 }
 
