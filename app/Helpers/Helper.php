@@ -67,6 +67,7 @@ if (!function_exists('getNamaKelurahan')) {
         if ($data) {
             return $data->kelurahan;
         }
+        return 'Tidak diketahui';
     }
 }
 
@@ -513,7 +514,7 @@ if (!function_exists('getJumlahPekerjaByKelurahan')) {
                 'total' => $val,
             ];
         }
-        return $data;
+        return $kelurahan;
     }
 }
 
