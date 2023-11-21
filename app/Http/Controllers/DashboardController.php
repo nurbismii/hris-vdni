@@ -103,6 +103,7 @@ class DashboardController extends Controller
 
             $check_request = employee::select('provinsi_id', 'kabupaten_id', 'kecamatan_id', 'kelurahan_id')
                 ->where('kabupaten_id', $kabupaten_id)
+                ->where('status_resign', 'Aktif')
                 ->first();
 
             if (!$check_request) {
@@ -111,11 +112,12 @@ class DashboardController extends Controller
 
             $data_karyawan_by_kab = employee::select('provinsi_id', 'kabupaten_id', 'kecamatan_id', 'kelurahan_id')
                 ->where('kabupaten_id', $kabupaten_id)
+                ->where('status_resign', 'Aktif')
                 ->get();
 
             $kelurahan = $data_karyawan_by_kab->pluck('kelurahan_id')->toArray();
 
-            $res_kelurahan = getJumlahPekerjaByKelurahan($kelurahan);
+            $res_kelurahan = getJumlahPekerjaByKelurahan($kelurahan, $kabupaten_id);
 
             $jumlah_pekerja_by_kelurahan = jumlahPekerjaByKelurahan($res_kelurahan);
 

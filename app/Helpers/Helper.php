@@ -47,7 +47,7 @@ if (!function_exists('getNamaProvinsi')) {
 if (!function_exists('getNamaKabupaten')) {
     function getNamaKabupaten($id)
     {
-        $kabupaten = Kecamatan::where('id', $id)->pluck('kabupaten')->implode("");
+        $kabupaten = Kabupaten::where('id', $id)->pluck('kabupaten')->implode("");
         return $kabupaten;
     }
 }
@@ -61,9 +61,14 @@ if (!function_exists('getNamaKecamatan')) {
 }
 
 if (!function_exists('getNamaKelurahan')) {
-    function getNamaKelurahan($id)
+    function getNamaKelurahan($key, $id)
     {
-        $data = Kelurahan::where('id', '7403171004')->first();
+        $data = Kelurahan::join('master_kecamatan', 'master_kecamatan.id', '=', 'master_kelurahan.id_kecamatan')
+            ->join('master_kabupaten', 'master_kabupaten.id', '=', 'master_kecamatan.id_kabupaten')
+            ->where('master_kelurahan.id', $key)
+            ->where('master_kabupaten.id', $id)
+            ->select('master_kelurahan.kelurahan')
+            ->first();
         if ($data) {
             return $data->kelurahan;
         }
@@ -497,10 +502,10 @@ if (!function_exists('getDataStatusKaryawanPersentase')) {
 }
 
 if (!function_exists('getJumlahPekerjaByKelurahan')) {
-    function getJumlahPekerjaByKelurahan($kelurahan)
+    function getJumlahPekerjaByKelurahan($datas, $id)
     {
         $data = [];
-        $array = $kelurahan;
+        $array = $datas;
         $array = array_replace($array, array_fill_keys(array_keys($array, null), ''));
         $counted = array_count_values($array);
 
@@ -510,7 +515,7 @@ if (!function_exists('getJumlahPekerjaByKelurahan')) {
 
             $data[] = [
                 'id' => $key == "" ? 'Tidak diketahui' : $key,
-                'kelurahan' => getNamaKelurahan($key),
+                'kelurahan' => getNamaKelurahan($key, $id),
                 'total' => $val,
             ];
         }
