@@ -510,14 +510,6 @@ if (!function_exists('getJumlahPekerjaByKelurahan')) {
 
             $nama = getNamaKelurahan($key);
 
-            if($nama == 'Tidak diketahui'){
-                $data = Kelurahan::where('id', $key)->first();
-                if ($data) {
-                    $nama = $data->kelurahan;
-                }
-                'Tidak diketahui';
-            }
-
             $data[] = [
                 'id' => $key == "" ? 'Tidak diketahui' : $key,
                 'kelurahan' => $nama,
