@@ -503,12 +503,14 @@ if (!function_exists('getJumlahPekerjaByKelurahan')) {
         $array = array_replace($array, array_fill_keys(array_keys($array, null), ''));
         $counted = array_count_values($array);
 
+        $service = new Controller();
+
         arsort($counted);
 
         foreach ($counted as $key => $val) {
             $data[] = [
                 'id' => $key == "" ? 'Tidak diketahui' : $key,
-                'kelurahan' => Controller::namaKelurahan($key),
+                'kelurahan' => $service->namaKelurahan($key),
                 'total' => $val,
             ];
         }
