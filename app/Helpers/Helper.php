@@ -505,7 +505,7 @@ if (!function_exists('getJumlahPekerjaByKelurahan')) {
         foreach ($counted as $key => $val) {
             $data[] = [
                 'id' => $key == "" ? 'Tidak diketahui' : $key,
-                'kelurahan' => getNamaKelurahan($key) == '' ? 'Tidak diketahui' : getNamaKelurahan($key),
+                'kelurahan' => getNamaKelurahan($key) != "" ? getNamaKelurahan($key) : 'Tidak diketahui',
                 'total' => $val,
             ];
         }
