@@ -117,8 +117,6 @@ class DashboardController extends Controller
 
             $res_kelurahan = getJumlahPekerjaByKelurahan($kelurahan);
 
-            return $res_kelurahan;
-
             $jumlah_pekerja_by_kelurahan = jumlahPekerjaByKelurahan($res_kelurahan);
 
             $daftar_nama_kelurahan = daftarNamaKelurahan($res_kelurahan);

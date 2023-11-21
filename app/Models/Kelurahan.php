@@ -10,5 +10,4 @@ class Kelurahan extends Model
     use HasFactory;
     protected $table = 'master_kelurahan';
     protected $guarded = [];
-    protected $primaryKey = 'id';
 }
