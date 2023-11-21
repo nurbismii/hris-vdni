@@ -63,7 +63,7 @@ if (!function_exists('getNamaKecamatan')) {
 if (!function_exists('getNamaKelurahan')) {
     function getNamaKelurahan($id)
     {
-        $data = Kelurahan::where('id', $id)->first();
+        $data = Kelurahan::where('id', '7403171004')->first();
         if ($data) {
             return $data->kelurahan;
         }
