@@ -510,7 +510,7 @@ if (!function_exists('getJumlahPekerjaByKelurahan')) {
 
             $data[] = [
                 'id' => $key == "" ? 'Tidak diketahui' : $key,
-                'kelurahan' => Kelurahan::where('id', $key)->pluck('kelurahan')->implode(''),
+                'kelurahan' => $key,
                 'total' => $val,
             ];
         }
