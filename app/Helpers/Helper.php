@@ -61,14 +61,9 @@ if (!function_exists('getNamaKecamatan')) {
 }
 
 if (!function_exists('getNamaKelurahan')) {
-    function getNamaKelurahan($key, $id)
+    function getNamaKelurahan($key)
     {
-        $data = Kelurahan::join('master_kecamatan', 'master_kecamatan.id', '=', 'master_kelurahan.id_kecamatan')
-            ->join('master_kabupaten', 'master_kabupaten.id', '=', 'master_kecamatan.id_kabupaten')
-            ->where('master_kelurahan.id', $key)
-            ->where('master_kabupaten.id', $id)
-            ->select('master_kelurahan.kelurahan')
-            ->first();
+        $data = Kelurahan::where('id', $key)->first();
         if ($data) {
             return $data->kelurahan;
         }
@@ -502,7 +497,7 @@ if (!function_exists('getDataStatusKaryawanPersentase')) {
 }
 
 if (!function_exists('getJumlahPekerjaByKelurahan')) {
-    function getJumlahPekerjaByKelurahan($datas, $id)
+    function getJumlahPekerjaByKelurahan($datas)
     {
         $data = [];
         $array = $datas;
@@ -513,9 +508,19 @@ if (!function_exists('getJumlahPekerjaByKelurahan')) {
 
         foreach ($counted as $key => $val) {
 
+            $nama = getNamaKelurahan($key);
+
+            if($nama == 'Tidak diketahui'){
+                $data = Kelurahan::where('id', $key)->first();
+                if ($data) {
+                    $nama = $data->kelurahan;
+                }
+                'Tidak diketahui';
+            }
+
             $data[] = [
                 'id' => $key == "" ? 'Tidak diketahui' : $key,
-                'kelurahan' => getNamaKelurahan($key, $id),
+                'kelurahan' => $nama,
                 'total' => $val,
             ];
         }

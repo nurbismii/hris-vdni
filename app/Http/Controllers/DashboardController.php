@@ -117,7 +117,7 @@ class DashboardController extends Controller
 
             $kelurahan = $data_karyawan_by_kab->pluck('kelurahan_id')->toArray();
 
-            $res_kelurahan = getJumlahPekerjaByKelurahan($kelurahan, $kabupaten_id);
+            $res_kelurahan = getJumlahPekerjaByKelurahan($kelurahan);
 
             $jumlah_pekerja_by_kelurahan = jumlahPekerjaByKelurahan($res_kelurahan);
 
