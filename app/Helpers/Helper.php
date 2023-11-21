@@ -61,9 +61,9 @@ if (!function_exists('getNamaKecamatan')) {
 }
 
 if (!function_exists('getNamaKelurahan')) {
-    function getNamaKelurahan($key)
+    function getNamaKelurahan($id)
     {
-        $data = Kelurahan::where('id', $key)->first();
+        $data = Kelurahan::where('id', $id)->first();
         if ($data) {
             return $data->kelurahan;
         }
@@ -510,7 +510,7 @@ if (!function_exists('getJumlahPekerjaByKelurahan')) {
 
             $data[] = [
                 'id' => $key == "" ? 'Tidak diketahui' : $key,
-                'kelurahan' => $key,
+                'kelurahan' => getNamaKelurahan($key),
                 'total' => $val,
             ];
         }
