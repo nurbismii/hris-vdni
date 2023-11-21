@@ -50,6 +50,13 @@ class RegisterController extends Controller
         try {
             DB::beginTransaction();
             $employee = employee::where('nik', $request->employee_id)->first();
+
+            $check_user = User::where('nik_karyawan', $request->employee_id)->first();
+
+            if ($check_user) {
+                return back()->with('info', 'Akun pengguna telah tersedia, laporkan ini ke kantor HRD');
+            }
+
             if ($request->password == $request->password_confirm) {
                 $data_user = array(
                     'id' => Uuid::uuid4()->getHex(),
