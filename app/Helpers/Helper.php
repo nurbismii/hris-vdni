@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Controller;
 use App\Models\Departemen;
 use App\Models\Divisi;
 use App\Models\employee;
@@ -66,7 +67,6 @@ if (!function_exists('getNamaKelurahan')) {
         if ($data) {
             return $data->kelurahan;
         }
-        return 'Tidak diketahui';
     }
 }
 
@@ -508,7 +508,7 @@ if (!function_exists('getJumlahPekerjaByKelurahan')) {
         foreach ($counted as $key => $val) {
             $data[] = [
                 'id' => $key == "" ? 'Tidak diketahui' : $key,
-                'kelurahan' => getNamaKelurahan($key),
+                'kelurahan' => Controller::namaKelurahan($key),
                 'total' => $val,
             ];
         }

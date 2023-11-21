@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\employee;
+use App\Models\Kelurahan;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -31,5 +32,11 @@ class Controller extends BaseController
         return (round($distance));
     }
 
- 
+    public function namaKelurahan($key)
+    {
+        $data = Kelurahan::where('id', $key)->first();
+        if ($data) {
+            return $data->kelurahan;
+        }
+    }
 }
