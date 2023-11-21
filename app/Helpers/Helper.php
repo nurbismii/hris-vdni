@@ -503,6 +503,7 @@ if (!function_exists('getJumlahPekerjaByKelurahan')) {
         $array = $datas;
         $array = array_replace($array, array_fill_keys(array_keys($array, null), ''));
         $counted = array_count_values($array);
+        $nama = '';
 
         arsort($counted);
 
