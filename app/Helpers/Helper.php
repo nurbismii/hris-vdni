@@ -63,6 +63,7 @@ if (!function_exists('getNamaKecamatan')) {
 if (!function_exists('getNamaKelurahan')) {
     function getNamaKelurahan($key)
     {
+        return $key;
         $data = Kelurahan::where('id', $key)->first();
         if ($data) {
             return $data->kelurahan;
