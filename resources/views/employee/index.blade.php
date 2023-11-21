@@ -1,4 +1,4 @@
-<x-app-layout title="Employees">
+<x-app-layout title="Karyawan">
     @push('styles')
     <link href="{{ asset('css/styles.css')}}" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/favicon.png')}}" />
@@ -70,7 +70,7 @@
                                     <div class="col-md-3 mb-2">
                                         <label class="small mb-1">Status keluar</label>
                                         <select class="form-select" id="status_resign">
-                                            <option value="">- Select a status -</option>
+                                            <option value="">- Pilih status keluar -</option>
                                             <option value="Aktif">Aktif</option>
                                             <option value="Resign">Resign</option>
                                             <option value="Mutasi">Mutasi</option>
@@ -79,7 +79,7 @@
                                     <div class="col-md-3 mb-2">
                                         <label class="small mb-1">Kontrak</label>
                                         <select class="form-select" id="status_karyawan">
-                                            <option value="">- Select a contract -</option>
+                                            <option value="">- Pilih status kontrak -</option>
                                             <option value="PKWTT 固定工">PKWTT 固定工</option>
                                             <option value="PKWT 合同工">PKWT 合同工</option>
                                             <option value="TRAINING">TRAINING</option>
@@ -88,7 +88,7 @@
                                     <div class="col-md-3 mb-2">
                                         <label class="small mb-1">Departemen</label>
                                         <select class="form-select" id="departemen">
-                                            <option value="">- Select a departement -</option>
+                                            <option value="">- Pilih status departemen -</option>
                                             @foreach($depts as $d)
                                             <option value="{{ $d->id }}">{{ $d->departemen }}</option>
                                             @endforeach
@@ -101,7 +101,7 @@
                                 </div>
                                 <a class="btn btn-sm btn-light text-primary" href="/employees">
                                     <i class="me-1" data-feather="trash"></i>
-                                    Clear
+                                    Hapus
                                 </a>
                             </div>
                         </form>
@@ -145,13 +145,13 @@
                     <div class="modal-body">
                         @csrf
                         <div class="mb-3">
-                            <label class="form-label">Select a file</label>
+                            <label class="form-label">Pilih file : </label>
                             <input class="form-control" type="file" name="file" id="formFile">
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
-                        <button class="btn btn-success" type="submit">Send</button>
+                        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Tutup</button>
+                        <button class="btn btn-success" type="submit">Kirim</button>
                     </div>
                 </form>
             </div>
@@ -171,13 +171,13 @@
                     <div class="modal-body">
                         @csrf
                         <div class="mb-3">
-                            <label class="form-label">Select a file</label>
+                            <label class="form-label">Pilih file :</label>
                             <input class="form-control" name="file" type="file" id="formFile">
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
-                        <button class="btn btn-success" type="submit">Send</button>
+                        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Tutup</button>
+                        <button class="btn btn-success" type="submit">Kirim</button>
                     </div>
                 </form>
             </div>

@@ -1,4 +1,4 @@
-<x-app-layout title="Add user">
+<x-app-layout title="Tambah Pengguna">
     @push('styles')
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css" rel="stylesheet" />
@@ -20,7 +20,7 @@
                     <div class="col-auto mt-4">
                         <h1 class="page-header-title">
                             <div class="page-header-icon"><i data-feather="user-plus"></i></div>
-                            User
+                            Pengguna
                         </h1>
                     </div>
                 </div>
@@ -39,7 +39,7 @@
                             <form action="/users/store" method="POST">
                                 @csrf
                                 <div class="mb-3">
-                                    <label class="small mb-1">Employee ID</label>
+                                    <label class="small mb-1">Nomor Induk Karyawan</label>
                                     <input class="form-control" type="text" name="nik_karyawan" placeholder="NIK Karyawan" />
                                 </div>
                                 <div class="mb-3">
@@ -48,26 +48,26 @@
                                 </div>
                                 <div class="row gx-3">
                                     <div class="mb-3 col-md-6">
-                                        <label class="small mb-1">New password</label>
+                                        <label class="small mb-1">Kata sandi</label>
                                         <input class="form-control" name="password" type="password" placeholder="Kata Sandi" />
                                     </div>
                                     <div class="mb-3 col-md-6">
-                                        <label class="small mb-1">Password confirm</label>
+                                        <label class="small mb-1">Konfirmasi kata sandi</label>
                                         <input class="form-control" name="password_confirm" type="password" placeholder="Konfirmasi Kata Sandi" />
                                     </div>
                                 </div>
                                 <div class="mb-3">
                                     <label class="small mb-1">Status</label>
                                     <select class="form-select" name="status">
-                                        <option selected disabled>Select status : </option>
-                                        <option value="aktif">Active</option>
-                                        <option value="tidak aktif">Not active</option>
+                                        <option selected disabled>Pilih status : </option>
+                                        <option value="aktif">Aktif</option>
+                                        <option value="tidak aktif">Tidak aktif</option>
                                     </select>
                                 </div>
                                 <div class="mb-3">
-                                    <label class="small mb-1">Access</label>
+                                    <label class="small mb-1">Akses</label>
                                     <select class="form-select" name="role_id" aria-label="Default select example">
-                                        <option selected disabled>Select access :</option>
+                                        <option selected disabled>Pilih access :</option>
                                         @foreach($roles as $role)
                                         <option value="{{ $role->id }}">{{ $role->permission_role }}</option>
                                         @endforeach
@@ -76,8 +76,8 @@
                                 </div>
                                 <hr class="my-4" />
                                 <div class="d-flex justify-content-between">
-                                    <a href="{{ url()->previous() }}" class="btn btn-light" type="button">Back</a>
-                                    <button class="btn btn-primary" type="submit">Submit</button>
+                                    <a href="{{ url()->previous() }}" class="btn btn-light" type="button">Kembali</a>
+                                    <button class="btn btn-primary" type="submit">Kirim</button>
                                 </div>
                             </form>
                         </div>

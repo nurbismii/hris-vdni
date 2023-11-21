@@ -1,4 +1,4 @@
-<x-app-layout title="Import Pengguna">
+<x-app-layout title="Impor Pengguna">
   @push('styles')
   <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css" rel="stylesheet" />
@@ -54,7 +54,7 @@
               <input class="form-control" name="file" type="file" id="formFile" required>
             </div>
             <div class="mb-3 col-3">
-              <button class="btn btn-primary" type="submit">Kirim berkas</button>
+              <button class="btn btn-primary" type="submit">Kirim</button>
             </div>
           </div>
         </form>
