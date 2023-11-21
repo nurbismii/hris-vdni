@@ -507,10 +507,10 @@ if (!function_exists('getJumlahPekerjaByKelurahan')) {
         arsort($counted);
 
         foreach ($counted as $key => $val) {
-            $kelurahan = getNamaKelurahan($key);
+
             $data[] = [
                 'id' => $key == "" ? 'Tidak diketahui' : $key,
-                'kelurahan' => $kelurahan,
+                'kelurahan' => Kelurahan::where('id', $key)->pluck('kelurahan')->implode(''),
                 'total' => $val,
             ];
         }
