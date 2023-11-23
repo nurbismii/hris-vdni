@@ -13,12 +13,12 @@
                 </a>
                 @endif
                 <div class="sidenav-menu-heading">Core</div>
-                <a class="nav-link" href="/dashboard">
+                <a class="nav-link {{ (request()->segment(1) == 'dashboard') ? 'active' : '' }}" href="/dashboard">
                     <div class="nav-link-icon"><i data-feather="activity"></i></div>
                     Dashboard
                 </a>
                 @if(strtolower(Auth::user()->job->permission_role ?? '') == 'administrator')
-                <a class="nav-link" href="/audit-trails">
+                <a class="nav-link {{ (request()->segment(1) == 'audit-trails') ? 'active' : '' }}" href="/audit-trails">
                     <div class="nav-link-icon"><i data-feather="clipboard"></i></div>
                     Jejak Aktivitas
                 </a>
@@ -28,10 +28,10 @@
                     Pengguna
                     <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
-                <div class="collapse" id="collapseUsers" data-bs-parent="#accordionSidenav">
+                <div class="collapse {{ (request()->segment(1) == 'users') ? 'show' : '' }}" id="collapseUsers" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav">
-                        <a class="nav-link" href="/users">Data Pengguna</a>
-                        <a class="nav-link" href="/users/last-login">Riwayat masuk</a>
+                        <a class="nav-link {{ (request()->is('users', 'users')) ? 'active' : '' }}" href="/users">Data Pengguna</a>
+                        <a class="nav-link {{ (request()->segment(2) == 'last-login') ? 'active' : '' }}" href="/users/last-login">Riwayat masuk</a>
                     </nav>
                 </div>
                 <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseEmployees" aria-expanded="false" aria-controls="collapseEmployees">
@@ -39,15 +39,15 @@
                     Karyawan
                     <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
-                <div class="collapse" id="collapseEmployees" data-bs-parent="#accordionSidenav">
+                <div class="collapse {{ (request()->segment(1) == 'employees' || request()->segment(1) == 'roles') ? 'show' : '' }}" id="collapseEmployees" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavemployee">
-                        <a class="nav-link" href="{{ url('employees')}}">Data karyawan</a>
-                        <a class="nav-link" href="/roles">Peran dan akses</a>
-                        <a class="nav-link" href="/employees/import">Impor karyawan</a>
+                        <a class="nav-link {{ (request()->is('employees', 'employees')) ? 'active' : '' }}" href="{{ url('employees')}}">Data karyawan</a>
+                        <a class="nav-link {{ (request()->segment(1) == 'roles') ? 'active' : '' }}" href="/roles">Peran dan akses</a>
+                        <a class="nav-link {{ (request()->segment(2) == 'import') ? 'active' : '' }}" href="/employees/import">Impor karyawan</a>
                     </nav>
                 </div>
 
-                <a class="nav-link" href="/departemen">
+                <a class="nav-link {{ (request()->segment(1) == 'departemen') ? 'active' : '' }}" href="/departemen">
                     <div class="nav-link-icon"><i data-feather="codepen"></i></div>
                     Departmen
                 </a>
@@ -57,12 +57,12 @@
                     Hubungan Industrial
                     <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
-                <div class="collapse" id="collapseCoreHr" data-bs-parent="#accordionSidenav">
+                <div class="collapse {{ (request()->segment(1) == 'industrial-relations') ? 'show' : '' }}" id="collapseCoreHr" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav">
-                        <a class="nav-link" href="/contract">PKWT</a>
-                        <a class="nav-link" href="/industrial-relations/severance-pay">Pesangon</a>
-                        <a class="nav-link" href="/industrial-relations/sp-report">Peringatan</a>
-                        <a class="nav-link" href="/industrial-relations/resign">Resign</a>
+                        <a class="nav-link {{ (request()->is('contract', 'contract')) ? 'active' : '' }}" href="/contract">PKWT</a>
+                        <a class="nav-link {{ (request()->segment(2) == 'severance-pay') ? 'active' : '' }}" href="/industrial-relations/severance-pay">Pesangon</a>
+                        <a class="nav-link {{ (request()->segment(2) == 'sp-report') ? 'active' : '' }}" href="/industrial-relations/sp-report">Peringatan</a>
+                        <a class="nav-link {{ (request()->segment(2) == 'resign') ? 'active' : '' }}" href="/industrial-relations/resign">Resign</a>
                     </nav>
                 </div>
                 <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapsePayroll" aria-expanded="false" aria-controls="collapsePayroll">
@@ -70,12 +70,12 @@
                     Penggajian
                     <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
-                <div class="collapse" id="collapsePayroll" data-bs-parent="#accordionSidenav">
+                <div class="collapse {{ (request()->segment(1) == 'salary') ? 'show' : '' }}" id="collapsePayroll" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav">
                         <!-- <a class="nav-link" href="/salary/employee">Employee Salary</a> -->
-                        <a class="nav-link" href="/salary/payslip">Slip gaji</a>
-                        <a class="nav-link" href="/salary">Impor slip gaji</a>
-                        <a class="nav-link" href="/salary/history">Riwayat impor</a>
+                        <a class="nav-link {{ (request()->segment(1) == 'salary' && request()->segment(2) == 'payslip') ? 'active' : '' }}" href="/salary/payslip">Slip gaji</a>
+                        <a class="nav-link {{ (request()->segment(1) == 'salary' && request()->segment(2) == '') ? 'active' : '' }}" href="/salary">Impor slip gaji</a>
+                        <a class="nav-link {{ (request()->segment(1) == 'salary' && request()->segment(2) == 'history') ? 'active' : '' }}" href="/salary/history">Riwayat impor</a>
                     </nav>
                 </div>
 
@@ -84,33 +84,33 @@
                     Keuntungan dan manfaat
                     <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
-                <div class="collapse" id="collapseKelolaCuti" data-bs-parent="#accordionSidenav">
+                <div class="collapse {{ (request()->segment(1) == 'pengajuan-karyawan' || request()->segment(1) == 'roster' || request()->segment(3) == 'all-in') ? 'show' : '' }}" id="collapseKelolaCuti" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav">
-                        <a class="nav-link" href="/pengajuan-karyawan">Cuti & Izin</a>
-                        <a class="nav-link" href="/roster">Cuti Roster</a>
-                        <a class="nav-link" href="/roster/aktif">Pengingat</a>
-                        <a class="nav-link" href="/absen/detail/all-in">Absensi</a>
+                        <a class="nav-link {{ (request()->segment(1) == 'pengajuan-karyawan') ? 'active' : '' }}" href="/pengajuan-karyawan">Cuti & Izin</a>
+                        <a class="nav-link {{ (request()->segment(1) == 'roster' && request()->segment(2) == '') ? 'active' : '' }}" href="/roster">Cuti Roster</a>
+                        <a class="nav-link {{ (request()->segment(2) == 'daftar-pengingat') ? 'active' : '' }}" href="/roster/daftar-pengingat">Pengingat</a>
+                        <a class="nav-link {{ (request()->segment(3) == 'all-in') ? 'active' : '' }}" href="/absen/detail/all-in">Absensi</a>
                     </nav>
                 </div>
                 @endif
                 <div class="sidenav-menu-heading">Main menu</div>
 
                 @if(strtolower(Auth::user()->job->permission_role ?? '') == 'admin divisi')
-                <a class="nav-link" href="/admin/roster">
+                <a class="nav-link {{ (request()->segment(1) == 'admin' || request()->segment(2) == 'roster') ? 'active' : '' }}" href="/admin/roster">
                     <div class="nav-link-icon"><i data-feather="calendar"></i></div>
                     Cuti Roster
                 </a>
-                <a class="nav-link" href="/admin/cuti">
+                <a class="nav-link {{ (request()->segment(1) == 'admin' || request()->segment(2) == 'cuti') ? 'active' : '' }}" href="/admin/cuti">
                     <div class="nav-link-icon"><i data-feather="calendar"></i></div>
                     Cuti & izin
                 </a>
                 @endif
-                <a class="nav-link" href="/absen">
+                <a class="nav-link {{ (request()->segment(1) == 'absen') ? 'active' : '' }}" href="/absen">
                     <div class="nav-link-icon"><i data-feather="map-pin"></i></div>
                     Presensi
                 </a>
 
-                <a class="nav-link" href="/tiket">
+                <a class="nav-link {{ (request()->segment(1) == 'tiket') ? 'active' : '' }}" href="/tiket">
                     <div class="nav-link-icon"><i data-feather="log-out"></i></div>
                     Tiket
                 </a>

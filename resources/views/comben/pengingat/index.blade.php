@@ -40,6 +40,8 @@
                         <div class="card-body" style="overflow-x: auto;">
                             <select name="status_pengajuan" id="" class="form-select">
                                 <option value="" disabled selected>Pilih status pengajuan :</option>
+                                <option value="Selesai">Selesai</option>
+                                <option value="Proses">Proses</option>
                                 <option value="Belum Pengajuan">Belum pengajuan</option>
                                 <option value="Jatuh Tempo">Jatuh tempo</option>
                             </select>
@@ -72,7 +74,6 @@
                                     <th>Tanggal cuti</th>
                                     <th>Periode</th>
                                     <th>Tahun</th>
-                                    <th>Form</th>
                                 </tr>
                                 @endif
                                 @if(strtolower(Auth::user()->job->permission_role ?? '') != 'administrator')
@@ -104,6 +105,15 @@
                                     <td>{{ ++$no }}</td>
                                     <td>
                                         {{ $data->nik_karyawan }} <br>
+                                        @if($data->status_pengajuan === NULL)
+                                        <span class="badge bg-warning-soft text-warning">Belum pengajuan</span>
+                                        @endif
+                                        @if((strtolower($data->status_pengajuan) === 'proses') && ($tgl_jt_tempo > 0))
+                                        <span class="badge bg-primary-soft text-primary">Proses</span>
+                                        @endif
+                                        @if(strtolower($data->status_pengajuan) == 'selesai' && $tgl_jt_tempo > 0)
+                                        <span class="badge bg-success-soft text-success">Selesai</span>
+                                        @endif
                                         @if($data->status_pengajuan == NULL || strtolower($data->status_pengajuan) && $tgl_jt_tempo > 0 && strtolower($data->status_pengajuan) != 'selesai')
                                         @if($tgl_jt_tempo >= 14 && $tahun > 0)
                                         <span class="badge bg-danger-soft text-danger">jatuh tempo {{ $tahun }} tahun {{ $bulan }} bulan</span>
@@ -120,9 +130,6 @@
                                     <td>{{ $data->tanggal_cuti }}</td>
                                     <td>Cuti Ke-{{ $data->periode_mingguan }}</td>
                                     <td>{{ $data->periode->awal_periode }} - {{ $data->periode->akhir_periode }}</td>
-                                    <td>
-                                        <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href=""><i data-feather="printer"></i></a>
-                                    </td>
                                 </tr>
                                 @endif
 
@@ -142,9 +149,6 @@
                                             @endif
                                     </td>
                                     <td>{{ $data->pesan }}</td>
-                                    <td>
-                                        <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href=""><i data-feather="printer"></i></a>
-                                    </td>
                                 </tr>
                                 @endif
 
