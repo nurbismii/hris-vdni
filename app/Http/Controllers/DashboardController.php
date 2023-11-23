@@ -110,14 +110,16 @@ class DashboardController extends Controller
                 return redirect('dashboard')->with('error', 'Data dari yang kamu inginkan, belum tersedia');
             }
 
-            $data_karyawan_by_kab = employee::select('provinsi_id', 'kabupaten_id', 'kecamatan_id', 'kelurahan_id')
+            $data_karyawan_by_kab = employee::join('master_kelurahan', 'master_kelurahan.id', '=', 'employees.kelurahan_id')
                 ->where('kabupaten_id', $kabupaten_id)
                 ->where('status_resign', 'Aktif')
+                ->select('employees.provinsi_id', 'employees.kabupaten_id', 'employees.kecamatan_id', 'employees.kelurahan_id', 'master_kelurahan.kelurahan')
                 ->get();
 
             $kelurahan = $data_karyawan_by_kab->pluck('kelurahan_id')->toArray();
+            $nama = $data_karyawan_by_kab->pluck('kelurahan')->toArray();
 
-            $res_kelurahan = getJumlahPekerjaByKelurahan($kelurahan);
+            $res_kelurahan = getJumlahPekerjaByKelurahan($kelurahan, $nama);
 
             $jumlah_pekerja_by_kelurahan = jumlahPekerjaByKelurahan($res_kelurahan);
 
