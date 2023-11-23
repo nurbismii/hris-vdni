@@ -96,11 +96,11 @@
                 <div class="sidenav-menu-heading">Main menu</div>
 
                 @if(strtolower(Auth::user()->job->permission_role ?? '') == 'admin divisi')
-                <a class="nav-link {{ (request()->segment(1) == 'admin' || request()->segment(2) == 'roster') ? 'active' : '' }}" href="/admin/roster">
+                <a class="nav-link {{ (request()->segment(1) == 'admin' && request()->segment(2) == 'roster') ? 'active' : '' }}" href="/admin/roster">
                     <div class="nav-link-icon"><i data-feather="calendar"></i></div>
                     Cuti Roster
                 </a>
-                <a class="nav-link {{ (request()->segment(1) == 'admin' || request()->segment(2) == 'cuti') ? 'active' : '' }}" href="/admin/cuti">
+                <a class="nav-link {{ (request()->segment(1) == 'admin' && request()->segment(2) == 'cuti') ? 'active' : '' }}" href="/admin/cuti">
                     <div class="nav-link-icon"><i data-feather="calendar"></i></div>
                     Cuti & izin
                 </a>
