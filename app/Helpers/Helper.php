@@ -517,10 +517,17 @@ if (!function_exists('getJumlahPekerjaByKelurahan')) {
 if (!function_exists('jumlahPekerjaByKelurahan')) {
     function jumlahPekerjaByKelurahan($data)
     {
-        for ($i = 0; $i < count($data); $i++) {
+        if (count($data) >= 5) {
+            $count = 5;
+        } else {
+            $count = count($data);
+        }
+
+
+        for ($i = 0; $i < $count; $i++) {
             $total_pekerja[] = isset($data[$i]['total']) == true ? $data[$i]['total'] : 0;
 
-            if ($i == count($data))
+            if ($i == $count)
                 break;
         }
         return $total_pekerja;
@@ -530,10 +537,17 @@ if (!function_exists('jumlahPekerjaByKelurahan')) {
 if (!function_exists('daftarNamaKelurahan')) {
     function daftarNamaKelurahan($data)
     {
-        for ($i = 0; $i < $data; $i++) {
+        if (count($data) >= 5) {
+            $count = 5;
+        } else {
+            $count = count($data);
+        }
+
+
+        for ($i = 0; $i < $count; $i++) {
             $nama_kelurahan[] = isset($data[$i]['kelurahan']) == true ? $data[$i]['kelurahan'] : 0;
 
-            if ($i == 4)
+            if ($i == $count)
                 break;
         }
         return $nama_kelurahan;
