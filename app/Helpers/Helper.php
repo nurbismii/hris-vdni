@@ -521,8 +521,8 @@ if (!function_exists('getJumlahPekerjaByKelurahan')) {
                     ];
                 }
             }
+            return $data;
         }
-        return $data;
     }
 }
 
