@@ -517,10 +517,10 @@ if (!function_exists('getJumlahPekerjaByKelurahan')) {
 if (!function_exists('jumlahPekerjaByKelurahan')) {
     function jumlahPekerjaByKelurahan($data)
     {
-        for ($i = 0; $i < $data; $i++) {
+        for ($i = 0; $i < count($data); $i++) {
             $total_pekerja[] = isset($data[$i]['total']) == true ? $data[$i]['total'] : 0;
 
-            if ($i == 4)
+            if ($i == count($data))
                 break;
         }
         return $total_pekerja;
