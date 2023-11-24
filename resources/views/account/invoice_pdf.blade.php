@@ -85,12 +85,9 @@
                                     <tr class="">
                                         @if($data->gaji_pokok > 0)
                                         <td>
-                                            <div class="">Gaji</div>
+                                            <div class="">Gaji pokok</div>
                                         </td>
                                         <td class="text-end">Rp{{ number_format($data->gaji_pokok, 0, ",", ".") }}</td>
-                                        @else
-                                        <td></td>
-                                        <td></td>
                                         @endif
                                         @if($data->jht > 0)
                                         <td class="text-end ">BPJS TK JHT</td>
@@ -130,6 +127,21 @@
                                         @endif
                                     </tr>
                                     <!-- Invoice item 4-->
+                                    <tr class="">
+                                        @if($data->tunjungan_transportasi > 0)
+                                        <td>
+                                            <div class="">Tunj. Transportasi</div>
+                                        </td>
+                                        <td class="text-end ">Rp{{ number_format($data->tunjungan_transportasi, 0, ",", ".")  }}</td>
+                                        @else
+                                        <td></td>
+                                        <td></td>
+                                        @endif
+                                        @if($data->deduction_unpaid_leave > 0)
+                                        <td class="text-end ">Deduction Unpaid Leave</td>
+                                        <td class="text-end ">Rp{{ number_format($data->deduction_unpaid_leave, 0, ",", ".")  }}</td>
+                                        @endif
+                                    </tr>
                                     <tr class="">
                                         @if($data->tunjugan_koefisien > 0)
                                         <td>
