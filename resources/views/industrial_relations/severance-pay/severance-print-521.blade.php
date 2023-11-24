@@ -41,7 +41,7 @@
 			<!-- Main page content-->
 			<div class="container-xl px-1">
 				<div class="text-end mb-2">
-					<img src="{{ public_path('assets/img/backgrounds/vdni-ikon.png') }}" style="height: 40px;" alt=""><br>
+					<img src="{{ asset('assets/img/backgrounds/vdni-ikon.png') }}" style="height: 40px;" alt=""><br>
 				</div>
 				<div class="text-center">
 					<h4 class="fw-bold">PERJANJIAN BERSAMA</h4>

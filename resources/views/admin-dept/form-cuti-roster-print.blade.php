@@ -50,7 +50,7 @@
         <div class="text-center">FORMULIR PERMOHONAN CUTI ROSTER 休假申请单<br>
           Nomor 编号 : {{ $data->nomor_surat ?? '' }}
         </div>
-        <img class="text-start" src="{{ public_path('assets/img/backgrounds/vdni-ikon.png') }}" style="height: 40px;" alt="">
+        <img class="text-start" src="{{ asset('assets/img/backgrounds/vdni-ikon.png') }}" style="height: 40px;" alt="">
 
         <div class="card-body">
           <div class="table-responsive">
