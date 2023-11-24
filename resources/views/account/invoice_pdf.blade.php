@@ -35,7 +35,7 @@
                 <div class="card invoice">
                     <div class="text-center">
                         <h4 class="fw-bold">PT VDNI</h4>
-                        <img src="{{ public_path('assets/img/backgrounds/vdni-ikon.png') }}" style="height: 30px;" alt=""><br>
+                        <img src="{{ asset('assets/img/backgrounds/vdni-ikon.png') }}" style="height: 30px;" alt=""><br>
                         <span class="fw-normal">SLIP GAJI </span> <br>
                         <span class="fw-normal"> Periode ({{ date('F Y', strtotime($data->mulai_periode)) }} - {{ date('F Y', strtotime($data->akhir_periode)) }})</span>
                     </div>
