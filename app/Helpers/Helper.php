@@ -494,35 +494,23 @@ if (!function_exists('getDataStatusKaryawanPersentase')) {
 }
 
 if (!function_exists('getJumlahPekerjaByKelurahan')) {
-    function getJumlahPekerjaByKelurahan($kelurahan_id, $nama_kelurahan)
+    function getJumlahPekerjaByKelurahan($nama_kelurahan)
     {
         $data = [];
-        $array_id = $kelurahan_id;
         $array_nama = $nama_kelurahan;
         // Cek isi array
-        $array_id = array_replace($array_id, array_fill_keys(array_keys($array_id, null), ''));
         $array_nama = array_replace($array_nama, array_fill_keys(array_keys($array_nama, null), ''));
-
-        $count_id = array_count_values($array_id);
         $count_nama = array_count_values($array_nama);
-
-        arsort($count_id);
         arsort($count_nama);
 
-        foreach ($count_id as $key => $val) {
+        foreach ($count_nama as $key => $val) {
 
-            foreach ($count_nama as $key1 => $val1) {
-
-                if ($val == $val1) {
-                    $data[] = [
-                        'id' => $key,
-                        'kelurahan' => $key1,
-                        'total' => $val
-                    ];
-                }
-            }
-            return $data;
+            $data[] = [
+                'kelurahan' => $key,
+                'total' => $val
+            ];
         }
+        return $data;
     }
 }
 
