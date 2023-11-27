@@ -23,6 +23,11 @@
             font-family: Firefly Sung, DejaVu Sans, sans-serif;
             font-size: 11px;
         }
+
+        th,
+        td {
+            border: 1px solid;
+        }
     </style>
 </head>
 
@@ -35,7 +40,7 @@
                 <div class="card invoice">
                     <div class="text-center">
                         <h4 class="fw-bold">PT VDNI</h4>
-                        <img src="{{ asset('assets/img/backgrounds/vdni-ikon.png') }}" style="height: 30px;" alt=""><br>
+                        <img src="{{ public_path('assets/img/backgrounds/vdni-ikon.png') }}" style="height: 30px;" alt=""><br>
                         <span class="fw-normal">SLIP GAJI </span> <br>
                         <span class="fw-normal"> Periode ({{ date('F Y', strtotime($data->mulai_periode)) }} - {{ date('F Y', strtotime($data->akhir_periode)) }})</span>
                     </div>
@@ -72,7 +77,7 @@
                             </table>
                         </div>
                         <div class="table-responsive">
-                            <table class="table table-borderless mb-0">
+                            <table class="table mb-0">
                                 <thead class="border-bottom">
                                     <tr class="small text-uppercase text-muted">
                                         <th scope="col">Detail</th>
@@ -88,6 +93,9 @@
                                             <div class="">Gaji pokok</div>
                                         </td>
                                         <td class="text-end">Rp{{ number_format($data->gaji_pokok, 0, ",", ".") }}</td>
+                                        @else
+                                        <td></td>
+                                        <td></td>
                                         @endif
                                         @if($data->jht > 0)
                                         <td class="text-end ">BPJS TK JHT</td>

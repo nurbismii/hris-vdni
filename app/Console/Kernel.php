@@ -21,7 +21,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('sisa:cuti')
             ->daily();
         $schedule->command('resign:cron')
-            ->daily();
+            ->everyMinute();
     }
 
     /**

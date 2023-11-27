@@ -1,4 +1,4 @@
-<x-app-layout title="Slip-Gaji">
+<x-app-layout title="Slip gaji">
 
     @push('styles')
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
@@ -17,17 +17,17 @@
                     <div class="col-auto mb-3">
                         <h1 class="page-header-title">
                             <div class="page-header-icon"><i data-feather="credit-card"></i></div>
-                            Salary details
+                            Detail gaji
                         </h1>
                     </div>
                     <div class="col-12 col-xl-auto mb-3">
                         <a class="btn btn-sm btn-light text-blue" href="/account/information">
                             <i class="me-1" data-feather="arrow-left"></i>
-                            Back
+                            Kembali
                         </a>
                         <a class="btn btn-sm btn-light text-blue" href="{{ route('slipgaji', $data->id) }}" target="_blank">
                             <i class="me-1" data-feather="printer"></i>
-                            Print
+                            Cetak
                         </a>
                     </div>
                 </div>
@@ -43,35 +43,35 @@
                 <div class="text-center lh-1 mb-2">
                     <h4 class="fw-bold">PT VDNI</h4> <br>
                     <img src="{{ asset('assets/img/backgrounds/vdni-ikon.png') }}" style="height: 50px;" alt=""><br> <br>
-                    <span class="fw-normal mb-2"> Payslip </span> <br> <br>
+                    <span class="fw-normal mb-2"> Slip gaji </span> <br> <br>
                     <span class="fw-normal"> Periode ({{ date('F Y', strtotime($data->mulai_periode)) }} - {{ date('F Y', strtotime($data->akhir_periode)) }})</span>
                 </div>
                 <div class="table-responsive">
                     <table class="table table-borderless mb-0">
                         <tbody>
                             <tr>
-                                <th scope="row">Employee ID</th>
+                                <th scope="row">Nomor Induk Karyawan</th>
                                 <td>{{ $data->employee_id }}</td>
-                                <td>Payable/Working Days</td>
+                                <td>Jumlah hari kerja</td>
                                 <td>{{ $data->jumlah_hari_kerja }}</td>
                             </tr>
                             <tr>
-                                <th scope="row">Employee Name</th>
+                                <th scope="row">Nama Karyawan</th>
                                 <td>{{ Auth::user()->employee->nama_karyawan }}</td>
                                 <td>Status Gaji</td>
                                 <td>{{ ucfirst($data->status_gaji) }}</td>
                             </tr>
                             <tr>
-                                <th scope="row">Departement</th>
+                                <th scope="row">Departemen</th>
                                 <td>{{ Auth::user()->employee->divisi->departemen->departemen }}</td>
                                 <td>Divisi</td>
                                 <td>{{ ucfirst(Auth::user()->employee->divisi->nama_divisi) }}</td>
                             </tr>
                             <tr>
-                                <th scope="row">Position</th>
+                                <th scope="row">Posisi</th>
                                 <td>{{ $data->posisi }}</td>
                                 <td>Overtime</td>
-                                <td>0</td>
+                                <td>{{ $data->ot }}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -82,14 +82,14 @@
                         <table class="table table-borderless mb-0">
                             <thead class="border-bottom">
                                 <tr class="small text-uppercase text-muted">
-                                    <th scope="col">Salary detail</th>
+                                    <th scope="col">Detail gaji</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @if($data->gaji_pokok > 0)
                                 <tr class="border-bottom">
                                     <td>
-                                        <div class="fw-bold">Salary</div>
+                                        <div class="fw-bold">Gaji Pokok</div>
                                     </td>
                                     <td class="text-end fw-bold">:</td>
                                     <td class="text-end fw-bold">Rp.</td>
@@ -99,7 +99,7 @@
                                 @if($data->tunjangan_umum > 0)
                                 <tr class="border-bottom">
                                     <td>
-                                        <div class="fw-bold">Allowance meal</div>
+                                        <div class="fw-bold">Tunj. makan</div>
                                     </td>
                                     <td class="text-end fw-bold">:</td>
                                     <td class="text-end fw-bold">Rp.</td>
@@ -109,7 +109,7 @@
                                 @if($data->tunjangan_pengawas > 0)
                                 <tr class="border-bottom">
                                     <td>
-                                        <div class="fw-bold">Allowwance supervisor</div>
+                                        <div class="fw-bold">Tunj. pengawas</div>
                                     </td>
                                     <td class="text-end fw-bold">:</td>
                                     <td class="text-end fw-bold">Rp.</td>
@@ -119,7 +119,7 @@
                                 @if($data->tunjangan_transport > 0)
                                 <tr class="border-bottom">
                                     <td>
-                                        <div class="fw-bold">Overtime</div>
+                                        <div class="fw-bold">Tunj. Transportasi</div>
                                     </td>
                                     <td class="text-end fw-bold">:</td>
                                     <td class="text-end fw-bold">Rp.</td>
@@ -129,7 +129,7 @@
                                 @if($data->tunjangan_mk > 0)
                                 <tr class="border-bottom">
                                     <td>
-                                        <div class="fw-bold">Allowance service year</div>
+                                        <div class="fw-bold">Tunj. masa kerja</div>
                                     </td>
                                     <td class="text-end fw-bold">:</td>
                                     <td class="text-end fw-bold">Rp.</td>
@@ -139,7 +139,7 @@
                                 @if($data->tunjangan_koefisien > 0)
                                 <tr class="border-bottom">
                                     <td>
-                                        <div class="fw-bold">Allowance service year</div>
+                                        <div class="fw-bold">Tunj. koefisien</div>
                                     </td>
                                     <td class="text-end fw-bold">:</td>
                                     <td class="text-end fw-bold">Rp.</td>
@@ -149,7 +149,7 @@
                                 @if($data->overtime > 0)
                                 <tr class="border-bottom">
                                     <td>
-                                        <div class="fw-bold">Overtime</div>
+                                        <div class="fw-bold">Lembur</div>
                                     </td>
                                     <td class="text-end fw-bold">:</td>
                                     <td class="text-end fw-bold">Rp.</td>

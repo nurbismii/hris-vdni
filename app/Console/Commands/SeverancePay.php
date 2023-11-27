@@ -45,7 +45,7 @@ class SeverancePay extends Command
         $current_time = date('Y-m-d', strtotime($current_time));
         Log::info($current_time);
 
-        $data = ModelsSeverancepay::whereDate('termination_date', $current_time)->where('flg_kirim', null)->get();
+        $data = ModelsSeverancepay::whereDate('termination_date', '=' ,$current_time)->where('flg_kirim', null)->get();
         foreach ($data as $row) {
             employee::where('nik', $row->nik_karyawan)->update([
                 'status_resign' => 'PHK',
