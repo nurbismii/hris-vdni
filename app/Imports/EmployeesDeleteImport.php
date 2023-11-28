@@ -2,6 +2,8 @@
 
 namespace App\Imports;
 
+use App\Models\CutiIzin;
+use App\Models\CutiRoster;
 use App\Models\employee;
 use App\Models\KaryawanRoster;
 use App\Models\Pengingat;
@@ -45,6 +47,16 @@ class EmployeesDeleteImport implements ToModel, WithHeadingRow, WithValidation
         KaryawanRoster::where('nik_karyawan', $row['nik'])->chunkById(1000, function ($karyawanRoster){
             foreach($karyawanRoster as $kr){
                 $kr->delete();
+            }
+        });
+        CutiIzin::where('nik_karyawan', $row['nik'])->chunkById(1000, function ($cutiIzin){
+            foreach($cutiIzin as $ci){
+                $ci->delete();
+            }
+        });
+        CutiRoster::where('nik_karyawan', $row['nik'])->chunkById(1000, function ($cutiRoster){
+            foreach($cutiRoster as $cr){
+                $cr->delete();
             }
         });
     }

@@ -15,7 +15,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('Pengingat:cron')
-            ->dailyAt('07:00');
+            ->everyMinute();
         // $schedule->command('severance:cron')
         //     ->everyMinute();
         $schedule->command('sisa:cuti')
