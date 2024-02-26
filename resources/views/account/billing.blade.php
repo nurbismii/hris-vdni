@@ -1,4 +1,5 @@
 <x-app-layout title="Payslip">
+	
 
 	@push('styles')
 	<link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />

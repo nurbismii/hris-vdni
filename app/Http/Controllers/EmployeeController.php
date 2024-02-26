@@ -12,6 +12,7 @@ use App\Models\Divisi;
 use App\Models\employee;
 use App\Models\Mutasi;
 use App\Models\PosisiLama;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
@@ -22,6 +23,11 @@ class EmployeeController extends Controller
     public function index()
     {
         $depts = Departemen::all();
+
+        $data = employee::leftjoin('divisis', 'divisis.id', '=', 'employees.divisi_id')
+            ->leftjoin('departemens', 'departemens.id', '=', 'divisis.departemen_id')
+            ->select(DB::raw("*, tgl_lahir, (year(curdate())-year(tgl_lahir)) as umur"))->limit(10);
+
         return view('employee.index', compact('depts'));
     }
 
@@ -36,6 +42,7 @@ class EmployeeController extends Controller
         $data = employee::leftjoin('divisis', 'divisis.id', '=', 'employees.divisi_id')
             ->leftjoin('departemens', 'departemens.id', '=', 'divisis.departemen_id')
             ->select(DB::raw("*, tgl_lahir, (year(curdate())-year(tgl_lahir)) as umur"));
+
         return DataTables::of($data)
             ->addIndexColumn()
             ->addColumn('action', function ($data) {
@@ -47,15 +54,39 @@ class EmployeeController extends Controller
                 if ($request->get('status_karyawan') == 'PKWTT 固定工' || $request->get('status_karyawan') == 'PKWT 合同工' || $request->get('status_karyawan') == 'TRAINING') {
                     $instance->where('status_karyawan', $request->get('status_karyawan'));
                 }
+
+                if ($request->get('area_kerja') != '') {
+                    $instance->where('area_kerja', $request->get('area_kerja'));
+                }
+
                 if ($request->get('departemen') != '') {
                     $instance->where('departemen_id', $request->get('departemen'));
                 }
+
                 if ($request->get('nama_divisi') != '') {
                     $instance->where('divisi_id', $request->get('nama_divisi'));
                 }
+
                 if ($request->get('status_resign') != '') {
+
                     $instance->where('status_resign', $request->get('status_resign'));
                 }
+                if ($request->get('jenis_kelamin') != '') {
+                    $instance->where('jenis_kelamin', $request->get('jenis_kelamin'));
+                }
+
+                if ($request->get('pendidikan_terakhir') != '') {
+                    $instance->where('pendidikan_terakhir', $request->get('pendidikan_terakhir'));
+                }
+
+                if (($request->get('awal_umur') != '') && ($request->get('akhir_umur') != '')) {
+                    $instance->whereBetween('tgl_lahir', [date('Y-m-d', strtotime(Carbon::today()->subYears($request->get('akhir_umur')))), date('Y-m-d', strtotime(Carbon::today()->subYears($request->get('awal_umur'))))]);
+                }
+
+                if (($request->get('awal_umur') != '') && ($request->get('akhir_umur') == '')) {
+                    $instance->whereYear('tgl_lahir', date('Y-m-d', strtotime(Carbon::today()->subYears($request->get('awal_umur')))));
+                }
+
                 if (!empty($request->get('search'))) {
                     $instance->where(function ($w) use ($request) {
                         $search = $request->get('search');
