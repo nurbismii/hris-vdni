@@ -103,6 +103,7 @@ class DashboardController extends Controller
 
             $check_request = employee::select('provinsi_id', 'kabupaten_id', 'kecamatan_id', 'kelurahan_id')
                 ->where('kabupaten_id', $kabupaten_id)
+                ->where('kecamatan_id', $kecamatan_id)
                 ->where('status_resign', 'Aktif')
                 ->first();
 
@@ -112,6 +113,7 @@ class DashboardController extends Controller
 
             $data_karyawan_by_kab = employee::join('master_kelurahan', 'master_kelurahan.id', '=', 'employees.kelurahan_id')
                 ->where('kabupaten_id', $kabupaten_id)
+                ->where('kecamatan_id', $kecamatan_id)
                 ->where('status_resign', 'Aktif')
                 ->select('employees.provinsi_id', 'employees.kabupaten_id', 'employees.kecamatan_id', 'employees.kelurahan_id', 'master_kelurahan.kelurahan')
                 ->get();

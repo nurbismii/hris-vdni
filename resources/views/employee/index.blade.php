@@ -232,7 +232,7 @@
                                         </select>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="umur" class="col-sm-2 col-form-label">Range umur</label>
+                                        <label for="umur" class="col-sm-2 col-form-label">Rentang umur</label>
                                         <div class="col-sm-2 mb-2">
                                             <input type="number" class="form-control" id="awal_umur" name="awal_umur">
                                         </div>

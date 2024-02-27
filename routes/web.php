@@ -22,6 +22,7 @@ use App\Http\Controllers\WaktuAbsenController;
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\ReportSpController;
 use App\Http\Controllers\ResignController;
+use App\Http\Controllers\WilayahController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -278,6 +279,11 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
             route::post('/store', [PeriodeRosterController::class, 'store'])->name('store.periodeRoster');
             route::patch('/update/{id}', [PeriodeRosterController::class, 'update'])->name('update.periodeRoster');
             route::delete('/delete/{id}', [PeriodeRosterController::class, 'destroy'])->name('destroy.periodeRoster');
+        });
+
+        Route::group(['prefix' => 'wilayah'], function () {
+            route::get('/', [WilayahController::class, 'index']);
+            route::get('/{provinsi}/{kabupaten}/{kecamatan}', [WilayahController::class, 'exportExcel'])->name('export-wilayah');
         });
     });
     Route::group(['prefix' => 'api/hrcorner/'], function () {

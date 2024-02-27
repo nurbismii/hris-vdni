@@ -65,7 +65,7 @@
                         <a class="nav-link {{ (request()->segment(2) == 'resign') ? 'active' : '' }}" href="/industrial-relations/resign">Resign</a>
                     </nav>
                 </div>
-                
+
                 <!-- <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapsePayroll" aria-expanded="false" aria-controls="collapsePayroll">
                     <div class="nav-link-icon"><i data-feather="credit-card"></i></div>
                     Penggajian
@@ -99,12 +99,9 @@
                     Laporan
                     <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
-                <div class="collapse {{ (request()->segment(1) == 'pengajuan-karyawan' || request()->segment(1) == 'roster' || request()->segment(3) == 'all-in') ? 'show' : '' }}" id="collapseLaporan" data-bs-parent="#accordionSidenav">
+                <div class="collapse {{ request()->segment(1) == 'wilayah' ? 'show' : '' }}" id="collapseLaporan" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav">
-                        <a class="nav-link {{ (request()->segment(1) == 'pengajuan-karyawan') ? 'active' : '' }}" href="/pengajuan-karyawan">Cuti & Izin</a>
-                        <a class="nav-link {{ (request()->segment(1) == 'roster' && request()->segment(2) == '') ? 'active' : '' }}" href="/roster">Cuti Roster</a>
-                        <a class="nav-link {{ (request()->segment(2) == 'daftar-pengingat') ? 'active' : '' }}" href="/roster/daftar-pengingat">Pengingat</a>
-                        <a class="nav-link {{ (request()->segment(3) == 'all-in') ? 'active' : '' }}" href="/absen/detail/all-in">Absensi</a>
+                        <a class="nav-link {{ (request()->segment(1) == 'wilayah') ? 'active' : '' }}" href="/wilayah">Wilayah</a>
                     </nav>
                 </div>
                 @endif
