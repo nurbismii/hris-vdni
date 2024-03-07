@@ -43,6 +43,12 @@ class UpdateSisaCuti extends Command
         $data = employee::whereMonth('entry_date', $today->month)->whereDay('entry_date', $today->day)->get();
         Log::info($data);
         foreach ($data as $row) {
+            if ($row->sisa_cuti <= 0) {
+                $res = 12 - abs($row->sisa_cuti);
+                employee::where('nik', $row->nik)->update([
+                    'sisa_cuti' => $res,
+                ]);
+            }
             if ($row->sisa_cuti != 12) {
                 employee::where('nik', $row->nik)->update([
                     'sisa_cuti' => '12',

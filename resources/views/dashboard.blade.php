@@ -77,7 +77,7 @@
                                 <div class="text-white-75 small">Karyawan (VDNIP)</div>
                                 <div class="text-lg fw-bold">{{ $total_karyawan_vdnip }}</div>
                             </div>
-                            <i class="feather-xl text-white-50" data-feather="link"></i>
+                            <i class="feather-xl text-white-50" data-feather="users"></i>
                         </div>
                     </div>
                     <div class="card-footer d-flex align-items-center justify-content-between small">
@@ -100,6 +100,62 @@
                     <div class="card-footer d-flex align-items-center justify-content-between small">
                         <a class="text-white stretched-link" href="users">selengkapnya...</a>
                         <div class="text-white"><i class="fas fa-angle-right"></i></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6 mb-4">
+                <!-- Dashboard info widget 1-->
+                <div class="card border-start-lg border-start-primary h-100">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-grow-1">
+                                <div class="small fw-bold text-primary mb-1">Total karyawan</div>
+                                <div class="h5">{{ $total_karyawan }}</div>
+                            </div>
+                            <div class="ms-2"><i class="fas fa-users fa-2x text-gray-200"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6 mb-4">
+                <!-- Dashboard info widget 2-->
+                <div class="card border-start-lg border-start-warning h-100">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-grow-1">
+                                <div class="small fw-bold text-warning mb-1">Karyawan laki-laki</div>
+                                <div class="h5">{{ $total_karyawan_laki }}</div>
+                            </div>
+                            <div class="ms-2"><i class="fas fa-mars fa-2x text-gray-200"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6 mb-4">
+                <!-- Dashboard info widget 3-->
+                <div class="card border-start-lg border-start-success h-100">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-grow-1">
+                                <div class="small fw-bold text-success mb-1">Karyawan perempuan</div>
+                                <div class="h5">{{ $total_karyawan_perempuan }}</div>
+                            </div>
+                            <div class="ms-2"><i class="fas fa-venus fa-2x text-gray-200"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6 mb-4">
+                <!-- Dashboard info widget 4-->
+                <div class="card border-start-lg border-start-danger h-100">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-grow-1">
+                                <div class="small fw-bold text-danger mb-1">Total bayar upah</div>
+                                <div class="h5">Rp xx M</div>
+                            </div>
+                            <div class="ms-2"><i class="fas fa-dollar-sign fa-2x text-gray-200"></i></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -202,24 +258,6 @@
                         <div class="tab-content" id="dashboardNavContent">
                             <div class="tab-pane fade show active" id="rentang-umur" role="tabpanel" aria-labelledby="overview-pill">
                                 <div class="chart-bar mb-4 mb-lg-0" style="height: 20rem"><canvas id="barChart" width="100%" height="0"></canvas></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card card-header-actions mb-4">
-                    <div class="card-header text-muted 75">
-                        Status kontrak
-                        @if($req_awal_prd && $req_akhir_prd)
-                        <div>
-                            {{ date('d F Y', strtotime($req_awal_prd)) }} - {{ date('d F Y', strtotime($req_akhir_prd)) }}
-                        </div>
-                        @endif
-                        <a class="btn btn-sm btn-primary-soft text-primary" data-bs-toggle="modal" data-bs-target="#selectPeriode">Cari periode</a>
-                    </div>
-                    <div class="card-body">
-                        <div class="tab-content" id="dashboardNavContent">
-                            <div class="tab-pane fade show active" role="tabpanel" aria-labelledby="overview-pill">
-                                <div class="chart-pie mb-4 mb-lg-0" style="height: 20rem"><canvas id="pieChart1" width="100%" height="0"></canvas></div>
                             </div>
                         </div>
                     </div>

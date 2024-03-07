@@ -69,6 +69,14 @@ class DashboardController extends Controller
             $total_karyawan_vdnip = employee::where('status_resign', 'Aktif')->where('area_kerja', 'VDNIP')
                 ->count();
 
+            $total_karyawan_laki = employee::where('status_resign', 'Aktif')->where('jenis_kelamin', 'L')
+                ->count();
+
+            $total_karyawan_perempuan = employee::where('status_resign', 'Aktif')->where('jenis_kelamin', 'P')
+                ->count();
+
+            $total_karyawan = employee::where('status_resign', 'Aktif')->count();
+
             $req_awal_prd = $request->mulai_periode != '' ? $request->mulai_periode : $tanggal_hari_ini;
             $req_akhir_prd = $request->akhir_periode != '' ? $request->akhir_periode : $bulan_depan;
 
@@ -130,6 +138,7 @@ class DashboardController extends Controller
 
             return view('dashboard', compact(
                 'data',
+                'total_karyawan',
                 'total_karyawan_vdni',
                 'total_karyawan_vdnip',
                 'total_pwkt1_perbulan',
@@ -150,7 +159,9 @@ class DashboardController extends Controller
                 'req_akhir_prd',
                 'prov_res',
                 'kab_res',
-                'kec_res'
+                'kec_res',
+                'total_karyawan_laki',
+                'total_karyawan_perempuan'
             ));
         }
 

@@ -41,6 +41,7 @@ class EmployeeController extends Controller
     {
         $data = employee::leftjoin('divisis', 'divisis.id', '=', 'employees.divisi_id')
             ->leftjoin('departemens', 'departemens.id', '=', 'divisis.departemen_id')
+            ->where('kode_area_kerja', '!=', null)
             ->select(DB::raw("*, tgl_lahir, (year(curdate())-year(tgl_lahir)) as umur"));
 
         return DataTables::of($data)
@@ -61,6 +62,10 @@ class EmployeeController extends Controller
 
                 if ($request->get('departemen') != '') {
                     $instance->where('departemen_id', $request->get('departemen'));
+                }
+
+                if ($request->get('jabatan') != '') {
+                    $instance->where('jabatan', $request->get('jabatan'));
                 }
 
                 if ($request->get('nama_divisi') != '') {
@@ -131,28 +136,24 @@ class EmployeeController extends Controller
     {
         try {
             employee::where('nik', $id)->update([
-                'nama_karyawan' => $request['nama_karyawan'],
-                'nama_ibu_kandung' => $request['nama_ibu_kandung'],
-                'agama' => $request['agama'],
-                'kode_area_kerja' => $request['kode_area_kerja'],
-                'no_ktp' => $request['no_ktp'],
-                'no_kk' => $request['no_kk'],
-                'jenis_kelamin' => $request['jenis_kelamin'],
-                'status_perkawinan' => $request['status_perkawinan'],
-                'tgl_resign' => $request->tgl_resign ?? null,
-                'no_telp' => $request['no_telp'],
-                'tgl_lahir' => $request->tgl_lahir ?? null,
-                'alamat_ktp' => $request['alamat_ktp'],
-                'area_kerja' => $request['area_kerja'],
-                'golongan_darah' => $request['golongan_darah'],
-                'entry_date' => $request->entry_date ?? null,
-                'npwp' => $request['npwp'],
-                'bpjs_kesehatan' => $request['bpjs_kesehatan'],
-                'bpjs_tk' => $request['bpjs_tk'],
-                'vaksin' => $request['vaksin'],
-                'jam_kerja' => $request['jam_kerja'],
-                'posisi' => $request['posisi'],
-                'jabatan' => $request['jabatan'],
+                'no_sk_pkwtt' => $request->no_sk_pkwtt,
+                'no_kk' => $request->no_kk,
+                'nama_karyawan' => $request->nama_karyawan,
+                'nama_ibu_kandung' => $request->nama_ibu_kandung,
+                'no_ktp' => $request->no_ktp,
+                'alamat_ktp' => $request->alamat_ktp,
+                'jenis_kelamin' => $request->jenis_kelamin,
+                'status_perkawinan' => $request->status_perkawinan,
+                'no_telp' => $request->no_telp,
+                'npwp' => $request->npwp,
+                'bpjs_kesehatan' => $request->bpjs_kesehatan,
+                'bpjs_tk' => $request->bpjs_tk,
+                'vaksin' => $request->vaksin,
+                'jam_kerja' => $request->jam_kerja,
+                'area_kerja' =>  $request->area_kerja,
+                'golongan_darah' => $request->golongan_darah,
+                'tgl_lahir' => $request->tgl_lahir,
+                'entry_date' => $request->entry_date
             ]);
             return redirect('employees')->with('success', 'Data karyawan berhasil diperbarui');
         } catch (\Throwable $e) {
@@ -162,7 +163,6 @@ class EmployeeController extends Controller
 
     public function updateKontrak(Request $request, $id)
     {
-
         try {
             employee::where('nik', $id)->update([
                 'no_sk_pkwtt' => $request['no_sk_pkwtt'],

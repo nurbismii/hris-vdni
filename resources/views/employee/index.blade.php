@@ -201,34 +201,56 @@
                                         <label class="small mb-1">Jenis kelamin</label>
                                         <select class="form-select" id="jenis_kelamin">
                                             <option value="">- Pilih jenis kelamin -</option>
-                                            <option value="L">Laki-laki</option>
-                                            <option value="P">Perempuan</option>
+                                            <option value="L">LAKI-LAKI</option>
+                                            <option value="P">PEREMPUAN</option>
                                         </select>
                                     </div>
                                     <div class="col-md-3 mb-2">
                                         <label class="small mb-1">Status keluar</label>
                                         <select class="form-select" id="status_resign">
                                             <option value="">- Pilih status keluar -</option>
-                                            <option value="Aktif">Aktif</option>
-                                            <option value="Resign">Resign</option>
-                                            <option value="Mutasi">Mutasi</option>
+                                            <option value="Aktif">AKTIF</option>
+                                            <option value="Resign">RESIGN</option>
+                                            <option value="Mutasi">MUTASI</option>
                                         </select>
                                     </div>
                                     <div class="col-md-3 mb-3">
                                         <label class="small mb-1">Pendidikan terakhir</label>
                                         <select class="form-select" id="pendidikan_terakhir">
                                             <option value="">- Pilih gelar -</option>
-                                            <option value="S3">S3</option>
-                                            <option value="S2">S2</option>
-                                            <option value="S1">S1</option>
-                                            <option value="D4">D4</option>
-                                            <option value="D3">D3</option>
-                                            <option value="D2">D2</option>
-                                            <option value="D1">D1</option>
-                                            <option value="SMA">SMA</option>
-                                            <option value="SMK">SMK</option>
-                                            <option value="SMP">SMP</option>
-                                            <option value="SD">SD</option>
+                                            <option value="S2 研究生">S2 研究生</option>
+                                            <option value="S1 本科">S1 本科</option>
+                                            <option value="D4 大专三年">D4 大专三年</option>
+                                            <option value="D3 大专三年">D3 大专三年</option>
+                                            <option value="D2 大专两年">D2 大专两年</option>
+                                            <option value="D1 大专一年">D1 大专一年</option>
+                                            <option value="SMA 高中 SEDERAJAT">SMA 高中 SEDERAJAT</option>
+                                            <option value="SMP 初中 SEDERAJAT">SMP 初中 SEDERAJAT</option>
+                                            <option value="SD 小学">SD 小学</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3 mb-3">
+                                        <label class="small mb-1">Jabatan</label>
+                                        <select class="form-select" id="jabatan">
+                                            <option value="">- Pilih jabatan -</option>
+                                            <option value="ADMIN 文员">ADMIN 文员</option>
+                                            <option value="ASISTEN MANAGER">ASISTEN MANAGER</option>
+                                            <option value="ASISTEN SUPERVISOR">ASISTEN SUPERVISOR</option>
+                                            <option value="DOKTER UMUM">DOKTER UMUM</option>
+                                            <option value="KEPALA KORDINATOR 调度">KEPALA KORDINATOR 调度</option>
+                                            <option value="KEPALA PRODUKSI 科长">KEPALA PRODUKSI 科长</option>
+                                            <option value="KEPALA TEKNIK">KEPALA TEKNIK</option>
+                                            <option value="KOORDINATOR 大班长">KOORDINATOR 大班长</option>
+                                            <option value="PENGAWAS 班长">PENGAWAS 班长</option>
+                                            <option value="STAFF 职员">STAFF 职员</option>
+                                            <option value="SUPERVISOR 调度">SUPERVISOR 调度</option>
+                                            <option value="WAKIL KEPALA KORDINATOR 副调度">WAKIL KEPALA KORDINATOR 副调度</option>
+                                            <option value="WAKIL KEPALA PRODUKSI 副科长">WAKIL KEPALA PRODUKSI 副科长</option>
+                                            <option value="WAKIL KEPALA TUNGKU 副炉长">WAKIL KEPALA TUNGKU 副炉长</option>
+                                            <option value="WAKIL KEPALA TUNGKU 副炉长">WAKIL KEPALA TUNGKU 副炉长</option>
+                                            <option value="WAKIL KOORDINATOR 副大班长">WAKIL KOORDINATOR 副大班长</option>
+                                            <option value="WAKIL PENGAWAS 副班长">WAKIL PENGAWAS 副班长</option>
+                                            <option value="WAKIL SUPERVISOR 副调度">WAKIL SUPERVISOR 副调度</option>
                                         </select>
                                     </div>
                                     <div class="form-group row">
@@ -264,6 +286,7 @@
                                     <th>Dept</th>
                                     <th>Div</th>
                                     <th>Posisi</th>
+                                    <th>Jabatan</th>
                                     <th>Kontrak</th>
                                     <th>Sex</th>
                                     <th>Pendidikan</th>
@@ -407,6 +430,7 @@
                         d.status_resign = $('#status_resign').val()
                         d.area_kerja = $('#area_kerja').val()
                         d.departemen = $('#departemen').val()
+                        d.jabatan = $('#jabatan').val()
                         d.nama_divisi = $('#divisi').val()
                         d.jenis_kelamin = $('#jenis_kelamin').val()
                         d.pendidikan_terakhir = $('#pendidikan_terakhir').val()
@@ -430,6 +454,8 @@
                     {
                         data: 'departemen',
                         name: 'departemen',
+                        searchable: true,
+                        visible: false,
                     },
                     {
                         data: 'nama_divisi',
@@ -440,8 +466,23 @@
                         name: 'posisi',
                     },
                     {
+                        data: 'jabatan',
+                        name: 'jabatan',
+                        render: function(data, type, row) {
+                            result = ''
+                            if (data == null) {
+                                result = '-';
+                            } else {
+                                result = data;
+                            }
+                            return result;
+                        }
+                    },
+                    {
                         data: 'status_karyawan',
-                        name: 'status_karyawan'
+                        name: 'status_karyawan',
+                        searchable: true,
+                        visible: false
                     },
                     {
                         data: 'jenis_kelamin',
@@ -462,6 +503,8 @@
                     {
                         data: 'pendidikan_terakhir',
                         name: 'pendidikan_terakhir',
+                        searchable: true,
+                        visible: false,
                         render: function(data, type, row) {
                             badge = '';
                             if (data == null) {
@@ -541,6 +584,10 @@
                 table.draw();
             });
 
+            $('#jabatan').change(function() {
+                table.draw();
+            });
+
             $('#jenis_kelamin').change(function() {
                 table.draw();
             });
@@ -571,7 +618,20 @@
                 }
             });
         });
+
+        document.querySelectorAll('a.toggle-vis').forEach((el) => {
+            el.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                let columnIdx = e.target.getAttribute('data-column');
+                let column = table.column(columnIdx);
+
+                // Toggle the visibility
+                column.visible(!column.visible());
+            });
+        });
     </script>
+
     <script>
         $(document).ready(function() {
             $('#departemen').on('change', function() {

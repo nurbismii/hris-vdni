@@ -2,6 +2,7 @@
 
 namespace App\Imports;
 
+use App\Models\Divisi;
 use App\Models\employee;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
@@ -22,7 +23,10 @@ class EmployeesUpdateImport implements ToCollection, WithHeadingRow, WithValidat
     {
         foreach ($collection as $collect) {
 
+            $divisi = Divisi::where('nama_divisi', $collect['divisi_id'])->first();
+
             $data = $this->employee->where('nik', $collect['nik'])->first();
+
             $data->where('nik', $collect['nik'])->update([
                 'no_sk_pkwtt' => $collect['no_sk_pkwtt'],
                 'nama_karyawan' => $collect['nama_karyawan'],
@@ -32,8 +36,8 @@ class EmployeesUpdateImport implements ToCollection, WithHeadingRow, WithValidat
                 'no_ktp' => str_replace(["'", "`"], "", $collect['no_ktp']),
                 'no_kk' => str_replace(["'", "`"], "", $collect['no_kk']),
                 'kode_area_kerja' => $collect['kode_area_kerja'],
-                'jenis_kelamin' => strtoupper($collect['jenis_kelamin']),
-                'status_perkawinan' => $collect['status_perkawinan'],
+                'jenis_kelamin' => $collect['jenis_kelamin'] == 'M 男' ? 'L' : 'P',
+                'status_perkawinan' => $collect['status_perkawinan'] == 'TK' ? 'Belum Kawin' : 'Kawin',
                 'status_karyawan' => $collect['status_karyawan'],
                 'tgl_resign' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(intVal($collect['tgl_resign']))),
                 'alasan_resign' => $collect['alasan_resign'],
@@ -60,7 +64,7 @@ class EmployeesUpdateImport implements ToCollection, WithHeadingRow, WithValidat
                 'jam_kerja' => $collect['jam_kerja'],
                 'posisi' => $collect['posisi'],
                 'jabatan' => $collect['jabatan'],
-                'divisi_id' => $collect['divisi_id'],
+                'divisi_id' => $divisi->id,
                 'tinggi' => $collect['tinggi'],
                 'berat' => $collect['berat'],
                 'hobi' => $collect['hobi'],
@@ -74,6 +78,8 @@ class EmployeesUpdateImport implements ToCollection, WithHeadingRow, WithValidat
                 'jurusan' => $collect['jurusan'],
                 'tanggal_kelulusan' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(intVal($collect['tanggal_kelulusan']))),
                 'tanggal_menikah' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(intVal($collect['tanggal_menikah']))),
+                'sisa_cuti' => $collect['sisa_cuti'],
+                'sisa_cuti_covid' => $collect['sisa_cuti_covid'],
             ]);
         }
     }

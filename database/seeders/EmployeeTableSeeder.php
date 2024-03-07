@@ -17,8 +17,8 @@ class EmployeeTableSeeder extends Seeder
         employee::Create([
             'nik' => '15040001',
             'no_sk_pkwtt' => '',
-            'nama_karyawan' => 'Karyawan Dummy',
-            'nama_ibu_kandung' => 'Ibu Karyawan Dummy',
+            'nama_karyawan' => 'Administrator',
+            'nama_ibu_kandung' => 'Dummy mom',
             'agama' => 'Islam',
             'no_ktp' => '7402211501930002',
             'no_kk' => '7402211501930022',

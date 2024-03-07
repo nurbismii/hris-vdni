@@ -128,9 +128,10 @@
 								<div class="timeline-item" data-bs-toggle="tooltip" data-bs-placement="right" title="">
 									<div class="timeline-item-marker">
 										<div class="timeline-item-marker-text"></div>
+										<div class="timeline-item-marker-indicator bg-dark"></div>
 									</div>
 									<div class="timeline-item-content">
-										<a class="fw-bold text-dark bg-dark" href="#!">Tidak ada catatan</a>
+										<a class="fw-bold text-dark" href="#!">Tidak ada catatan</a>
 									</div>
 								</div>
 								@endforelse
@@ -255,7 +256,7 @@
 									<input class="form-control" type="text" name="nik_karyawan" value="{{ $data->nik }}" readonly />
 								</div>
 								<div class="col-md-6 mb-3">
-									<label class="small mb-1">NIK KTP</label>
+									<label class="small mb-1">NO KTP</label>
 									<input class="form-control" type="text" name="no_ktp" value="{{ $data->no_ktp }}" />
 								</div>
 							</div>
@@ -263,22 +264,22 @@
 							<div class="row gx-3">
 								<div class="col-md-6 mb-3">
 									<label class="small mb-1">Departemen</label>
-									<input class="form-control" type="text" name="nik_karyawan" value="{{ isset($data->divisi->departemen->departemen) != '' ? $data->divisi->departemen->departemen : ''}}" />
+									<input class="form-control" type="text" name="" value="{{ isset($data->divisi->departemen->departemen) != '' ? $data->divisi->departemen->departemen : ''}}" disabled />
 								</div>
 								<div class="col-md-6 mb-3">
 									<label class="small mb-1">Divisi</label>
-									<input class="form-control" type="text" name="no_ktp" value="{{ isset($data->divisi->nama_divisi) != '' ? $data->divisi->nama_divisi : ''}}" />
+									<input class="form-control" type="text" name="" value="{{ isset($data->divisi->nama_divisi) != '' ? $data->divisi->nama_divisi : ''}}" disabled />
 								</div>
 							</div>
 
 							<div class="row gx-3">
 								<div class="col-md-6 mb-3">
 									<label class="small mb-1">Posisi</label>
-									<input class="form-control" type="text" name="posisi" value="{{ $data->posisi }}" />
+									<input class="form-control" type="text" name="posisi" value="{{ $data->posisi }}" disabled />
 								</div>
 								<div class="col-md-6 mb-3">
 									<label class="small mb-1">Jabatan</label>
-									<input class="form-control" type="text" name="jabatan" value="{{ $data->jabatan }}" />
+									<input class="form-control" type="text" name="jabatan" value="{{ $data->jabatan ?? '-' }}" disabled />
 								</div>
 							</div>
 
@@ -304,9 +305,11 @@
 									<label class="small mb-1">Status Perkawinan</label>
 									<select class="form-select" name="status_perkawinan">
 										<option value="{{ $data->status_perkawinan }}" selected>{{ $data->status_perkawinan }}</option>
+										@if($data->status_perkawinan != 'Kawin')
 										<option value="Kawin">Kawin</option>
+										@else
 										<option value="Belum Kawin">Belum Kawin</option>
-										<option value="Cerai">Cerai</option>
+										@endif
 									</select>
 								</div>
 							</div>
@@ -319,106 +322,97 @@
 
 								<div class="col-md-6 mb-3">
 									<label class="small mb-1">Agama</label>
-									<select name="agama" class="form-select">
-										<option value="{{ $data->agama }}" selected>{{ $data->agama }}</option>
-										<option value="Islam">Islam</option>
-										<option value="Kristen">Kristen Protestan</option>
-										<option value="Katolik">Katolik</option>
-										<option value="Hindu">Hindu</option>
-										<option value="Buddha">Buddha</option>
-										<option value="Konguchu">Konghucu</option>
-									</select>
-								</div>
-							</div>
-
-							<div class="row gx-3">
-								<div class="col-md-6 mb-3">
-									<label class="small mb-1">Tanggal Lahir</label>
-									<input class="form-control" type="date" name="tgl_lahir" value="{{ date('Y-m-d', strtotime($data->tgl_lahir)) }}" />
-								</div>
-								<div class="col-md-6 mb-3">
-									<label class="small mb-1">Entry Date</label>
-									<input class="form-control" type="date" name="entry_date" value="{{ date('Y-m-d', strtotime($data->entry_date)) }}" />
-								</div>
-							</div>
-
-							<div class="row gx-3">
-								<div class="col-md-6 mb-3">
-									<label class="small mb-1">No Telp</label>
-									<input class="form-control" name="no_telp" type="tel" value="{{ $data->no_telp }}" />
+									<input class="form-control" type="text" value="{{ $data->agama ?? '-' }}" readonly />
 								</div>
 
-								<div class="col-md-6 mb-3">
-									<label class="small mb-1">NPWP</label>
-									<input class="form-control" type="text" name="npwp" value="{{ $data->npwp }}" />
-								</div>
-							</div>
-
-							<div class="row gx-3">
-								<div class="col-md-6 mb-3">
-									<label class="small mb-1">BPSJ Kesehatan</label>
-									<input class="form-control" name="bpjs_kesehatan" type="text" value="{{ $data->bpjs_kesehatan }}" />
-								</div>
-								<div class="col-md-6 mb-3">
-									<label class="small mb-1">BPJS Ketenagakerjaan</label>
-									<input class="form-control" name="bpjs_tk" type="text" name="bpjs_tk" value="{{ $data->bpjs_tk }}" />
-								</div>
-							</div>
-
-							<div class="row gx-3">
-								<div class="col-md-6 mb-3">
-									<label class="small mb-1">Provinsi</label>
-									<input class="form-control" type="text" name="" value="{{ $data->provinsi->provinsi ?? '' }}" readonly />
-								</div>
-								<div class="col-md-6 mb-3">
-									<label class="small mb-1">Kabupaten</label>
-									<input class="form-control" type="text" name="" value="{{ $data->kabupaten->kabupaten ?? '' }}" readonly />
-								</div>
-							</div>
-
-							<div class="row gx-3">
-								<div class="col-md-6 mb-3">
-									<label class="small mb-1">Kecamatan</label>
-									<input class="form-control" type="text" name="" value="{{ $data->kecamatan->kecamatan ?? '' }}" readonly />
-								</div>
-								<div class="col-md-6 mb-3">
-									<label class="small mb-1">Kelurahan</label>
-									<input class="form-control" type="text" name="" value="{{ $data->kelurahan->kelurahan ?? '' }}" readonly />
-								</div>
-							</div>
-
-							<div class="row gx-3">
-								<div class="col-md-6 mb-3">
-									<label class="small mb-1">Vaksin</label>
-									<select name="vaksin" class="form-select">
-										<option value="{{ $data->vaksin }}">{{ $level_vaksin }}</option>
-										<option value="1">Vaksin 1</option>
-										<option value="2">Vaksin 2</option>
-										<option value="3">Booster 1</option>
-										<option value="4">Booster 2</option>
-									</select>
+								<div class="row gx-3">
+									<div class="col-md-6 mb-3">
+										<label class="small mb-1">Tanggal Lahir</label>
+										<input class="form-control" type="date" name="tgl_lahir" value="{{ date('Y-m-d', strtotime($data->tgl_lahir)) }}" />
+									</div>
+									<div class="col-md-6 mb-3">
+										<label class="small mb-1">Entry Date</label>
+										<input class="form-control" type="date" name="entry_date" value="{{ date('Y-m-d', strtotime($data->entry_date)) }}" />
+									</div>
 								</div>
 
-								<div class="col-md-6 mb-3">
-									<label class="small mb-1">Jam Kerja</label>
-									<input class="form-control" type="text" name="jam_kerja" value="{{ $data->jam_kerja }}" />
-								</div>
-							</div>
+								<div class="row gx-3">
+									<div class="col-md-6 mb-3">
+										<label class="small mb-1">No Telp</label>
+										<input class="form-control" name="no_telp" type="no_telp" value="{{ $data->no_telp }}" />
+									</div>
 
-							<div class="row gx-3">
-								<div class="col-md-6 mb-3">
-									<label class="small mb-1">Area Kerja</label>
-									<input class="form-control" type="text" name="area_kerja" value="{{ $data->area_kerja }}" />
+									<div class="col-md-6 mb-3">
+										<label class="small mb-1">NPWP</label>
+										<input class="form-control" type="text" name="npwp" value="{{ $data->npwp }}" />
+									</div>
 								</div>
-								<div class="col-md-6 mb-3">
-									<label class="small mb-1">Golongan Darah</label>
-									<input class="form-control" type="text" name="golongan_darah" value="{{ $data->golongan_darah }}" />
+
+								<div class="row gx-3">
+									<div class="col-md-6 mb-3">
+										<label class="small mb-1">BPSJ Kesehatan</label>
+										<input class="form-control" name="bpjs_kesehatan" type="text" value="{{ $data->bpjs_kesehatan }}" />
+									</div>
+									<div class="col-md-6 mb-3">
+										<label class="small mb-1">BPJS Ketenagakerjaan</label>
+										<input class="form-control" name="bpjs_tk" type="text" name="bpjs_tk" value="{{ $data->bpjs_tk }}" />
+									</div>
 								</div>
-							</div>
-							<div class="d-flex justify-content-between">
-								<a href="/employees" class="btn btn-light" type="button">Kembali</a>
-								<button class="btn btn-primary" type="submit">Simpan</button>
-							</div>
+
+								<div class="row gx-3">
+									<div class="col-md-6 mb-3">
+										<label class="small mb-1">Provinsi</label>
+										<input class="form-control" type="text" name="" value="{{ $data->provinsi->provinsi ?? '' }}" readonly />
+									</div>
+									<div class="col-md-6 mb-3">
+										<label class="small mb-1">Kabupaten</label>
+										<input class="form-control" type="text" name="" value="{{ $data->kabupaten->kabupaten ?? '' }}" readonly />
+									</div>
+								</div>
+
+								<div class="row gx-3">
+									<div class="col-md-6 mb-3">
+										<label class="small mb-1">Kecamatan</label>
+										<input class="form-control" type="text" name="" value="{{ $data->kecamatan->kecamatan ?? '' }}" readonly />
+									</div>
+									<div class="col-md-6 mb-3">
+										<label class="small mb-1">Kelurahan</label>
+										<input class="form-control" type="text" name="" value="{{ $data->kelurahan->kelurahan ?? '' }}" readonly />
+									</div>
+								</div>
+
+								<div class="row gx-3">
+									<div class="col-md-6 mb-3">
+										<label class="small mb-1">Vaksin</label>
+										<select name="vaksin" class="form-select">
+											<option value="{{ $data->vaksin }}">{{ $level_vaksin }}</option>
+											<option value="1">Vaksin 1</option>
+											<option value="2">Vaksin 2</option>
+											<option value="3">Booster 1</option>
+											<option value="4">Booster 2</option>
+										</select>
+									</div>
+
+									<div class="col-md-6 mb-3">
+										<label class="small mb-1">Jam Kerja</label>
+										<input class="form-control" type="text" name="jam_kerja" value="{{ $data->jam_kerja }}" />
+									</div>
+								</div>
+
+								<div class="row gx-3">
+									<div class="col-md-6 mb-3">
+										<label class="small mb-1">Area Kerja</label>
+										<input class="form-control" type="text" name="area_kerja" value="{{ $data->area_kerja }}" />
+									</div>
+									<div class="col-md-6 mb-3">
+										<label class="small mb-1">Golongan Darah</label>
+										<input class="form-control" type="text" name="golongan_darah" value="{{ $data->golongan_darah }}" />
+									</div>
+								</div>
+								<div class="d-flex justify-content-between">
+									<a href="/employees" class="btn btn-light" type="button">Kembali</a>
+									<button class="btn btn-primary" type="submit">Simpan</button>
+								</div>
 						</form>
 					</div>
 				</div>
