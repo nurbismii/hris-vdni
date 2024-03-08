@@ -24,7 +24,7 @@ class EmployeesImport implements ToCollection, WithHeadingRow, WithValidation
 
             $divisi = Divisi::where('nama_divisi', $collect['divisi_id'])->first();
 
-            $datas[] = array(
+            $datas[] = [
                 'nik' => $collect['nik'],
                 'no_sk_pkwtt' => $collect['no_sk_pkwtt'],
                 'nama_karyawan' => $collect['nama_karyawan'],
@@ -78,8 +78,9 @@ class EmployeesImport implements ToCollection, WithHeadingRow, WithValidation
                 'tanggal_menikah' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(intVal($collect['tanggal_menikah']))),
                 'sisa_cuti' => $collect['sisa_cuti'],
                 'sisa_cuti_covid' => $collect['sisa_cuti_covid'],
-            );
+            ];
         }
+
         foreach (array_chunk($datas, 500) as $chunk) {
             employee::insert($chunk);
         }

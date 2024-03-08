@@ -23,6 +23,7 @@ use App\Http\Controllers\ApiController;
 use App\Http\Controllers\ReportSpController;
 use App\Http\Controllers\ResignController;
 use App\Http\Controllers\WilayahController;
+use App\Http\Controllers\PerusahaanController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -222,8 +223,15 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
             route::post('/resign/import/update', [ResignController::class, 'importUpdate'])->name('resign.import.update');
         });
 
+        Route::group(['prefix' => 'perusahaan'], function () {
+            route::get('/', [PerusahaanController::class, 'index']);
+            route::post('/store', [PerusahaanController::class, 'store'])->name('perusahaan.store');
+            route::get('/{id}/show', [PerusahaanController::class, 'show'])->name('perusahaan.show');
+            route::patch('/{id}/update', [PerusahaanController::class, 'update'])->name('perusahaan.update');
+            route::delete('/{id}/destroy', [PerusahaanController::class, 'destroy'])->name('perusahaan.destroy');
+        });
+
         Route::group(['prefix' => 'departemen'], function () {
-            route::get('/', [DepartemenController::class, 'index']);
             route::post('/store', [DepartemenController::class, 'store'])->name('departemen.store');
             route::patch('/update/{id}', [DepartemenController::class, 'update'])->name('departemen.update');
             route::delete('/destroy/{id}', [DepartemenController::class, 'destroy'])->name('departemen.destroy');

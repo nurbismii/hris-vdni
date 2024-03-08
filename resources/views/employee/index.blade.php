@@ -208,10 +208,13 @@
                                     <div class="col-md-3 mb-2">
                                         <label class="small mb-1">Status keluar</label>
                                         <select class="form-select" id="status_resign">
-                                            <option value="">- Pilih status keluar -</option>
-                                            <option value="Aktif">AKTIF</option>
-                                            <option value="Resign">RESIGN</option>
-                                            <option value="Mutasi">MUTASI</option>
+                                            <option value="Aktif" selected>AKTIF</option>
+                                            <option value="Resign sesuai prosedur">RESIGN SESUAI PROSEDUR</option>
+                                            <option value="RESIGN TIDAK SESUAI PROSEDUR">RESIGN TIDAK SESUAI PROSEDUR</option>
+                                            <option value="PHK">PHK</option>
+                                            <option value="PB PHK">PB PHK</option>
+                                            <option value="PB PHK">PB RESIGN</option>
+                                            <option value="PB PHK">PUTUS KONTRAK</option>
                                         </select>
                                     </div>
                                     <div class="col-md-3 mb-3">
@@ -528,23 +531,20 @@
                                 case 'Aktif':
                                     badge = '<span class="badge bg-success">' + data + '</span>';
                                     break;
-                                case 'Resign':
+                                case 'RESIGN TIDAK SESUAI PROSEDUR':
                                     badge = '<span class="badge bg-red">' + data + '</span>';
                                     break;
-                                case 'Mutasi':
+                                case 'RESIGN SESUAI PROSEDUR':
                                     badge = '<span class="badge bg-warning">' + data + '</span>';
                                     break;
                                 case 'PHK':
                                     badge = '<span class="badge bg-red">' + data + '</span>';
                                     break;
-                                case 'BAIK':
-                                    badge = '<span class="badge bg-primary">' + data + '</span>';
+                                case 'PB PHK':
+                                    badge = '<span class="badge bg-red">' + data + '</span>';
                                     break;
                                 case 'PUTUS KONTRAK':
                                     badge = '<span class="badge bg-secondary">' + data + '</span>';
-                                    break;
-                                case 'PASAL (50)':
-                                    badge = '<span class="badge bg-info">' + data + '</span>';
                                     break;
                                 case 'PB RESIGN':
                                     badge = '<span class="badge bg-red">' + data + '</span>';

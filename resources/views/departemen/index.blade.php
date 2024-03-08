@@ -24,6 +24,10 @@
                         </h1>
                     </div>
                     <div class="col-12 col-xl-auto mb-3">
+                        <a class="btn btn-sm btn-light text-primary" onclick="history.back()">
+                            <i class="me-1" data-feather="arrow-left"></i>
+                            Kembali
+                        </a>
                         <a class="btn btn-sm btn-light text-primary" data-bs-toggle="modal" data-bs-target="#addDept">
                             <i class="me-1" data-feather="plus"></i>
                             Tambah Departemen
@@ -32,9 +36,22 @@
                 </div>
             </div>
         </div>
+
     </header>
+
     <!-- Main page content-->
     <div class="container-fluid px-4">
+        <div class="card bg-gradient-primary-to-secondary mb-4">
+            <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div class="me-3">
+                        <div class="small text-white-50">Perusahaan :</div>
+                        <div class="h1 text-white">{{ $data_pt->nama_perusahaan }}</div>
+                    </div>
+                    <div class="text-white">{{ count($data) }} Departemen</div>
+                </div>
+            </div>
+        </div>
         <div class="card">
             <div class="card-body" style="overflow-x: auto;">
                 <table id="datatablesSimple">
@@ -81,6 +98,7 @@
                         <div class="mb-3">
                             <label class="small mb-1">Departemen</label>
                             <input type="text" class="form-control" name="departemen">
+                            <input type="hidden" class="form-control" name="perusahaan_id" value="{{ $data_pt->id }}">
                         </div>
                         <div class="mb-3">
                             <label class="small mb-1">Kepala Departemen</label>
@@ -119,6 +137,7 @@
                         <div class="mb-3">
                             <label class="small mb-1">Departemen</label>
                             <input type="text" class="form-control" name="departemen" value="{{ $row->departemen }}">
+                            <input type="text" class="form-control" name="perusahaan_id" value="{{ $data_pt->id }}">
                         </div>
                         <div class="mb-3">
                             <label class="small mb-1">Kepala Departemen</label>

@@ -28,8 +28,18 @@ class DepartemenController extends Controller
      */
     public function store(StoreDepartemenRequest $request)
     {
-        Departemen::create($request->all());
-        return back()->with('success', 'Departemen berhasil ditambahkan');
+        try {
+            Departemen::create([
+                'perusahaan_id' => $request->perusahaan_id,
+                'departemen' => $request->departemen,
+                'kepala_dept' => $request->kepala_dept,
+                'no_telp_departemen' => $request->no_telp_departemen,
+                'status_pengeluaran' => $request->status_pengeluaran,
+            ]);
+            return back()->with('success', 'Departemen berhasil ditambahkan');
+        } catch (\Throwable $e) {
+            return back()->with('error', 'Terjadi kesalahan pada permintaan');
+        }
     }
 
     /**
@@ -42,10 +52,11 @@ class DepartemenController extends Controller
     public function update(Request $request, $id)
     {
         Departemen::where('id', $id)->update([
+            'perusahaan_id' => $request->perusahaan_id,
             'departemen' => $request->departemen,
             'kepala_dept' => $request->kepala_dept,
             'no_telp_departemen' => $request->no_telp_departemen,
-            'status_pengeluaran' => $request->status_pengeluaran
+            'status_pengeluaran' => $request->status_pengeluaran,
         ]);
         return back()->with('success', 'Departemen berhasil diperbarui');
     }
@@ -59,7 +70,9 @@ class DepartemenController extends Controller
     public function destroy($id)
     {
         //
-        Departemen::where('id', $id)->delete();
+        $data = Departemen::where('id', $id)->first();
+        Divisi::where('departemen_id', $data->id)->delete();
+        $data->delete();
         return back()->with('success', 'Departemen berhasil dihapus');
     }
 

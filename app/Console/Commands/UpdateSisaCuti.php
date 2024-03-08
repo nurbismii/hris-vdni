@@ -39,19 +39,32 @@ class UpdateSisaCuti extends Command
      */
     public function handle()
     {
+        $cuti_tahunan = 12;
         $today = now();
         $data = employee::whereMonth('entry_date', $today->month)->whereDay('entry_date', $today->day)->get();
         Log::info($data);
         foreach ($data as $row) {
+
             if ($row->sisa_cuti <= 0) {
-                $res = 12 - abs($row->sisa_cuti);
+
+                $sisa_cuti_covid = $row->sisa_cuti_covid - abs($row->sisa_cuti);
+
+                if ($sisa_cuti_covid < 0) {
+
+                    $sisa_cuti = $cuti_tahunan - abs($sisa_cuti_covid);
+
+                    employee::where('nik', $row->nik)->update([
+                        'sisa_cuti' => $sisa_cuti
+                    ]);
+                }
+
                 employee::where('nik', $row->nik)->update([
-                    'sisa_cuti' => $res,
+                    'sisa_cuti_covid' => $sisa_cuti_covid > 0 ? $sisa_cuti_covid : 0
                 ]);
-            }
-            if ($row->sisa_cuti != 12) {
+            } else {
+
                 employee::where('nik', $row->nik)->update([
-                    'sisa_cuti' => '12',
+                    'sisa_cuti' => $cuti_tahunan
                 ]);
             }
         }

@@ -74,7 +74,7 @@ class EmployeeController extends Controller
 
                 if ($request->get('status_resign') != '') {
 
-                    $instance->where('status_resign', $request->get('status_resign'));
+                    $instance->where('status_resign', strtoupper($request->get('status_resign')));
                 }
                 if ($request->get('jenis_kelamin') != '') {
                     $instance->where('jenis_kelamin', $request->get('jenis_kelamin'));
@@ -198,8 +198,12 @@ class EmployeeController extends Controller
 
     public function importEmployee(Request $request)
     {
-        Excel::import(new EmployeesImport, $request->file('file'));
-        return back()->with('success', 'Data Karyawan Berhasil ditambahkan');
+        try {
+            Excel::import(new EmployeesImport, $request->file('file'));
+            return back()->with('success', 'Data Karyawan Berhasil ditambahkan');
+        } catch (\Throwable $e) {
+            return back()->with('error', 'Opps, Terjadi kesalahan ' . $e->getMessage());
+        }
     }
 
     public function updateImportEmployee(Request $request)

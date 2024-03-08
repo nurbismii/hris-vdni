@@ -47,9 +47,9 @@
                     </nav>
                 </div>
 
-                <a class="nav-link {{ (request()->segment(1) == 'departemen') ? 'active' : '' }}" href="/departemen">
+                <a class="nav-link {{ (request()->segment(1) == 'perusahaan') ? 'active' : '' }}" href="/perusahaan">
                     <div class="nav-link-icon"><i data-feather="codepen"></i></div>
-                    Departmen
+                    Perusahaan
                 </a>
 
                 <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseCoreHr" aria-expanded="false" aria-controls="collapseCoreHr">
@@ -62,7 +62,7 @@
                         <a class="nav-link {{ (request()->is('contract', 'contract')) ? 'active' : '' }}" href="/contract">PKWT 1</a>
                         <a class="nav-link {{ (request()->segment(2) == 'severance-pay') ? 'active' : '' }}" href="/industrial-relations/severance-pay">Pesangon</a>
                         <a class="nav-link {{ (request()->segment(2) == 'sp-report') ? 'active' : '' }}" href="/industrial-relations/sp-report">Peringatan</a>
-                        <a class="nav-link {{ (request()->segment(2) == 'resign') ? 'active' : '' }}" href="/industrial-relations/resign">Resign</a>
+                        <a class="nav-link {{ (request()->segment(2) == 'resign') ? 'active' : '' }}" href="/industrial-relations/resign">Pengunduran diri</a>
                     </nav>
                 </div>
 

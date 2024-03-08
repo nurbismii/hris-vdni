@@ -24,7 +24,7 @@
                         </h1>
                     </div>
                     <div class="col-12 col-xl-auto mb-3">
-                        <a class="btn btn-sm btn-light text-primary" href="/departemen">
+                        <a class="btn btn-sm btn-light text-primary" onclick="history.back()">
                             <i class="me-1" data-feather="arrow-left"></i>
                             Kembali
                         </a>
