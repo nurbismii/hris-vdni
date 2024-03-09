@@ -164,6 +164,10 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
             route::get('/divisi/{id}', [EmployeeController::class, 'fetchDivisi'])->name('fetch/divisi');
             route::get('/mutasi', [EmployeeController::class, 'mutasi']);
             route::post('/mutasi/update', [EmployeeController::class, 'mutasiUpdate'])->name('mutasi.update');
+
+            route::get('/weekly', [EmployeeController::class, 'weekly']);
+            route::get('/monthly', [EmployeeController::class, 'monthly']);
+
             // Maatwebsite excel 
             route::get('/import', [EmployeeController::class, 'import']);
             route::get('/download-example', [EmployeeController::class, 'downloadExample'])->name('download.example');
@@ -299,5 +303,7 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
         route::get('detail-employee/{id}', [ApiController::class, 'getEmployeeById']);
         route::get('airports', [ApiController::class, 'getAirport']);
         route::get('divisi/{id}', [ApiController::class, 'getDivisi']);
+        route::get('employees', [ApiController::class, 'getEmployeeWithEntryDate']);
+        route::get('employees/monthly', [ApiController::class, 'getEmployeeMonthly']);
     });
 });

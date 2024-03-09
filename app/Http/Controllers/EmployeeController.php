@@ -12,6 +12,7 @@ use App\Models\Divisi;
 use App\Models\employee;
 use App\Models\Mutasi;
 use App\Models\PosisiLama;
+use App\Models\Provinsi;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -24,11 +25,9 @@ class EmployeeController extends Controller
     {
         $depts = Departemen::all();
 
-        $data = employee::leftjoin('divisis', 'divisis.id', '=', 'employees.divisi_id')
-            ->leftjoin('departemens', 'departemens.id', '=', 'divisis.departemen_id')
-            ->select(DB::raw("*, tgl_lahir, (year(curdate())-year(tgl_lahir)) as umur"))->limit(10);
+        $provinsi = Provinsi::all();
 
-        return view('employee.index', compact('depts'));
+        return view('employee.index', compact('depts', 'provinsi'));
     }
 
     public function fetchDivisi($id)
@@ -92,6 +91,23 @@ class EmployeeController extends Controller
                     $instance->whereYear('tgl_lahir', date('Y-m-d', strtotime(Carbon::today()->subYears($request->get('awal_umur')))));
                 }
 
+                if ($request->get('provinsi_id') != '') {
+                    $instance->where('provinsi_id', $request->get('provinsi_id'));
+                }
+
+                if ($request->get('kabupaten_id') != '') {
+                    $instance->where('kabupaten_id', $request->get('kabupaten_id'));
+                }
+
+                if ($request->get('kecamatan_id') != '') {
+                    $instance->where('kecamatan_id', $request->get('kecamatan_id'));
+                }
+
+                if ($request->get('kelurahan_id') != '') {
+                    $instance->where('kelurahan_id', $request->get('kelurahan_id'));
+                }
+
+
                 if (!empty($request->get('search'))) {
                     $instance->where(function ($w) use ($request) {
                         $search = $request->get('search');
@@ -136,7 +152,6 @@ class EmployeeController extends Controller
     {
         try {
             employee::where('nik', $id)->update([
-                'no_sk_pkwtt' => $request->no_sk_pkwtt,
                 'no_kk' => $request->no_kk,
                 'nama_karyawan' => $request->nama_karyawan,
                 'nama_ibu_kandung' => $request->nama_ibu_kandung,
@@ -153,7 +168,9 @@ class EmployeeController extends Controller
                 'area_kerja' =>  $request->area_kerja,
                 'golongan_darah' => $request->golongan_darah,
                 'tgl_lahir' => $request->tgl_lahir,
-                'entry_date' => $request->entry_date
+                'entry_date' => $request->entry_date,
+                'sisa_cuti' => $request->sisa_cuti,
+                'sisa_cuti_covid' => $request->sisa_cuti_covid,
             ]);
             return redirect('employees')->with('success', 'Data karyawan berhasil diperbarui');
         } catch (\Throwable $e) {
@@ -280,5 +297,21 @@ class EmployeeController extends Controller
             DB::commit();
             return back()->with('success', 'Berhasil melakukan mutasi');
         }
+    }
+
+    public function weekly(Request $request)
+    {
+        $depts = Departemen::all();
+        $provinsi = Provinsi::all();
+
+        return view('employee.weekly.index', compact('depts', 'provinsi'));
+    }
+
+    public function monthly(Request $request)
+    {
+        $depts = Departemen::all();
+        $provinsi = Provinsi::all();
+
+        return view('employee.monthly.index', compact('depts', 'provinsi'));
     }
 }

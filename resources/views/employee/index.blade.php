@@ -128,19 +128,14 @@
     <!-- Main page content-->
     <div class="container-fluid px-4">
         <nav class="nav nav-borders">
-            <a class="nav-link {{ (request()->segment(1) == 'employees') ? 'active' : '' }} ms-0" href="/employees">Karyawan</a>
-            <a class="nav-link {{ (request()->segment(1) == 'information') ? 'active' : '' }} ms-0" href="/">Informasi</a>
+            <a class="nav-link ms-0 {{ (request()->segment(1) == 'employees') ? 'active' : '' }} " href="/employees">Keseluruhan</a>
+            <a class="nav-link ms-0" href="/employees/monthly">Bulanan</a>
+            <a class="nav-link ms-0" href="/employees/weekly">Mingguan</a>
         </nav>
         <hr class="mt-0 mb-4" />
         <div class="row">
             <div class="col-lg-12">
-                <div class="card card-collapsable mb-3">
-                    <a class="card-header" href="#collapseFilterKaryawan" data-bs-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample">Filter
-                        <div class="card-collapsable-arrow">
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                    </a>
-
+                <div class="card">
                     <div class="card-header">
                         <div class="pull-right">
                             <div class="pull-left float-end">
@@ -160,126 +155,134 @@
                             </div>
                         </div>
                     </div>
+                    <div class="card-body" style="overflow-x:auto;">
+                        <div class="row gx-3 mb-3">
+                            <div class="col-md-3 mb-2">
+                                <label class="small mb-1">Area</label>
+                                <select class="form-select" id="area_kerja">
+                                    <option value="">- Pilih area -</option>
+                                    <option value="VDNI">PT VDNI</option>
+                                    <option value="VDNIP">PT VDNIP</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3 mb-2">
+                                <label class="small mb-1">Departemen</label>
+                                <select class="form-select" id="departemen">
+                                    <option value="">- Pilih departemen -</option>
+                                    @foreach($depts as $d)
+                                    <option value="{{ $d->id }}">{{ $d->departemen }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-3 mb-2">
+                                <label class="small mb-1">Divisi</label>
+                                <select class="form-select" name="divisi" id="divisi"></select>
+                            </div>
 
-                    <div class="collapse show" id="collapseFilterKaryawan">
-                        <form action="{{ route('karyawan.index') }}" method="get">
-                            @csrf
-                            <div class="card-body">
-                                <div class="row gx-3 mb-3">
-                                    <div class="col-md-3 mb-2">
-                                        <label class="small mb-1">Area</label>
-                                        <select class="form-select" id="area_kerja">
-                                            <option value="">- Pilih area -</option>
-                                            <option value="VDNI">PT VDNI</option>
-                                            <option value="VDNIP">PT VDNIP</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-3 mb-2">
-                                        <label class="small mb-1">Departemen</label>
-                                        <select class="form-select" id="departemen">
-                                            <option value="">- Pilih departemen -</option>
-                                            @foreach($depts as $d)
-                                            <option value="{{ $d->id }}">{{ $d->departemen }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="col-md-3 mb-2">
-                                        <label class="small mb-1">Divisi</label>
-                                        <select class="form-select" name="divisi" id="divisi"></select>
-                                    </div>
-
-                                    <div class="col-md-3 mb-2">
-                                        <label class="small mb-1">Kontrak</label>
-                                        <select class="form-select" id="status_karyawan">
-                                            <option value="">- Pilih status kontrak -</option>
-                                            <option value="PKWTT 固定工">PKWTT 固定工</option>
-                                            <option value="PKWT 合同工">PKWT 合同工</option>
-                                            <option value="TRAINING">TRAINING</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-3 mb-2">
-                                        <label class="small mb-1">Jenis kelamin</label>
-                                        <select class="form-select" id="jenis_kelamin">
-                                            <option value="">- Pilih jenis kelamin -</option>
-                                            <option value="L">LAKI-LAKI</option>
-                                            <option value="P">PEREMPUAN</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-3 mb-2">
-                                        <label class="small mb-1">Status keluar</label>
-                                        <select class="form-select" id="status_resign">
-                                            <option value="Aktif" selected>AKTIF</option>
-                                            <option value="Resign sesuai prosedur">RESIGN SESUAI PROSEDUR</option>
-                                            <option value="RESIGN TIDAK SESUAI PROSEDUR">RESIGN TIDAK SESUAI PROSEDUR</option>
-                                            <option value="PHK">PHK</option>
-                                            <option value="PB PHK">PB PHK</option>
-                                            <option value="PB PHK">PB RESIGN</option>
-                                            <option value="PB PHK">PUTUS KONTRAK</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-3 mb-3">
-                                        <label class="small mb-1">Pendidikan terakhir</label>
-                                        <select class="form-select" id="pendidikan_terakhir">
-                                            <option value="">- Pilih gelar -</option>
-                                            <option value="S2 研究生">S2 研究生</option>
-                                            <option value="S1 本科">S1 本科</option>
-                                            <option value="D4 大专三年">D4 大专三年</option>
-                                            <option value="D3 大专三年">D3 大专三年</option>
-                                            <option value="D2 大专两年">D2 大专两年</option>
-                                            <option value="D1 大专一年">D1 大专一年</option>
-                                            <option value="SMA 高中 SEDERAJAT">SMA 高中 SEDERAJAT</option>
-                                            <option value="SMP 初中 SEDERAJAT">SMP 初中 SEDERAJAT</option>
-                                            <option value="SD 小学">SD 小学</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-3 mb-3">
-                                        <label class="small mb-1">Jabatan</label>
-                                        <select class="form-select" id="jabatan">
-                                            <option value="">- Pilih jabatan -</option>
-                                            <option value="ADMIN 文员">ADMIN 文员</option>
-                                            <option value="ASISTEN MANAGER">ASISTEN MANAGER</option>
-                                            <option value="ASISTEN SUPERVISOR">ASISTEN SUPERVISOR</option>
-                                            <option value="DOKTER UMUM">DOKTER UMUM</option>
-                                            <option value="KEPALA KORDINATOR 调度">KEPALA KORDINATOR 调度</option>
-                                            <option value="KEPALA PRODUKSI 科长">KEPALA PRODUKSI 科长</option>
-                                            <option value="KEPALA TEKNIK">KEPALA TEKNIK</option>
-                                            <option value="KOORDINATOR 大班长">KOORDINATOR 大班长</option>
-                                            <option value="PENGAWAS 班长">PENGAWAS 班长</option>
-                                            <option value="STAFF 职员">STAFF 职员</option>
-                                            <option value="SUPERVISOR 调度">SUPERVISOR 调度</option>
-                                            <option value="WAKIL KEPALA KORDINATOR 副调度">WAKIL KEPALA KORDINATOR 副调度</option>
-                                            <option value="WAKIL KEPALA PRODUKSI 副科长">WAKIL KEPALA PRODUKSI 副科长</option>
-                                            <option value="WAKIL KEPALA TUNGKU 副炉长">WAKIL KEPALA TUNGKU 副炉长</option>
-                                            <option value="WAKIL KEPALA TUNGKU 副炉长">WAKIL KEPALA TUNGKU 副炉长</option>
-                                            <option value="WAKIL KOORDINATOR 副大班长">WAKIL KOORDINATOR 副大班长</option>
-                                            <option value="WAKIL PENGAWAS 副班长">WAKIL PENGAWAS 副班长</option>
-                                            <option value="WAKIL SUPERVISOR 副调度">WAKIL SUPERVISOR 副调度</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="umur" class="col-sm-2 col-form-label">Rentang umur</label>
-                                        <div class="col-sm-2 mb-2">
-                                            <input type="number" class="form-control" id="awal_umur" name="awal_umur">
-                                        </div>
-                                        <div class="col-sm-2 mb-2">
-                                            <input type="number" class="form-control" id="akhir_umur" name="akhir_umur">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <a class="btn btn-sm btn-light text-primary" href="/employees">
+                            <div class="col-md-3 mb-2">
+                                <label class="small mb-1">Kontrak</label>
+                                <select class="form-select" id="status_karyawan">
+                                    <option value="">- Pilih status kontrak -</option>
+                                    <option value="PKWTT 固定工">PKWTT 固定工</option>
+                                    <option value="PKWT 合同工">PKWT 合同工</option>
+                                    <option value="TRAINING">TRAINING</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3 mb-2">
+                                <label class="small mb-1">Jenis kelamin</label>
+                                <select class="form-select" id="jenis_kelamin">
+                                    <option value="">- Pilih jenis kelamin -</option>
+                                    <option value="L">LAKI-LAKI</option>
+                                    <option value="P">PEREMPUAN</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3 mb-2">
+                                <label class="small mb-1">Status keluar</label>
+                                <select class="form-select" id="status_resign">
+                                    <option value="Aktif" selected>AKTIF</option>
+                                    <option value="Resign sesuai prosedur">RESIGN SESUAI PROSEDUR</option>
+                                    <option value="RESIGN TIDAK SESUAI PROSEDUR">RESIGN TIDAK SESUAI PROSEDUR</option>
+                                    <option value="PHK">PHK</option>
+                                    <option value="PB PHK">PB PHK</option>
+                                    <option value="PB PHK">PB RESIGN</option>
+                                    <option value="PB PHK">PUTUS KONTRAK</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3 mb-2">
+                                <label class="small mb-1">Pendidikan terakhir</label>
+                                <select class="form-select" id="pendidikan_terakhir">
+                                    <option value="">- Pilih gelar -</option>
+                                    <option value="S2 研究生">S2 研究生</option>
+                                    <option value="S1 本科">S1 本科</option>
+                                    <option value="D4 大专三年">D4 大专三年</option>
+                                    <option value="D3 大专三年">D3 大专三年</option>
+                                    <option value="D2 大专两年">D2 大专两年</option>
+                                    <option value="D1 大专一年">D1 大专一年</option>
+                                    <option value="SMA 高中 SEDERAJAT">SMA 高中 SEDERAJAT</option>
+                                    <option value="SMP 初中 SEDERAJAT">SMP 初中 SEDERAJAT</option>
+                                    <option value="SD 小学">SD 小学</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3 mb-2">
+                                <label class="small mb-1">Jabatan</label>
+                                <select class="form-select" id="jabatan">
+                                    <option value="">- Pilih jabatan -</option>
+                                    <option value="ADMIN 文员">ADMIN 文员</option>
+                                    <option value="ASISTEN MANAGER">ASISTEN MANAGER</option>
+                                    <option value="ASISTEN SUPERVISOR">ASISTEN SUPERVISOR</option>
+                                    <option value="DOKTER UMUM">DOKTER UMUM</option>
+                                    <option value="KEPALA KORDINATOR 调度">KEPALA KORDINATOR 调度</option>
+                                    <option value="KEPALA PRODUKSI 科长">KEPALA PRODUKSI 科长</option>
+                                    <option value="KEPALA TEKNIK">KEPALA TEKNIK</option>
+                                    <option value="KOORDINATOR 大班长">KOORDINATOR 大班长</option>
+                                    <option value="PENGAWAS 班长">PENGAWAS 班长</option>
+                                    <option value="STAFF 职员">STAFF 职员</option>
+                                    <option value="SUPERVISOR 调度">SUPERVISOR 调度</option>
+                                    <option value="WAKIL KEPALA KORDINATOR 副调度">WAKIL KEPALA KORDINATOR 副调度</option>
+                                    <option value="WAKIL KEPALA PRODUKSI 副科长">WAKIL KEPALA PRODUKSI 副科长</option>
+                                    <option value="WAKIL KEPALA TUNGKU 副炉长">WAKIL KEPALA TUNGKU 副炉长</option>
+                                    <option value="WAKIL KOORDINATOR 副大班长">WAKIL KOORDINATOR 副大班长</option>
+                                    <option value="WAKIL PENGAWAS 副班长">WAKIL PENGAWAS 副班长</option>
+                                    <option value="WAKIL SUPERVISOR 副调度">WAKIL SUPERVISOR 副调度</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3 mb-2">
+                                <label class="small mb-1">Provinsi</label>
+                                <select class="form-select" id="provinsi_id">
+                                    <option value="">- Pilih provinsi -</option>
+                                    @foreach($provinsi as $prov)
+                                    <option value="{{ $prov->id }}">{{ $prov->provinsi }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-3 mb-2">
+                                <label class="small mb-1">Kabupaten</label>
+                                <select name="kabupaten" class="form-select" id="kabupaten_id"></select>
+                            </div>
+                            <div class="col-md-3 mb-2">
+                                <label class="small mb-1">Kecamatan</label>
+                                <select name="kecamatan" class="form-select" id="kecamatan_id"></select>
+                            </div>
+                            <div class="col-md-3 mb-2">
+                                <label class="small mb-1">Kelurahan</label>
+                                <select name="kelurahan" class="form-select" id="kelurahan_id"></select>
+                            </div>
+                            <div class="col-md-3 mb-2">
+                                <label class="small mb-1">Mulai umur</label>
+                                <input type="number" class="form-control" id="awal_umur" name="mulai_umur">
+                            </div>
+                            <div class="col-md-3 mb-2">
+                                <label class="small mb-1">Sampai umur</label>
+                                <input type="number" class="form-control" id="akhir_umur" name="akhir_umur">
+                            </div>
+                            <div class="col-sm-2 mb-3">
+                                <a class="btn btn-light text-primary mt-4" href="/employees">
                                     <i class="me-1" data-feather="trash"></i>
-                                    Hapus
+                                    Hapus filter
                                 </a>
                             </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
+                        </div>
 
-            <div class="col-lg-12">
-                <div class="card">
-                    <div class="card-body" style="overflow-x:auto;">
                         <table id="data-table-karyawan" class="table table-hover text-sm" style="width: 100%;">
                             <thead>
                                 <tr>
@@ -295,6 +298,10 @@
                                     <th>Pendidikan</th>
                                     <th>Umur</th>
                                     <th>Status keluar</th>
+                                    <th>Provinsi</th>
+                                    <th>Kabupaten</th>
+                                    <th>Kecamatan</th>
+                                    <th>Kelurahan</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -439,6 +446,10 @@
                         d.pendidikan_terakhir = $('#pendidikan_terakhir').val()
                         d.awal_umur = $('#awal_umur').val()
                         d.akhir_umur = $('#akhir_umur').val()
+                        d.provinsi_id = $('#provinsi_id').val()
+                        d.kabupaten_id = $('#kabupaten_id').val()
+                        d.kecamatan_id = $('#kecamatan_id').val()
+                        d.kelurahan_id = $('#kelurahan_id').val()
                         d.search = $('input[type="search"]').val()
                     }
                 },
@@ -554,6 +565,30 @@
                         }
                     },
                     {
+                        data: 'provinsi_id',
+                        name: 'provinsi_id',
+                        searchable: true,
+                        visible: false
+                    },
+                    {
+                        data: 'kabupaten_id',
+                        name: 'kabupaten_id',
+                        searchable: true,
+                        visible: false
+                    },
+                    {
+                        data: 'kecamatan_id',
+                        name: 'kecamatan_id',
+                        searchable: true,
+                        visible: false
+                    },
+                    {
+                        data: 'kelurahan_id',
+                        name: 'kelurahan_id',
+                        searchable: true,
+                        visible: false
+                    },
+                    {
                         data: 'action',
                         name: 'action',
                         orderable: false
@@ -601,6 +636,22 @@
             });
 
             $('#akhir_umur').keyup(function() {
+                table.draw();
+            });
+
+            $('#provinsi_id').change(function() {
+                table.draw();
+            });
+
+            $('#kabupaten_id').change(function() {
+                table.draw();
+            });
+
+            $('#kecamatan_id').change(function() {
+                table.draw();
+            });
+
+            $('#kelurahan_id').change(function() {
                 table.draw();
             });
 
@@ -662,5 +713,94 @@
             });
         });
     </script>
+
+    <script>
+        $(document).ready(function() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $('#provinsi_id').on('change', function() {
+                var provinsiID = $(this).val();
+                if (provinsiID) {
+                    $.ajax({
+                        url: 'dashboard/fetch-kabupaten/' + provinsiID,
+                        type: "GET",
+                        data: {
+                            "_token": "{{ csrf_token() }}"
+                        },
+                        dataType: "json",
+                        success: function(data) {
+                            if (data) {
+                                $('#kabupaten_id').empty();
+                                $('#kabupaten_id').append('<option hidden>- Pilih kabupaten -</option>');
+                                $.each(data, function(id, kabupaten) {
+                                    $('select[name="kabupaten"]').append('<option value="' + kabupaten.id + '">' + kabupaten.kabupaten + '</option>');
+                                });
+                            } else {
+                                $('#kabupaten').empty();
+                            }
+                        }
+                    });
+                } else {
+                    $('#kabupaten').empty();
+                }
+            });
+
+            $('#kabupaten_id').on('change', function() {
+                var kabupatenID = $(this).val();
+                if (kabupatenID) {
+                    $.ajax({
+                        url: 'dashboard/fetch-kecamatan/' + kabupatenID,
+                        type: "GET",
+                        data: {
+                            "_token": "{{ csrf_token() }}"
+                        },
+                        dataType: "json",
+                        success: function(data) {
+                            if (data) {
+                                $('#kecamatan_id').empty();
+                                $('#kecamatan_id').append('<option hidden>- Pilih kecamatan -</option>');
+                                $.each(data, function(id, kecamatan) {
+                                    $('select[name="kecamatan"]').append('<option value="' + kecamatan.id + '">' + kecamatan.kecamatan + '</option>');
+                                })
+                            } else {
+                                $('#kecamatan').empty();
+                            }
+                        }
+                    });
+                }
+            });
+
+            $('#kecamatan_id').on('change', function() {
+                var kecamatanID = $(this).val();
+                if (kecamatanID) {
+                    $.ajax({
+                        url: 'dashboard/fetch-kelurahan/' + kecamatanID,
+                        type: "GET",
+                        data: {
+                            "_token": "{{ csrf_token() }}"
+                        },
+                        dataType: "json",
+                        success: function(data) {
+                            if (data) {
+                                $('#kelurahan_id').empty();
+                                $('#kelurahan_id').append('<option hidden>- Pilih kelurahan/desa -</option>');
+                                console.log(data);
+                                $.each(data, function(id, kelurahan) {
+                                    $('select[name="kelurahan"]').append('<option value="' + kelurahan.id + '">' + kelurahan.kelurahan + '</option>');
+                                })
+                            } else {
+                                $('#kelurahan').empty();
+                            }
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+
     @endpush
 </x-app-layout>

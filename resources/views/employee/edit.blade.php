@@ -230,12 +230,16 @@
 
 							<div class="row gx-3">
 								<div class="col-md-6 mb-3">
-									<label class="small mb-1">NO SK PKWTT</label>
-									<input class="form-control" type="text" name="no_sk_pkwtt" value="{{ $data->no_sk_pkwtt }}" />
-								</div>
-								<div class="col-md-6 mb-3">
 									<label class="small mb-1">NIK KK</label>
 									<input class="form-control" type="text" name="no_kk" value="{{ $data->no_kk }}" />
+								</div>
+								<div class="col-md-3 mb-3">
+									<label class="small mb-1">Cuti tahunan</label>
+									<input class="form-control" type="text" name="sisa_cuti" value="{{ $data->sisa_cuti }}" />
+								</div>
+								<div class="col-md-3 mb-3">
+									<label class="small mb-1">Cuti Covid</label>
+									<input class="form-control" type="text" name="sisa_cuti_covid" value="{{ $data->sisa_cuti_covid }}" />
 								</div>
 							</div>
 
@@ -411,7 +415,7 @@
 								</div>
 								<div class="d-flex justify-content-between">
 									<a href="/employees" class="btn btn-light" type="button">Kembali</a>
-									<button class="btn btn-primary" type="submit">Simpan</button>
+									<button class="btn btn-primary" type="submit">Perbarui</button>
 								</div>
 						</form>
 					</div>
