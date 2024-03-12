@@ -45,12 +45,6 @@ class UpdateSisaCuti extends Command
         Log::info($data);
         foreach ($data as $row) {
 
-            if ($row->sisa_cuti == 0) {
-                employee::where('nik', $row->nik)->update([
-                    'sisa_cuti' => $cuti_tahunan
-                ]);
-            }
-
             if ($row->sisa_cuti < 0) {
 
                 $sisa_cuti_covid = $row->sisa_cuti_covid - abs($row->sisa_cuti);
@@ -66,6 +60,11 @@ class UpdateSisaCuti extends Command
 
                 employee::where('nik', $row->nik)->update([
                     'sisa_cuti_covid' => $sisa_cuti_covid > 0 ? $sisa_cuti_covid : 0
+                ]);
+            } else {
+
+                employee::where('nik', $row->nik)->update([
+                    'sisa_cuti' => $cuti_tahunan
                 ]);
             }
         }
