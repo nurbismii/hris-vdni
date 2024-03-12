@@ -58,7 +58,7 @@ class UpdateSisaCuti extends Command
                         'sisa_cuti_covid' => 0
                     ]);
                 }
-
+            }
                 // employee::where('nik', $row->nik)->update([
                 //     'sisa_cuti' => $cuti_tahunan - abs($row->sisa_cuti),
                 //     'sisa_cuti_covid' => $sisa_cuti_covid > 0 ? $sisa_cuti_covid : 0
@@ -66,7 +66,7 @@ class UpdateSisaCuti extends Command
             // } else {
 
             //     employee::where('nik', $row->nik)->update([
-            //         'sisa_cuti' => $cuti_tahunan
+            //         'sisa_cuti' => $cuti_tahunan,
             //     ]);
             // }
         }
