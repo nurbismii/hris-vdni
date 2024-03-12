@@ -43,6 +43,7 @@ class UpdateSisaCuti extends Command
         $today = now();
         $data = employee::select('nik', 'sisa_cuti', 'sisa_cuti_covid')->whereMonth('entry_date', $today->month)->whereDay('entry_date', $today->day)->get();
         Log::info($data);
+
         foreach ($data as $row) {
 
             if ($row->sisa_cuti < 0) {
@@ -57,7 +58,16 @@ class UpdateSisaCuti extends Command
                         'sisa_cuti' => $sisa_cuti,
                         'sisa_cuti_covid' => 0
                     ]);
+                } else {
+                    employee::where('nik', $row->nik)->update([
+                        'sisa_cuti' => $cuti_tahunan,
+                        'sisa_cuti_covid' => $sisa_cuti_covid
+                    ]);
                 }
+            } else {
+                employee::where('nik', $row->nik)->update([
+                    'sisa_cuti' => $cuti_tahunan,
+                ]);
             }
         }
     }
