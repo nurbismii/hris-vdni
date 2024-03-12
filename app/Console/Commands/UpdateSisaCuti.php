@@ -41,7 +41,7 @@ class UpdateSisaCuti extends Command
     {
         $cuti_tahunan = 12;
         $today = now();
-        $data = employee::whereMonth('entry_date', $today->month)->whereDay('entry_date', $today->day)->get();
+        $data = employee::select('nik', 'sisa_cuti', 'sisa_cuti_covid')->whereMonth('entry_date', $today->month)->whereDay('entry_date', $today->day)->get();
         Log::info($data);
         foreach ($data as $row) {
 
