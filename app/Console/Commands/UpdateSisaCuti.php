@@ -45,7 +45,7 @@ class UpdateSisaCuti extends Command
         Log::info($data);
         foreach ($data as $row) {
 
-            if ($row->sisa_cuti <= 0) {
+            if ($row->sisa_cuti < 0) {
 
                 $sisa_cuti_covid = $row->sisa_cuti_covid - abs($row->sisa_cuti);
 
