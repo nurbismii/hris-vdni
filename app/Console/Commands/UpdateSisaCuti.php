@@ -54,7 +54,8 @@ class UpdateSisaCuti extends Command
                     $sisa_cuti = $cuti_tahunan - abs($sisa_cuti_covid);
 
                     employee::where('nik', $row->nik)->update([
-                        'sisa_cuti' => $sisa_cuti
+                        'sisa_cuti' => $sisa_cuti,
+                        'sisa_cuti_covid' => 0
                     ]);
                 }
 
