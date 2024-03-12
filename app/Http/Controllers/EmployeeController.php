@@ -41,7 +41,7 @@ class EmployeeController extends Controller
         $data = employee::leftjoin('divisis', 'divisis.id', '=', 'employees.divisi_id')
             ->leftjoin('departemens', 'departemens.id', '=', 'divisis.departemen_id')
             ->where('kode_area_kerja', '!=', null)
-            ->select(DB::raw("*, tgl_lahir, (year(curdate())-year(tgl_lahir)) as umur"));
+            ->select(DB::raw('*, tgl_lahir, TIMESTAMPDIFF(YEAR, tgl_lahir, NOW()) AS umur'));
 
         return DataTables::of($data)
             ->addIndexColumn()

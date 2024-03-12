@@ -13,13 +13,13 @@ class EmployeeExport implements FromCollection, WithHeadings
      */
     public function collection()
     {
-        return employee::select('nik', 'no_sk_pkwtt', 'nama_karyawan', 'nama_ibu_kandung', 'agama', 'no_ktp', 'no_kk', 'jenis_kelamin', 'status_perkawinan', 'status_karyawan', 'tgl_resign', 'no_telp', 'tgl_lahir', 'area_kerja', 'golongan_darah', 'foto_karyawan', 'entry_date', 'npwp', 'bpjs_kesehatan', 'bpjs_tk', 'vaksin', 'jam_kerja', 'status_resign')->take(0)->get();
+        return employee::select('*')->take(0)->get();
     }
 
     public function headings(): array
     {
         return array(
-            'NIK', 'NO_SK_PKWTT', 'NAMA_KARYAWAN', 'NAMA_IBU_KANDUNG', 'AGAMA', 'NO_KTP', 'NO_KK', 'JENIS_KELAMIN', 'STATUS_PERKAWINAN', 'STATUS_KARYAWAN', 'TGL_RESIGN', 'NO_TELP', 'TGL_LAHIR', 'AREA_KERJA', 'GOLONGAN_DARAH', 'FOTO_KARYAWAN', 'ENTRY_DATE', 'NPWP', 'BPJS_KESEHATAN', 'BPJS_TK', 'VAKSIN', 'JAM_KERJA', 'STATUS_RESIGN'
+            'Nik', 'No_Sk_Pkwtt', 'Nama_Karyawan', 'Nama_Ibu_Kandung', 'Nama_Bapak', 'Agama', 'No_Ktp', 'No_Kk', 'Kode_Area_Kerja', 'Jenis_Kelamin', 'Status_Perkawinan', 'Status_Karyawan', 'Tgl_Resign', 'Alasan_Resign', 'Status_Resign', 'No_Telp', 'Tgl_Lahir', 'Provinsi_Id', 'Kabupaten_Id', 'Kecamatan_Id', 'Kelurahan_Id', 'Alamat_Ktp', 'Alamat_Domisili', 'Rt', 'Rw', 'Kode_Pos', 'Area_Kerja', 'Golongan_Darah', 'Entry_Date', 'Npwp', 'Status_Pajak', 'Bpjs_Kesehatan', 'Bpjs_Tk', 'Vaksin', 'Jam_Kerja', 'Posisi', 'Jabatan', 'Divisi_Id', 'Tinggi', 'Berat', 'Hobi', 'No_Jamsostek', 'No_Asuransi', 'No_Kartu_Asuransi', 'Nama_Bank', 'No_Rekening', 'Nama_Instansi_Pendidikan', 'Pendidikan_Terakhir', 'Jurusan', 'Tanggal_Kelulusan', 'Tanggal_Menikah', 'Sisa_cuti', 'Sisa_cuti_covid'
         );
     }
 }
