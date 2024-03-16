@@ -107,7 +107,7 @@
 								@forelse($data->cutiIzin as $row)
 								<div class="timeline-item" data-bs-toggle="tooltip" data-bs-placement="right" title="Mulai {{date('d F Y', strtotime($row->tanggal_mulai))}} berakhir {{ date('d F Y', strtotime($row->tanggal_berakhir))}}">
 									<div class="timeline-item-marker">
-										<div class="timeline-item-marker-text">{{ date('d/m/Y', strtotime($row->tanggal)) }}</div>
+										<div class="timeline-item-marker-text">{{ date('d-M-Y', strtotime($row->tanggal)) }}</div>
 										@if(strtoupper($row->tipe) == 'CUTI')
 										<div class="timeline-item-marker-indicator bg-green"></div>
 										@elseif(strtoupper($row->tipe) == 'IZIN DIBAYARKAN')
@@ -119,9 +119,8 @@
 										@endif
 									</div>
 									<div class="timeline-item-content">
-										<a class="fw-bold text-dark text-xs" href="#!">[{{strtoupper($row->tipe)}}] </a> <br>
+										<a class="fw-bold text-dark text-xs" href="#!">[{{strtoupper($row->tipe)}}] - {{ $row->keterangan }} </a> <br>
 										<a class="fw-bold text-dark text-xs" href="#!">({{$row->jumlah}} Hari)</a> <br>
-										<a class="fw-bold text-dark text-xs" href="#!">{{ $row->keterangan }} </a>
 									</div>
 								</div>
 								@empty
@@ -150,7 +149,7 @@
 								<div class="timeline-item" data-bs-toggle="tooltip" data-bs-placement="right" title="">
 									<div class="timeline-item-marker">
 										<div class="timeline-item-marker-text">{{ date('d/m/Y', strtotime($row->tanggal_mutasi)) }}</div>
-										<div class="timeline-item-marker-indicator bg-primary"></div>
+										<div class="timeline-item-marker-indicator bg-danger"></div>
 									</div>
 									<div class="timeline-item-content">
 										<a class="fw-bold text-dark" href="#!">{{ getNamaDepartemen($row->posisi_lama->departemen_lama_id) ?? '' }} </a> <br>
@@ -279,11 +278,11 @@
 							<div class="row gx-3">
 								<div class="col-md-6 mb-3">
 									<label class="small mb-1">Posisi</label>
-									<input class="form-control" type="text" name="posisi" value="{{ $data->posisi }}" disabled />
+									<input class="form-control" type="text" name="posisi" value="{{ $data->posisi }}" />
 								</div>
 								<div class="col-md-6 mb-3">
 									<label class="small mb-1">Jabatan</label>
-									<input class="form-control" type="text" name="jabatan" value="{{ $data->jabatan ?? '-' }}" disabled />
+									<input class="form-control" type="text" name="jabatan" value="{{ $data->jabatan ?? '-' }}" />
 								</div>
 							</div>
 

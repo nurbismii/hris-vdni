@@ -20,4 +20,6 @@ class Mutasi extends Model
     {
         return $this->hasOne(PosisiLama::class, 'mutasi_id', 'id');
     }
+
+    
 }

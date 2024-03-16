@@ -82,7 +82,7 @@
 												<td colspan="2">
 													<div class="col-md-12">
 														<label class="small mb-2">Departemen</label>
-														<input class="form-control" name="departemen" type="text" id="departemen" readonly />
+														<input class="form-control" name="" type="text" id="departemen" readonly />
 													</div>
 												</td>
 											</tr>
@@ -90,7 +90,7 @@
 												<td colspan="2">
 													<div class="col-md-12">
 														<label class="small mb-2">Jabatan</label>
-														<input class="form-control" name="posisi" type="text" id="posisi" readonly />
+														<input class="form-control" name="" type="text" id="jabatan" readonly />
 													</div>
 												</td>
 											</tr>
@@ -130,7 +130,7 @@
 												<td colspan="2">
 													<div class="col-md-12">
 														<label class="small mb-2">Jabatan</label>
-														<input class="form-control" name="posisi" type="text" required/>
+														<input class="form-control" name="posisi" type="text" required />
 													</div>
 												</td>
 											</tr>
@@ -153,7 +153,7 @@
 							</div>
 							<div class="mb-3">
 								<label for="" class="mb-2">Berkas pendukung</label>
-								<input type="file" name="file" class="form-control">
+								<input type="file" name="file" class="form-control" required>
 							</div>
 							<hr class="my-4" />
 							<div class="d-grid">

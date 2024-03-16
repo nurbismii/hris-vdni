@@ -156,6 +156,8 @@ class EmployeeController extends Controller
                 'nama_karyawan' => $request->nama_karyawan,
                 'nama_ibu_kandung' => $request->nama_ibu_kandung,
                 'no_ktp' => $request->no_ktp,
+                'posisi' => $request->posisi,
+                'jabatan' => $request->jabatan,
                 'alamat_ktp' => $request->alamat_ktp,
                 'jenis_kelamin' => $request->jenis_kelamin,
                 'status_perkawinan' => $request->status_perkawinan,
@@ -172,7 +174,7 @@ class EmployeeController extends Controller
                 'sisa_cuti' => $request->sisa_cuti,
                 'sisa_cuti_covid' => $request->sisa_cuti_covid,
             ]);
-            return redirect('employees')->with('success', 'Data karyawan berhasil diperbarui');
+            return back()->with('success', 'Data karyawan berhasil diperbarui');
         } catch (\Throwable $e) {
             return redirect('employees')->with('error', 'Terjadi kesalahan!');
         }
@@ -247,7 +249,10 @@ class EmployeeController extends Controller
         } catch (\Throwable $e) {
             DB::rollBack();
         }
+
         $data = employee::where('nik', $request->nik)->first();
+
+        $div = Divisi::where('id', $data->divisi_id)->first();
 
         $cek_file = Mutasi::where('nik_karyawan', $request->nik)->first();
 
@@ -255,12 +260,13 @@ class EmployeeController extends Controller
             $upload = $request->file('file');
             $file_name = $request->nik . ' - ' . $upload->getClientOriginalName();
             $path = public_path('/mutasi/' . $request->nik . '/' . $request->tanggal_mutasi . '/');
-            if (file_exists($path)) {
+            if (file_exists(isset($cek_file->file))) {
                 unlink($path . $cek_file->file);
             }
             $upload->move($path, $file_name);
 
             DB::beginTransaction();
+
             $mutasi = Mutasi::create([
                 'nik_karyawan' => $request->nik,
                 'departemen_id' => $request->departemen_id,
@@ -272,9 +278,9 @@ class EmployeeController extends Controller
                 'berkas_pendukung' => $file_name
             ]);
 
-            $posisi_lama = PosisiLama::create([
+            PosisiLama::create([
+                'departemen_lama_id' => $div->departemen_id,
                 'mutasi_id' => $mutasi->id,
-                'departemen_lama_id' => $mutasi->departemen_id,
                 'divisi_lama_id' => $data->divisi_id,
                 'area_kerja_lama' => $data->area_kerja,
                 'jabatan_lama' => $data->posisi,
@@ -283,7 +289,7 @@ class EmployeeController extends Controller
             if ($mutasi->area_kerja != 'VDNI') {
                 $data->update([
                     'divisi_id' => $mutasi->divisi_id,
-                    'posisi' => $mutasi->posisi,
+                    'posisi' => $mutasi->jabatan,
                     'area_kerja' => $mutasi->area_kerja,
                     'status_resign' => 'Mutasi'
                 ]);
