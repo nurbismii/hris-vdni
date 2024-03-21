@@ -48,7 +48,7 @@ class UpdateDataResignKaryawan extends Command
             employee::where('nik', $row->nik_karyawan)->update([
                 'tgl_resign' => $row->tanggal_keluar,
                 'alasan_resign' => $row->alasan_keluar,
-                'status_resign' => 'Resign',
+                'status_resign' => $row->tipe,
                 'kategori_keluar' => $row->tipe
             ]);
             Resign::where('nik_karyawan', $row->nik_karyawan)->update([
