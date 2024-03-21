@@ -13,6 +13,7 @@ use App\Models\employee;
 use App\Models\Mutasi;
 use App\Models\PosisiLama;
 use App\Models\Provinsi;
+use App\Models\Resign;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -135,14 +136,19 @@ class EmployeeController extends Controller
     {
         try {
             $data = employee::with('cutiIzin', 'spreportMany')->where('nik', $nik)->first();
+
+            $data_resign = Resign::where('nik_karyawan', $data->nik)->first();
+
             $mutasi = Mutasi::with('posisi_lama')->where('nik_karyawan', $data->nik)->get();
+
             $level_vaksin = $data->vaksin == '0' ? 'Belum Vaksin'
                 : ($data->vaksin == '1' ? 'Vaksin 1'
                     : ($data->vaksin == '2' ? 'Vaksin 2'
                         : ($data->vaksin == '3' ? 'Booster 1'
                             : ($data->vaksin == '4' ? 'Booster 2'
                                 : 'Tidak diketahui'))));
-            return view('employee.edit', compact('data', 'mutasi', 'level_vaksin'));
+
+            return view('employee.edit', compact('data', 'mutasi', 'level_vaksin', 'data_resign'));
         } catch (\Throwable $e) {
             return back()->with('error', 'Terjadi kesalahan');
         }

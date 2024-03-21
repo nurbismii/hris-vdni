@@ -45,12 +45,12 @@
 								<div class="col-md-12 mb-3">
 									<select name="tipe" class="form-select" id="tipe">
 										<option value="" selected>- Pilih tipe resign -</option>
-										<option value="BAIK">Baik</option>
-										<option value="PB RESIGN">PB Resign</option>
-										<option value="KABUR">Kabur</option>
+										<option value="RESIGN SESUAI PROSEDUR">RESIGN SESUAI PROSEDUR</option>
+										<option value="RESIGN TIDAK SESUAI PROSEDUR">RESIGN TIDAK SESUAI PROSEDUR</option>
 										<option value="PHK">PHK</option>
-										<option value="PASAL (50)">Pasal (50)</option>
-										<option value="PUTUS KONTRAK">Putus Kontrak</option>
+										<option value="PB PHK">PB PHK</option>
+										<option value="PB RESIGN">PB RESIGN</option>
+										<option value="PUTUS KONTRAK">PUTUS KONTRAK</option>
 									</select>
 								</div>
 							</div>
@@ -77,7 +77,6 @@
 	<x-toastr />
 
 	<script type="text/javascript">
-
 		function confirmReject() {
 			return confirm('Kamu yakin ingin menolak pengajuan ini ?');
 		}
@@ -111,7 +110,7 @@
 			});
 
 			var table = $('#data-table-resign').DataTable({
-				pageLength: 15,
+				pageLength: 10,
 				processing: true,
 				serverSide: true,
 				searching: true,

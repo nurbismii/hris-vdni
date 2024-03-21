@@ -26,7 +26,9 @@ class SpreportImportUpdate implements ToCollection, WithValidation, WithHeadingR
     public function collection(Collection $collection)
     {
         foreach ($collection as $collect) {
+
             $data = $this->sp->where('nik_karyawan', $collect['nik'])->first();
+
             $data->where('nik_karyawan', $collect['nik'])->update([
                 'no_sp' => $collect['no_sp'],
                 'level_sp' => $collect['level_sp'],
@@ -48,7 +50,7 @@ class SpreportImportUpdate implements ToCollection, WithValidation, WithHeadingR
     public function customValidationMessages()
     {
         return [
-            'nik.required' => 'NIK must be filled in',
+            'nik.required' => 'NIK karyawan wajib diisi',
         ];
     }
 }

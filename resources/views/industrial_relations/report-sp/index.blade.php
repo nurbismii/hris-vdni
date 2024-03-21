@@ -21,7 +21,7 @@
           <div class="col-auto mb-3">
             <h1 class="page-header-title">
               <div class="page-header-icon"><i data-feather="list"></i></div>
-              SP Report
+              Laporan surat peringatan
             </h1>
           </div>
           <div class="col-12 col-xl-auto mb-3">
@@ -42,12 +42,12 @@
           <thead>
             <tr>
               <th>No SP</th>
-              <th>Employee ID</th>
-              <th>Employee name</th>
-              <th>Level SP</th>
-              <th>Start date</th>
-              <th>End date</th>
-              <th>Action</th>
+              <th>NIK</th>
+              <th>Nama</th>
+              <th>Tingkat SP</th>
+              <th>Tanggal mulai</th>
+              <th>Sampai tanggal</th>
+              <th>Aksi</th>
             </tr>
           </thead>
           <tbody>

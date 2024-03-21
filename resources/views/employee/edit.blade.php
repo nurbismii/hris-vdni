@@ -42,7 +42,7 @@
 					@csrf
 					{{ method_field('patch')}}
 					<div class="card mb-3 mt-3 mb-xl-0">
-						<div class="card-header">kontrak</div>
+						<div class="card-header">Kontrak</div>
 						<div class="card-body">
 							<div class="row gx-3">
 								<div class="col-md-12 mb-2">
@@ -72,17 +72,23 @@
 										@if($data->status_resign != 'Aktif')
 										<option value="Aktif">Aktif</option>
 										@endif
-										@if($data->status_resign != 'Mutasi')
-										<option value="Mutasi">Mutasi</option>
+										@if($data->status_resign != 'RESIGN SESUAI PROSEDUR')
+										<option value="RESIGN SESUAI PROSEDUR">RESIGN SESUAI PROSEDUR</option>
+										@endif
+										@if($data->status_resign != 'RESIGN TIDAK SESUAI PROSEDUR')
+										<option value="RESIGN TIDAK SESUAI PROSEDUR">RESIGN TIDAK SESUAI PROSEDUR</option>
 										@endif
 										@if($data->status_resign != 'PHK')
 										<option value="PHK">PHK</option>
 										@endif
-										@if($data->status_resign != 'Pengembalian')
-										<option value="Pengembalian">Pengembalian</option>
+										@if($data->status_resign != 'PB PHK')
+										<option value="PB PHK">PB PHK</option>
 										@endif
-										@if($data->status_resign != 'Efisiensi')
-										<option value="Efisiensi">Efisiensi</option>
+										@if($data->status_resign != 'PB RESIGN')
+										<option value="PB RESIGN">PB RESIGN</option>
+										@endif
+										@if($data->status_resign != 'PUTUS KONTRAK')
+										<option value="PUTUS KONTRAK">PUTUS KONTRAK</option>
 										@endif
 									</select>
 								</div>
@@ -90,7 +96,13 @@
 							<div class="row gx-3 mb-2">
 								<div class="col-md-12 mb-2">
 									<label class="small mb-1">Status Keluar</label>
-									<input class="form-control" type="text" name="kategori_keluar" value="{{ $data->kategori_keluar }}" readonly />
+									<input class="form-control" type="text" name="kategori_keluar" value="{{ $data->kategori_keluar ?? '-' }}" readonly />
+								</div>
+							</div>
+							<div class="row gx-3 mb-2">
+								<div class="col-md-12 mb-2">
+									<label class="small mb-1">Alasan Keluar</label>
+									<textarea class="form-control" type="text" name="alasan_keluar" readonly>{{ $data_resign->alasan_keluar ?? '-' }}</textarea>
 								</div>
 							</div>
 							<button class="btn btn-primary" type="submit">Perbarui</button>
