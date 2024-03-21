@@ -468,8 +468,6 @@
                     {
                         data: 'departemen',
                         name: 'departemen',
-                        searchable: true,
-                        visible: false,
                     },
                     {
                         data: 'nama_divisi',

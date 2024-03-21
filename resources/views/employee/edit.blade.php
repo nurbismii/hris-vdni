@@ -206,11 +206,11 @@
 								@forelse($data->spreportMany as $row)
 								<div class="timeline-item" data-bs-toggle="tooltip" data-bs-placement="right" title="Mulai {{date('d F Y', strtotime($row->tgl_mulai))}} berakhir {{ date('d F Y', strtotime($row->tgl_berakhir))}}">
 									<div class="timeline-item-marker">
-										<div class="timeline-item-marker-text">{{ $row->no_sp }}</div>
+										<div class="timeline-item-marker-text">{{ $row->level_sp }}</div>
 										<div class="timeline-item-marker-indicator bg-red"></div>
 									</div>
 									<div class="timeline-item-content">
-										<a class="fw-bold text-dark" href="#!">({{$row->pelapor}}) {{ $row->keterangan }} </a>
+										<a class="fw-bold text-dark" href="#!">{{ $row->keterangan }}</a>
 									</div>
 								</div>
 								@empty

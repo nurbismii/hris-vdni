@@ -212,14 +212,13 @@
               <div class="col-md-3 mb-2">
                 <label class="small mb-1">Status keluar</label>
                 <select class="form-select" id="status_resign">
-                  <option value="" selected>- Pilih status keluar -</option>
-                  <option value="Aktif">AKTIF</option>
-                  <option value="Resign sesuai prosedur">RESIGN SESUAI PROSEDUR</option>
+                  <option value="Aktif" selected>AKTIF</option>
+                  <option value="RESIGN SESUAI PROSEDUR">RESIGN SESUAI PROSEDUR</option>
                   <option value="RESIGN TIDAK SESUAI PROSEDUR">RESIGN TIDAK SESUAI PROSEDUR</option>
                   <option value="PHK">PHK</option>
                   <option value="PB PHK">PB PHK</option>
-                  <option value="PB PHK">PB RESIGN</option>
-                  <option value="PB PHK">PUTUS KONTRAK</option>
+                  <option value="PB RESIGN">PB RESIGN</option>
+                  <option value="PUTUS KONTRAK">PUTUS KONTRAK</option>
                 </select>
               </div>
               <div class="col-md-3 mb-2">
@@ -487,8 +486,6 @@
           {
             data: 'departemen',
             name: 'departemen',
-            searchable: true,
-            visible: false,
           },
           {
             data: 'nama_divisi',

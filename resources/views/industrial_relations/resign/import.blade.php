@@ -36,8 +36,8 @@
               <form action="{{ route('resign.import.store') }}" enctype="multipart/form-data" method="post">
                 @csrf
                 <label class="form-label">Bulk laporan data resign :</label>
-                <input class="form-control" type="file" name="file" id="formFile">
-                <button type="submit" class="btn btn-light text-primary btn-sm mt-2">Kirim</button>
+                <input class="form-control" type="file" name="file" id="formFile" required>
+                <button type="submit" class="btn btn-primary btn-sm mt-2 float-end">Kirim</button>
               </form>
             </div>
           </div>
@@ -50,8 +50,8 @@
               <form action="{{ route('resign.import.update') }}" enctype="multipart/form-data" method="post">
                 @csrf
                 <label class="form-label">Bulk update data resign :</label>
-                <input class="form-control" type="file" name="file" id="formFile">
-                <button type="submit" class="btn btn-light text-primary btn-sm mt-2">Kirim</button>
+                <input class="form-control" type="file" name="file" id="formFile" required>
+                <button type="submit" class="btn btn-primary btn-sm mt-2 float-end">Kirim</button>
               </form>
             </div>
           </div>
@@ -64,8 +64,8 @@
               <form action="#" enctype="multipart/form-data" method="post">
                 @csrf
                 <label class="form-label">Bulk hapus data resign :</label>
-                <input class="form-control" type="file" name="file" id="formFile">
-                <button type="submit" class="btn btn-danger btn-sm mt-2">Kirim</button>
+                <input class="form-control" type="file" name="file" id="formFile" required>
+                <button type="submit" class="btn btn-danger btn-sm mt-2 float-end">Kirim</button>
               </form>
             </div>
           </div>
