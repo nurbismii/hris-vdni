@@ -89,12 +89,12 @@
 					<div class="p-3">
 						<table class="table table-bordered">
 							<tr>
-								<th width="15%">Area kerja</th>
+								<th width="20%">Area kerja</th>
 								<td width="5px">:</td>
 								<td>PT {{ $area_kerja }}</td>
 							</tr>
 							<tr>
-								<th width="15%">Provinsi</th>
+								<th width="20%">Provinsi</th>
 								<td width="5px">:</td>
 								<td>{{ getNamaProvinsi($provinsi_id) }}</td>
 							</tr>
@@ -108,13 +108,17 @@
 								<td>:</td>
 								<td>{{ getNamaKecamatan($kecamatan_id) }}</td>
 							</tr>
+							<tr>
+								<th>Jumlah kelurahan/desa</th>
+								<td>:</td>
+								<td>{{ count($response) }}</td>
+							</tr>
 						</table>
 						<table id="datatablesSimpleWilayah" class="table table-bordered">
 							<thead>
 								<tr>
-									<th>No</th>
-									<th>Kelurahan</th>
-									<th>Total Karyawan Kel.</th>
+									<th>Daftar kelurahan/desa</th>
+									<th>Total karyawan</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -124,8 +128,6 @@
 								@endphp
 								@foreach($response as $item)
 								<tr>
-
-									<td width="15%">{{ $no++ }}</td>
 
 									<td>
 										@if($item['kelurahan_id'])
@@ -146,7 +148,7 @@
 								</tr>
 								@endforeach
 								<tr>
-									<td colspan="2" class="fw-800">Total karyawan kecamatan :</td>
+									<td colspan="1" class="fw-800">Total karyawan kecamatan :</td>
 									<td class="fw-800">{{ $totalKaryawan }} </td>
 								</tr>
 							</tbody>

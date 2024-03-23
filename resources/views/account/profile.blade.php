@@ -77,11 +77,11 @@
             <div class="row gx-3 mb-3">
               <div class="col-md-6">
                 <label class="small mb-1">Departement</label>
-                <input class="form-control" value="{{ $divisi->departemen->departemen }}" disabled />
+                <input class="form-control" value="{{ $divisi->departemen->departemen ?? '-' }}" disabled />
               </div>
               <div class="col-md-6">
                 <label class="small mb-1">Division</label>
-                <input class="form-control" value="{{ $divisi->nama_divisi }}" disabled />
+                <input class="form-control" value="{{ $divisi->nama_divisi ?? '' }}" disabled />
               </div>
             </div>
             <div class="row gx-3 mb-3">

@@ -60,11 +60,11 @@
                                 <div class="text-white-75 small">Karyawan (VDNI)</div>
                                 <div class="text-lg fw-bold">{{ $total_karyawan_vdni }}</div>
                             </div>
-                            <i class="feather-xl text-white-50" data-feather="users"></i>
+                            <i class="feather-xl text-white-50" data-feather="codepen"></i>
                         </div>
                     </div>
                     <div class="card-footer d-flex align-items-center justify-content-between small">
-                        <a class="text-white stretched-link" href="/employees">Selengkapnya...</a>
+                        <a class="text-white stretched-link" href="/perusahaan">Selengkapnya...</a>
                         <div class="text-white"><i class="fas fa-angle-right"></i></div>
                     </div>
                 </div>
@@ -77,11 +77,11 @@
                                 <div class="text-white-75 small">Karyawan (VDNIP)</div>
                                 <div class="text-lg fw-bold">{{ $total_karyawan_vdnip }}</div>
                             </div>
-                            <i class="feather-xl text-white-50" data-feather="users"></i>
+                            <i class="feather-xl text-white-50" data-feather="codepen"></i>
                         </div>
                     </div>
                     <div class="card-footer d-flex align-items-center justify-content-between small">
-                        <a class="text-white stretched-link" href="/departemen">selengkapnya...</a>
+                        <a class="text-white stretched-link" href="/perusahaan">selengkapnya...</a>
                         <div class="text-white"><i class="fas fa-angle-right"></i></div>
                     </div>
                 </div>
@@ -146,15 +146,15 @@
                 </div>
             </div>
             <div class="col-xl-3 col-md-6 mb-4">
-                <!-- Dashboard info widget 4-->
+                <!-- Dashboard info widget 3-->
                 <div class="card border-start-lg border-start-danger h-100">
                     <div class="card-body">
                         <div class="d-flex align-items-center">
                             <div class="flex-grow-1">
-                                <div class="small fw-bold text-danger mb-1">Total bayar upah</div>
-                                <div class="h5">Rp xx M</div>
+                                <div class="small fw-bold text-danger mb-1">Aktivitas (Harian)</div>
+                                <div class="h5">{{ $jumlah_hit_perhari }}</div>
                             </div>
-                            <div class="ms-2"><i class="fas fa-dollar-sign fa-2x text-gray-200"></i></div>
+                            <div class="ms-2"><i class="fas fa-tasks fa-2x text-gray-200"></i></div>
                         </div>
                     </div>
                 </div>

@@ -139,6 +139,8 @@ class DashboardController extends Controller
 
             $presensi_terakhir = Absensi::orderBy('created_at', 'desc')->limit(5)->get();
 
+            $jumlah_hit_perhari = AuditTrail::whereDate('created_at', Carbon::today())->count();
+
             return view('dashboard', compact(
                 'data',
                 'total_karyawan',
@@ -165,7 +167,8 @@ class DashboardController extends Controller
                 'kec_res',
                 'total_karyawan_laki',
                 'total_karyawan_perempuan',
-                'area_kerja'
+                'area_kerja',
+                'jumlah_hit_perhari'
             ));
         }
 

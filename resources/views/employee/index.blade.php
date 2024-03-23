@@ -282,7 +282,6 @@
                                 </a>
                             </div>
                         </div>
-
                         <table id="data-table-karyawan" class="table table-hover text-sm" style="width: 100%;">
                             <thead>
                                 <tr>
@@ -380,7 +379,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.2/moment.min.js"></script>
     <script src="https://cdn.datatables.net/datetime/1.4.0/js/dataTables.dateTime.min.js"></script>
 
-
     <script src="https://cdn.datatables.net/buttons/1.6.5/js/dataTables.buttons.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.flash.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
@@ -398,7 +396,7 @@
             });
 
             var table = $('#data-table-karyawan').DataTable({
-                pageLength: 15,
+                pageLength: 10,
                 processing: true,
                 serverSide: true,
                 searching: true,
