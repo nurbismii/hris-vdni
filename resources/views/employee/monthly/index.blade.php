@@ -167,7 +167,7 @@
               <div class="col-md-6 mb-2">
                 <label class="small mb-1">Pilih periode pengunduran diri</label>
                 <div class="input-group">
-                  <input type="month" name="periode_resign" id="periode_resign" class="form-control">
+                  <input type="month" value="" name="periode_resign" id="periode_resign" class="form-control">
                 </div>
               </div>
               <div class="col-md-3 mb-2">
@@ -210,9 +210,10 @@
                 </select>
               </div>
               <div class="col-md-3 mb-2">
-                <label class="small mb-1">Status keluar</label>
+                <label class="small mb-1">Status karyawan</label>
                 <select class="form-select" id="status_resign">
-                  <option value="Aktif" selected>AKTIF</option>
+                  <option value="" selected>- Pilih status karyawan -</option>
+                  <option value="Aktif">AKTIF</option>
                   <option value="RESIGN SESUAI PROSEDUR">RESIGN SESUAI PROSEDUR</option>
                   <option value="RESIGN TIDAK SESUAI PROSEDUR">RESIGN TIDAK SESUAI PROSEDUR</option>
                   <option value="PHK">PHK</option>
@@ -405,6 +406,14 @@
   <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.print.min.js"></script>
 
   <script>
+    const monthControl = document.querySelector('input[type="month"]');
+    const date = new Date()
+    const month = ("0" + (date.getMonth() + 1)).slice(-2)
+    const year = date.getFullYear()
+    monthControl.value = `${year}-${month}`;
+  </script>
+
+  <script>
     $(function() {
       $.ajaxSetup({
         headers: {
@@ -413,7 +422,7 @@
       });
 
       var table = $('#data-table-karyawan').DataTable({
-        pageLength: 15,
+        pageLength: 10,
         processing: true,
         serverSide: true,
         searching: true,

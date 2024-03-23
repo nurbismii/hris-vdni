@@ -197,7 +197,7 @@
                                 </select>
                             </div>
                             <div class="col-md-3 mb-2">
-                                <label class="small mb-1">Status keluar</label>
+                                <label class="small mb-1">Status karyawan</label>
                                 <select class="form-select" id="status_resign">
                                     <option value="Aktif" selected>AKTIF</option>
                                     <option value="RESIGN SESUAI PROSEDUR">RESIGN SESUAI PROSEDUR</option>
