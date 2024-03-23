@@ -64,7 +64,10 @@ if (!function_exists('getNamaKelurahan')) {
     function getNamaKelurahan($key)
     {
         $kelurahan = Kelurahan::where('id', $key)->pluck('kelurahan')->implode("");
-        return $kelurahan;
+        if ($kelurahan) {
+            return $kelurahan;
+        }
+        return 'BELUM DIKETAHUI';
     }
 }
 
@@ -745,5 +748,19 @@ if (!function_exists('no_urut_surat')) {
         if (strlen($nomor) == '3') {
             return $nomor;
         }
+    }
+}
+
+if (!function_exists('add_name_kelurahan')) {
+    function add_name_kelurahan($datas)
+    {
+        foreach ($datas as $row) {
+
+            $data[] = [
+                'nik' => $row->nik,
+                'kelurahan' => getNamaKelurahan($row->kelurahan_id)
+            ];
+        }
+        return $data;
     }
 }

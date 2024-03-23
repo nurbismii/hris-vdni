@@ -6,4 +6,13 @@ window.addEventListener('DOMContentLoaded', event => {
     if (datatablesSimple) {
         new simpleDatatables.DataTable(datatablesSimple);
     }
+
+    const datatablesSimpleWilayah = document.getElementById('datatablesSimpleWilayah');
+    if (datatablesSimpleWilayah) {
+        new simpleDatatablesCustom.DataTable(datatablesSimpleWilayah, {
+            config: {
+                pageLength: 25 // Ganti dengan jumlah yang Anda inginkan
+            }
+        });
+    }
 });

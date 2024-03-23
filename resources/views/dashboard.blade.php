@@ -192,8 +192,16 @@
                         <form action="{{ url('dashboard') }}" method="get">
                             @csrf
                             <div class="card-body">
-                                <div class="row gx-3 mb-3">
-                                    <div class="col-md-4 mb-2">
+                                <div class="row gx-4 mb-3">
+                                    <div class="col-md-3 mb-2">
+                                        <label class="small mb-1">Area kerja</label>
+                                        <select name="area_kerja" class="form-select">
+                                            <option value="" disabled selected>- Pilih area kerja -</option>
+                                            <option value="VDNI">PT VDNI</option>
+                                            <option value="VDNIP">PT VDNIP</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3 mb-2">
                                         <label class="small mb-1">Provinsi</label>
                                         <select name="provinsi_id" class="form-select" id="provinsi_id">
                                             <option value="" disabled selected>- Pilih provinsi -</option>
@@ -202,11 +210,11 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="col-md-4 mb-2">
+                                    <div class="col-md-3 mb-2">
                                         <label class="small mb-1">Kabupaten</label>
                                         <select name="kabupaten" class="form-select" id="kabupaten_id"></select>
                                     </div>
-                                    <div class="col-md-4 mb-2">
+                                    <div class="col-md-3 mb-2">
                                         <label class="small mb-1">Kecamatan</label>
                                         <select name="kecamatan" class="form-select" id="kecamatan_id"></select>
                                     </div>
@@ -223,6 +231,11 @@
                                     <b>Hasil :</b>
                                     <div class="p-3">
                                         <table>
+                                            <tr>
+                                                <th>Area kerja</th>
+                                                <td>:</td>
+                                                <td>PT {{ $area_kerja }}</td>
+                                            </tr>
                                             <tr>
                                                 <th>Provinsi</th>
                                                 <td>:</td>

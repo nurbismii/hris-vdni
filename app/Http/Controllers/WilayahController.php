@@ -27,22 +27,25 @@ class WilayahController extends Controller
 
         $kecamatan_id = $request->kecamatan ?? '7403105';
 
+        $area_kerja = $request->area_kerja ?? 'VDNI';
+
         $response = employee::select('provinsi_id', 'kabupaten_id', 'kecamatan_id', 'kelurahan_id')
             ->where('provinsi_id', $provinsi_id)
             ->where('kabupaten_id', $kabupaten_id)
             ->where('kecamatan_id', $kecamatan_id)
             ->where('status_resign', 'Aktif')
+            ->where('area_kerja', $area_kerja)
             ->selectRaw('COUNT(*) as jumlah_karyawan')
             ->groupBy('provinsi_id', 'kabupaten_id', 'kecamatan_id', 'kelurahan_id')
             ->orderBy('jumlah_karyawan', 'desc')
             ->get();
 
-        return view('wilayah.index', compact('response', 'provinsi', 'provinsi_id', 'kabupaten_id', 'kecamatan_id'));
+        return view('wilayah.index', compact('response', 'area_kerja', 'provinsi', 'provinsi_id', 'kabupaten_id', 'kecamatan_id'));
     }
 
-    public function exportExcel($provinsi_id, $kabupaten_id, $kelurahan_id)
+    public function exportExcel($area, $provinsi_id, $kabupaten_id, $kelurahan_id)
     {
-        return Excel::download(new WilayahExport($provinsi_id, $kabupaten_id, $kelurahan_id), 'Wilayah-exported.xlsx');
+        return Excel::download(new WilayahExport($area, $provinsi_id, $kabupaten_id, $kelurahan_id), 'Wilayah-exported.xlsx');
     }
 
     /**

@@ -40,8 +40,16 @@
 					<form action="{{ url('wilayah') }}" method="get">
 						@csrf
 						<div class="card-body">
-							<div class="row gx-3 mb-3">
-								<div class="col-md-4 mb-2">
+							<div class="row gx-4 mb-3">
+								<div class="col-md-3 mb-2">
+									<label class="small mb-1">Area kerja</label>
+									<select name="area_kerja" class="form-select">
+										<option value="" disabled selected>- Pilih area kerja -</option>
+										<option value="VDNI">PT VDNI</option>
+										<option value="VDNIP">PT VDNIP</option>
+									</select>
+								</div>
+								<div class="col-md-3 mb-2">
 									<label class="small mb-1">Provinsi</label>
 									<select name="provinsi_id" class="form-select" id="provinsi_id">
 										<option value="" disabled selected>- Pilih provinsi -</option>
@@ -50,20 +58,20 @@
 										@endforeach
 									</select>
 								</div>
-								<div class="col-md-4 mb-2">
+								<div class="col-md-3 mb-2">
 									<label class="small mb-1">Kabupaten</label>
 									<select name="kabupaten" class="form-select" id="kabupaten_id"></select>
 								</div>
-								<div class="col-md-4 mb-2">
+								<div class="col-md-3 mb-2">
 									<label class="small mb-1">Kecamatan</label>
 									<select name="kecamatan" class="form-select" id="kecamatan_id"></select>
 								</div>
 							</div>
-							<button class="btn btn-sm btn-light text-primary" type="submit">
+							<button class="btn btn-primary float-end text-white" type="submit">
 								<i class="me-1" data-feather="search"></i>
 								Cari
 							</button>
-							<a class="btn btn-sm btn-light text-primary" href="/wilayah">
+							<a class="btn btn-primary text-white" href="/wilayah">
 								<i class="me-1" data-feather="trash"></i>
 								Bersihkan
 							</a>
@@ -75,75 +83,76 @@
 
 		<div class="card">
 			<div class="card-body" style="overflow-x: auto;">
-				<a href="{{ route('export-wilayah', ['provinsi' => $provinsi_id, 'kabupaten' => $kabupaten_id, 'kecamatan' => $kecamatan_id]) }}" class="btn btn-sm btn-success">Export excel</a>
-				<table id="datatablesSimple" class="table table-hover">
-					<thead>
-						<tr>
-							<th>Provinsi</th>
-							<th>Kabupaten</th>
-							<th>Kecamatan</th>
-							<th>Kelurahan</th>
-							<th>Total Karyawan Kel.</th>
-						</tr>
-					</thead>
-					<tbody>
-						@php
-						$prevProvinsi = null;
-						$prevKabupaten = null;
-						$prevKecamatan = null;
-						$totalKaryawan = 0;
-						@endphp
-						@foreach($response as $item)
-						<tr>
-							<td>
-								@if($item['provinsi_id'] !== $prevProvinsi)
-								{{ getNamaProvinsi($item['provinsi_id']) }}
-								@php $prevProvinsi = $item['provinsi_id']; @endphp
-								@endif
-							</td>
+				<a href="{{ route('export-wilayah', ['area' => $area_kerja, 'provinsi' => $provinsi_id, 'kabupaten' => $kabupaten_id, 'kecamatan' => $kecamatan_id]) }}" class="btn btn-success mb-2 float-end">Export excel</a>
+				<div class="mt-5">
+					<b>HASIL LAPORAN WILAYAH :</b>
+					<div class="p-3">
+						<table class="table table-bordered">
+							<tr>
+								<th width="15%">Area kerja</th>
+								<td width="5px">:</td>
+								<td>PT {{ $area_kerja }}</td>
+							</tr>
+							<tr>
+								<th width="15%">Provinsi</th>
+								<td width="5px">:</td>
+								<td>{{ getNamaProvinsi($provinsi_id) }}</td>
+							</tr>
+							<tr>
+								<th>Kabupaten</th>
+								<td>:</td>
+								<td>{{ getNamaKabupaten($kabupaten_id) }}</td>
+							</tr>
+							<tr>
+								<th>Kecamatan</th>
+								<td>:</td>
+								<td>{{ getNamaKecamatan($kecamatan_id) }}</td>
+							</tr>
+						</table>
+						<table id="datatablesSimpleWilayah" class="table table-bordered">
+							<thead>
+								<tr>
+									<th>No</th>
+									<th>Kelurahan</th>
+									<th>Total Karyawan Kel.</th>
+								</tr>
+							</thead>
+							<tbody>
+								@php
+								$totalKaryawan = 0;
+								$no = 1;
+								@endphp
+								@foreach($response as $item)
+								<tr>
 
-							<td>
-								@if($item['kabupaten_id'] !== $prevKabupaten)
-								{{ getNamaKabupaten($item['kabupaten_id']) }}
-								@php $prevKabupaten = $item['kabupaten_id']; @endphp
-								@endif
-							</td>
+									<td width="15%">{{ $no++ }}</td>
 
-							<td>
-								@if($item['kecamatan_id'] !== $prevKecamatan)
-								{{ getNamaKecamatan($item['kecamatan_id']) }}
-								@php $prevKecamatan = $item['kecamatan_id']; @endphp
-								@endif
-							</td>
+									<td>
+										@if($item['kelurahan_id'])
+										{{ getNamaKelurahan($item['kelurahan_id']) }}
+										@else
+										BELUM DIKETAHUI
+										@endif
+									</td>
 
-							<td>
-								@if($item['kelurahan_id'])
-								<ul>
-									<li>{{ getNamaKelurahan($item['kelurahan_id']) }}</li>
-								</ul>
-								@else
-								<ul>
-									<li>ID Kel. kosong</li>
-								</ul>
-								@endif
-							</td>
+									<td width="25%">
+										{{ $item['jumlah_karyawan'] }}
+									</td>
 
-							<td>
-								{{ $item['jumlah_karyawan'] }}
-							</td>
+									@if($item['kelurahan_id'])
+									@php $totalKaryawan += $item['jumlah_karyawan']; @endphp
+									@endif
 
-							@if($item['kelurahan_id'])
-							@php $totalKaryawan += $item['jumlah_karyawan']; @endphp
-							@endif
-
-						</tr>
-						@endforeach
-						<tr>
-							<td colspan="4" class="fw-800">Total karyawan kecamatan :</td>
-							<td class="fw-800">{{ $totalKaryawan }} </td>
-						</tr>
-					</tbody>
-				</table>
+								</tr>
+								@endforeach
+								<tr>
+									<td colspan="2" class="fw-800">Total karyawan kecamatan :</td>
+									<td class="fw-800">{{ $totalKaryawan }} </td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

@@ -97,6 +97,8 @@ class DashboardController extends Controller
             $umur_karyawan = getUmur($data_karyawan);
             /* Code for chart  end */
 
+            $area_kerja = $request->area_kerja ?? 'VDNI';
+
             $provinsi_id = $request->provinsi_id ?? '74';
 
             $kabupaten_id = $request->kabupaten ?? '7403';
@@ -123,7 +125,8 @@ class DashboardController extends Controller
                 ->where('kabupaten_id', $kabupaten_id)
                 ->where('kecamatan_id', $kecamatan_id)
                 ->where('status_resign', 'Aktif')
-                ->select('employees.provinsi_id', 'employees.kabupaten_id', 'employees.kecamatan_id', 'employees.kelurahan_id', 'master_kelurahan.kelurahan')
+                ->where('area_kerja', $area_kerja)
+                ->select('employees.nik', 'employees.kelurahan_id', 'master_kelurahan.kelurahan')
                 ->get();
 
             $nama = $data_karyawan_by_kab->pluck('kelurahan')->toArray();
@@ -161,7 +164,8 @@ class DashboardController extends Controller
                 'kab_res',
                 'kec_res',
                 'total_karyawan_laki',
-                'total_karyawan_perempuan'
+                'total_karyawan_perempuan',
+                'area_kerja'
             ));
         }
 

@@ -8,12 +8,14 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 
 class WilayahExport implements FromCollection, WithHeadings
 {
+    protected $area;
     protected $provinsi_id;
     protected $kabupaten_id;
     protected $kecamatan_id;
 
-    function __construct($provinsi_id, $kabupaten_id, $kecamatan_id)
+    function __construct($area, $provinsi_id, $kabupaten_id, $kecamatan_id)
     {
+        $this->area = $area;
         $this->provinsi_id = $provinsi_id;
         $this->kabupaten_id = $kabupaten_id;
         $this->kecamatan_id = $kecamatan_id;
@@ -23,18 +25,20 @@ class WilayahExport implements FromCollection, WithHeadings
      */
     public function collection()
     {
-        $datas = employee::select('provinsi_id', 'kabupaten_id', 'kecamatan_id', 'kelurahan_id')
+        $datas = employee::select('area_kerja', 'provinsi_id', 'kabupaten_id', 'kecamatan_id', 'kelurahan_id')
             ->where('provinsi_id', $this->provinsi_id)
             ->where('kabupaten_id', $this->kabupaten_id)
             ->where('kecamatan_id', $this->kecamatan_id)
             ->where('status_resign', 'Aktif')
+            ->where('area_kerja', $this->area)
             ->selectRaw('COUNT(*) as jumlah_karyawan')
-            ->groupBy('provinsi_id', 'kabupaten_id', 'kecamatan_id', 'kelurahan_id')
+            ->groupBy('area_kerja', 'provinsi_id', 'kabupaten_id', 'kecamatan_id', 'kelurahan_id')
             ->orderBy('jumlah_karyawan', 'desc')
             ->get();
 
         foreach ($datas as $row) {
             $wilayah[] = [
+                'area' => $row->area_kerja,
                 'provinsi' => getNamaProvinsi($row->provinsi_id),
                 'kabupaten' => getNamaKabupaten($row->kabupaten_id),
                 'kecamatan' => getNamaKecamatan($row->kecamatan_id),
@@ -48,6 +52,6 @@ class WilayahExport implements FromCollection, WithHeadings
 
     public function headings(): array
     {
-        return ["PROVINSI", "KABUPATEN", "KECAMATAN", "KELURAHAN", "TOTAL KARYAWAN BY KELURAHAN"];
+        return ["AREA", "PROVINSI", "KABUPATEN", "KECAMATAN", "KELURAHAN", "TOTAL KARYAWAN BY KELURAHAN"];
     }
 }
