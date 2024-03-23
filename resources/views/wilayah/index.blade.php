@@ -83,7 +83,8 @@
 
 		<div class="card">
 			<div class="card-body" style="overflow-x: auto;">
-				<a href="{{ route('export-wilayah', ['area' => $area_kerja, 'provinsi' => $provinsi_id, 'kabupaten' => $kabupaten_id, 'kecamatan' => $kecamatan_id]) }}" class="btn btn-success mb-2 float-end">Export excel</a>
+				<a href="{{ route('export-wilayah-excel', ['area' => $area_kerja, 'provinsi' => $provinsi_id, 'kabupaten' => $kabupaten_id, 'kecamatan' => $kecamatan_id]) }}" class="btn btn-success mb-2 mx-2 float-end">Export excel</a>
+				<a href="{{ route('export-wilayah-pdf', ['area' => $area_kerja, 'provinsi' => $provinsi_id, 'kabupaten' => $kabupaten_id, 'kecamatan' => $kecamatan_id]) }}" class="btn btn-danger mb-2 float-end">Export pdf</a>
 				<div class="mt-5">
 					<b>HASIL LAPORAN WILAYAH :</b>
 					<div class="p-3">

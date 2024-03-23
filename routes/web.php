@@ -295,7 +295,8 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
 
         Route::group(['prefix' => 'wilayah'], function () {
             route::get('/', [WilayahController::class, 'index']);
-            route::get('{area}/{provinsi}/{kabupaten}/{kecamatan}', [WilayahController::class, 'exportExcel'])->name('export-wilayah');
+            route::get('/excel/{area}/{provinsi}/{kabupaten}/{kecamatan}', [WilayahController::class, 'exportExcel'])->name('export-wilayah-excel');
+            route::get('/pdf/{area}/{provinsi}/{kabupaten}/{kecamatan}', [WilayahController::class, 'exportPdf'])->name('export-wilayah-pdf');
         });
     });
     Route::group(['prefix' => 'api/hrcorner/'], function () {

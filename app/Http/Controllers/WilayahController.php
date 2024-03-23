@@ -6,8 +6,8 @@ use App\Exports\WilayahExport;
 use App\Models\employee;
 use App\Models\Provinsi;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
+use PDF;
 
 class WilayahController extends Controller
 {
@@ -48,69 +48,20 @@ class WilayahController extends Controller
         return Excel::download(new WilayahExport($area, $provinsi_id, $kabupaten_id, $kelurahan_id), 'Wilayah-exported.xlsx');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function exportPdf($area, $provinsi_id, $kabupaten_id, $kecamatan_id)
     {
-        //
-    }
+        $response = employee::select('area_kerja', 'provinsi_id', 'kabupaten_id', 'kecamatan_id', 'kelurahan_id')
+            ->where('provinsi_id', $provinsi_id)
+            ->where('kabupaten_id', $kabupaten_id)
+            ->where('kecamatan_id', $kecamatan_id)
+            ->where('status_resign', 'Aktif')
+            ->where('area_kerja', $area)
+            ->selectRaw('COUNT(*) as jumlah_karyawan')
+            ->groupBy('area_kerja', 'provinsi_id', 'kabupaten_id', 'kecamatan_id', 'kelurahan_id')
+            ->orderBy('jumlah_karyawan', 'desc')
+            ->get();
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        $pdf = PDF::loadView('wilayah.wilayah-pdf', compact('response', 'area', 'provinsi_id', 'kabupaten_id', 'kecamatan_id'));
+        return $pdf->download('REKAP WILAYAH ' . getNamaProvinsi($provinsi_id) . '-' . getNamaKabupaten($kabupaten_id) . '-' . getNamaKecamatan($kecamatan_id) . '.pdf');
     }
 }
