@@ -39,6 +39,8 @@ class WilayahController extends Controller
             ->groupBy('provinsi_id', 'kabupaten_id', 'kecamatan_id', 'kelurahan_id')
             ->orderBy('jumlah_karyawan', 'desc')
             ->get();
+        
+        return $response;
 
         return view('wilayah.index', compact('response', 'area_kerja', 'provinsi', 'provinsi_id', 'kabupaten_id', 'kecamatan_id'));
     }
