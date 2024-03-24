@@ -342,7 +342,7 @@
             @csrf
             <div class="mb-3">
               <label class="form-label">Pilih file : </label>
-              <input class="form-control" type="file" name="file" id="formFile">
+              <input class="form-control" type="file" name="file" id="formFile" required>
             </div>
           </div>
           <div class="modal-footer">
@@ -368,7 +368,7 @@
             @csrf
             <div class="mb-3">
               <label class="form-label">Pilih file :</label>
-              <input class="form-control" name="file" type="file" id="formFile">
+              <input class="form-control" name="file" type="file" id="formFile" required>
             </div>
           </div>
           <div class="modal-footer">
