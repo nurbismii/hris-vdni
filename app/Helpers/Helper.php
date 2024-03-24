@@ -128,51 +128,51 @@ if (!function_exists('getDataResign')) {
 
         for ($i = 0; $i < count($resign_record); $i++) :
             if ($validation1[$i] == $tahun_sekarang) :
-                if ($resign_record[$i] >= '01-16' && $resign_record[$i] <= '02-15') {
+                if ($resign_record[$i] >= '12-16' && $resign_record[$i] <= '01-15') {
                     $jan[] = $resign_record[$i];
                 }
 
-                if ($resign_record[$i] >= '02-16' && $resign_record[$i] <= '03-15') {
+                if ($resign_record[$i] >= '01-16' && $resign_record[$i] <= '02-15') {
                     $feb[] = $resign_record[$i];
                 }
 
-                if ($resign_record[$i] >= '03-16' && $resign_record[$i] <= '04-15') {
+                if ($resign_record[$i] >= '02-16' && $resign_record[$i] <= '03-15') {
                     $maret[] = $resign_record[$i];
                 }
 
-                if ($resign_record[$i] >= '04-16' && $resign_record[$i] <= '05-15') {
+                if ($resign_record[$i] >= '03-16' && $resign_record[$i] <= '04-15') {
                     $april[] = $resign_record[$i];
                 }
 
-                if ($resign_record[$i] >= '05-16' && $resign_record[$i] <= '06-15') {
+                if ($resign_record[$i] >= '04-16' && $resign_record[$i] <= '05-15') {
                     $mei[] = $resign_record[$i];
                 }
 
-                if ($resign_record[$i] >= '06-16' && $resign_record[$i] <= '07-15') {
+                if ($resign_record[$i] >= '05-16' && $resign_record[$i] <= '06-15') {
                     $juni[] = $resign_record[$i];
                 }
 
-                if ($resign_record[$i] >= '07-16' && $resign_record[$i] <= '08-15') {
+                if ($resign_record[$i] >= '06-16' && $resign_record[$i] <= '07-15') {
                     $juli[] = $resign_record[$i];
                 }
 
-                if ($resign_record[$i] >= '08-16' && $resign_record[$i] <= '09-15') {
+                if ($resign_record[$i] >= '07-16' && $resign_record[$i] <= '08-15') {
                     $agust[] = $resign_record[$i];
                 }
 
-                if ($resign_record[$i] >= '09-16' && $resign_record[$i] <= '10-15') {
+                if ($resign_record[$i] >= '08-16' && $resign_record[$i] <= '09-15') {
                     $sept[] = $resign_record[$i];
                 }
 
-                if ($resign_record[$i] >= '10-16' && $resign_record[$i] <= '11-15') {
+                if ($resign_record[$i] >= '09-16' && $resign_record[$i] <= '10-15') {
                     $okt[] = $resign_record[$i];
                 }
 
-                if ($resign_record[$i] >= '11-16' && $resign_record[$i] <= '12-15') {
+                if ($resign_record[$i] >= '10-16' && $resign_record[$i] <= '11-15') {
                     $nov[] = $resign_record[$i];
                 }
 
-                if ($resign_record[$i] >= '12-15' && $resign_record[$i] <= '01-15' && $tahun_sekarang == $validation1[$i]) {
+                if ($resign_record[$i] >= '11-15' && $resign_record[$i] <= '12-15' && $tahun_sekarang == $validation1[$i]) {
                     $dec[] = $resign_record[$i];
                 }
             endif;

@@ -219,11 +219,11 @@
                                         <select name="kecamatan" class="form-select" id="kecamatan_id"></select>
                                     </div>
                                 </div>
-                                <button class="btn btn-sm btn-light text-primary" type="submit">
+                                <button class="btn btn-light float-end mx-2 text-primary" type="submit">
                                     <i class="me-1" data-feather="search"></i>
                                     Cari
                                 </button>
-                                <a class="btn btn-sm btn-light text-primary" href="/dashboard">
+                                <a class="btn btn-light float-end text-primary" href="/dashboard">
                                     <i class="me-1" data-feather="trash"></i>
                                     Bersihkan
                                 </a>
@@ -322,7 +322,7 @@
                                         <div class="avatar avatar-xl me-3 bg-gray-200"><img class="avatar-img img-fluid" src="assets/img/illustrations/profiles/profile-1.png" alt="" /></div>
                                         <div class="d-flex flex-column fw-bold">
                                             <a class="text-dark line-height-normal mb-1" href="#!">{{ getName($d->nik_karyawan) ?? '' }}</a>
-                                            <div class="small text-muted line-height-normal">{{ date('Y-m-d H:i:s', strtotime($d->terakhir_login)) }}</div>
+                                            <div class="small text-muted line-height-normal">{{ tgl_indo(date('Y-m-d', strtotime($d->terakhir_login))) }} pukul {{ date('H:i', strtotime($d->terakhir_login)) }}</div>
                                         </div>
                                     </div>
                                 </div>
