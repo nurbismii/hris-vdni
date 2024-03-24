@@ -71,7 +71,7 @@
 								<i class="me-1" data-feather="search"></i>
 								Cari
 							</button>
-							<a class="btn btn-primary text-white" href="/wilayah">
+							<a class="btn btn-danger text-white" href="/wilayah">
 								<i class="me-1" data-feather="trash"></i>
 								Bersihkan
 							</a>
