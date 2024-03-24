@@ -11,32 +11,32 @@
                 <div class="mt-4">
                     <x-message />
                 </div>
-                <div class="card-opacation shadow-lg border-0 rounded-lg mt-5">
+                <div class="card shadow-lg border-0 rounded-lg mt-5">
                     <div class="card-header text-center">
-                        <h3 class="fw-light my-2 text-light">Masuk</h3>
+                        <h3 class="fw-light my-2">Masuk</h3>
                         <img src="{{ asset('assets/img/backgrounds/icon.png') }}" class="text-center" style="height: 55px;" alt="">
                     </div>
                     <div class="card-body">
                         <form action="{{ route('login') }}" method="POST">
                             @csrf
                             <div class="mb-3">
-                                <label class="small mb-1 text-light">Email</label>
+                                <label class="small mb-1">Email</label>
                                 <input class="form-control-login @error('email') is-invalid @enderror" type="email" name="email" placeholder="Email" />
                             </div>
                             <div class="mb-3">
-                                <label class="small mb-1 text-light">Kata sandi</label>
+                                <label class="small mb-1">Kata sandi</label>
                                 <input class="form-control-login @error('password') is-invalid @enderror" type="password" name="password" placeholder="Kata Sandi" />
                             </div>
                             <div class="d-flex align-items-center justify-content-between mt-2 mb-3">
-                                <a class="small text-light" href="#">Lupa kata sandi ?</a>
+                                <a class="small" href="#">Lupa kata sandi ?</a>
                             </div>
                             <div class="text-center d-grid">
-                                <button type="submit" class="btn btn-success text-light">Masuk</button>
+                                <button type="submit" class="btn btn-success">Masuk</button>
                             </div>
                         </form>
                     </div>
                     <div class="card-footer text-center">
-                        <div class="small text-light">Karyawan baru? <a class="text-primary" href="{{ route('register') }}">Daftar sekarang!</a></div>
+                        <div class="small">Karyawan baru ? <a class="text-primary bold" href="{{ route('register') }}">Daftar sekarang!</a></div>
                     </div>
                 </div>
             </div>

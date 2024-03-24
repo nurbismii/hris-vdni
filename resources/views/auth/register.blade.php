@@ -12,49 +12,49 @@
                 <div class="mt-4">
                     <x-message />
                 </div>
-                <div class="card-opacation shadow-lg border-0 rounded-lg mt-5">
+                <div class="card shadow-lg border-0 rounded-lg mt-5">
                     <div class="card-header text-center">
-                        <h3 class="fw-light my-2 text-light">Pendaftaran akun</h3>
+                        <h3 class="fw-bold my-2">Pendaftaran akun</h3>
                         <img src="{{ asset('assets/img/backgrounds/icon.png') }}" class="text-center" style="height: 55px;" alt="">
                     </div>
                     <div class="card-body">
                         <form action="{{ route('register.employee') }}" method="POST">
                             @csrf
                             <div class="mb-3">
-                                <label class="small mb-1 text-light">Nomor Induk Karyawan</label>
+                                <label class="small mb-1">Nomor Induk Karyawan</label>
                                 <input class="form-control-login @error('employee_id') is-invalid @enderror" type="number" name="employee_id" placeholder="Masukkan NIK" />
                                 @error('employee_id')
                                 <span class="invalid-feedback">{{ $message }}</span>
                                 @enderror
                             </div>
                             <div class="mb-3">
-                                <label class="small mb-1 text-light">Email</label>
+                                <label class="small mb-1">Email</label>
                                 <input class="form-control-login @error('email') is-invalid @enderror" type="email" name="email" placeholder="contoh@gmail.com" />
                                 @error('email')
                                 <span class="invalid-feedback">{{ $message }}</span>
                                 @enderror
                             </div>
                             <div class="mb-3">
-                                <label class="small mb-1 text-light">Kata sandi</label>
+                                <label class="small mb-1">Kata sandi</label>
                                 <input class="form-control-login @error('password') is-invalid @enderror" type="password" name="password" placeholder="******" />
                                 @error('password')
                                 <span class="invalid-feedback">{{ $message }}</span>
                                 @enderror
                             </div>
                             <div class="mb-3">
-                                <label class="small mb-1 text-light">Konfirmasi kata sandi</label>
+                                <label class="small mb-1">Konfirmasi kata sandi</label>
                                 <input class="form-control-login @error('password_confirm') is-invalid @enderror" name="password_confirm" type="password" placeholder="******" />
                                 @error('password_confirm')
                                 <span class="invalid-feedback">{{ $message }}</span>
                                 @enderror
                             </div>
                             <div class="text-center d-grid">
-                                <button type="submit" class="btn btn-success text-light">Kirim</button>
+                                <button type="submit" class="btn btn-success">Kirim</button>
                             </div>
                         </form>
                     </div>
                     <div class="card-footer text-center">
-                        <div class="small text-light"><a class="text-light" href="/login">Sudah punya akun! Masuk</a></div>
+                        <div class="small">Sudah punya akun! <a class="text-primary bold" href="/login"> Masuk</a></div>
                     </div>
                 </div>
             </div>
