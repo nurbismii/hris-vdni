@@ -13,6 +13,7 @@ use App\Models\salary;
 use App\Models\User;
 use PDF;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class AccountController extends Controller
 {
@@ -28,16 +29,26 @@ class AccountController extends Controller
         return view('account.profile', compact('datas', 'divisi'));
     }
 
-    public function billing()
+    public function slipgaji()
     {
+        $check_exist = DB::connection('epayslip')->table('data_karyawans')->select('id', 'nik', 'nama')
+            ->where('nik', Auth::user()->nik_karyawan)->first();
+
+        if (!$check_exist) {
+            return back()->with('info', 'Informasi yang kamu minta belum tersedia');
+        }
+
+        $gaji_karyawan = DB::connection('epayslip')->table('komponen_gajis')->select('*')
+            ->where('data_karyawan_id', $check_exist->id)->latest()->first();
+
+        $datas = DB::connection('epayslip')->table('komponen_gajis')->select('*')
+            ->orderBy('periode', 'DESC')
+            ->where('data_karyawan_id', $check_exist->id)->limit(6)->get();
+
+        $contract = Contract::where('nik', Auth::user()->nik_karyawan)->latest()->first('tanggal_berakhir_kontrak');
+
+        return view('account.billing', compact('datas', 'gaji_karyawan', 'contract'));
         try {
-            $datas = salary::orderBy('akhir_periode', 'DESC')->where('employee_id', Auth::user()->nik_karyawan)->limit(6)->get();
-            $gaji_karyawan = salary::where('employee_id', Auth::user()->nik_karyawan)->first();
-            if (!$gaji_karyawan) {
-                return back()->with('info', 'Informasi yang kamu minta belum tersedia');
-            }
-            $contract = Contract::where('nik', Auth::user()->nik_karyawan)->latest()->first('tanggal_berakhir_kontrak');
-            return view('account.billing', compact('datas', 'gaji_karyawan', 'contract'));
         } catch (\Throwable $e) {
             return back()->with('error', 'Terjadi kesalaham');
         }
@@ -45,13 +56,22 @@ class AccountController extends Controller
 
     public function show($id)
     {
-        $data = salary::where('id', $id)->first();
-        $gaji_karyawan = GajiKaryawan::where('nik_karyawan', $data->employee_id)->first();
-        $total_deduction = $data->jht + $data->jp + $data->bpjs_kesehatan + $data->deduction_unpaid_leave + $data->deduction_php21;
-        $total_diterima = ($data->gaji_pokok + $data->tunjangan_umum + $data->tunjangan_pengawas + $data->tunjangan_transport + $data->tunjangan_mk + $data->tunjangan_koefisien + $data->rapel + $data->insentif + $data->tunjangan_lap);
+        $check_exist = DB::connection('epayslip')->table('data_karyawans')->select('id', 'nik', 'nama')
+            ->where('nik', Auth::user()->nik_karyawan)->first();
+
+        $data = DB::connection('epayslip')->table('komponen_gajis')->select('*')
+            ->where('data_karyawan_id', $check_exist->id)
+            ->where('id', $id)
+            ->first();
+
+        $gaji_karyawan = DB::connection('epayslip')->table('komponen_gajis')->select('*')
+            ->where('data_karyawan_id', $check_exist->id)->latest()->first();
+
+        $total_deduction = $data->jht + $data->jp + $data->pot_bpjskes + $data->unpaid_leave + $data->deduction_pph21;
+        $total_diterima = ($data->gaji_pokok + $data->tunj_um + $data->tunj_pengawas + $data->tunj_transport + $data->tunj_mk + $data->tunj_koefisien + $data->rapel + $data->insentif + $data->tunj_lap);
         $gaji_bersih = ($total_diterima - $total_deduction);
 
-        return view('account.invoice', compact('data', 'total_diterima', 'total_deduction', 'gaji_bersih', 'gaji_karyawan'));
+        return view('account.invoice', compact('data', 'check_exist', 'total_diterima', 'total_deduction', 'gaji_bersih', 'gaji_karyawan'));
     }
 
     public function update(AccountUpdateRequest $request, $id)
@@ -86,13 +106,22 @@ class AccountController extends Controller
 
     public function cetak_pdf($id)
     {
-        $data = salary::where('id', $id)->first();
-        $karyawan = employee::where('nik', $data->employee_id)->first();
-        $total_deduction = $data->jht + $data->jp + $data->bpjs_kesehatan + $data->deduction_unpaid_leave + $data->deduction_php21;
-        $total_diterima = ($data->gaji_pokok + $data->tunjangan_umum + $data->tunjangan_pengawas + $data->tunjangan_transport + $data->tunjangan_mk + $data->tunjangan_koefisien + $data->rapel + $data->insentif + $data->tunjangan_lap);
+        $check_exist = DB::connection('epayslip')->table('data_karyawans')->select('id', 'nik', 'nama')
+            ->where('nik', Auth::user()->nik_karyawan)->first();
+
+        $data = DB::connection('epayslip')->table('komponen_gajis')->select('*')
+            ->where('data_karyawan_id', $check_exist->id)
+            ->where('id', $id)
+            ->first();
+
+        $gaji_karyawan = DB::connection('epayslip')->table('komponen_gajis')->select('*')
+            ->where('data_karyawan_id', $check_exist->id)->latest()->first();
+
+        $total_deduction = $data->jht + $data->jp + $data->pot_bpjskes + $data->unpaid_leave + $data->deduction_pph21;
+        $total_diterima = ($data->gaji_pokok + $data->tunj_um + $data->tunj_pengawas + $data->tunj_transport + $data->tunj_mk + $data->tunj_koefisien + $data->rapel + $data->insentif + $data->tunj_lap);
         $gaji_bersih = ($total_diterima - $total_deduction);
 
-        $pdf = PDF::loadView('account.invoice_pdf', compact('data', 'gaji_bersih', 'total_diterima', 'total_deduction', 'karyawan'))->setPaper('a4', 'landscape');
+        $pdf = PDF::loadView('account.invoice_pdf', compact('data', 'check_exist', 'gaji_bersih', 'total_diterima', 'total_deduction'))->setPaper('a4', 'landscape');
         return $pdf->stream();
     }
 

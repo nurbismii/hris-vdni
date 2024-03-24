@@ -20,7 +20,7 @@
           <div class="col-auto mb-3">
             <h1 class="page-header-title">
               <div class="page-header-icon"><i data-feather="codepen"></i></div>
-              Data Departemen
+              Data perusahaan
             </h1>
           </div>
           <div class="col-12 col-xl-auto mb-3">

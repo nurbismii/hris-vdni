@@ -22,7 +22,7 @@
                     <div class="col-auto mb-3">
                         <h1 class="page-header-title">
                             <div class="page-header-icon"><i data-feather="archive"></i></div>
-                            Data Cuti, Paid leave dan Unpaid leave
+                            Data cuti tahunan dan izin
                         </h1>
                     </div>
                     <div class="col-12 col-xl-auto mb-3">
@@ -32,7 +32,7 @@
                         </a>
                         <a class="btn btn-sm btn-light text-primary" href="{{ route('import.pengajuan') }}">
                             <i class="me-1" data-feather="upload-cloud"></i>
-                            Bulk
+                            Bulk upload
                         </a>
                     </div>
                 </div>

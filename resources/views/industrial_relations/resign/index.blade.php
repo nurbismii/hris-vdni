@@ -1,4 +1,4 @@
-<x-app-layout title="Data Resign">
+<x-app-layout title="Data pengunduran diri">
 	@push('styles')
 	<link href="{{ asset('css/styles.css')}}" rel="stylesheet" />
 	<link rel="icon" type="image/x-icon" href="{{ asset('assets/img/favicon.png')}}" />
@@ -21,13 +21,13 @@
 					<div class="col-auto mb-3">
 						<h1 class="page-header-title">
 							<div class="page-header-icon"><i data-feather="users"></i></div>
-							Data resign
+							Data pengunduran diri
 						</h1>
 					</div>
 					<div class="col-12 col-xl-auto mb-3">
 						<a class="btn btn-sm btn-light text-primary" href="/industrial-relations/resign/import">
 							<i class="me-1" data-feather="upload-cloud"></i>
-							Bulk
+							Bulk upload
 						</a>
 					</div>
 				</div>
@@ -44,7 +44,7 @@
 							<div class="row gx-3 mb-3">
 								<div class="col-md-12 mb-3">
 									<select name="tipe" class="form-select" id="tipe">
-										<option value="" selected>- Pilih tipe resign -</option>
+										<option value="" selected>- Pilih tipe pengunduran diri -</option>
 										<option value="RESIGN SESUAI PROSEDUR">RESIGN SESUAI PROSEDUR</option>
 										<option value="RESIGN TIDAK SESUAI PROSEDUR">RESIGN TIDAK SESUAI PROSEDUR</option>
 										<option value="PHK">PHK</option>

@@ -25,33 +25,37 @@ class CutiIzinController extends Controller
 
     public function serverSidePengajuan(Request $request)
     {
-        $data = CutiIzin::leftjoin('employees', 'employees.nik', '=', 'cuti_izin.nik_karyawan')
-            ->orderBy('cuti_izin.created_at', 'desc')
-            ->select('cuti_izin.*', 'employees.nama_karyawan');
-        return DataTables::of($data)
-            ->addIndexColumn()
-            ->addColumn('action', function ($data) {
-                return view('comben.pengajuan._action', [
-                    'data' => $data,
-                    'url_foto' => 'izin-dibayarkan/' . $data->nik_karyawan . '/' . $data->foto,
-                    'url_delete' => route('pengajuan-karyawan/destroy', $data->id),
-                    'url_diterima' => route('update.statuspengajuan.diterima', $data->id),
-                    'url_ditolak' => route('update.statuspengajuan.ditolak', $data->id)
-                ]);
-            })->filter(function ($instance) use ($request) {
-                if ($request->tipe == 'cuti' || $request->tipe == 'izin dibayarkan' || $request->tipe == 'izin tidak dibayarkan') {
-                    $instance->where('tipe', $request->get('tipe'));
-                }
-                if (!empty($request->get('search'))) {
-                    $instance->where(function ($w) use ($request) {
-                        $search = $request->get('search');
-                        $w->orWhere('nik_karyawan', 'LIKE', "%$search%")
-                            ->orWhere('nama_karyawan', 'LIKE', "%$search%");
-                    });
-                }
-            })
-            ->rawColumns(['action'])
-            ->make(true);
+        try {
+            $data = CutiIzin::leftjoin('employees', 'employees.nik', '=', 'cuti_izin.nik_karyawan')
+                ->orderBy('cuti_izin.created_at', 'desc')
+                ->select('cuti_izin.*', 'employees.nama_karyawan');
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($data) {
+                    return view('comben.pengajuan._action', [
+                        'data' => $data,
+                        'url_foto' => 'izin-dibayarkan/' . $data->nik_karyawan . '/' . $data->foto,
+                        'url_delete' => route('pengajuan-karyawan/destroy', $data->id),
+                        'url_diterima' => route('update.statuspengajuan.diterima', $data->id),
+                        'url_ditolak' => route('update.statuspengajuan.ditolak', $data->id)
+                    ]);
+                })->filter(function ($instance) use ($request) {
+                    if ($request->tipe == 'cuti' || $request->tipe == 'izin dibayarkan' || $request->tipe == 'izin tidak dibayarkan') {
+                        $instance->where('tipe', $request->get('tipe'));
+                    }
+                    if (!empty($request->get('search'))) {
+                        $instance->where(function ($w) use ($request) {
+                            $search = $request->get('search');
+                            $w->orWhere('nik_karyawan', 'LIKE', "%$search%")
+                                ->orWhere('nama_karyawan', 'LIKE', "%$search%");
+                        });
+                    }
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        } catch (\Throwable $e) {
+            return back()->with('success', 'Berkas yang dilampirkan tidak tersedia');
+        }
     }
 
     public function cutiIzin()

@@ -88,7 +88,7 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
 
     Route::group(['prefix' => 'account'], function () {
         route::get('/profile', [AccountController::class, 'profile']);
-        route::get('/information', [AccountController::class, 'billing']);
+        route::get('/slip-gaji', [AccountController::class, 'slipgaji']);
         route::get('/pengajuan', [AccountController::class, 'pengajuan']);
         route::get('/invoice/{id}', [AccountController::class, 'show'])->name('invoice');
         route::patch('/update/{id}', [AccountController::class, 'update'])->name('account.update');

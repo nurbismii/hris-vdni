@@ -20,7 +20,7 @@
                     <div class="col-auto mt-4">
                         <h3 class="page-header-title">
                             <div class="page-header-icon"><i data-feather="file"></i></div>
-                            Bulk
+                            Bulk upload
                         </h3>
                     </div>
                 </div>
@@ -34,7 +34,7 @@
             <div class="card-body">
                 <!-- Button with lift -->
                 <a class="btn btn-indigo  btn-sm lift mb-3" href="{{ route('download.example') }}">
-                    <i>Download Template Karyawan</i>
+                    <i>Unduh Template Karyawan</i>
                 </a>
                 <p class="col-12">
                     Pertama Download Template yang Sediakan Jika Belum Memiliki Template Untuk Import Karyawan.
@@ -46,21 +46,21 @@
                 <div class="timeline timeline-sm">
                     <div class="timeline-item">
                         <div class="timeline-item-marker">
-                            <div class="timeline-item-marker-text">First</div>
+                            <div class="timeline-item-marker-text">Pertama</div>
                             <div class="timeline-item-marker-indicator"><i data-feather="check"></i></div>
                         </div>
                         <div class="timeline-item-content">Format Tanggal Yang Digunakan (Format Tanggal Umum)</div>
                     </div>
                     <div class="timeline-item">
                         <div class="timeline-item-marker">
-                            <div class="timeline-item-marker-text">Second.</div>
+                            <div class="timeline-item-marker-text">Kedua</div>
                             <div class="timeline-item-marker-indicator"><i data-feather="check"></i></div>
                         </div>
                         <div class="timeline-item-content">Nama Perusahaan harus VDNI atau VDNIP</div>
                     </div>
                     <div class="timeline-item mb-3">
                         <div class="timeline-item-marker">
-                            <div class="timeline-item-marker-text">Third.</div>
+                            <div class="timeline-item-marker-text">Ketiga</div>
                             <div class="timeline-item-marker-indicator"><i data-feather="check"></i></div>
                         </div>
                         <div class="timeline-item-content">Jangan Merubah Template File Yang Telah Didownload..</div>
@@ -73,7 +73,7 @@
                             <input class="form-control" name="file" type="file" id="formFile" required>
                         </div>
                         <div class="mb-3 col-3">
-                            <button class="btn btn-primary" type="submit">Send file</button>
+                            <button class="btn btn-primary" type="submit">Upload file</button>
                         </div>
                     </div>
                 </form>

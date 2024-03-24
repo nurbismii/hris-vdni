@@ -1,5 +1,5 @@
 <x-app-layout title="Payslip">
-	
+
 
 	@push('styles')
 	<link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
@@ -68,7 +68,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-lg-12 mb-3">
+			<!-- <div class="col-lg-12 mb-3">
 				<form action="/roster/daftar-pengingat" method="get">
 					@csrf
 					<div class="card">
@@ -88,7 +88,7 @@
 						</div>
 					</div>
 				</form>
-			</div>
+			</div> -->
 			@foreach($datas as $data)
 			<div class="col-xl-4 mb-2">
 				<a class="card card-angles lift-sm h-100" href="{{ route('invoice', $data->id) }}" role="button">

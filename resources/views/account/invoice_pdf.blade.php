@@ -23,11 +23,6 @@
             font-family: Firefly Sung, DejaVu Sans, sans-serif;
             font-size: 11px;
         }
-
-        th,
-        td {
-            border: 1px solid;
-        }
     </style>
 </head>
 
@@ -35,200 +30,264 @@
     <div id="layoutSidenav">
         <main>
             <!-- Main page content-->
-            <div class="container-xl px-1">
+            <div class="container-xl px-4 mt-4">
                 <!-- Invoice-->
                 <div class="card invoice">
-                    <div class="text-center">
-                        <h4 class="fw-bold">PT VDNI</h4>
-                        <img src="{{ public_path('assets/img/backgrounds/vdni-ikon.png') }}" style="height: 30px;" alt=""><br>
-                        <span class="fw-normal">SLIP GAJI </span> <br>
-                        <span class="fw-normal"> Periode ({{ date('F Y', strtotime($data->mulai_periode)) }} - {{ date('F Y', strtotime($data->akhir_periode)) }})</span>
-                    </div>
-                    <div class="card-body p-4 p-md-5">
-                        <!-- Invoice table-->
+                    <div class="card-body p-2 p-md-4">
+                        <div class="text-center lh-1 mb-2">
+                            <h4 class="fw-bold">PT VDNI</h4> <br>
+                            <img src="{{ public_path('assets/img/backgrounds/vdni-ikon.png') }}" style="height: 50px;" alt=""><br> <br>
+                            <span class="fw-normal mb-2"> Slip gaji </span> <br> <br>
+                            <span class="fw-normal"> Periode ({{ date('F Y', strtotime($data->mulai_periode)) }} - {{ date('F Y', strtotime($data->akhir_periode)) }})</span>
+                        </div>
                         <div class="table-responsive">
-                            <table class="table table-borderless mb-3">
+                            <table class="table table-borderless mb-0">
                                 <tbody>
                                     <tr>
-                                        <td scope="row">NIK Karyawan</td>
-                                        <td>{{ $data->employee_id }}</td>
-                                        <td>Total Hari Kerja</td>
-                                        <td>{{ $data->jumlah_hari_kerja }}</td>
+                                        <th scope="row">Nomor Induk Karyawan</th>
+                                        <td>{{ $check_exist->nik }}</td>
+                                        <td>Jumlah hari kerja</td>
+                                        <td>{{ $data->jml_hari_kerja }}</td>
                                     </tr>
                                     <tr>
-                                        <td scope="row">Nama Karyawan</td>
-                                        <td>{{ $karyawan->nama_karyawan }}</td>
+                                        <th scope="row">Nama Karyawan</th>
+                                        <td>{{ Auth::user()->employee->nama_karyawan }}</td>
                                         <td>Status Gaji</td>
                                         <td>{{ ucfirst($data->status_gaji) }}</td>
                                     </tr>
                                     <tr>
-                                        <td scope="row">Departemen</td>
-                                        <td>{{ $karyawan->divisi->departemen->departemen }}</td>
+                                        <th scope="row">Departemen</th>
+                                        <td>{{ Auth::user()->employee->divisi->departemen->departemen }}</td>
                                         <td>Divisi</td>
-                                        <td>{{ $karyawan->divisi->nama_divisi }}</td>
+                                        <td>{{ ucfirst(Auth::user()->employee->divisi->nama_divisi) }}</td>
                                     </tr>
                                     <tr>
-                                        <td scope="row">Posisi</td>
+                                        <th scope="row">Posisi</th>
                                         <td>{{ $data->posisi }}</td>
-                                        <td>Hour Machine</td>
-                                        <td>{{ $data->jumlah_hour_machine }}</td>
+                                        <td>Overtime</td>
+                                        <td>{{ $data->ot }}</td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
-                        <div class="table-responsive">
-                            <table class="table mb-0">
-                                <thead class="border-bottom">
-                                    <tr class="small text-uppercase text-muted">
-                                        <th scope="col">Detail</th>
-                                        <th class="text-end" scope="col">Jumlah</th>
-                                        <th class="text-end" scope="col">Deduction</th>
-                                        <th class="text-end" scope="col">Jumlah</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr class="">
+                        <!-- Invoice table 1-->
+                        <div class="row">
+                            <div class="table-responsive col-lg-6">
+                                <table class="table table-borderless mb-0">
+                                    <thead class="border-bottom">
+                                        <tr class="small text-uppercase text-muted">
+                                            <th scope="col">Detail gaji</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
                                         @if($data->gaji_pokok > 0)
-                                        <td>
-                                            <div class="">Gaji pokok</div>
-                                        </td>
-                                        <td class="text-end">Rp{{ number_format($data->gaji_pokok, 0, ",", ".") }}</td>
-                                        @else
-                                        <td></td>
-                                        <td></td>
+                                        <tr class="border-bottom">
+                                            <td>
+                                                <div class="fw-bold">Gaji Pokok</div>
+                                            </td>
+                                            <td class="text-end fw-bold">:</td>
+                                            <td class="text-end fw-bold">Rp.</td>
+                                            <td class="text-end fw-bold">{{ number_format($data->gaji_pokok, 0, ",", ".") }}</td>
+                                        </tr>
                                         @endif
+                                        @if($data->tunj_um > 0)
+                                        <tr class="border-bottom">
+                                            <td>
+                                                <div class="fw-bold">Tunj. makan</div>
+                                            </td>
+                                            <td class="text-end fw-bold">:</td>
+                                            <td class="text-end fw-bold">Rp.</td>
+                                            <td class="text-end fw-bold">{{ number_format($data->tunj_um, 0, ",", ".") }}</td>
+                                        </tr>
+                                        @endif
+                                        @if($data->tunj_pengawas > 0)
+                                        <tr class="border-bottom">
+                                            <td>
+                                                <div class="fw-bold">Tunj. pengawas</div>
+                                            </td>
+                                            <td class="text-end fw-bold">:</td>
+                                            <td class="text-end fw-bold">Rp.</td>
+                                            <td class="text-end fw-bold">{{ number_format($data->tunj_pengawas) }}</td>
+                                        </tr>
+                                        @endif
+                                        @if($data->tunj_transport > 0)
+                                        <tr class="border-bottom">
+                                            <td>
+                                                <div class="fw-bold">Tunj. Transportasi</div>
+                                            </td>
+                                            <td class="text-end fw-bold">:</td>
+                                            <td class="text-end fw-bold">Rp.</td>
+                                            <td class="text-end fw-bold">{{ number_format($data->tunj_transport) }}</td>
+                                        </tr>
+                                        @endif
+                                        @if($data->tunj_mk > 0)
+                                        <tr class="border-bottom">
+                                            <td>
+                                                <div class="fw-bold">Tunj. masa kerja</div>
+                                            </td>
+                                            <td class="text-end fw-bold">:</td>
+                                            <td class="text-end fw-bold">Rp.</td>
+                                            <td class="text-end fw-bold">{{ number_format($data->tunj_mk) }}</td>
+                                        </tr>
+                                        @endif
+                                        @if($data->tunj_koefisien > 0)
+                                        <tr class="border-bottom">
+                                            <td>
+                                                <div class="fw-bold">Tunj. koefisien</div>
+                                            </td>
+                                            <td class="text-end fw-bold">:</td>
+                                            <td class="text-end fw-bold">Rp.</td>
+                                            <td class="text-end fw-bold">{{ number_format($data->tunj_koefisien) }}</td>
+                                        </tr>
+                                        @endif
+                                        @if($data->ot > 0)
+                                        <tr class="border-bottom">
+                                            <td>
+                                                <div class="fw-bold">Lembur</div>
+                                            </td>
+                                            <td class="text-end fw-bold">:</td>
+                                            <td class="text-end fw-bold">Rp.</td>
+                                            <td class="text-end fw-bold">{{ number_format($data->ot) }}</td>
+                                        </tr>
+                                        @endif
+                                        @if($data->jml_hour_machine > 0)
+                                        <tr class="border-bottom">
+                                            <td>
+                                                <div class="fw-bold">Hour Machine</div>
+                                            </td>
+                                            <td class="text-end fw-bold">:</td>
+                                            <td class="text-end fw-bold">Rp.</td>
+                                            <td class="text-end fw-bold">{{ number_format($data->jml_hour_machine) }}</td>
+                                        </tr>
+                                        @endif
+                                        @if($data->rapel > 0)
+                                        <tr class="border-bottom">
+                                            <td>
+                                                <div class="fw-bold">Rapel</div>
+                                            </td>
+                                            <td class="text-end fw-bold">:</td>
+                                            <td class="text-end fw-bold">Rp.</td>
+                                            <td class="text-end fw-bold">{{ number_format($data->rapel) }}</td>
+                                        </tr>
+                                        @endif
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- Invoice table 2-->
+                            <div class="table-responsive col-lg-6">
+                                <table class="table table-borderless mb-0">
+                                    <thead class="border-bottom">
+                                        <tr class="small text-uppercase text-muted">
+                                            <th scope="col">Deductions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
                                         @if($data->jht > 0)
-                                        <td class="text-end ">BPJS TK JHT</td>
-                                        <td class="text-end ">Rp{{ number_format($data->jht, 0, ",", ".")  }}</td>
-                                        @endif
-                                    </tr>
-                                    <!-- Invoice item 2-->
-                                    <tr class="">
-                                        @if($data->tunjangan_umum > 0)
-                                        <td>
-                                            <div class="">Tunj. Uang Makan</div>
-                                        </td>
-                                        <td class="text-end ">Rp{{ number_format($data->tunjangan_umum, 0, ",", ".")  }}</td>
-                                        @else
-                                        <td></td>
-                                        <td></td>
+                                        <tr class="border-bottom">
+                                            <td>
+                                                <div class="fw-bold">BPJS TK JHT</div>
+                                            </td>
+                                            <td class="text-end fw-bold">:</td>
+                                            <td class="text-end fw-bold">Rp.</td>
+                                            <td class="text-end fw-bold">{{ number_format($data->jht, 0, ",", ".") }}</td>
+                                        </tr>
                                         @endif
                                         @if($data->jp > 0)
-                                        <td class="text-end ">BPJS TK JP</td>
-                                        <td class="text-end ">Rp{{ number_format($data->jp, 0, ",", ".")  }}</td>
+                                        <tr class="border-bottom">
+                                            <td>
+                                                <div class="fw-bold">BPJS TK JP</div>
+                                            </td>
+                                            <td class="text-end fw-bold">:</td>
+                                            <td class="text-end fw-bold">Rp.</td>
+                                            <td class="text-end fw-bold">{{ number_format($data->jp, 0, ",", ".") }}</td>
+                                        </tr>
                                         @endif
-                                    </tr>
-                                    <!-- Invoice item 3-->
-                                    <tr class="">
-                                        @if($data->tunjangan_pengawas > 0)
-                                        <td>
-                                            <div class="">Tunj. Pengawas</div>
-                                        </td>
-                                        <td class="text-end ">Rp{{ number_format($data->tunjangan_pengawas, 0, ",", ".")  }}</td>
-                                        @else
-                                        <td></td>
-                                        <td></td>
-                                        @endif
-                                        @if($data->bpjs_kesehatan > 0)
-                                        <td class="text-end ">BPSJ Kesehatan</td>
-                                        <td class="text-end ">Rp{{ number_format($data->bpjs_kesehatan, 0, ",", ".")  }}</td>
-                                        @endif
-                                    </tr>
-                                    <!-- Invoice item 4-->
-                                    <tr class="">
-                                        @if($data->tunjungan_transportasi > 0)
-                                        <td>
-                                            <div class="">Tunj. Transportasi</div>
-                                        </td>
-                                        <td class="text-end ">Rp{{ number_format($data->tunjungan_transportasi, 0, ",", ".")  }}</td>
-                                        @else
-                                        <td></td>
-                                        <td></td>
-                                        @endif
-                                        @if($data->deduction_unpaid_leave > 0)
-                                        <td class="text-end ">Deduction Unpaid Leave</td>
-                                        <td class="text-end ">Rp{{ number_format($data->deduction_unpaid_leave, 0, ",", ".")  }}</td>
-                                        @endif
-                                    </tr>
-                                    <tr class="">
-                                        @if($data->tunjugan_koefisien > 0)
-                                        <td>
-                                            <div class="">Tunj. Koefisien</div>
-                                        </td>
-                                        <td class="text-end ">Rp{{ number_format($data->tunjugan_koefisien, 0, ",", ".")  }}</td>
-                                        @else
-                                        <td></td>
-                                        <td></td>
-                                        @endif
-                                        @if($data->deduction_unpaid_leave > 0)
-                                        <td class="text-end ">Deduction Unpaid Leave</td>
-                                        <td class="text-end ">Rp{{ number_format($data->deduction_unpaid_leave, 0, ",", ".")  }}</td>
-                                        @endif
-                                    </tr>
-                                    <tr class="">
-                                        @if($data->tunjangan_mk > 0)
-                                        <td>
-                                            <div class="">Tunj. Masa Kerja</div>
-                                        </td>
-                                        <td class="text-end ">Rp{{ number_format($data->tunjangan_mk, 0, ",", ".")  }}</td>
-                                        @else
-                                        <td></td>
-                                        <td></td>
+                                        @if($data->pot_bpjskes > 0)
+                                        <tr class="border-bottom">
+                                            <td>
+                                                <div class="fw-bold">BPJS Kesehatan</div>
+                                            </td>
+                                            <td class="text-end fw-bold">:</td>
+                                            <td class="text-end fw-bold">Rp.</td>
+                                            <td class="text-end fw-bold">{{ number_format($data->pot_bpjskes) }}</td>
+                                        </tr>
                                         @endif
                                         @if($data->deduction > 0)
-                                        <td class="text-end ">Deduction</td>
-                                        <td class="text-end ">Rp{{ number_format($data->deduction, 0, ",", ".")  }}</td>
+                                        <tr class="border-bottom">
+                                            <td>
+                                                <div class="fw-bold">Deduction Unpaid Leave</div>
+                                            </td>
+                                            <td class="text-end fw-bold">:</td>
+                                            <td class="text-end fw-bold">Rp.</td>
+                                            <td class="text-end fw-bold">{{ number_format($data->deduction) }}</td>
+                                        </tr>
                                         @endif
-                                    </tr>
-                                    <tr class="">
-                                        @if($data->ot > 0)
-                                        <td>
-                                            <div class="">Lembur</div>
-                                        </td>
-                                        <td class="text-end">Rp{{ number_format($data->ot, 0, ",", ".")  }}</td>
-                                        @else
-                                        <td></td>
-                                        <td></td>
+                                        @if($data->deduction_pph21 > 0)
+                                        <tr class="border-bottom">
+                                            <td>
+                                                <div class="fw-bold">deduction PPH 21</div>
+                                            </td>
+                                            <td class="text-end fw-bold">:</td>
+                                            <td class="text-end fw-bold">Rp.</td>
+                                            <td class="text-end fw-bold">{{ number_format($data->deduction_pph21) }}</td>
+                                        </tr>
                                         @endif
-                                        @if($data->deduction_php21 > 0)
-                                        <td class="text-end ">Deduction PPH 21</td>
-                                        <td class="text-end ">Rp{{ number_format($data->deduction_php21, 0, ",", ".")  }}</td>
+                                        @if($total_diterima > 0)
+                                        <tr>
+                                            <td class="text-end pb-0" colspan="3">
+                                                <div class="text-uppercase small fw-700 text-muted">Total diterima :</div>
+                                            </td>
+                                            <td class="text-end pb-0">
+                                                <div class="h5 mb-0 fw-700">Rp.{{ number_format($total_diterima, 0, ",",".") }}</div>
+                                            </td>
+                                        </tr>
                                         @endif
-                                    </tr>
-                                    <tr>
-                                        <td class="text-end pb-0" colspan="3">
-                                            <div class="text-uppercase small fw-700 text-muted">Total Penghasilan:</div>
-                                        </td>
-                                        <td class="text-end pb-0">
-                                            <div class="h5 mb-0 fw-700">Rp{{ number_format($total_diterima, 0, ",", ".") }}</div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-end pb-0" colspan="3">
-                                            <div class="text-uppercase small fw-700 text-muted">Total Deduction:</div>
-                                        </td>
-                                        <td class="text-end pb-0">
-                                            <div class="h5 mb-0 fw-700">Rp{{ number_format($total_deduction, 0 , ",", ".") }}</div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-end pb-0" colspan="3">
-                                            <div class="text-uppercase small fw-700 text-muted">Gaji Bersih:</div>
-                                        </td>
-                                        <td class="text-end pb-0">
-                                            <div class="h5 mb-0 fw-700 text-green">Rp{{ number_format($gaji_bersih, 0, ",", ".") }}</div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                                        @if($total_deduction > 0)
+                                        <tr>
+                                            <td class="text-end pb-0" colspan="3">
+                                                <div class="text-uppercase small fw-700 text-muted">Total deduction :</div>
+                                            </td>
+                                            <td class="text-end pb-0">
+                                                <div class="h5 mb-0 fw-700 text-red"> - Rp.{{ number_format($total_deduction, 0, ",",".") }}</div>
+                                            </td>
+                                        </tr>
+                                        @endif
+                                        @if($gaji_bersih > 0)
+                                        <tr>
+                                            <td class="text-end pb-0" colspan="3">
+                                                <div class="text-uppercase small fw-700 text-muted">Gaji bersih :</div>
+                                            </td>
+                                            <td class="text-end pb-0">
+                                                <div class="h5 mb-0 fw-700 text-green">Rp.{{ number_format($gaji_bersih, 0, ",", ".") }}</div>
+                                            </td>
+                                        </tr>
+                                        @endif
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="card-footer p-4 p-lg-5 border-top-0">
+                        <div class="row">
+                            <div class="col-md-6 col-lg-3 mb-4 mb-lg-0">
+                                <!-- Invoice - sent to info-->
+                                <div class="small text-muted text-uppercase fw-700 mb-2">Transfer kepada :</div>
+                                <div class="h6 mb-1">{{ Auth::user()->employee->nama_karyawan }}</div>
+                                <div class="small">PT VDNI</div>
+                                <div class="small">Puuruy, Kec. Bondoala, Kabupaten Konawe, Sulawesi Tenggara 93354</div>
+                            </div>
+                            <div class="col-md-6 col-lg-3 mb-4 mb-lg-0">
+                                <!-- Invoice - sent from info-->
+                                <div class="small text-muted text-uppercase fw-700 mb-2">Payroll Sistem : </div>
+                                <div class="h6 mb-1">PT VDNI</div>
+                                <div class="small">Payroll</div>
+                            </div>
                         </div>
                     </div>
-                    <div class="text-left">
-                        <p class="mb-5 mx-4">Mengetahui,</p> <br> <br>
-                        <p class="mt-3 mx-4">Payroll Sistem VDNi</p>
-                    </div>
-
                 </div>
+            </div>
+
         </main>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>

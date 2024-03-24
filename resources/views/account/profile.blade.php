@@ -120,13 +120,13 @@
                 <tr>
                   <td><label class="small mb-1">Status</label></td>
                   <td>:</td>
-                  <td><span class="badge bg-success">Active</span></td>
+                  <td><span class="badge bg-success">Aktif</span></td>
                 </tr>
                 @else
                 <tr>
                   <td><label class="small mb-1">Status</label></td>
                   <td>:</td>
-                  <td><span class="badge bg-danger">Non active</span></td>
+                  <td><span class="badge bg-danger">Tidak aktif</span></td>
                 </tr>
                 @endif
               </tbody>

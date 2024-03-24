@@ -21,17 +21,17 @@
 					<div class="col-auto mb-3">
 						<h1 class="page-header-title">
 							<div class="page-header-icon"><i data-feather="user"></i></div>
-							Severance Pay
+							Pesangon
 						</h1>
 					</div>
 					<div class="col-12 col-xl-auto mb-3">
 						<a class="btn btn-sm btn-light text-primary" href="{{ route('severance.create') }}">
-							<i class="me-1" data-feather="upload"></i>
-							Add
+							<i class="me-1" data-feather="plus"></i>
+							Tambah
 						</a>
 						<a class="btn btn-sm btn-light text-primary" href="{{ route('severance.import') }}">
 							<i class="me-1" data-feather="upload"></i>
-							Bulk
+							Bulk upkoad
 						</a>
 					</div>
 				</div>
@@ -45,15 +45,15 @@
 				<table id="datatablesSimple">
 					<thead>
 						<tr>
-							<th>Employee ID</th>
-							<th>Employee name</th>
-							<th>Entry date</th>
+							<th>NIK</th>
+							<th>Nama</th>
+							<th>Tanggal Masuk</th>
 							<th>Jabatan</th>
-							<th>Termination date</th>
-							<th>Severance pay</th>
+							<th>Tanggal PHK</th>
+							<th>Pesangon</th>
 							<th>Pasal</th>
-							<th>Payroll period</th>
-							<th>Action</th>
+							<th>Periode bayar</th>
+							<th>Aksi</th>
 						</tr>
 					</thead>
 					<tbody>

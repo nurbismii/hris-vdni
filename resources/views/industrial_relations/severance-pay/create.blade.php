@@ -26,7 +26,7 @@
 					<div class="col-auto mt-4">
 						<h1 class="page-header-title">
 							<div class="page-header-icon"><i data-feather="dollar-sign"></i></div>
-							Severance Pay
+							Perhitungan pesangon
 						</h1>
 					</div>
 				</div>
@@ -40,7 +40,7 @@
 			<div class="card-body">
 				<div class="row justify-content-center">
 					<div class="col-xxl-8 col-xl-8">
-						<h3 class="text-primary text-center">Form severance pay</h3>
+						<h3 class="text-primary text-center">Formulir perhitungan pesangon</h3>
 						<h5 class="card-title mb-4">
 							<img src="{{ asset('assets/img/backgrounds/vdni-ikon.png') }}" style="height: 30px;">
 						</h5>
@@ -49,17 +49,17 @@
 						</div>
 						<div class="row gx-3 mb-2">
 							<div class="col-md-6">
-								<label class="small mb-2">Employee ID</label>
+								<label class="small mb-2">NIK</label>
 								<input class="form-control nik_karyawan" name="nik_karyawan" type="text" id="nik_karyawan" readonly />
 							</div>
 							<div class="col-md-6">
-								<label class="small mb-2">Employee name</label>
+								<label class="small mb-2">Nama</label>
 								<input class="form-control" name="nama_karyawan" type="text" id="nama_karyawan" readonly />
 							</div>
 						</div>
 						<div class="row gx-3 mb-2">
 							<div class="col-md-6">
-								<label class="small mb-2">Departement</label>
+								<label class="small mb-2">Departemen</label>
 								<input class="form-control" name="departemen" type="text" id="departemen" readonly />
 							</div>
 							<div class="col-md-6">
@@ -69,41 +69,41 @@
 						</div>
 						<div class="row gx-3 mb-2">
 							<div class="col-md-6">
-								<label class="small mb-2">Position</label>
+								<label class="small mb-2">Posisi</label>
 								<input class="form-control" name="posisi" type="text" id="posisi" readonly />
 							</div>
 							<div class="col-md-6">
-								<label class="small mb-2">Job title</label>
+								<label class="small mb-2">Jabatan</label>
 								<input class="form-control" name="jabatan" type="text" id="jabatan" readonly />
 							</div>
 						</div>
 						<div class="row gx-3 mb-2">
 							<div class="col-md-6">
-								<label class="small mb-2">Entry date</label>
+								<label class="small mb-2">Tanggal masuk</label>
 								<input class="form-control" name="entry_date" type="text" id="entry_date" readonly />
 							</div>
 							<div class="col-md-6">
-								<label class="small mb-2">Employee status</label>
+								<label class="small mb-2">Status kontrak</label>
 								<input class="form-control" name="employee_status" type="text" id="status_karyawan" readonly />
 							</div>
 						</div>
 						<div class="row gx-3 mb-2">
 							<div class="col-md-6">
-								<label class="small mb-2">Province</label>
+								<label class="small mb-2">Provinsi</label>
 								<input class="form-control" name="entry_date" type="text" id="provinsi" readonly />
 							</div>
 							<div class="col-md-6">
-								<label class="small mb-2">Regency</label>
+								<label class="small mb-2">Kabupaten</label>
 								<input class="form-control" name="employee_status" type="text" id="kabupaten" readonly />
 							</div>
 						</div>
 						<div class="row gx-3 mb-2">
 							<div class="col-md-6">
-								<label class="small mb-2">District</label>
+								<label class="small mb-2">Kecamatan</label>
 								<input class="form-control" name="entry_date" type="text" id="kecamatan" readonly />
 							</div>
 							<div class="col-md-6">
-								<label class="small mb-2">Village</label>
+								<label class="small mb-2">Kelurahan</label>
 								<input class="form-control" name="employee_status" type="text" id="kelurahan" readonly />
 							</div>
 						</div>
@@ -112,14 +112,14 @@
 							<input class="form-control" name="pronvince" type="text" id="alamat" readonly />
 						</div>
 						<div class="col-md-12 mb-2">
-							<label class="small mb-2">SP Level</label>
+							<label class="small mb-2">Tingkat SP</label>
 							<input class="form-control" name="level_sp" type="text" id="level_sp" readonly />
 						</div>
 
 						<div class="mb-2">
-							<label class="small mb-1">Select pasal</label>
+							<label class="small mb-1">Pasal</label>
 							<select class="form-select" name="pasal" id="list-pasal">
-								<option value="" selected>Select pasal :</option>
+								<option value="" selected>Pilih pasal :</option>
 								@foreach($pasal as $row)
 								<option value="{{ $row->pasal }}">{{ $row->pasal }}</option>
 								@endforeach
@@ -136,8 +136,8 @@
 								<table class="table table-hover mb-0 text-align">
 									<tbody>
 										<tr>
-											<th scope="row">Severance pay</th>
-											<td>Number severance pay</td>
+											<th scope="row">Uang pesangon</th>
+											<td>Variabel pesango <sup>(*)</sup></td>
 											<td>:</td>
 											<td>
 												<div class="mb-2">
@@ -147,7 +147,7 @@
 										</tr>
 										<tr>
 											<th></th>
-											<td>Years of service</td>
+											<td>Masa kerja</td>
 											<td>:</td>
 											<td>
 												<div class="mb-2">
@@ -157,7 +157,7 @@
 										</tr>
 										<tr>
 											<th></th>
-											<td>Net salary</td>
+											<td>Gaji pokok</td>
 											<td>:</td>
 											<td>
 												<div class="mb-2">
@@ -167,7 +167,7 @@
 										</tr>
 										<tr>
 											<th></th>
-											<th>Subtotal severance pay</th>
+											<th>Subtotal pesangon</th>
 											<td>:</td>
 											<td>
 												<div class="mb-2">
@@ -176,8 +176,8 @@
 											</td>
 										</tr>
 										<tr>
-											<th scope="row">Award money</th>
-											<td>Number award money</td>
+											<th scope="row">Uang penghargaan</th>
+											<td>Variabel penghargaan <sup>(*)</sup></td>
 											<td>:</td>
 											<td>
 												<div class="mb-2">
@@ -187,7 +187,7 @@
 										</tr>
 										<tr>
 											<th></th>
-											<td>Net salary</td>
+											<td>Gaji pokok</td>
 											<td>:</td>
 											<td>
 												<div class="mb-2">
@@ -197,7 +197,7 @@
 										</tr>
 										<tr>
 											<th></th>
-											<th>Subtotal award</th>
+											<th>Subtotal penghargaan</th>
 											<td>:</td>
 											<td>
 												<div class="mb-2">
@@ -206,13 +206,13 @@
 											</td>
 										</tr>
 										<tr>
-											<th scope="row" colspan="2">Reimbursement of rights</th>
+											<th scope="row" colspan="2">Penggantian hak</th>
 											<td>:</td>
 											<td></td>
 										</tr>
 										<tr>
-											<th>a. Annual leave</th>
-											<td>Remaining leave</td>
+											<th>a. Cuti tahunan</th>
+											<td>Jumlah cuti tahunan</td>
 											<td>:</td>
 											<td>
 												<div class="mb-2">
@@ -222,7 +222,7 @@
 										</tr>
 										<tr>
 											<th></th>
-											<td>Basic salary</td>
+											<td>Gaji pokok</td>
 											<td>:</td>
 											<td>
 												<div class="mb-2">
@@ -232,7 +232,7 @@
 										</tr>
 										<tr>
 											<th></th>
-											<td>Number annual leave</td>
+											<td>Variabel cuti tahunan <sup class="text-danger">*</sup></td>
 											<td>:</td>
 											<td>
 												<div class="mb-2">
@@ -242,7 +242,7 @@
 										</tr>
 										<tr>
 											<th></th>
-											<th>Subtotal annual leave</th>
+											<th>Subtotal cuti tahunan</th>
 											<td>:</td>
 											<td>
 												<div class="mb-2">
@@ -251,16 +251,16 @@
 											</td>
 										</tr>
 										<tr>
-											<th colspan="2">b. Return cost</th>
+											<th colspan="2">b. Biaya pulang</th>
 											<td>:</td>
 											<td>
 												<div class="mb-2">
-													<input class="form-control" type="text" name="return_cost" id="return_cost521">
+													<input class="form-control" type="text" name="return_cost" id="return_cost521" required>
 												</div>
 											</td>
 										</tr>
 										<tr>
-											<th colspan="2"><i>Total severance pay</i></th>
+											<th colspan="2"><i>Total pembayaran pesangon</i></th>
 											<td>:</td>
 											<td><input class="form-control" name="total_severance" type="text" id="total_severance" readonly></td>
 										</tr>
@@ -268,12 +268,12 @@
 								</table>
 							</div>
 							<div class="mb-3">
-								<label class="small mb-1">Payroll period</label>
-								<input type="month" class="form-control" name="payroll_period" id="">
+								<label class="small mb-1">Periode pembayaran</label>
+								<input type="month" class="form-control" name="payroll_period" id="" required>
 							</div>
 							<div class="mb-3">
-								<label class="small mb-1">Termnination date</label>
-								<input type="date" class="form-control" name="termination_date" id="">
+								<label class="small mb-1">Tanggal PHK</label>
+								<input type="date" class="form-control" name="termination_date" id="" required>
 							</div>
 							<hr class="my-4" />
 							<div class="d-flex justify-content-between">
@@ -840,7 +840,7 @@
 		$('.search').select2({
 			width: 'resolve',
 			theme: 'classic',
-			placeholder: 'Search employee...',
+			placeholder: 'Cari karyawan...',
 			ajax: {
 				url: '/api/hrcorner/search-employee',
 				dataType: 'json',
