@@ -2,7 +2,7 @@
     <!-- Documentation Dropdown-->
     <li class="nav-item dropdown no-caret d-none d-md-block me-3">
         <a class="nav-link dropdown-toggle" id="navbarDropdownDocs" href="javascript:void(0);" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <div class="small text-gray-800">{{ date('d F Y') }}</div>
+            <div class="small text-gray-800">{{ tgl_indo(date('Y-m-d', strtotime(now()))) }}</div>
             <div class="mx-1"></div>
             <div id="time" class="small text-gray-800"></div>
         </a>
