@@ -47,7 +47,7 @@ class EmployeesUpdateImport implements ToCollection, WithHeadingRow, WithValidat
                 'provinsi_id' => $collect['provinsi_id'],
                 'kabupaten_id' => $collect['kabupaten_id'],
                 'kecamatan_id' => $collect['kecamatan_id'],
-                'kelurahan_id' => $collect['kelurahan_id'],
+                'kelurahan_id' => strval($collect['kelurahan_id']),
                 'alamat_ktp' => $collect['alamat_ktp'],
                 'alamat_domisili' => $collect['alamat_domisili'],
                 'rt' => $collect['rt'],
