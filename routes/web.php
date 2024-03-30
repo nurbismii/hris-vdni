@@ -20,6 +20,8 @@ use App\Http\Controllers\SeverancepayController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\WaktuAbsenController;
 use App\Http\Controllers\ApiController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\ReportSpController;
 use App\Http\Controllers\ResignController;
 use App\Http\Controllers\WilayahController;
@@ -28,6 +30,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/konfirmasi-email/{nik_karyawan}', [RegisterController::class, 'konfirmasiEmail']);
+
+Route::get('/lupa-kata-sandi', [ForgotPasswordController::class, 'index']);
+Route::post('/reset-kata-sandi', [ResetPasswordController::class, 'resetPassword'])->name('reset.password');
+Route::get('/set-kata-sandi/{id}', [ResetPasswordController::class, 'setPassword'])->name('set.password');
+Route::patch('/update/kata-sandi/{id}', [ResetPasswordController::class, 'updatePassword'])->name('update.password');
 
 Auth::routes();
 

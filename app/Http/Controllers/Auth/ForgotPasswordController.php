@@ -8,4 +8,9 @@ use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 class ForgotPasswordController extends Controller
 {
     use SendsPasswordResetEmails;
+
+    public function index()
+    {
+        return view('auth.forgot-password');
+    }
 }

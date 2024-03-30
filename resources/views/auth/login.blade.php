@@ -28,7 +28,7 @@
                                 <input class="form-control-login @error('password') is-invalid @enderror" type="password" name="password" placeholder="Kata Sandi" />
                             </div>
                             <div class="d-flex align-items-center justify-content-between mt-2 mb-3">
-                                <a class="small" href="#">Lupa kata sandi ?</a>
+                                <a class="small" href="/lupa-kata-sandi">Lupa kata sandi ?</a>
                             </div>
                             <div class="text-center d-grid">
                                 <button type="submit" class="btn btn-success">Masuk</button>
