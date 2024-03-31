@@ -9,7 +9,6 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/backgrounds/icon.png') }}" />
-    <link href="{{ asset('css/styles.css')}}" rel="stylesheet" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @stack('styles')
 </head>

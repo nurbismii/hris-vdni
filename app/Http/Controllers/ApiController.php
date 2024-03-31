@@ -8,6 +8,7 @@ use App\Models\Divisi;
 use App\Models\Pasal;
 use App\Models\employee;
 use App\Models\Kabupaten;
+use App\Models\Kecamatan;
 use App\Models\salary;
 use App\Models\Severancepay;
 use Carbon\Carbon;
@@ -252,5 +253,29 @@ class ApiController extends Controller
          })
          ->rawColumns(['action'])
          ->make(true);
+   }
+
+   public function getKabupaten(Request $request)
+   {
+      $data = Kabupaten::whereIn('id_provinsi', $request['selected'])->get();
+      $output = '';
+
+      foreach ($data as $row) {
+         $output .= '<option value="' . $row["id"] . '">' . $row["kabupaten"] . '</option>';
+      };
+
+      echo $output;
+   }
+
+   public function getKecamatan(Request $request)
+   {
+      $data = Kecamatan::whereIn('id_kabupaten', $request['selected'])->get();
+      $output = '';
+
+      foreach ($data as $row) {
+         $output .= '<option value="' . $row["id"] . '">' . $row["kecamatan"] . '</option>';
+      };
+
+      echo $output;
    }
 }

@@ -15,10 +15,10 @@ class WilayahExport implements FromCollection, WithHeadings
 
     function __construct($area, $provinsi_id, $kabupaten_id, $kecamatan_id)
     {
-        $this->area = $area;
-        $this->provinsi_id = $provinsi_id;
-        $this->kabupaten_id = $kabupaten_id;
-        $this->kecamatan_id = $kecamatan_id;
+        $this->area = explode(',', $area);
+        $this->provinsi_id = explode(',', $provinsi_id);
+        $this->kabupaten_id = explode(',', $kabupaten_id);
+        $this->kecamatan_id = explode(',', $kecamatan_id);
     }
     /**
      * @return \Illuminate\Support\Collection
@@ -26,11 +26,11 @@ class WilayahExport implements FromCollection, WithHeadings
     public function collection()
     {
         $datas = employee::select('area_kerja', 'provinsi_id', 'kabupaten_id', 'kecamatan_id', 'kelurahan_id')
-            ->where('provinsi_id', $this->provinsi_id)
-            ->where('kabupaten_id', $this->kabupaten_id)
-            ->where('kecamatan_id', $this->kecamatan_id)
+            ->whereIn('provinsi_id', $this->provinsi_id)
+            ->whereIn('kabupaten_id', $this->kabupaten_id)
+            ->whereIn('kecamatan_id', $this->kecamatan_id)
             ->where('status_resign', 'Aktif')
-            ->where('area_kerja', $this->area)
+            ->whereIn('area_kerja', $this->area)
             ->selectRaw('COUNT(*) as jumlah_karyawan')
             ->groupBy('area_kerja', 'provinsi_id', 'kabupaten_id', 'kecamatan_id', 'kelurahan_id')
             ->orderBy('jumlah_karyawan', 'desc')

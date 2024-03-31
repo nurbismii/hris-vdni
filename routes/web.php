@@ -313,5 +313,7 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
         route::get('divisi/{id}', [ApiController::class, 'getDivisi']);
         route::get('employees', [ApiController::class, 'getEmployeeWithEntryDate']);
         route::get('employees/monthly', [ApiController::class, 'getEmployeeMonthly']);
+        route::post('data-kabupaten', [ApiController::class, 'getKabupaten']);
+        route::post('data-kecamatan', [ApiController::class, 'getKecamatan']);
     });
 });

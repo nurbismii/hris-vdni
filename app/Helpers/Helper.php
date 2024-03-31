@@ -763,4 +763,14 @@ if (!function_exists('add_name_kelurahan')) {
         }
         return $data;
     }
+
+    if (!function_exists('stringReplace')) {
+        function stringReplace($arr)
+        {
+            $new_arr = str_replace($arr, '?', $arr);
+            $result = implode(', ', $new_arr);
+
+            return $result;
+        }
+    }
 }
