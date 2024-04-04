@@ -39,7 +39,8 @@ class WilayahController extends Controller
             ->selectRaw('COUNT(*) as jumlah_karyawan')
             ->groupBy('provinsi_id', 'kabupaten_id', 'kecamatan_id', 'kelurahan_id')
             ->orderBy('jumlah_karyawan', 'desc')
-            ->get();
+            ->get()
+            ->groupBy(['kabupaten_id', 'kecamatan_id']);
 
         return view('wilayah.index', compact('response', 'area_kerja', 'provinsi', 'provinsi_id', 'kabupaten_id', 'kecamatan_id'));
     }
@@ -51,16 +52,17 @@ class WilayahController extends Controller
 
     public function exportPdf($area, $provinsi_id, $kabupaten_id, $kecamatan_id)
     {
-        $response = employee::select('area_kerja', 'provinsi_id', 'kabupaten_id', 'kecamatan_id', 'kelurahan_id')
+        $response = employee::select('provinsi_id', 'kabupaten_id', 'kecamatan_id', 'kelurahan_id')
             ->whereIn('provinsi_id', explode(',', $provinsi_id))
             ->whereIn('kabupaten_id', explode(',', $kabupaten_id))
             ->whereIn('kecamatan_id', explode(',', $kecamatan_id))
             ->where('status_resign', 'Aktif')
             ->whereIn('area_kerja', explode(',', $area))
             ->selectRaw('COUNT(*) as jumlah_karyawan')
-            ->groupBy('area_kerja', 'provinsi_id', 'kabupaten_id', 'kecamatan_id', 'kelurahan_id')
+            ->groupBy('provinsi_id', 'kabupaten_id', 'kecamatan_id', 'kelurahan_id')
             ->orderBy('jumlah_karyawan', 'desc')
-            ->get();
+            ->get()
+            ->groupBy(['kabupaten_id', 'kecamatan_id']);
 
         $pdf = PDF::loadView('wilayah.wilayah-pdf', compact('response', 'area', 'provinsi_id', 'kabupaten_id', 'kecamatan_id'));
         return $pdf->download('REKAP WILAYAH ' . getNamaProvinsi($provinsi_id) . '-' . getNamaKabupaten($kabupaten_id) . '-' . getNamaKecamatan($kecamatan_id) . '.pdf');

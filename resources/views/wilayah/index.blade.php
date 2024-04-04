@@ -11,8 +11,9 @@
 	<!-- Toastr -->
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-	<!-- Multiselect Bootstrap -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css" />
+	<!-- Select2 Bootstrap -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" />
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
 	@endpush
 
 	<header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
@@ -44,20 +45,20 @@
 						<div class="card-body">
 							<div class="row gx-4 mb-3">
 								<div class="col-md-3 mb-2">
-									<select name="company_id[]" multiple class="form-select" data-placeholder="Pilih perusahaan" id="company">
+									<select name="company_id[]" class="form-select" data-placeholder="Pilih perusahaan" id="company" multiple>
 										<option value="VDNI">PT VDNI</option>
 										<option value="VDNIP">PT VDNIP</option>
 									</select>
 								</div>
 								<div class="col-md-3 mb-2">
-									<select name="provinsi_level[]" multiple class="form-select-" data-placeholder="Pilih provinsi" id="provinsi_level">
+									<select name="provinsi_level[]" class="form-select" data-placeholder="Pilih provinsi" id="provinsi_level" multiple>
 										@foreach($provinsi as $row)
 										<option value="{{ $row->id }}">{{ $row->provinsi }}</option>
 										@endforeach
 									</select>
 								</div>
 								<div class="col-md-3 mb-2">
-									<select name="kabupaten_level[]" multiple class="form-select" data-placeholder="Pilih kabupaten" id="kabupaten_level"></select>
+									<select name="kabupaten_level[]" class="form-select" data-placeholder="Pilih kabupaten" id="kabupaten_level" multiple></select>
 								</div>
 								<div class="col-md-3 mb-2">
 									<select name="kecamatan_level[]" multiple class="form-select" data-placeholder="Pilih kecamatan" id="kecamatan_level"></select>
@@ -115,45 +116,46 @@
 								<td>{{ count($response) }}</td>
 							</tr>
 						</table>
-						<table id="datatablesSimpleWilayah" class="table table-bordered">
+						@foreach ($response as $kabupatenId => $kecamatans)
+						@php
+						$totalKaryawanKabupaten = 0;
+						@endphp
+						@foreach ($kecamatans as $kecamatanId => $karyawan)
+						@php
+						$totalKaryawanKecamatan = 0;
+						@endphp
+						<table class="table table-bordered">
 							<thead>
+								<tr class="table-primary">
+									<th colspan="2" class="text-center text-uppercase">{{ getNamaKabupaten($kabupatenId) }}</th>
+								</tr>
+								<tr class="table-active">
+									<th colspan="2" class="text-center text-uppercase">Kecamatan {{ getNamaKecamatan($kecamatanId) }}</th>
+								</tr>
 								<tr>
-									<th>Daftar kelurahan/desa</th>
-									<th>Total karyawan</th>
+									<th>Kelurahan ID</th>
+									<th>Jumlah Karyawan</th>
 								</tr>
 							</thead>
 							<tbody>
-								@php
-								$totalKaryawan = 0;
-								$no = 1;
-								@endphp
-								@foreach($response as $item)
+								@foreach ($karyawan as $data)
 								<tr>
-
-									<td>
-										@if($item['kelurahan_id'])
-										{{ getNamaKelurahan($item['kelurahan_id']) }}
-										@else
-										BELUM DIKETAHUI
-										@endif
-									</td>
-
-									<td width="25%">
-										{{ $item['jumlah_karyawan'] }}
-									</td>
-
-									@if($item['kelurahan_id'])
-									@php $totalKaryawan += $item['jumlah_karyawan']; @endphp
-									@endif
-
+									<td>{{ getNamaKelurahan($data->kelurahan_id) }}</td>
+									<td>{{ $data->jumlah_karyawan }}</td>
 								</tr>
+								@php
+								$totalKaryawanKecamatan += $data->jumlah_karyawan;
+								$totalKaryawanKabupaten += $data->jumlah_karyawan;
+								@endphp
 								@endforeach
 								<tr>
-									<td colspan="1" class="fw-800">Total karyawan kecamatan :</td>
-									<td class="fw-800">{{ $totalKaryawan }} </td>
+									<td><strong>Total Karyawan Kecamatan</strong></td>
+									<td><strong>{{ $totalKaryawanKecamatan }}</strong></td>
 								</tr>
 							</tbody>
 						</table>
+						@endforeach
+						@endforeach
 					</div>
 				</div>
 			</div>
@@ -162,152 +164,142 @@
 
 	<script>
 		$(document).ready(function() {
+			// Inisialisasi Select2
+			$('#company').select2({
+				width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+				theme: "bootstrap-5",
+				allowClear: true,
+				placeholder: 'Pilih Provinsi',
+			});
 
-			$.ajaxSetup({
-				headers: {
-					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			$('#provinsi_level').select2({
+				width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+				theme: "bootstrap-5",
+				allowClear: true,
+				placeholder: 'Pilih Provinsi',
+			});
+
+			$('#kabupaten_level').select2({
+				width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+				theme: "bootstrap-5",
+				allowClear: true,
+				placeholder: 'Pilih kabupaten',
+			});
+
+			$('#kecamatan_level').select2({
+				width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+				theme: "bootstrap-5",
+				allowClear: true,
+				placeholder: 'Pilih kabupaten',
+			});
+
+			// Definisikan variabel selectedValues di luar blok event
+			var selectedValuesProv = [];
+
+			// Event select2:select
+			$('#provinsi_level').on('select2:select', function(e) {
+				var selectedValue = e.params.data.id;
+				selectedValuesProv.push(selectedValue);
+				console.log(selectedValuesProv);
+
+				// Kirim nilai array ke endpoint
+				postSelectedValuesToEndpointProv(selectedValuesProv);
+			});
+
+			// Event select2:unselect
+			$('#provinsi_level').on('select2:unselect', function(e) {
+				var unselectedValue = e.params.data.id;
+				var index = selectedValues.indexOf(unselectedValue);
+				if (index !== -1) {
+					selectedValuesProv.splice(index, 1);
 				}
+				console.log(selectedValuesProv);
+
+				// Kirim nilai array ke endpoint
+				postSelectedValuesToEndpointProv(selectedValuesProv);
 			});
 
-			$('#company').multiselect({
-				buttonWidth: '250px',
-			});
-
-			$('#provinsi_level').multiselect({
-				buttonWidth: '250px',
-				onChange: function(option, checked) {
-					$('#kabupaten_level').html('');
-					$('#kabupaten_level').multiselect('rebuild');
-					$('#kecamatan_level').html('');
-					$('#kecamatan_level').multiselect('rebuild');
-					var selected = this.$select.val();
-					if (selected.length > 0) {
-						$.ajax({
-							url: "/api/hrcorner/data-kabupaten",
-							method: "POST",
-							data: {
-								selected: selected
-							},
-							success: function(data) {
-								console.log(data);
-								$('#kabupaten_level').html(data);
-								$('#kabupaten_level').multiselect('rebuild');
-							}
-						})
-					}
+			// Fungsi untuk mengirim nilai array ke endpoint
+			function postSelectedValuesToEndpointProv(selectedValuesProv) {
+				if (selectedValuesProv.length > 0) {
+					$.ajax({
+						headers: {
+							'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+						},
+						url: "/api/hrcorner/data-kabupaten",
+						method: "POST",
+						data: {
+							selectedValuesProv: selectedValuesProv
+						},
+						success: function(data) {
+							$('#kabupaten_level').html(data);
+							$('#kabupaten_level').select2('destroy').select2();
+							// Lakukan sesuatu dengan respons dari server (opsional)
+						},
+						error: function(xhr, status, error) {
+							console.error("Kesalahan:", error);
+							// Tangani kesalahan jika diperlukan (opsional)
+						}
+					});
 				}
+			}
+
+
+			var selectedValuesKab = [];
+
+			// Event select2:select
+			$('#kabupaten_level').on('select2:select', function(e) {
+				var selectedValue = e.params.data.id;
+				selectedValuesKab.push(selectedValue);
+				console.log(selectedValuesKab);
+
+				// Kirim nilai array ke endpoint
+				postSelectedValuesToEndpointKab(selectedValuesKab);
 			});
 
-			$('#kabupaten_level').multiselect({
-				buttonWidth: '250px',
-				onChange: function(option, checked) {
-					$('#kecamatan_level').html('');
-					$('#kecamatan_level').multiselect('rebuild');
-					var selected = this.$select.val();
-					if (selected.length > 0) {
-						$.ajax({
-							url: "/api/hrcorner/data-kecamatan",
-							method: "POST",
-							data: {
-								selected: selected
-							},
-							success: function(data) {
-								$('#kecamatan_level').html(data);
-								$('#kecamatan_level').multiselect('rebuild');
-							}
-						});
-					}
+			// Event select2:unselect
+			$('#kabupaten_level').on('select2:unselect', function(e) {
+				var unselectedValue = e.params.data.id;
+				var index = selectedValues.indexOf(unselectedValue);
+				if (index !== -1) {
+					selectedValuesKab.splice(index, 1);
 				}
+				console.log(selectedValuesKab);
+
+				// Kirim nilai array ke endpoint
+				postSelectedValuesToEndpointKab(selectedValuesKab);
 			});
 
-			$('#kecamatan_level').multiselect({
-				buttonWidth: '250px'
-			});
-
-
-			// $('#provinsi_id').on('change', function() {
-			// 	var provinsiID = $(this).val();
-			// 	if (provinsiID) {
-			// 		$.ajax({
-			// 			url: 'dashboard/fetch-kabupaten/' + provinsiID,
-			// 			type: "GET",
-			// 			data: {
-			// 				"_token": "{{ csrf_token() }}"
-			// 			},
-			// 			dataType: "json",
-			// 			success: function(data) {
-			// 				if (data) {
-			// 					$('#kabupaten_id').empty();
-			// 					$('#kabupaten_id').append('<option hidden>- Pilih kabupaten -</option>');
-			// 					$.each(data, function(id, kabupaten) {
-			// 						$('select[name="kabupaten"]').append('<option value="' + kabupaten.id + '">' + kabupaten.kabupaten + '</option>');
-			// 					});
-			// 				} else {
-			// 					$('#kabupaten').empty();
-			// 				}
-			// 			}
-			// 		});
-			// 	} else {
-			// 		$('#kabupaten').empty();
-			// 	}
-			// });
-
-			// $('#kabupaten_id').on('change', function() {
-			// 	var kabupatenID = $(this).val();
-			// 	if (kabupatenID) {
-			// 		$.ajax({
-			// 			url: 'dashboard/fetch-kecamatan/' + kabupatenID,
-			// 			type: "GET",
-			// 			data: {
-			// 				"_token": "{{ csrf_token() }}"
-			// 			},
-			// 			dataType: "json",
-			// 			success: function(data) {
-			// 				if (data) {
-			// 					$('#kecamatan_id').empty();
-			// 					$('#kecamatan_id').append('<option hidden>- Pilih kecamatan -</option>');
-			// 					$.each(data, function(id, kecamatan) {
-			// 						$('select[name="kecamatan"]').append('<option value="' + kecamatan.id + '">' + kecamatan.kecamatan + '</option>');
-			// 					})
-			// 				} else {
-			// 					$('#kecamatan').empty();
-			// 				}
-			// 			}
-			// 		});
-			// 	}
-			// });
-
-			// $('#kecamatan_id').on('change', function() {
-			// 	var kecamatanID = $(this).val();
-			// 	if (kecamatanID) {
-			// 		$.ajax({
-			// 			url: 'dashboard/fetch-kelurahan/' + kecamatanID,
-			// 			type: "GET",
-			// 			data: {
-			// 				"_token": "{{ csrf_token() }}"
-			// 			},
-			// 			dataType: "json",
-			// 			success: function(data) {
-			// 				if (data) {
-			// 					$('#kelurahan_id').empty();
-			// 					$('#kelurahan_id').append('<option hidden>- Pilih kelurahan/desa -</option>');
-			// 					console.log(data);
-			// 					$.each(data, function(id, kelurahan) {
-			// 						$('select[name="kelurahan"]').append('<option value="' + kelurahan.id + '">' + kelurahan.kelurahan + '</option>');
-			// 					})
-			// 				} else {
-			// 					$('#kelurahan').empty();
-			// 				}
-			// 			}
-			// 		});
-			// 	}
-			// });
+			// Fungsi untuk mengirim nilai array ke endpoint
+			function postSelectedValuesToEndpointKab(selectedValuesKab) {
+				if (selectedValuesKab.length > 0) {
+					$.ajax({
+						headers: {
+							'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+						},
+						url: "/api/hrcorner/data-kecamatan",
+						method: "POST",
+						data: {
+							selectedValuesKab: selectedValuesKab
+						},
+						success: function(data) {
+							$('#kecamatan_level').html(data);
+							$('#kecamatan_level').select2('destroy').select2();
+							// Lakukan sesuatu dengan respons dari server (opsional)
+						},
+						error: function(xhr, status, error) {
+							console.error("Kesalahan:", error);
+							// Tangani kesalahan jika diperlukan (opsional)
+						}
+					});
+				}
+			}
 		});
 	</script>
 
 	@push('scripts')
 	<x-toastr />
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 	@endpush
 </x-app-layout>

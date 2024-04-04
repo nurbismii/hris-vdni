@@ -40,7 +40,7 @@
         <div class="card invoice">
           <div class="card-body p-4 p-md-5">
             <!-- Invoice table-->
-            <b>HASIL LAPORAN WILAYAH :</b>
+            <b class="text-center">HASIL LAPORAN WILAYAH</b>
             <div class="p-3">
               <table class="table table-bordered">
                 <tr>
@@ -69,45 +69,45 @@
                   <td>{{ count($response) }}</td>
                 </tr>
               </table>
-              <table id="datatablesSimpleWilayah" class="table table-bordered">
+              @foreach ($response as $kabupatenId => $kecamatans)
+              @php
+              $totalKaryawanKabupaten = 0;
+              @endphp
+              @foreach ($kecamatans as $kecamatanId => $karyawan)
+              @php
+              $totalKaryawanKecamatan = 0;
+              @endphp
+              <table class="table table-bordered">
                 <thead>
+                  <tr class="table-primary">
+                    <th colspan="2" class="text-center text-uppercase">{{ getNamaKabupaten($kabupatenId) }}</th>
+                  </tr>
+                  <tr class="table-active">
+                    <th colspan="2" class="text-center text-uppercase">Kecamatan {{ getNamaKecamatan($kecamatanId) }}</th>
+                  </tr>
                   <tr>
-                    <th>Daftar kelurahan/desa</th>
-                    <th>Total karyawan</th>
+                    <th>Kelurahan ID</th>
+                    <th>Jumlah Karyawan</th>
                   </tr>
                 </thead>
                 <tbody>
-                  @php
-                  $totalKaryawan = 0;
-                  $no = 1;
-                  @endphp
-                  @foreach($response as $item)
+                  @foreach ($karyawan as $data)
                   <tr>
-
-                    <td>
-                      @if($item['kelurahan_id'])
-                      {{ getNamaKelurahan($item['kelurahan_id']) }}
-                      @else
-                      BELUM DIKETAHUI
-                      @endif
-                    </td>
-
-                    <td width="25%">
-                      {{ $item['jumlah_karyawan'] }}
-                    </td>
-
-                    @if($item['kelurahan_id'])
-                    @php $totalKaryawan += $item['jumlah_karyawan']; @endphp
-                    @endif
-
+                    <td>{{ getNamaKelurahan($data->kelurahan_id) }}</td>
+                    <td>{{ $data->jumlah_karyawan }}</td>
                   </tr>
+                  @php
+                  $totalKaryawanKecamatan += $data->jumlah_karyawan;
+                  @endphp
                   @endforeach
                   <tr>
-                    <th colspan="1" class="fw-800">Total karyawan kecamatan</th>
-                    <td class="fw-800">{{ $totalKaryawan }} </td>
+                    <td><strong>Total Karyawan Kecamatan</strong></td>
+                    <td><strong>{{ $totalKaryawanKecamatan }}</strong></td>
                   </tr>
                 </tbody>
               </table>
+              @endforeach
+              @endforeach
             </div>
           </div>
         </div>

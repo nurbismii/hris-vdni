@@ -257,7 +257,7 @@ class ApiController extends Controller
 
    public function getKabupaten(Request $request)
    {
-      $data = Kabupaten::whereIn('id_provinsi', $request['selected'])->get();
+      $data = Kabupaten::whereIn('id_provinsi', $request['selectedValuesProv'])->get();
       $output = '';
 
       foreach ($data as $row) {
@@ -269,7 +269,7 @@ class ApiController extends Controller
 
    public function getKecamatan(Request $request)
    {
-      $data = Kecamatan::whereIn('id_kabupaten', $request['selected'])->get();
+      $data = Kecamatan::whereIn('id_kabupaten', $request['selectedValuesKab'])->get();
       $output = '';
 
       foreach ($data as $row) {
