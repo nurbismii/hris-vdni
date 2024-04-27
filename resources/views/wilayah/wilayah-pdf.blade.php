@@ -44,24 +44,28 @@
             <div class="p-3">
               <table class="table table-bordered">
                 <tr>
-                  <th width="30%">Area kerja</th>
+                  <th width="20%">Area kerja</th>
                   <td width="5px">:</td>
-                  <td>PT {{ $area }}</td>
+                  <td>
+                    @for($i=0; $i < count($area_kerja); $i++) {{ $area_kerja[$i] }} @endfor </td>
                 </tr>
                 <tr>
-                  <th width="30%">Provinsi</th>
+                  <th width="20%">Provinsi</th>
                   <td width="5px">:</td>
-                  <td>{{ getNamaProvinsi($provinsi_id) }}</td>
+                  <td>@for($i=0; $i < count($provinsi_id); $i++) {{ getNamaProvinsi($provinsi_id[$i]) }} @endfor </td>
+                  </td>
                 </tr>
                 <tr>
                   <th>Kabupaten</th>
                   <td>:</td>
-                  <td>{{ getNamaKabupaten($kabupaten_id) }}</td>
+                  <td>@for($i=0; $i < count($kabupaten_id); $i++) @if($i==count($kabupaten_id) - 2) {{getNamaKabupaten($kabupaten_id[$i])}} dan @else {{getNamaKabupaten($kabupaten_id[$i])}} @endif @if($i < count($kabupaten_id) - 2) , @endif @endfor .</td>
+                  </td>
                 </tr>
                 <tr>
                   <th>Kecamatan</th>
                   <td>:</td>
-                  <td>{{ getNamaKecamatan($kecamatan_id) }}</td>
+                  <td>@for($i=0; $i < count($kecamatan_id); $i++) @if($i==count($kecamatan_id) - 2) {{ getNamaKecamatan($kecamatan_id[$i]) }} dan @else {{ getNamaKecamatan($kecamatan_id[$i]) }}@endif @if($i < count($kecamatan_id) - 2), @endif @endfor .</td>
+                  </td>
                 </tr>
                 <tr>
                   <th>Jumlah kelurahan/desa</th>
