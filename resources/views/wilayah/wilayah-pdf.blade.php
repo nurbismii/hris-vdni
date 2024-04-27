@@ -47,30 +47,44 @@
                   <th width="20%">Area kerja</th>
                   <td width="5px">:</td>
                   <td>
-                    @for($i=0; $i < count($area_kerja); $i++) {{ $area_kerja[$i] }} @endfor </td>
+                    @for($i=0; $i < count($area_arr); $i++) {{ $area_arr[$i] }} @endfor </td>
                 </tr>
                 <tr>
                   <th width="20%">Provinsi</th>
                   <td width="5px">:</td>
-                  <td>@for($i=0; $i < count($provinsi_id); $i++) {{ getNamaProvinsi($provinsi_id[$i]) }} @endfor </td>
+                  <td>@for($i=0; $i < count($prov_arr); $i++) {{ getNamaProvinsi($prov_arr[$i]) }} @endfor </td>
                   </td>
                 </tr>
                 <tr>
                   <th>Kabupaten</th>
                   <td>:</td>
-                  <td>@for($i=0; $i < count($kabupaten_id); $i++) @if($i==count($kabupaten_id) - 2) {{getNamaKabupaten($kabupaten_id[$i])}} dan @else {{getNamaKabupaten($kabupaten_id[$i])}} @endif @if($i < count($kabupaten_id) - 2) , @endif @endfor .</td>
+                  <td>@for($i=0; $i < count($kab_arr); $i++) @if($i==count($kab_arr) - 2) {{getNamaKabupaten($kab_arr[$i])}} dan @else {{getNamaKabupaten($kab_arr[$i])}} @endif @if($i < count($kab_arr) - 2) , @endif @endfor .</td>
                   </td>
                 </tr>
                 <tr>
                   <th>Kecamatan</th>
                   <td>:</td>
-                  <td>@for($i=0; $i < count($kecamatan_id); $i++) @if($i==count($kecamatan_id) - 2) {{ getNamaKecamatan($kecamatan_id[$i]) }} dan @else {{ getNamaKecamatan($kecamatan_id[$i]) }}@endif @if($i < count($kecamatan_id) - 2), @endif @endfor .</td>
+                  <td>@for($i=0; $i < count($kec_arr); $i++) @if($i==count($kec_arr) - 2) {{ getNamaKecamatan($kec_arr[$i]) }} dan @else {{ getNamaKecamatan($kec_arr[$i]) }}@endif @if($i < count($kec_arr) - 2), @endif @endfor .</td>
                   </td>
                 </tr>
+                
+                @php
+                $total_objek = 0;
+                @endphp
+
+                @foreach($array as $kabupaten) 
+                @foreach($kabupaten as $kecamatan) 
+                @php
+                $total_objek += count($kecamatan);
+                @endphp
+                @endforeach
+                @endforeach
+                
+                
                 <tr>
                   <th>Jumlah kelurahan/desa</th>
                   <td>:</td>
-                  <td>{{ count($response) }}</td>
+                  <td>{{ $total_objek }}</td>
                 </tr>
               </table>
               @foreach ($response as $kabupatenId => $kecamatans)

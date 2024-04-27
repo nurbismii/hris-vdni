@@ -52,6 +52,11 @@ class WilayahController extends Controller
 
     public function exportPdf($area, $provinsi_id, $kabupaten_id, $kecamatan_id)
     {
+        $area_arr = explode(',', $area);
+        $prov_arr = explode(',', $provinsi_id);
+        $kab_arr = explode(',', $kabupaten_id);
+        $kec_arr = explode(',', $kecamatan_id);
+
         $response = employee::select('provinsi_id', 'kabupaten_id', 'kecamatan_id', 'kelurahan_id')
             ->whereIn('provinsi_id', explode(',', $provinsi_id))
             ->whereIn('kabupaten_id', explode(',', $kabupaten_id))
@@ -64,7 +69,9 @@ class WilayahController extends Controller
             ->get()
             ->groupBy(['kabupaten_id', 'kecamatan_id']);
 
-        $pdf = PDF::loadView('wilayah.wilayah-pdf', compact('response', 'area', 'provinsi_id', 'kabupaten_id', 'kecamatan_id'));
+        $array = json_decode($response, true);
+
+        $pdf = PDF::loadView('wilayah.wilayah-pdf', compact('array', 'response', 'area_arr', 'prov_arr', 'kab_arr', 'kec_arr', 'area', 'provinsi_id', 'kabupaten_id', 'kecamatan_id'));
         return $pdf->stream();
     }
 }
