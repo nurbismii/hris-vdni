@@ -51,17 +51,17 @@
                 <tr>
                   <th width="30%">Provinsi</th>
                   <td width="5px">:</td>
-                  <td>{{ getNamaProvinsi($provinsi_id) }}</td>
+                  <td>{{ $provinsi_id }}</td>
                 </tr>
                 <tr>
                   <th>Kabupaten</th>
                   <td>:</td>
-                  <td>{{ getNamaKabupaten($kabupaten_id) }}</td>
+                  <td>{{ $kabupaten_id }}</td>
                 </tr>
                 <tr>
                   <th>Kecamatan</th>
                   <td>:</td>
-                  <td>{{ getNamaKecamatan($kecamatan_id) }}</td>
+                  <td>{{ $kecamatan_id }}</td>
                 </tr>
                 <tr>
                   <th>Jumlah kelurahan/desa</th>
