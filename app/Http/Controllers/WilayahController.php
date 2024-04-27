@@ -64,6 +64,8 @@ class WilayahController extends Controller
             ->get()
             ->groupBy(['kabupaten_id', 'kecamatan_id']);
 
+        return $response;
+
         $pdf = PDF::loadView('wilayah.wilayah-pdf', compact('response', 'area', 'provinsi_id', 'kabupaten_id', 'kecamatan_id'));
         return $pdf->download('REKAP WILAYAH ' . getNamaProvinsi($provinsi_id) . '-' . getNamaKabupaten($kabupaten_id) . '-' . getNamaKecamatan($kecamatan_id) . '.pdf');
     }
