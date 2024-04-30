@@ -110,10 +110,23 @@
 								<td>@for($i=0; $i < count($kecamatan_id); $i++) @if($i==count($kecamatan_id) - 2) {{ getNamaKecamatan($kecamatan_id[$i]) }} dan @else {{ getNamaKecamatan($kecamatan_id[$i]) }}@endif @if($i < count($kecamatan_id) - 2), @endif @endfor .</td>
 								</td>
 							</tr>
+
+							@php
+							$total_objek = 0;
+							@endphp
+
+							@foreach($array as $kabupaten)
+							@foreach($kabupaten as $kecamatan)
+							@php
+							$total_objek += count($kecamatan);
+							@endphp
+							@endforeach
+							@endforeach
+
 							<tr>
 								<th>Jumlah kelurahan/desa</th>
 								<td>:</td>
-								<td>{{ count($response) }}</td>
+								<td>{{ $total_objek }}</td>
 							</tr>
 						</table>
 						@foreach ($response as $kabupatenId => $kecamatans)

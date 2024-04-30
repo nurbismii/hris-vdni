@@ -42,7 +42,9 @@ class WilayahController extends Controller
             ->get()
             ->groupBy(['kabupaten_id', 'kecamatan_id']);
 
-        return view('wilayah.index', compact('response', 'area_kerja', 'provinsi', 'provinsi_id', 'kabupaten_id', 'kecamatan_id'));
+        $array = json_decode($response, true);
+
+        return view('wilayah.index', compact('array', 'response', 'area_kerja', 'provinsi', 'provinsi_id', 'kabupaten_id', 'kecamatan_id'));
     }
 
     public function exportExcel($area, $provinsi_id, $kabupaten_id, $kecamatan_id)
