@@ -15,6 +15,7 @@ use App\Models\PosisiLama;
 use App\Models\Provinsi;
 use App\Models\Resign;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
@@ -226,7 +227,7 @@ class EmployeeController extends Controller
         try {
             Excel::import(new EmployeesImport, $request->file('file'));
             return back()->with('success', 'Data Karyawan Berhasil ditambahkan');
-        } catch (\Throwable $e) {
+        } catch (Exception $e) {
             return back()->with('error', 'Opps, Terjadi kesalahan ' . $e->getMessage());
         }
     }

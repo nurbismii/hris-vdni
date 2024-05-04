@@ -4,13 +4,8 @@ namespace App\Imports;
 
 use App\Models\Divisi;
 use App\Models\employee;
-use App\Models\Kabupaten;
-use App\Models\Kecamatan;
-use App\Models\Kelurahan;
-use App\Models\Provinsi;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
@@ -59,7 +54,7 @@ class EmployeesImport implements ToCollection, WithHeadingRow, WithValidation
                 'bpjs_kesehatan' => $collect['bpjs_kesehatan'],
                 'bpjs_tk' => $collect['bpjs_tk'],
                 'vaksin' => $collect['vaksin'],
-                'jam_kerja' => $collect['jam_kerja'],
+                'jam_kerja' => strtoupper($collect['jam_kerja']),
                 'posisi' => $collect['posisi'],
                 'jabatan' => $collect['jabatan'],
                 'divisi_id' => $divisi->id,

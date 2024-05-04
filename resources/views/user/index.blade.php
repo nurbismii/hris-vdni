@@ -97,7 +97,7 @@
                     <div class="modal-body">
                         @csrf
                         {{ method_field('delete') }}
-                        Yakin ingin menghapus pengguna ini ({{ $data->employee->nama_karyawan }})?
+                        Yakin ingin menghapus pengguna ini ({{ $data->employee->nama_karyawan ?? ''}})?
                     </div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">No</button>
