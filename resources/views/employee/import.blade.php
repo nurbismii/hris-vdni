@@ -49,18 +49,32 @@
                             <div class="timeline-item-marker-text">Pertama</div>
                             <div class="timeline-item-marker-indicator"><i data-feather="check"></i></div>
                         </div>
-                        <div class="timeline-item-content">Format Tanggal Yang Digunakan (Format Tanggal Umum)</div>
+                        <div class="timeline-item-content">Nomor Induk Karyawan Wajib Diisi</div>
                     </div>
                     <div class="timeline-item">
                         <div class="timeline-item-marker">
                             <div class="timeline-item-marker-text">Kedua</div>
                             <div class="timeline-item-marker-indicator"><i data-feather="check"></i></div>
                         </div>
-                        <div class="timeline-item-content">Nama Perusahaan harus VDNI atau VDNIP</div>
+                        <div class="timeline-item-content">Format Tanggal Yang Digunakan (Format Tanggal Umum)</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-item-marker">
+                            <div class="timeline-item-marker-text">Ketiga</div>
+                            <div class="timeline-item-marker-indicator"><i data-feather="check"></i></div>
+                        </div>
+                        <div class="timeline-item-content">Penulisan nama divisi yang terisi harus sesuai dengan yang ada pada database HR Site</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-item-marker">
+                            <div class="timeline-item-marker-text">Keempat</div>
+                            <div class="timeline-item-marker-indicator"><i data-feather="check"></i></div>
+                        </div>
+                        <div class="timeline-item-content">Nama area kerja VDNI atau VDNIP</div>
                     </div>
                     <div class="timeline-item mb-3">
                         <div class="timeline-item-marker">
-                            <div class="timeline-item-marker-text">Ketiga</div>
+                            <div class="timeline-item-marker-text">Kelima</div>
                             <div class="timeline-item-marker-indicator"><i data-feather="check"></i></div>
                         </div>
                         <div class="timeline-item-content">Jangan Merubah Template File Yang Telah Didownload..</div>

@@ -50,7 +50,7 @@
     <div class="card">
       <div class="card-body">
         <div class="row justify-content-center">
-          <div class="col-xxl-10 col-xl-8">
+          <div class="col-lg-12">
             <h3 class="text-primary text-center">Formulir Cuti Roster</h3>
             <h5 class="card-title mb-4">
               <img src="{{ asset('assets/img/backgrounds/vdni-ikon.png') }}" style="height: 30px;" class="">
