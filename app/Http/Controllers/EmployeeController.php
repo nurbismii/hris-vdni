@@ -224,12 +224,8 @@ class EmployeeController extends Controller
 
     public function importEmployee(Request $request)
     {
-        try {
-            Excel::import(new EmployeesImport, $request->file('file'));
-            return back()->with('success', 'Data Karyawan Berhasil ditambahkan');
-        } catch (Exception $e) {
-            return back()->with('error', 'Opps, Terjadi kesalahan ' . $e->getMessage());
-        }
+        Excel::import(new EmployeesImport, $request->file('file'));
+        return back()->with('success', 'Data Karyawan Berhasil ditambahkan');
     }
 
     public function updateImportEmployee(Request $request)
@@ -252,11 +248,6 @@ class EmployeeController extends Controller
 
     public function mutasiUpdate(Request $request)
     {
-        try {
-        } catch (\Throwable $e) {
-            DB::rollBack();
-        }
-
         $data = employee::where('nik', $request->nik)->first();
 
         $div = Divisi::where('id', $data->divisi_id)->first();

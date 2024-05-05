@@ -78,7 +78,7 @@
 			</div>
 		</div>
 
-		<div class="card">
+		<div class="card mb-2">
 			<div class="card-body" style="overflow-x: auto;">
 				<a href="{{ route('export-wilayah-excel', ['area' => implode(',', $area_kerja), 'provinsi' => implode(',', $provinsi_id), 'kabupaten' => implode(',', $kabupaten_id), 'kecamatan' => implode(',', $kecamatan_id)]) }}" class="btn btn-success mb-2 mx-2 float-end">Export excel</a>
 				<a href="{{ route('export-wilayah-pdf', ['area' => implode(',', $area_kerja), 'provinsi' => implode(',', $provinsi_id), 'kabupaten' => implode(',', $kabupaten_id), 'kecamatan' => implode(',', $kecamatan_id)]) }}" class="btn btn-danger mb-2 float-end">Export pdf</a>
@@ -129,6 +129,22 @@
 								<td>{{ $total_objek }}</td>
 							</tr>
 						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-sm-7">
+				<div class="card">
+					<div class="card-body" style="overflow-x: auto;">
+						<div class="chart-bar mb-4 mb-lg-0" style="height: 30rem;"><canvas id="pieLaporanWilayah" width="100%" height="0"></canvas></div>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-5">
+				<div class="card">
+					<div class="card-body" style="overflow-x: auto;">
 						@foreach ($response as $kabupatenId => $kecamatans)
 						@php
 						$totalKaryawanKabupaten = 0;
@@ -257,7 +273,6 @@
 				}
 			}
 
-
 			var selectedValuesKab = [];
 
 			// Event select2:select
@@ -310,9 +325,20 @@
 		});
 	</script>
 
+	<script>
+		var jumlah_karyawan = JSON.parse('{!! json_encode($arr_jumlah_karyawan)!!}')
+
+		var nama_kelurahan = JSON.parse('{!! json_encode($arr_nama_kelurahan)!!}')
+	</script>
+
 	@push('scripts')
 	<x-toastr />
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+	<script src="{{ asset('assets/vendors/chart.js/Chart.min.js')}}"></script>
+	<script src="{{ asset('assets/js/chartWilayah.js')}}"></script>
+
+	<script src="{{ asset('js/app.js') }}"></script>
 	@endpush
 </x-app-layout>

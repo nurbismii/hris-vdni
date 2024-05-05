@@ -19,7 +19,6 @@ class WilayahController extends Controller
     public function index(Request $request)
     {
         //
-
         $provinsi = Provinsi::all();
 
         $provinsi_id = $request->provisi_level ?? ['74'];
@@ -29,6 +28,9 @@ class WilayahController extends Controller
         $kecamatan_id = $request->kecamatan_level ?? ['7403105'];
 
         $area_kerja = $request->company_id ?? ['VDNI'];
+
+        $arr_jumlah_karyawan = [];
+        $arr_nama_kelurahan = [];
 
         $response = employee::select('provinsi_id', 'kabupaten_id', 'kecamatan_id', 'kelurahan_id')
             ->whereIn('provinsi_id', $provinsi_id)
@@ -44,7 +46,16 @@ class WilayahController extends Controller
 
         $array = json_decode($response, true);
 
-        return view('wilayah.index', compact('array', 'response', 'area_kerja', 'provinsi', 'provinsi_id', 'kabupaten_id', 'kecamatan_id'));
+        foreach ($response as $kecamatan) {
+            foreach ($kecamatan as $karyawan) {
+                foreach ($karyawan as $data) {
+                    $arr_jumlah_karyawan[] = $data->jumlah_karyawan;
+                    $arr_nama_kelurahan[] = getNamaKelurahan($data->kelurahan_id);
+                }
+            }
+        }
+
+        return view('wilayah.index', compact('arr_jumlah_karyawan', 'arr_nama_kelurahan', 'array', 'response', 'area_kerja', 'provinsi', 'provinsi_id', 'kabupaten_id', 'kecamatan_id'));
     }
 
     public function exportExcel($area, $provinsi_id, $kabupaten_id, $kecamatan_id)
