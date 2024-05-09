@@ -101,6 +101,7 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
         route::patch('/update/{id}', [AccountController::class, 'update'])->name('account.update');
         route::get('/contract', [AccountController::class, 'contract'])->name('contract');
         route::get('/slip-gaji/{id}', [AccountController::class, 'cetak_pdf'])->name('slipgaji');
+        route::patch('/update/akun/{id}', [AccountController::class, 'updateAkun'])->name('update.akun');
     });
 
     Route::group(['prefix' => 'tiket'], function () {

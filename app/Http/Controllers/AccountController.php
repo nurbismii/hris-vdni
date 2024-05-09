@@ -11,9 +11,11 @@ use App\Models\employee;
 use App\Models\GajiKaryawan;
 use App\Models\salary;
 use App\Models\User;
+use Illuminate\Http\Request;
 use PDF;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class AccountController extends Controller
 {
@@ -135,5 +137,21 @@ class AccountController extends Controller
     {
         $datas = CutiRoster::where('nik_karyawan', Auth::user()->employee->nik)->get();
         return view('tiket.index', compact('datas'));
+    }
+
+    public function updateAkun(Request $request, $id)
+    {
+        if ($request->password != $request->password_confirm) {
+            return back()->with('error', 'Konfirmasi kata sandi tidak sesuai, silahkan coba lagi');
+        }
+
+        User::where('nik_karyawan', $id)->update(
+            [
+                'email' => $request->email,
+                'password' => Hash::make($request->password)
+            ],
+        );
+
+        return back()->with('success', 'Berhasil melakukan perubahan');
     }
 }

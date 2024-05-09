@@ -4,6 +4,8 @@
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/backgrounds/bg-auth-vdni-new.png')}}" />
     <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     @endpush
     <div class="container-xl px-4">
         <div class="row justify-content-center">
@@ -21,11 +23,18 @@
                             @csrf
                             <div class="mb-3">
                                 <label class="small mb-1">Email</label>
-                                <input class="form-control-login @error('email') is-invalid @enderror" type="email" name="email" placeholder="Email" />
+                                <input class="form-control @error('email') is-invalid @enderror" type="email" name="email" placeholder="Email" />
                             </div>
                             <div class="mb-3">
-                                <label class="small mb-1">Kata sandi</label>
-                                <input class="form-control-login @error('password') is-invalid @enderror" type="password" name="password" placeholder="Kata Sandi" />
+                                <div class="form-group">
+                                    <label>Password</label>
+                                    <div class="input-group input-group-joined" id="show_hide_password">
+                                        <input class="form-control pe-0" name="password" type="password" aria-label="Search">
+                                        <span class="input-group-text">
+                                            <a href=""><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
                             <div class="d-flex align-items-center justify-content-between mt-2 mb-3">
                                 <a class="small" href="/lupa-kata-sandi">Lupa kata sandi ?</a>
@@ -44,6 +53,23 @@
     </div>
 
     @push('scripts')
+    <script>
+        $(document).ready(function() {
+            $("#show_hide_password a").on('click', function(event) {
+                event.preventDefault();
+                if ($('#show_hide_password input').attr("type") == "text") {
+                    $('#show_hide_password input').attr('type', 'password');
+                    $('#show_hide_password i').addClass("fa-eye-slash");
+                    $('#show_hide_password i').removeClass("fa-eye");
+                } else if ($('#show_hide_password input').attr("type") == "password") {
+                    $('#show_hide_password input').attr('type', 'text');
+                    $('#show_hide_password i').removeClass("fa-eye-slash");
+                    $('#show_hide_password i').addClass("fa-eye");
+                }
+            });
+        });
+    </script>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="{{ asset('js/scripts.js')}}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
