@@ -4,8 +4,13 @@
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/backgrounds/bg-auth-vdni-new.png')}}" />
     <script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <style>
+        a {
+            color: #79818d;
+            text-decoration: none;
+        }
+    </style>
     @endpush
     <div class="container-xl px-4">
         <div class="row justify-content-center">
@@ -23,14 +28,14 @@
                             @csrf
                             <div class="mb-3">
                                 <label class="small mb-1">Email</label>
-                                <input class="form-control @error('email') is-invalid @enderror" type="email" name="email" placeholder="Email" />
+                                <input class="form-control @error('email') is-invalid @enderror" type="email" name="email" />
                             </div>
                             <div class="mb-3">
                                 <div class="form-group">
                                     <label>Password</label>
                                     <div class="input-group input-group-joined" id="show_hide_password">
-                                        <input class="form-control pe-0" name="password" type="password" aria-label="Search">
-                                        <span class="input-group-text">
+                                        <input class="form-control pe-0 @error('password') is-invalid @enderror" name="password" type="password" aria-label="Search">
+                                        <span class="input-group-text" style="background-color: #F5F5F5;">
                                             <a href=""><i class="fa fa-eye" aria-hidden="true"></i></a>
                                         </span>
                                     </div>

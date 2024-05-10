@@ -12,6 +12,13 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+  <style>
+    a {
+      color: #79818d;
+      text-decoration: none;
+    }
+  </style>
   @endpush
 
   <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
@@ -156,8 +163,8 @@
               <div class="form-group">
                 <label>Kata sandi</label>
                 <div class="input-group input-group-joined" id="show_hide_password">
-                  <input class="form-control pe-0" name="password" type="password" aria-label="Search">
-                  <span class="input-group-text">
+                  <input class="form-control pe-0" name="password" type="password" required>
+                  <span class="input-group-text" style="background-color: #F5F5F5;">
                     <a href=""><i class="fa fa-eye" aria-hidden="true"></i></a>
                   </span>
                 </div>
@@ -167,8 +174,8 @@
               <div class="form-group">
                 <label>Konfirmasi kata sandi</label>
                 <div class="input-group input-group-joined" id="show_hide_password_2">
-                  <input class="form-control pe-0" name="password_confirm" type="password" aria-label="Search">
-                  <span class="input-group-text">
+                  <input class="form-control pe-0" name="password_confirm" type="password" required>
+                  <span class="input-group-text" style="background-color: #F5F5F5;">
                     <a href=""><i class="fa fa-eye" aria-hidden="true"></i></a>
                   </span>
                 </div>
