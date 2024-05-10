@@ -32,7 +32,7 @@
                             </div>
                             <div class="mb-3">
                                 <div class="form-group">
-                                    <label>Password</label>
+                                    <label class="small mb-1">Password</label>
                                     <div class="input-group input-group-joined" id="show_hide_password">
                                         <input class="form-control pe-0 @error('password') is-invalid @enderror" name="password" type="password" aria-label="Search">
                                         <span class="input-group-text" style="background-color: #F5F5F5;">

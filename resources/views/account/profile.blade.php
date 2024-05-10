@@ -161,7 +161,7 @@
             </div>
             <div class="mb-3">
               <div class="form-group">
-                <label>Kata sandi</label>
+                <label class="small mb-1">Kata sandi</label>
                 <div class="input-group input-group-joined" id="show_hide_password">
                   <input class="form-control pe-0" name="password" type="password" required>
                   <span class="input-group-text" style="background-color: #F5F5F5;">
@@ -172,7 +172,7 @@
             </div>
             <div class="mb-3">
               <div class="form-group">
-                <label>Konfirmasi kata sandi</label>
+                <label class="small mb-1">Konfirmasi kata sandi</label>
                 <div class="input-group input-group-joined" id="show_hide_password_2">
                   <input class="form-control pe-0" name="password_confirm" type="password" required>
                   <span class="input-group-text" style="background-color: #F5F5F5;">
