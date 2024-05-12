@@ -83,9 +83,6 @@ class CutiIzinController extends Controller
                 'tanggal_mulai' => $request->tgl_mulai_cuti,
                 'tanggal_berakhir' => $request->tgl_akhir_cuti,
                 'status_pemohon' => 'ya',
-                'status_hrd' => 'Diterima',
-                'status_hod' => 'Diterima',
-                'status_penanggung_jawab' => 'Diterima',
                 'tipe' => 'cuti',
             ]);
 
@@ -97,7 +94,7 @@ class CutiIzinController extends Controller
             return back()->with('success', 'Berhasil melakukan pengajuan');
         } catch (\Throwable $e) {
             DB::rollBack();
-            return back()->with('error', 'Terjadi kesalahan pada sistem');
+            return back()->with('error', 'Terjadi kesalahan ' . $e->getMessage());
         }
     }
 
@@ -138,9 +135,6 @@ class CutiIzinController extends Controller
             'tanggal_mulai' => $request->tgl_mulai_cuti,
             'tanggal_berakhir' => $request->tgl_akhir_cuti,
             'status_pemohon' => 'ya',
-            'status_hrd' => 'Diterima',
-            'status_hod' => 'Diterima',
-            'status_penanggung_jawab' => 'Diterima',
             'tipe' => 'izin dibayarkan',
             'foto' => $file_name
         ]);
@@ -168,9 +162,6 @@ class CutiIzinController extends Controller
             'tanggal_mulai' => $request->tgl_mulai_cuti,
             'tanggal_berakhir' => $request->tgl_akhir_cuti,
             'status_pemohon' => 'ya',
-            'status_hrd' => 'Diterima',
-            'status_hod' => 'Diterima',
-            'status_penanggung_jawab' => 'Diterima',
             'tipe' => 'izin tidak dibayarkan',
         ]);
 

@@ -31,8 +31,8 @@
         <div class="row align-items-center justify-content-between pt-3">
           <div class="col-auto mb-3">
             <h1 class="page-header-title">
-              <div class="page-header-icon"><i data-feather="archive"></i></div>
-              Cuti Roster
+              <div class="page-header-icon"><i data-feather="log-out"></i></div>
+              Cuti roster
             </h1>
           </div>
           <div class="col-12 col-xl-auto mb-3">
@@ -51,43 +51,44 @@
       <div class="card-body">
         <div class="row justify-content-center">
           <div class="col-lg-12">
-            <h3 class="text-primary text-center">Formulir Cuti Roster</h3>
+            <h3 class="text-primary text-center">Formulir cuti roster</h3>
             <h5 class="card-title mb-4">
               <img src="{{ asset('assets/img/backgrounds/vdni-ikon.png') }}" style="height: 30px;" class="">
             </h5>
-            <form action="{{ route('cutiroster.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('admindept.cuti.store') }}" method="POST" enctype="multipart/form-data">
               @csrf
-              <div class="mb-3">
+              <!-- <div class="mb-3">
                 <select class="form-select search" name="search" id="nik"></select>
-              </div>
+              </div> -->
               <div class="row gx-3 mb-2">
                 <div class="col-md-6 mb-2">
                   <label class="small mb-2">Nama</label>
-                  <input class="form-control" type="text" name="nama" id="nama_karyawan" readonly />
+                  <input class="form-control" type="text" name="nama" id="nama_karyawan" value="{{ Auth::user()->employee->nama_karyawan }}" readonly />
+                  <input class="form-control" type="hidden" name="tipe_pilihan" value="1" />
                 </div>
                 <div class="col-md-6">
                   <label class="small mb-2">Departemen</label>
-                  <input class="form-control" name="departemen" type="text" id="departemen" readonly />
+                  <input class="form-control" name="departemen" type="text" id="departemen" value="{{ Auth::user()->employee->divisi->departemen->departemen }}" readonly />
                 </div>
               </div>
               <div class="row gx-3 mb-2">
                 <div class="col-md-6 mb-2">
                   <label class="small mb-2">NIK</label>
-                  <input class="form-control nik_karyawan" name="nik_karyawan" type="text" readonly />
+                  <input class="form-control nik_karyawan" name="nik_karyawan" type="text" value="{{ Auth::user()->employee->nik }}" readonly />
                 </div>
                 <div class="col-md-6">
                   <label class="small mb-2">Posisi</label>
-                  <input class="form-control" name="posisi" type="text" id="posisi" readonly />
+                  <input class="form-control" name="posisi" type="text" id="posisi" value="{{ Auth::user()->employee->posisi }}" readonly />
                 </div>
               </div>
               <div class="row gx-3 mb-2">
                 <div class="col-md-6 mb-2">
-                  <label class="small mb-2">No HP</label>
-                  <input class="form-control" name="no_telp" type="number" id="no_telp" readonly />
-                </div>
-                <div class="col-md-6 mb-2">
                   <label class="small mb-2">Divisi</label>
-                  <input class="form-control" name="divisi" type="text" id="divisi" readonly />
+                  <input class="form-control" name="divisi" type="text" id="divisi" value="{{ Auth::user()->employee->divisi_id }}" readonly />
+                </div>
+                <div class="col-md-6">
+                  <label class="small mb-2">Tanggal Pengajuan</label>
+                  <input class="form-control date" name="tanggal_pengajuan" type="text" value="{{ date('Y-m-d') }}" readonly required />
                 </div>
               </div>
               <div class="row gx-3 mb-2">
@@ -95,102 +96,93 @@
                   <label class="small mb-2">Email</label>
                   <input class="form-control" name="email" type="email" />
                 </div>
-                <div class="col-md-6">
-                  <label class="small mb-2">Tanggal Pengajuan</label>
-                  <input class="form-control date" name="tanggal_pengajuan" type="text" placeholder="DD-MM-YYYY" required />
+                <div class="col-md-6 mb-2">
+                  <label class="small mb-2">No HP</label>
+                  <input class="form-control" name="no_telp" type="number" id="no_telp" />
                 </div>
               </div>
-              <div class="table-responsive col-lg-12">
-                <table class="table table-borderless mb-2">
-                  <thead class="border-bottom">
-                    <tr class="small text-uppercase text-muted">
-                      <th scope="col">PERIODE ROSTER SAAT INI 目前休假明细</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr class="border-bottom">
-                      <td>
-                        <div class="fw-bold">Tanggal Periode Kerja Roster 工作日期</div>
-                      </td>
-                      <td class="text-end fw-bold">
-                        <input class="form-control date" name="periode_awal" type="text" placeholder="DD-MM-YYYY" required />
-                      </td>
-                      <td class="text-end fw-bold">
-                        <input class="form-control date" name="periode_akhir" type="text" placeholder="DD-MM-YYYY" required />
-                      </td>
-                    </tr>
-                    <tr class="border-bottom">
-                      <td>
-                        <div class="fw-bold">I</div>
-                      </td>
-                      <td>
-                        <select name="satu" class="form-select" id="">
-                          <option value="OFF">OFF</option>
-                          <option value="BEKERJA">BEKERJA</option>
-                        </select>
-                      </td>
-                      <td class="text-end fw-bold">
-                        <input class="form-control date" name="tanggal_satu" type="text" placeholder="DD-MM-YYYY" required />
-                      </td>
-                    </tr>
-                    <tr class="border-bottom">
-                      <td>
-                        <div class="fw-bold">II</div>
-                      </td>
-                      <td>
-                        <select name="dua" class="form-select" id="">
-                          <option value="OFF">OFF</option>
-                          <option value="BEKERJA">BEKERJA</option>
-                        </select>
-                      </td>
-                      <td class="text-end fw-bold">
-                        <input class="form-control date" name="tanggal_dua" type="text" placeholder="DD-MM-YYYY" required />
-                      </td>
-                    </tr>
-                    <tr class="border-bottom">
-                      <td>
-                        <div class="fw-bold">III</div>
-                      </td>
-                      <td>
-                        <select name="tiga" class="form-select" id="">
-                          <option value="OFF">OFF</option>
-                          <option value="BEKERJA">BEKERJA</option>
-                        </select>
-                      </td>
-                      <td class="text-end fw-bold">
-                        <input class="form-control date" name="tanggal_tiga" type="text" placeholder="DD-MM-YYYY" required />
-                      </td>
-                    </tr>
-                    <tr class="border-bottom">
-                      <td>
-                        <div class="fw-bold">IV</div>
-                      </td>
-                      <td>
-                        <select name="empat" class="form-select" id="">
-                          <option value="OFF">OFF</option>
-                          <option value="BEKERJA">BEKERJA</option>
-                        </select>
-                      </td>
-                      <td class="text-end fw-bold">
-                        <input class="form-control date" name="tanggal_empat" type="text" placeholder="DD-MM-YYYY" required />
-                      </td>
-                    </tr>
-                    <tr class="border-bottom">
-                      <td>
-                        <div class="fw-bold">V</div>
-                      </td>
-                      <td>
-                        <select name="lima" class="form-select" id="">
-                          <option value="OFF">OFF</option>
-                          <option value="BEKERJA">BEKERJA</option>
-                        </select>
-                      </td>
-                      <td class="text-end fw-bold">
-                        <input class="form-control date" name="tanggal_lima" type="text" placeholder="DD-MM-YYYY" required />
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+              <hr class="mt-2 mb-2">
+              <p class="text-muted text-uppercase small">PERIODE ROSTER SAAT INI 目前休假明细</p>
+              <div class="row g-3 align-items-center mb-3">
+                <div class="col-lg-4">
+                  <label for="periode_awal" class="col-form-label">PERIODE ROSTER SAAT INI 目前休假明细</label>
+                </div>
+                <div class="col-lg-4">
+                  <input class="form-control date" name="periode_awal" type="text" placeholder="DD-MM-YYYY" required />
+                </div>
+                <div class="col-lg-4">
+                  <input class="form-control date" name="periode_akhir" type="text" placeholder="DD-MM-YYYY" required />
+                </div>
+              </div>
+              <div class="row g-3 align-items-center mb-2">
+                <div class="col-lg-2">
+                  <label for="satu" class="col-form-label">I</label>
+                </div>
+                <div class="col-lg-5">
+                  <select name="satu" class="form-select" id="">
+                    <option value="OFF">OFF</option>
+                    <option value="BEKERJA">BEKERJA</option>
+                  </select>
+                </div>
+                <div class="col-lg-5">
+                  <input class="form-control date" name="tanggal_satu" type="text" placeholder="DD-MM-YYYY" required />
+                </div>
+              </div>
+              <div class="row g-3 align-items-center mb-2">
+                <div class="col-lg-2">
+                  <label for="satu" class="col-form-label">II</label>
+                </div>
+                <div class="col-lg-5">
+                  <select name="dua" class="form-select" id="">
+                    <option value="OFF">OFF</option>
+                    <option value="BEKERJA">BEKERJA</option>
+                  </select>
+                </div>
+                <div class="col-lg-5">
+                  <input class="form-control date" name="tanggal_dua" type="text" placeholder="DD-MM-YYYY" required />
+                </div>
+              </div>
+              <div class="row g-3 align-items-center mb-2">
+                <div class="col-lg-2">
+                  <label for="satu" class="col-form-label">III</label>
+                </div>
+                <div class="col-lg-5">
+                  <select name="tiga" class="form-select" id="">
+                    <option value="OFF">OFF</option>
+                    <option value="BEKERJA">BEKERJA</option>
+                  </select>
+                </div>
+                <div class="col-lg-5">
+                  <input class="form-control date" name="tanggal_tiga" type="text" placeholder="DD-MM-YYYY" required />
+                </div>
+              </div>
+              <div class="row g-3 align-items-center mb-2">
+                <div class="col-lg-2">
+                  <label for="satu" class="col-form-label">IV</label>
+                </div>
+                <div class="col-lg-5">
+                  <select name="empat" class="form-select" id="">
+                    <option value="OFF">OFF</option>
+                    <option value="BEKERJA">BEKERJA</option>
+                  </select>
+                </div>
+                <div class="col-lg-5">
+                  <input class="form-control date" name="tanggal_empat" type="text" placeholder="DD-MM-YYYY" required />
+                </div>
+              </div>
+              <div class="row g-3 align-items-center mb-2">
+                <div class="col-lg-2">
+                  <label for="satu" class="col-form-label">IV</label>
+                </div>
+                <div class="col-lg-5">
+                  <select name="lima" class="form-select" id="">
+                    <option value="OFF">OFF</option>
+                    <option value="BEKERJA">BEKERJA</option>
+                  </select>
+                </div>
+                <div class="col-lg-5">
+                  <input class="form-control date" name="tanggal_lima" type="text" placeholder="DD-MM-YYYY" required />
+                </div>
               </div>
               <hr class="mt-2 mb-2">
               <div class="row">

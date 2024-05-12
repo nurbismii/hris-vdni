@@ -43,10 +43,10 @@
     <!-- Main page content-->
     <div class="container-xl px-4 mt-4">
         <nav class="nav nav-borders">
-            <a class="nav-link {{ (request()->segment(2) == 'cuti') ? 'active' : '' }} ms-0" href="/pengajuan-karyawan/cuti">Cuti</a>
-            <!-- <a class="nav-link {{ (request()->segment(2) == 'cuti-roster') ? 'active' : '' }} ms-0" href="/pengajuan-karyawan/cuti-roster">Cuti Roster</a> -->
-            <a class="nav-link {{ (request()->segment(2) == 'izin-dibayarkan') ? 'active' : '' }} ms-0" href="/pengajuan-karyawan/izin-dibayarkan">Izin berbayar</a>
-            <a class="nav-link {{ (request()->segment(2) == 'izin-tidak-dibayarkan') ? 'active' : '' }} ms-0" href="/pengajuan-karyawan/izin-tidak-dibayarkan">Izin tidak berbayar</a>
+            <a class="nav-link {{ (request()->segment(2) == 'cuti') ? 'active' : '' }} ms-0" href="/karyawan/cuti">Cuti</a>
+            <!-- <a class="nav-link {{ (request()->segment(2) == 'cuti-roster') ? 'active' : '' }} ms-0" href="/karyawan/cuti-roster">Cuti Roster</a> -->
+            <a class="nav-link {{ (request()->segment(2) == 'izin-dibayarkan') ? 'active' : '' }} ms-0" href="/karyawan/izin-dibayarkan">Izin berbayar</a>
+            <a class="nav-link {{ (request()->segment(2) == 'izin-tidak-dibayarkan') ? 'active' : '' }} ms-0" href="/karyawan/izin-tidak-dibayarkan">Izin tidak berbayar</a>
         </nav>
         <hr class="mt-0 mb-4">
         <!-- Wizard card example with navigation-->
@@ -60,27 +60,27 @@
                         </h5>
                         <form action="/pengajuan-karyawan/store-izin-dibayarkan" method="POST" enctype="multipart/form-data">
                             @csrf
-                            <div class="mb-3">
+                            <!-- <div class="mb-3">
                                 <select class="form-select search" name="search" id="nik"></select>
-                            </div>
+                            </div> -->
                             <div class="row gx-3 mb-2">
                                 <div class="col-md-6 mb-2">
                                     <label class="small mb-2">Nama</label>
-                                    <input class="form-control" type="text" name="nama" id="nama_karyawan" readonly />
+                                    <input class="form-control" type="text" name="nama" id="nama_karyawan" value="{{ Auth::user()->employee->nama_karyawan }}" readonly />
                                 </div>
                                 <div class="col-md-6">
                                     <label class="small mb-2">Departemen</label>
-                                    <input class="form-control" name="departemen" type="email" id="departemen" readonly />
+                                    <input class="form-control" name="departemen" type="email" id="departemen" value="{{ Auth::user()->employee->divisi->departemen->departemen }}" readonly />
                                 </div>
                             </div>
                             <div class="row gx-3 mb-2">
                                 <div class="col-md-6 mb-2">
                                     <label class="small mb-2">NIK</label>
-                                    <input class="form-control nik_karyawan" name="nik" type="text" readonly />
+                                    <input class="form-control nik_karyawan" name="nik" type="text" value="{{ Auth::user()->employee->nik }}" readonly />
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="small mb-2">Tanggal pengajuan</label>
-                                    <input class="form-control" name="tanggal_pengajuan" type="date" />
+                                    <label class="small mb-2">Tanggal Pengajuan</label>
+                                    <input class="form-control" name="tanggal_pengajuan" type="text" value="{{ date('Y-m-d') }}" readonly />
                                 </div>
                             </div>
                             <hr class="my-4" />

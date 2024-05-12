@@ -140,13 +140,14 @@ class KaryawanRosterController extends Controller
 
     public function adminDeptStore(Request $request)
     {
+
         try {
             $cek_file = CutiRoster::where('id', $request->nik_karyawan)->first();
             if ($request->hasFile('berkas_cuti')) {
                 $upload = $request->file('berkas_cuti');
                 $file_name = $request->nik_karyawan . ' - ' . $upload->getClientOriginalName();
                 $path = public_path('/cuti-roster/' . $request->nik_karyawan . '/' . $request->tgl_pengajuan . '/');
-                if (file_exists($path)) {
+                if (file_exists($path) && $cek_file) {
                     unlink($path . $cek_file->file);
                 }
                 $upload->move($path, $file_name);
@@ -224,7 +225,7 @@ class KaryawanRosterController extends Controller
             ]);
             DB::commit();
 
-            return redirect(url('admin/roster/permohonan'))->with('success', 'Berhasil melakukan pengajuan cuti roster');
+            return back()->with('success', 'Berhasil melakukan pengajuan cuti roster');
         } catch (\Throwable $e) {
             DB::rollBack();
             return back()->with('error', 'Terjadi kesalahan pada sistem');

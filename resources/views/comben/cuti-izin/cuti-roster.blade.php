@@ -65,9 +65,9 @@
 						</h5>
 						<form action="{{ route('cutiroster.store') }}" method="POST" enctype="multipart/form-data">
 							@csrf
-							<div class="mb-3">
+							<!-- <div class="mb-3">
 								<select class="form-select search" name="search" id="nik"></select>
-							</div>
+							</div> -->
 							<div class="row gx-3 mb-2">
 								<div class="col-md-6 mb-2">
 									<label class="small mb-2">Nama</label>

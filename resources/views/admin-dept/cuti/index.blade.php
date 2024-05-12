@@ -22,14 +22,8 @@
           <div class="col-auto mb-3">
             <h1 class="page-header-title">
               <div class="page-header-icon"><i data-feather="users"></i></div>
-              Data Pengajuan Cuti, Paid leave dan Unpaid leave
+              Data pengajuan karyawan
             </h1>
-          </div>
-          <div class="col-12 col-xl-auto mb-3">
-            <a class="btn btn-sm btn-light text-primary" href="/admin/cuti/tahunan">
-              <i class="me-1" data-feather="plus"></i>
-              Tambah
-            </a>
           </div>
         </div>
       </div>
@@ -47,8 +41,8 @@
                   <select name="status_hrd" class="form-select" id="tipe">
                     <option value="" selected>- Pilih tipe pengajuan -</option>
                     <option value="cuti">Cuti</option>
-                    <option value="izin dibayarkan">Izin Dibayarkan</option>
-                    <option value="izin tidak dibayarkan">Izin Tidak Dibayarkan</option>
+                    <option value="izin dibayarkan">Izin dibayar</option>
+                    <option value="izin tidak dibayarkan">Izin tidak dibayar</option>
                   </select>
                 </div>
               </div>

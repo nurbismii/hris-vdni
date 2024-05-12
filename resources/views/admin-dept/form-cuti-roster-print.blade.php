@@ -50,7 +50,7 @@
         <div class="text-center">FORMULIR PERMOHONAN CUTI ROSTER 休假申请单<br>
           Nomor 编号 : {{ $data->nomor_surat ?? '' }}
         </div>
-        <img class="text-start" src="{{ asset('assets/img/backgrounds/vdni-ikon.png') }}" style="height: 40px;" alt="">
+        <img class="text-start" src="{{ public_path('assets/img/backgrounds/vdni-ikon.png') }}" style="height: 40px;" alt="">
 
         <div class="card-body">
           <div class="table-responsive">
@@ -152,18 +152,36 @@
                 </tr>
                 <tr class="text-center">
                   <td>Cuti Roster 轮休假</td>
-                  <td colspan="4"></td>
-                  <td colspan="5"></td>
+                  <td colspan="4">{{ tgl_indo($data->tgl_mulai_cuti) }} - {{ tgl_indo($data->tgl_mulai_cuti_berakhir) }}</td>
+                  @php
+                  $tgl1 = strtotime($data->tgl_mulai_cuti);
+                  $tgl2 = strtotime($data->tgl_mulai_cuti_berakhir);
+                  $selisih =$tgl2 - $tgl1;
+                  $hari = $selisih / 60 / 60 / 24;
+                  @endphp
+                  <td colspan="5">{{ $hari + 1 }}</td>
                 </tr>
                 <tr class="text-center">
                   <td>Cuti Tahunan 年假</td>
-                  <td colspan="4"></td>
-                  <td colspan="5"></td>
+                  <td colspan="4">{{ tgl_indo($data->tgl_mulai_cuti_tahunan) }} - {{ tgl_indo($data->tgl_mulai_cuti_tahunan_berakhir) }}</td>
+                  @php
+                  $tgl1 = strtotime($data->tgl_mulai_cuti_tahunan);
+                  $tgl2 = strtotime($data->tgl_mulai_cuti_tahunan_berakhir);
+                  $selisih =$tgl2 - $tgl1;
+                  $hari = $selisih / 60 / 60 / 24;
+                  @endphp
+                  <td colspan="5">{{ $hari + 1 }}</td>
                 </tr>
                 <tr class="text-center">
                   <td>OFF 休息日</td>
-                  <td colspan="4"></td>
-                  <td colspan="5"></td>
+                  <td colspan="4">{{ tgl_indo($data->tgl_mulai_off) }} - {{ tgl_indo($data->tgl_mulai_off_berakhir) }}</td>
+                  @php
+                  $tgl1 = strtotime($data->tgl_mulai_off);
+                  $tgl2 = strtotime($data->tgl_mulai_off_berakhir);
+                  $selisih =$tgl2 - $tgl1;
+                  $hari = $selisih / 60 / 60 / 24;
+                  @endphp
+                  <td colspan="5">{{ $hari + 1 }}</td>
                 </tr>
                 <tr>
                   <th class="text-center" colspan="10">Detail Pemesanan Tiket Pesawat Detail Pemesanan Tiket Pesawat 飞机票预订详情</th>

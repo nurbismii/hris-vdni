@@ -16,7 +16,7 @@
           <div class="col-auto mb-3">
             <h1 class="page-header-title">
               <div class="page-header-icon"><i data-feather="user"></i></div>
-              Pengingat
+              Pengajuan cuti roster & insentif
             </h1>
           </div>
         </div>
@@ -26,11 +26,6 @@
   <!-- Main page content-->
   <div class="container-fluid px-4">
     <x-message />
-    <nav class="nav nav-borders">
-      <a class="nav-link {{ (request()->segment(2) == 'daftar-pengingat') ? 'active' : '' }} ms-0" href="/admin/roster">Cuti Roster</a>
-      <a class="nav-link {{ (request()->segment(2) == 'permohonan') ? 'active' : '' }} ms-0" href="/admin/roster/permohonan">Data Permohonan</a>
-    </nav>
-    <hr class="mt-0 mb-4" />
     <div class="row">
       <div class="col-lg-12 mb-2">
         <form action="/roster/daftar-pengingat" method="get">
@@ -64,9 +59,11 @@
                 <tr>
                   <th>No</th>
                   <th>NIK</th>
-                  <th>Tanggal Pengajuan</th>
-                  <th>Tipe Pilihan</th>
+                  <th>Nama</th>
+                  <th>Tanggal pengajuan</th>
+                  <th>Tipe pilihan</th>
                   <th>Form</th>
+                  <th>Aksi</th>
                 </tr>
               </thead>
               <tbody>
@@ -74,6 +71,7 @@
                 <tr>
                   <td>{{ ++$no }}</td>
                   <td>{{ $data->nik_karyawan }}</td>
+                  <td>{{ getName($data->nik_karyawan) }}</td>
                   <td>{{ $data->tanggal_pengajuan }}</td>
                   <td>
                     @if($data->periode_kerja->tipe_rencana == '1')
@@ -83,7 +81,10 @@
                     @endif
                   </td>
                   <td>
-                    <a href="{{route('admindept.print', $data->id)}}" target="_blank" class="btn btn-sm btn-primary">Unduh</a>
+                    <a href="{{route('admindept.print', $data->id)}}" target="_blank" class="btn btn-sm btn-secondary"><i data-feather="download"></i></a>
+                  </td>
+                  <td>
+                    <a href="{{route('admindept.print', $data->id)}}" target="_blank" class="btn btn-sm btn-primary">Detail</a>
                   </td>
                 </tr>
                 @endforeach

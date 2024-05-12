@@ -17,14 +17,8 @@
                     <div class="col-auto mb-3">
                         <h1 class="page-header-title">
                             <div class="page-header-icon"><i data-feather="user"></i></div>
-                            Informasi
+                            Status pengajuan
                         </h1>
-                    </div>
-                    <div class="col-12 col-xl-auto mb-3">
-                        <a class="btn btn-sm btn-light text-blue" href="/account/profile">
-                            <i class="me-1" data-feather="x"></i>
-                            Tutup
-                        </a>
                     </div>
                 </div>
             </div>
@@ -32,8 +26,6 @@
     </header>
     <!-- Main page content-->
     <div class="container-xl px-4 mt-4">
-        <x-nav-account />
-        <hr class="mt-0 mb-4" />
         <div class="row">
             @foreach($datas as $data)
             <div class="col-lg-12 mb-2">
@@ -117,25 +109,6 @@
                             <div class="timeline-item-content">Langkah selanjutnya...</div>
                             @endif
                         </div>
-                        <div class="timeline-item">
-                            <div class="timeline-item-marker">
-                                <div class="timeline-item-marker-text">Penanggung Jawab</div>
-                                <div class="timeline-item-marker-indicator">
-                                    @if($data->status_penanggung_jawab == 'Menunggu')
-                                    4
-                                    @else
-                                    <i data-feather="check"></i>
-                                    @endif
-                                </div>
-                            </div>
-                            @if($data->status_hod == 'Diterima' && $data->status_hrd == 'Menunggu' && $data->status_penanggung_jawab == 'Menunggu')
-                            <div class="timeline-item-content">Langkah selanjutnya...</div>
-                            @elseif($data->status_hod == 'Menunggu' && $data->status_hrd == 'Menunggu' && $data->status_penanggung_jawab == 'Menunggu')
-                            <div class="timeline-item-content">Langkah selanjutnya...</div>
-                            @elseif($data->status_hod == 'Diterima' && $data->status_hrd == 'Diterima' && $data->status_penanggung_jawab == 'Diterima')
-                            <div class="timeline-item-content text-success">Syarat terpenuhi.</div>
-                            @endif
-                        </div>
                         <div class="timeline-item mb-3">
                             <div class="timeline-item-marker">
                                 <div class="timeline-item-marker-text">Selesai</div>
@@ -147,7 +120,7 @@
                                     @endif
                                 </div>
                             </div>
-                            @if($data->status_hrd == 'Diterima' && $data->status_hod == 'Diterima' && $data->status_penanggung_jawab == 'Diterima')
+                            @if($data->status_hrd == 'Diterima' && $data->status_hod == 'Diterima')
                             <div class="timeline-item-content text-success">Pengajuan cuti izin tahunan selesai.</div>
                             @elseif($data->status_hod == 'Menunggu' && $data->status_hrd == 'Menunggu' && $data->status_penanggung_jawab == 'Menunggu')
                             <div class="timeline-item-content">Langkah selanjutnya...</div>

@@ -15,8 +15,8 @@
 				<div class="row align-items-center justify-content-between pt-3">
 					<div class="col-auto mb-3">
 						<h1 class="page-header-title">
-							<div class="page-header-icon"><i data-feather="user"></i></div>
-							Cuti Roster & form
+							<div class="page-header-icon"><i data-feather="bell"></i></div>
+							Pengingat
 						</h1>
 					</div>
 				</div>
@@ -26,11 +26,6 @@
 	<!-- Main page content-->
 	<div class="container-fluid px-4">
 		<x-message />
-		<nav class="nav nav-borders">
-			<a class="nav-link {{ (request()->segment(2) == 'daftar-pengingat') ? 'active' : '' }} ms-0" href="/admin/roster">Cuti Roster</a>
-			<a class="nav-link {{ (request()->segment(2) == 'permohonan') ? 'active' : '' }} ms-0" href="/admin/roster/permohonan">Data Permohonan</a>
-		</nav>
-		<hr class="mt-0 mb-4" />
 		<div class="row">
 			<div class="col-lg-12 mb-2">
 				<form action="/admin/roster" method="get">
