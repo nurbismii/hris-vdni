@@ -47,30 +47,30 @@ class RegisterController extends Controller
 
     public function register(StoreRegisterRequest $request)
     {
+        DB::beginTransaction();
+        $employee = employee::where('nik', $request->employee_id)->first();
+
+        $check_user = User::where('nik_karyawan', $request->employee_id)->first();
+
+        if ($check_user) {
+            return back()->with('info', 'Akun pengguna telah tersedia, laporkan ini ke kantor HRD');
+        }
+
+        if ($request->password == $request->password_confirm) {
+            $data_user = array(
+                'id' => Uuid::uuid4()->getHex(),
+                'nik_karyawan' => $request->employee_id,
+                'name' => $employee->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'status' => 'Tidak Aktif',
+            );
+            $user = User::create($data_user);
+            Mail::to($user->email)->send(new SendEmailVerification($user));
+            DB::commit();
+            return redirect('login')->with('success', 'Silahkan verifikasi email kamu.');
+        }
         try {
-            DB::beginTransaction();
-            $employee = employee::where('nik', $request->employee_id)->first();
-
-            $check_user = User::where('nik_karyawan', $request->employee_id)->first();
-
-            if ($check_user) {
-                return back()->with('info', 'Akun pengguna telah tersedia, laporkan ini ke kantor HRD');
-            }
-
-            if ($request->password == $request->password_confirm) {
-                $data_user = array(
-                    'id' => Uuid::uuid4()->getHex(),
-                    'nik_karyawan' => $request->employee_id,
-                    'name' => $employee->name,
-                    'email' => $request->email,
-                    'password' => Hash::make($request->password),
-                    'status' => 'Tidak Aktif',
-                );
-                $user = User::create($data_user);
-                Mail::to($user->email)->send(new SendEmailVerification($user));
-                DB::commit();
-                return redirect('login')->with('success', 'Silahkan verifikasi email kamu.');
-            }
         } catch (\Throwable $e) {
             DB::rollBack();
             return back()->with('error', 'Terjadi kesalahan!');
