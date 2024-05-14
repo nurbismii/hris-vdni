@@ -66,7 +66,7 @@
               <div class="row gx-3 mb-2">
                 <div class="col-md-6 mb-2">
                   <label class="small mb-2">No HP</label>
-                  <input class="form-control" name="no_telp" type="number" value="{{$data->karyawan->no_telp}}" readonly />
+                  <input class="form-control" name="no_telp" type="number" value="{{$data->no_telp}}" readonly />
                 </div>
                 <div class="col-md-6 mb-2">
                   <label class="small mb-2">Divisi</label>
@@ -76,7 +76,7 @@
               <div class="row gx-3 mb-2">
                 <div class="col-md-6">
                   <label class="small mb-2">Email</label>
-                  <input class="form-control" name="email" type="email" value="{{$data->karyawan->email}}" />
+                  <input class="form-control" name="email" type="email" value="{{$data->email}}" />
                 </div>
                 <div class="col-md-6">
                   <label class="small mb-2">Tanggal Pengajuan</label>
@@ -249,7 +249,15 @@
           <div class="card-body">
             <form action="{{ route('cutiroster.update', $data->id) }}" method="post">
               @csrf
-              <label for="" class="mb-2">Status pengajuan</label>
+              <label for="" class="mb-2">Persetujuan HOD</label>
+              @if($data->status_pengajuan == 'diterima')
+              <h5><span class="badge bg-success fw-bold">{{ ucfirst($data->status_pengajuan) }}</span></h5>
+              @elseif($data->status_pengajuan == 'ditolak')
+              <h5><span class="badge bg-danger">{{ ucfirst($data->status_pengajuan) }}</span></h5>
+              @else
+              <h5><span class="badge bg-primary">{{ ucfirst($data->status_pengajuan) }}</span></h5>
+              @endif
+              <label for="" class="mb-2">Persetujuan HR</label>
               <select name="status_pengajuan" class="form-select">
                 <option value="{{$data->status_pengajuan}}">{{ ucfirst($data->status_pengajuan)}}</option>
                 @if($data->status_pengajuan != 'diterima')
@@ -275,11 +283,11 @@
               <input type="file" name="tiket_pesawat" class="form-control">
               <hr class="my-4" />
               <div class="mb-3">
-                Tiket : 
+                Tiket :
                 @if($data->tiket_pesawat != null)
                 <a href="{{route('cutiroster.download.tiket', $data->id)}}" target="_blank" rel="noopener noreferrer">{{ substr($data->tiket_pesawat, 0, 35) }}...</a>
                 @else
-                  Tiket belum tersedia
+                Tiket belum tersedia
                 @endif
               </div>
               <hr class="my-4" />

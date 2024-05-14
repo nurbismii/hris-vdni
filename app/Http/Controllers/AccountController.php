@@ -154,4 +154,15 @@ class AccountController extends Controller
 
         return back()->with('success', 'Berhasil melakukan perubahan');
     }
+
+    public function statusPermohonan()
+    {
+        $cuti = CutiRoster::join('employees', 'employees.nik', '=', 'cuti_roster.nik_karyawan')
+            ->join('periode_kerja_roster', 'periode_kerja_roster.cuti_roster_id', '=', 'cuti_roster.id')
+            ->orderBy('cuti_roster.id', 'desc')
+            ->select('cuti_roster.*', 'employees.nama_karyawan',  'periode_kerja_roster.tipe_rencana')
+            ->get();
+
+        return view('account/permohonan-cuti-roster', compact('cuti'));
+    }
 }

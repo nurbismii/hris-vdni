@@ -28,24 +28,25 @@
     <x-message />
     <div class="row">
       <div class="col-lg-12 mb-2">
-        <form action="/roster/daftar-pengingat" method="get">
+        <form action="/admin/roster/permohonan" method="get">
           @csrf
           <div class="card">
             <div class="card-body" style="overflow-x: auto;">
               <select name="status_pengajuan" id="" class="form-select">
                 <option value="" disabled selected>Pilih status pengajuan :</option>
-                <option value="Belum Pengajuan">Belum pengajuan</option>
-                <option value="Jatuh Tempo">Jatuh tempo</option>
+                <option value="menunggu">Menunggu</option>
+                <option value="diterima">Diterima</option>
+                <option value="ditolak">Ditolak</option>
               </select>
               <div class="mt-2">
-                <button class="btn btn-sm btn-light text-primary" type="submit">
-                  <i class="me-1" data-feather="search"></i>
-                  Filter
-                </button>
-                <a class="btn btn-sm btn-light text-primary" href="/roster/daftar-pengingat">
+                <a class="btn btn-sm btn-light text-primary" href="/admin/roster/permohonan">
                   <i class="me-1" data-feather="trash"></i>
                   Bersihkan
                 </a>
+                <button class="btn btn-sm btn-light text-primary" type="submit">
+                  <i class="me-1" data-feather="search"></i>
+                  Pencarian
+                </button>
               </div>
             </div>
           </div>
@@ -62,6 +63,8 @@
                   <th>Nama</th>
                   <th>Tanggal pengajuan</th>
                   <th>Tipe pilihan</th>
+                  <th>HOD</th>
+                  <th>HRD</th>
                   <th>Form</th>
                   <th>Aksi</th>
                 </tr>
@@ -81,10 +84,28 @@
                     @endif
                   </td>
                   <td>
+                    @if($data->status_pengajuan == 'diterima')
+                    <span class="badge bg-success fw-bold">{{ ucfirst($data->status_pengajuan) }}</span>
+                    @elseif($data->status_pengajuan == 'ditolak')
+                    <span class="badge bg-danger">{{ ucfirst($data->status_pengajuan) }}</span>
+                    @else
+                    <span class="badge bg-primary">{{ ucfirst($data->status_pengajuan) }}</span>
+                    @endif
+                  </td>
+                  <td>
+                    @if($data->status_pengajuan_hrd == 'diterima')
+                    <span class="badge bg-success fw-bold">{{ ucfirst($data->status_pengajuan_hrd) }}</span>
+                    @elseif($data->status_pengajuan_hrd == 'ditolak')
+                    <span class="badge bg-danger">{{ ucfirst($data->status_pengajuan_hrd) }}</span>
+                    @else
+                    <span class="badge bg-primary">{{ ucfirst($data->status_pengajuan_hrd) }}</span>
+                    @endif
+                  </td>
+                  <td>
                     <a href="{{route('admindept.print', $data->id)}}" target="_blank" class="btn btn-sm btn-secondary"><i data-feather="download"></i></a>
                   </td>
                   <td>
-                    <a href="{{route('admindept.print', $data->id)}}" target="_blank" class="btn btn-sm btn-primary">Detail</a>
+                    <a href="{{ route('detail.pengajuan.roster', $data->id) }}" target="_blank" class="btn btn-sm btn-primary">Persetujuan</a>
                   </td>
                 </tr>
                 @endforeach

@@ -54,12 +54,13 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
         route::get('', [KaryawanRosterController::class, 'viewAdminDept']);
         route::get('pengajuan/{id}', [KaryawanRosterController::class, 'viewAdminDeptFormCuti'])->name('admindept.formcuti');
         route::get('pengajuan/print/{id}', [KaryawanRosterController::class, 'viewAdminPrint'])->name('admindept.print');
-        route::post('/pengajuan/store', [KaryawanRosterController::class, 'adminDeptStore'])->name('admindept.cuti.store');
-        route::get('/permohonan', [KaryawanRosterController::class, 'adminDeptListCetak'])->name('admindept.listcetak');
+        route::patch('/update/{id}', [CutiIzinController::class, 'cutiRosterUpdate'])->name('admindept.update.pengajuan');
+        route::get('/permohonan', [KaryawanRosterController::class, 'adminListPengajuan']);
     });
 
     Route::group(['prefix' => 'admin/cuti/', 'middleware' => ['isAdminDivisi']], function () {
         route::get('/', [CutiIzinController::class, 'viewAdminDeptCuti']);
+        route::get('/detail/{id}', [CutiIzinController::class, 'viewAdminDeptDetailPengajuan'])->name('detail.pengajuan.roster');
         route::get('/tahunan', [CutiIzinController::class, 'viewAdminDeptCutiTahunan']);
         route::post('/tahunan/store', [CutiIzinController::class, 'adminDeptstoreCutiTahunan']);
         route::get('/paidleave', [CutiIzinController::class, 'viewAdminDeptPaidLeave']);
@@ -80,7 +81,10 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
         route::post('/store-izin-dibayarkan', [CutiIzinController::class, 'storeIzinDibayarkan']);
         route::get('izin-tidak-dibayarkan', [CutiIzinController::class, 'izinTidakDibayarkan']);
         route::post('/store-izin-tidak-dibayarkan', [CutiIzinController::class, 'storeIzinTidakDibayarkan']);
-        route::get('/status-permohonan', [CutiIzinController::class, 'statusPermohonan']);
+        route::get('/status-permohonan', [AccountController::class, 'statusPermohonan']);
+        route::post('/pengajuan/store', [KaryawanRosterController::class, 'pengajuanCutiRoster'])->name('store.pengajuan.roster');
+        route::get('/detail/{id}', [KaryawanRosterController::class, 'pengajuanCutiRosterDetail'])->name('show.pengajuan.roster');
+        route::delete('/delete/{id}', [KaryawanRosterController::class, 'pengajuanCutiRosterHapus'])->name('destroy.pengajuan.roster');
     });
 
     Route::group(['prefix' => 'absen'], function () {
@@ -287,17 +291,6 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
         });
 
         Route::group(['prefix' => 'roster'], function () {
-            route::get('/kalender', [KaryawanRosterController::class, 'index']);
-            route::post('/import-karyawan-roster', [KaryawanRosterController::class, 'importKaryawanRoster'])->name('import.karyawanRoster');
-            route::post('/import-delete-karyawan-roster', [KaryawanRosterController::class, 'importDeleteKaryawanRoster'])->name('import.deleteKaryawanRoster');
-            route::get('/daftar-pengingat', [KaryawanRosterController::class, 'reminder']);
-            route::get('/aktif', [KaryawanRosterController::class, 'rosterAktif']);
-            route::patch('/update/status-pengajuan/{id}', [KaryawanRosterController::class, 'updateStatusPengajuan'])->name('update.statusPengajuan');
-        });
-
-
-
-        Route::group(['prefix' => 'roster'], function () {
             route::get('/', [CutiIzinController::class, 'cutiRoster']);
             route::get('/server-side', [CutiIzinController::class, 'serverSideCutiRoster']);
             route::get('/create', [CutiIzinController::class, 'cutiRosterCreate']);
@@ -307,6 +300,13 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
             route::post('/upload/tiket/{id}', [CutiIzinController::class, 'uploadTiketPesawat'])->name('cutiroster.upload.tiket');
             route::post('/download/tiket/{id}', [CutiIzinController::class, 'downloadTiketPesawat'])->name('cutiroster.download.tiket');
             route::get('/download/berkas/{id}', [CutiIzinController::class, 'downloadBerkas'])->name('cutiroster.download');
+
+            route::get('/kalender', [KaryawanRosterController::class, 'index']);
+            route::post('/import-karyawan-roster', [KaryawanRosterController::class, 'importKaryawanRoster'])->name('import.karyawanRoster');
+            route::post('/import-delete-karyawan-roster', [KaryawanRosterController::class, 'importDeleteKaryawanRoster'])->name('import.deleteKaryawanRoster');
+            route::get('/daftar-pengingat', [KaryawanRosterController::class, 'reminder']);
+            route::get('/aktif', [KaryawanRosterController::class, 'rosterAktif']);
+            route::patch('/update/status-pengajuan/{id}', [KaryawanRosterController::class, 'updateStatusPengajuan'])->name('update.statusPengajuan');
         });
 
         Route::group(['prefix' => 'periode'], function () {

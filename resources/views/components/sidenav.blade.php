@@ -106,9 +106,11 @@
                 </div>
                 @endif
 
-                <div class="sidenav-menu-heading">Main menu</div>
+
 
                 @if(strtolower(Auth::user()->job->permission_role ?? '') == 'admin divisi')
+                <div class="sidenav-menu-heading">Main menu</div>
+
                 <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseKelolaCuti" aria-expanded="false" aria-controls="collapseKelolaCuti">
                     <div class="nav-link-icon"><i data-feather="calendar"></i></div>
                     Pengajuan karyawan
@@ -124,7 +126,12 @@
                     <div class="nav-link-icon"><i data-feather="bell"></i></div>
                     Pengingat
                 </a>
-                @else 
+                @endif
+
+                @if(strtolower(Auth::user()->job->permission_role ?? '') == '')
+
+                <div class="sidenav-menu-heading">Main menu</div>
+
                 <a class="nav-link {{ (request()->segment(2) == 'pengajuan' || request()->segment(2) == 'status-permohonan') ? '' : 'collapsed' }}" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseStatusPengajuan" aria-expanded="false" aria-controls="collapseStatusPengajuan">
                     <div class="nav-link-icon"><i data-feather="calendar"></i></div>
                     Status pengajuan
@@ -133,15 +140,15 @@
                 <div class="collapse {{ (request()->segment(2) == 'status-permohonan' || request()->segment(2) == 'pengajuan') ? 'show' : '' }}" id="collapseStatusPengajuan" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav">
                         <a class="nav-link {{ (request()->segment(2) == 'status-permohonan') ? 'active' : '' }}" href="/karyawan/status-permohonan">Cuti roster</a>
-                        <a class="nav-link {{ (request()->segment(2) == 'pengajuan') ? 'active' : '' }}" href="/account/pengajuan">Cuti tahunan</a>
+                        <a class="nav-link {{ (request()->segment(2) == 'pengajuan') ? 'active' : '' }}" href="/account/pengajuan">Cuti tahunan dan izin</a>
                     </nav>
                 </div>
-                <a class="nav-link {{ (request()->segment(1) == 'karyawan') ? '' : 'collapsed' }}" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseKelolaCuti" aria-expanded="false" aria-controls="collapseKelolaCuti">
+                <a class="nav-link {{ (request()->segment(1) == 'karyawan' && request()->segment(2) == '') ? '' : 'collapsed' }}" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseKelolaCuti" aria-expanded="false" aria-controls="collapseKelolaCuti">
                     <div class="nav-link-icon"><i data-feather="calendar"></i></div>
                     Pengajuan
                     <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
-                <div class="collapse {{ (request()->segment(1) == 'karyawan') ? 'show' : '' }}" id="collapseKelolaCuti" data-bs-parent="#accordionSidenav">
+                <div class="collapse {{ (request()->segment(1) == 'karyawan' && request()->segment(2) == '') ? 'show' : '' }}" id="collapseKelolaCuti" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav">
                         <a class="nav-link {{ (request()->segment(2) == 'cuti' && request()->segment(3) == 'roster') ? 'active' : '' }}" href="/karyawan/cuti/roster">Cuti roster</a>
                         <a class="nav-link {{ (request()->segment(2) == 'cuti' && request()->segment(3) == '') ? 'active' : '' }}" href="/karyawan/cuti">Cuti tahunan</a>
@@ -173,6 +180,7 @@
                         <a class="nav-link" href="/periode">Periode roster</a>
                         <a class="nav-link" href="/setting/waktu-absen">Waktu absen</a>
                         <a class="nav-link" href="/setting/pasal">Pasal</a>
+                    </nav>
                 </div>
                 @endif
             </div>

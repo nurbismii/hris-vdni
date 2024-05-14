@@ -50,12 +50,12 @@
     <div class="card">
       <div class="card-body">
         <div class="row justify-content-center">
-          <div class="col-lg-12">
+          <div class="col-xxl-6 col-xl-8">
             <h3 class="text-primary text-center">Formulir cuti roster</h3>
             <h5 class="card-title mb-4">
               <img src="{{ asset('assets/img/backgrounds/vdni-ikon.png') }}" style="height: 30px;" class="">
             </h5>
-            <form action="{{ route('admindept.cuti.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('store.pengajuan.roster') }}" method="POST" enctype="multipart/form-data">
               @csrf
               <!-- <div class="mb-3">
                 <select class="form-select search" name="search" id="nik"></select>
@@ -172,7 +172,7 @@
               </div>
               <div class="row g-3 align-items-center mb-2">
                 <div class="col-lg-2">
-                  <label for="satu" class="col-form-label">IV</label>
+                  <label for="satu" class="col-form-label">V</label>
                 </div>
                 <div class="col-lg-5">
                   <select name="lima" class="form-select" id="">
@@ -186,7 +186,7 @@
               </div>
               <hr class="mt-2 mb-2">
               <div class="row">
-                <div class="table-responsive col-lg-6">
+                <div class="table-responsive col-lg-12">
                   <table class="table table-borderless mb-2">
                     <thead class="border-bottom">
                       <tr class="small text-uppercase text-muted">
@@ -261,7 +261,7 @@
                     </tbody>
                   </table>
                 </div>
-                <div class="table-responsive col-lg-6">
+                <div class="table-responsive col-lg-12">
                   <table class="table table-borderless mb-0">
                     <thead class="border-bottom">
                       <tr class="small text-uppercase text-muted">

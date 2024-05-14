@@ -272,7 +272,7 @@ class CutiIzinController extends Controller
     public function cutiRosterUpdate(Request $request, $id)
     {
         CutiRoster::where('id', $id)->update([
-            'status_pengajuan' => $request->status_pengajuan,
+            'status_pengajuan_hrd' => $request->status_pengajuan,
         ]);
 
         return back()->with('success', 'Berhasil melakukan perubahan status pengajuan');
@@ -473,5 +473,17 @@ class CutiIzinController extends Controller
             'status_hod' => 'Diterima'
         ]);
         return back()->with('success', 'Status pengajuan telah disetujui oleh Head of Departement');
+    }
+
+    public function viewAdminDeptDetailPengajuan($id)
+    {
+        $data = CutiRoster::join('employees', 'employees.nik', '=', 'cuti_roster.nik_karyawan')
+            ->join('periode_kerja_roster', 'periode_kerja_roster.cuti_roster_id', '=', 'cuti_roster.id')
+            ->orderBy('cuti_roster.id', 'desc')
+            ->select('cuti_roster.*', 'employees.nama_karyawan',  'periode_kerja_roster.tipe_rencana')
+            ->where('cuti_roster.id', $id)
+            ->first();
+
+        return view('admin-dept.pengingat.permohonan-detail', compact('data'));
     }
 }
