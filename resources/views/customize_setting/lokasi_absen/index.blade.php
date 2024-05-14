@@ -50,7 +50,7 @@
                         @foreach($datas as $data)
                         <tr>
                             <td>{{ ++$no }}</td>
-                            <td>{{ $data->divisi->nama_divisi }}</td>
+                            <td>{{ $data->divisi->nama_divisi ?? ''}}</td>
                             <td>{{ $data->lat }}</td>
                             <td>{{ $data->long }}</td>
                             <td>{{ $data->jarak_toleransi }}m</td>
@@ -123,7 +123,7 @@
                     <div class="modal-body">
                         <div class="mb-3">
                             <label class="small mb-1">Divisi</label>
-                            <input type="text" class="form-control" value="{{ $data->divisi->nama_divisi }}" readonly>
+                            <input type="text" class="form-control" value="{{ $data->divisi->nama_divisi ?? '' }}" readonly>
                             <input type="hidden" name="divisi_id" class="form-control" value="{{ $data->divisi_id }}" readonly>
                         </div>
                         <div class="mb-3">
@@ -161,7 +161,7 @@
                     <div class="modal-body">
                         @csrf
                         {{ method_field('delete') }}
-                        Apa kamu yakin ingin menghapus data ini ({{ $data->divisi->nama_divisi }})?
+                        Apa kamu yakin ingin menghapus data ini ({{ $data->divisi->nama_divisi ?? ''}})?
                     </div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary btn-sm" type="button" data-bs-dismiss="modal">Tutup</button>
