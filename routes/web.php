@@ -29,7 +29,7 @@ use App\Http\Controllers\PerusahaanController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/konfirmasi-email/{nik_karyawan}', [RegisterController::class, 'konfirmasiEmail']);
+Route::get('/konfirmasi/{nik_karyawan}', [RegisterController::class, 'konfirmasiEmail']);
 
 Route::get('/lupa-kata-sandi', [ForgotPasswordController::class, 'index']);
 Route::post('/reset-kata-sandi', [ResetPasswordController::class, 'resetPassword'])->name('reset.password');
