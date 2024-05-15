@@ -34,7 +34,7 @@ class SendEmailResetPassword extends Mailable
             'id' => $this->detail['id'],
             'email' => $this->detail['email']
         ];
-        return $this->from('hr.site@vdni.top')->view('auth.reset-password-email', compact('data'))->with([
+        return $this->from('no-reply@vdni.top')->view('auth.reset-password-email', compact('data'))->with([
             'data' => $data
         ]);
     }
