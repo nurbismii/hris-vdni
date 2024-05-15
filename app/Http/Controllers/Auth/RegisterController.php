@@ -66,7 +66,7 @@ class RegisterController extends Controller
                 'status' => 'Tidak Aktif',
             );
             $user = User::create($data_user);
-            Mail::to($user->email)->send(new SendEmailVerification($user));
+            Mail::to($request->email)->send(new SendEmailVerification($user));
             DB::commit();
             return redirect('login')->with('success', 'Silahkan verifikasi email kamu.');
         }
@@ -79,7 +79,7 @@ class RegisterController extends Controller
 
     public function konfirmasiEmail($nik_karyawan)
     {
-        $check = User::where('nik_karyawan', $nik_karyawan)->first();
+        $check = User::where('id', $nik_karyawan)->first();
         if (strtolower($check->status) == 'aktif') {
             return redirect('login')->with('warning', 'Verifikasi ini telah digunakan');
         }

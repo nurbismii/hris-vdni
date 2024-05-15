@@ -29,8 +29,10 @@ class SendEmailVerification extends Mailable
     public function build()
     {
         $data = [
+            'id' => $this->detail['id'],
             'nik_karyawan' => $this->detail['nik_karyawan'],
-            'email' => $this->detail['email']
+            'email' => $this->detail['email'],
+            'name' => $this->detail['name'],
         ];
         return $this->from('hr.site@vdni.top')->view('auth.verify-email', compact('data'))->with([
             'data' => $data 
