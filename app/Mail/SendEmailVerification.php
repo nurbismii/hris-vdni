@@ -32,7 +32,7 @@ class SendEmailVerification extends Mailable
             'nik_karyawan' => $this->detail['nik_karyawan'],
             'email' => $this->detail['email']
         ];
-        return $this->from('hr.site@vdni.top')->subject('Verifikasi email kamu')->view('auth.verify-email', compact('data'))->with([
+        return $this->from('hr.site@vdni.top')->view('auth.verify-email', compact('data'))->with([
             'data' => $data 
         ]);
     }
