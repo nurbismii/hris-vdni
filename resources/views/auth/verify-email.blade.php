@@ -24,7 +24,7 @@
                                             <tr>
                                                 <td style="padding-top: 60px; padding-bottom: 20px;" align="center" valign="middle" class="emailLogo">
                                                     <a href="#" style="text-decoration:none" target="_blank">
-                                                        <img alt="" border="0" src="{{ asset('assets/img/backgrounds/vdni-ikon.png') }}" style="width:100%;max-width:150px;height:auto;display:block" width="150">
+                                                        <img alt="" border="0" src="{{ public_path('assets/img/backgrounds/vdni-ikon.png') }}" style="width:100%;max-width:150px;height:auto;display:block" width="150">
                                                     </a>
                                                 </td>
                                             </tr>
@@ -81,7 +81,7 @@
                                                 <td align="center" valign="middle" style="padding-bottom: 40px;" class="emailRegards">
                                                     <!-- Image and Link // -->
                                                     <a href="#" target="_blank" style="text-decoration:none;">
-                                                        <img mc:edit="signature" src="{{ asset('assets/img/backgrounds/icon.png') }}" alt="" width="150" border="0" style="width:100%; max-width:150px; height: 100px; display:block;">
+                                                        <img mc:edit="signature" src="{{ public_path('assets/img/backgrounds/icon.png') }}" alt="" width="150" border="0" style="width:100%; max-width:150px; height: 100px; display:block;">
                                                     </a>
                                                 </td>
                                             </tr>
