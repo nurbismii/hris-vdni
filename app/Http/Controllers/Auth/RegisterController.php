@@ -79,7 +79,7 @@ class RegisterController extends Controller
 
     public function konfirmasiEmail($nik_karyawan)
     {
-        $check = User::where('id', $nik_karyawan)->first();
+        $check = User::where('nik_karyawan', $nik_karyawan)->first();
         if (strtolower($check->status) == 'aktif') {
             return redirect('login')->with('warning', 'Verifikasi ini telah digunakan');
         }

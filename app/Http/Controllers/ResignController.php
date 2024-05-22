@@ -36,7 +36,7 @@ class ResignController extends Controller
                     'url_surat' => route('resign.surat', $data->nik_karyawan),
                 ]);
             })->filter(function ($instance) use ($request) {
-                if ($request->tipe == 'BAIK' || $request->tipe == 'PASAL (50)' || $request->tipe == 'PB RESIGN' || $request->tipe == 'PHK' || $request->tipe == 'KABUR' || $request->tipe == 'PUTUS KONTRAK') {
+                if ($request->tipe == 'RESIGN SESUAI PROSEDUR' || $request->tipe == 'RESIGN TIDAK SESUAI PROSEDUR' || $request->tipe == 'PB RESIGN' || $request->tipe == 'PHK' || $request->tipe == 'PB PHK' || $request->tipe == 'PUTUS KONTRAK') {
                     $instance->where('tipe', $request->get('tipe'));
                 }
                 if (!empty($request->get('search'))) {

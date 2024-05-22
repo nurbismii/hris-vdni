@@ -47,7 +47,7 @@
                                             </tr>
                                             <tr>
                                                 <td style="padding-left:20px;padding-right:20px" align="center" valign="top" class="containtTable ui-sortable">
-                                                    <table border="0" cellpadding="0" cellspacing="0" width="100%" class="tableDescription" style="">
+                                                    <table border="0" cellpadding="0" cellspacing="0" width="100%" class="tableDescription">
                                                         <tbody>
                                                             <tr>
                                                                 <td style="padding-bottom: 20px;" align="center" valign="top" class="description">
@@ -56,7 +56,7 @@
                                                             </tr>
                                                         </tbody>
                                                     </table>
-                                                    <table border="0" cellpadding="0" cellspacing="0" width="100%" class="tableButton" style="">
+                                                    <table border="0" cellpadding="0" cellspacing="0" width="100%" class="tableButton">
                                                         <tbody>
                                                             <tr>
                                                                 <td style="padding-top:20px;padding-bottom:20px" align="center" valign="top">
@@ -137,7 +137,7 @@
                                             <tr>
                                                 <td style="padding: 0px 10px 10px;" align="center" valign="top" class="footerEmailInfo">
                                                     <p class="text" style="color:#bbb;font-family:'Open Sans',Helvetica,Arial,sans-serif;font-size:12px;font-weight:400;font-style:normal;letter-spacing:normal;line-height:20px;text-transform:none;text-align:center;padding:0;margin:0">Jika Anda memiliki pertanyaan, silakan hubungi kami <a href="#" style="color:#bbb;text-decoration:underline" target="_blank">hr.site@vdni.top</a>
-                                                        <br> <a href="#" style="color:#bbb;text-decoration:underline" target="_blank">Unsubscribe</a> from our mailing lists
+                                                        <br> <a href="#" style="color:#bbb;text-decoration:underline" target="_blank">Berhenti berlangganan </a> dari mailing kami
                                                     </p>
                                                 </td>
                                             </tr>
