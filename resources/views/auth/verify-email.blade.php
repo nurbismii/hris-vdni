@@ -24,7 +24,7 @@
                                             <tr>
                                                 <td style="padding-top: 60px; padding-bottom: 20px;" align="center" valign="middle" class="emailLogo">
                                                     <a href="#" style="text-decoration:none" target="_blank">
-                                                        <img alt="" border="0" src="{{ public_path('assets/img/backgrounds/vdni-ikon.png') }}" style="width:100%;max-width:150px;height:auto;display:block" width="150">
+                                                        <img alt="" border="0" src="{{ asset('assets/img/backgrounds/vdni-ikon.png') }}" style="width:100%;max-width:150px;height:auto;display:block" width="150">
                                                     </a>
                                                 </td>
                                             </tr>
@@ -81,7 +81,7 @@
                                                 <td align="center" valign="middle" style="padding-bottom: 40px;" class="emailRegards">
                                                     <!-- Image and Link // -->
                                                     <a href="#" target="_blank" style="text-decoration:none;">
-                                                        <img mc:edit="signature" src="{{ public_path('assets/img/backgrounds/icon.png') }}" alt="" width="150" border="0" style="width:100%; max-width:150px; height: 100px; display:block;">
+                                                        <img mc:edit="signature" src="{{ asset('assets/img/backgrounds/icon.png') }}" alt="" width="150" border="0" style="width:100%; max-width:150px; height: 100px; display:block;">
                                                     </a>
                                                 </td>
                                             </tr>
@@ -139,16 +139,6 @@
                                                     <p class="text" style="color:#bbb;font-family:'Open Sans',Helvetica,Arial,sans-serif;font-size:12px;font-weight:400;font-style:normal;letter-spacing:normal;line-height:20px;text-transform:none;text-align:center;padding:0;margin:0">Jika Anda memiliki pertanyaan, silakan hubungi kami <a href="#" style="color:#bbb;text-decoration:underline" target="_blank">hr.site@vdni.top</a>
                                                         <br> <a href="#" style="color:#bbb;text-decoration:underline" target="_blank">Berhenti berlangganan </a> dari mailing kami
                                                     </p>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td style="padding-top:10px;padding-bottom:10px;padding-left:10px;padding-right:10px" align="center" valign="top" class="appLinks">
-                                                    <a href="#Play-Store-Link" style="display: inline-block;" target="_blank" class="play-store">
-                                                        <img alt="" border="0" src="http://email.aumfusion.com/vespro/img/app/play-store.png" style="height:auto;margin:5px;width:100%;max-width:120px" width="120">
-                                                    </a>
-                                                    <a href="#App-Store-Link" style="display: inline-block;" target="_blank" class="app-store">
-                                                        <img alt="" border="0" src="http://email.aumfusion.com/vespro/img/app/app-store.png" style="height:auto;margin:5px;width:100%;max-width:120px" width="120">
-                                                    </a>
                                                 </td>
                                             </tr>
                                             <tr>

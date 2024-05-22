@@ -77,13 +77,13 @@ class RegisterController extends Controller
         }
     }
 
-    public function konfirmasiEmail($nik_karyawan)
+    public function konfirmasiEmail($id)
     {
-        $check = User::where('nik_karyawan', $nik_karyawan)->first();
+        $check = User::where('id', $id)->first();
         if (strtolower($check->status) == 'aktif') {
             return redirect('login')->with('warning', 'Verifikasi ini telah digunakan');
         }
-        User::where('nik_karyawan', $nik_karyawan)->update([
+        User::where('id', $id)->update([
             'email_verified_at' => Carbon::now(),
             'status' => 'aktif'
         ]);
