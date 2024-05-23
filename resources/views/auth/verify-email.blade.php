@@ -81,7 +81,7 @@
                                                 <td align="center" valign="middle" style="padding-bottom: 40px;" class="emailRegards">
                                                     <!-- Image and Link // -->
                                                     <a href="#" target="_blank" style="text-decoration:none;">
-                                                        <img mc:edit="signature" src="{{ asset('assets/img/backgrounds/icon.png') }}" alt="" width="150" border="0" style="width:100%; max-width:150px; height: 100px; display:block;">
+                                                        <img mc:edit="signature" src="{{ asset('assets/img/backgrounds/Logo-05.png') }}" alt="" width="150" border="0" style="width:100%; max-width:150px; height: 100px; display:block;">
                                                     </a>
                                                 </td>
                                             </tr>
