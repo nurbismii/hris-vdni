@@ -42,9 +42,10 @@
 					<div class="card-body" style="overflow-x:auto;">
 						<table id="data-table-resign" class="table table-hover" style="width: 100%;">
 							<div class="row gx-3 mb-3">
-								<div class="col-md-12 mb-3">
+								<div class="col-md-6 mb-2">
+									<label class="small mb-1">Kategori keluar</label>
 									<select name="tipe" class="form-select" id="tipe">
-										<option value="" selected>- Pilih tipe pengunduran diri -</option>
+										<option value="" selected>- Pilih kategori -</option>
 										<option value="RESIGN SESUAI PROSEDUR">RESIGN SESUAI PROSEDUR</option>
 										<option value="RESIGN TIDAK SESUAI PROSEDUR">RESIGN TIDAK SESUAI PROSEDUR</option>
 										<option value="PHK">PHK</option>
@@ -52,6 +53,12 @@
 										<option value="PB RESIGN">PB RESIGN</option>
 										<option value="PUTUS KONTRAK">PUTUS KONTRAK</option>
 									</select>
+								</div>
+								<div class="col-md-6 mb-2">
+									<label class="small mb-1">Periode keluar</label>
+									<div class="input-group">
+										<input type="month" name="periode_resign" id="periode_resign" class="form-control">
+									</div>
 								</div>
 							</div>
 							<hr class="mt-0 mb-4" />
@@ -120,8 +127,10 @@
 					data: function(d) {
 						d.tipe = $('#tipe').val()
 						d.search = $('input[type="search"]').val()
+						d.periode_resign = $('#periode_resign').val()
 					}
 				},
+				
 				columns: [{
 						data: 'nik_karyawan',
 						name: 'nik_karyawan'
@@ -156,6 +165,10 @@
 			$('#tipe').change(function() {
 				table.draw();
 			});
+
+			$('#periode_resign').change(function() {
+        table.draw();
+      });
 
 		});
 	</script>

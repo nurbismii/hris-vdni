@@ -46,49 +46,21 @@ class ResignController extends Controller
                             ->orWhere('nama_karyawan', 'LIKE', "%$search%");
                     });
                 }
+                if ($request->get('periode_resign') != '') {
+
+                    $periode_resign = $request->periode_resign;
+                    $periode_resign = $periode_resign . '-16';
+
+                    $minus_one_month = date('Y-m-d', strtotime("$periode_resign -1 Month"));
+                    $plus_one_month_minus_one_day = date('Y-m-d', strtotime("$minus_one_month +1 Month -1 Day"));
+
+                    $instance->whereBetween('tanggal_keluar', [$minus_one_month, $plus_one_month_minus_one_day]);
+                }
             })
             ->rawColumns(['action'])
             ->make(true);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $data = Resign::join('employees', 'employees.nik', '=', 'resign.nik_karyawan')
@@ -102,29 +74,6 @@ class ResignController extends Controller
         }
 
         return view('industrial_relations.resign.edit', compact('data'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 
     public function importView()
