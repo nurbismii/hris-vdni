@@ -18,31 +18,31 @@
                 <div class="mt-4">
                     <x-message />
                 </div>
-                <div class="card shadow-lg border-0 rounded-lg mt-5">
+                <div class="card-opacation shadow-lg border-0 rounded-lg mt-5">
                     <div class="card-header text-center">
-                        <h3 class="fw-light my-2">Masuk</h3>
+                        <h3 class="fw-bold my-2 text-white">Masuk</h3>
                         <img src="{{ asset('assets/img/backgrounds/icon.png') }}" class="text-center" style="height: 55px;" alt="">
                     </div>
                     <div class="card-body">
                         <form action="{{ route('login') }}" method="POST">
                             @csrf
                             <div class="mb-3">
-                                <label class="small mb-1">Email</label>
-                                <input class="form-control @error('email') is-invalid @enderror" type="email" name="email" />
+                                <label class="small mb-1 text-white">Email</label>
+                                <input class="form-control-login @error('email') is-invalid @enderror" type="email" name="email" />
                             </div>
                             <div class="mb-3">
                                 <div class="form-group">
-                                    <label class="small mb-1">Password</label>
+                                    <label class="small mb-1 text-white">Password</label>
                                     <div class="input-group input-group-joined" id="show_hide_password">
-                                        <input class="form-control pe-0 @error('password') is-invalid @enderror" name="password" type="password" aria-label="Search">
-                                        <span class="input-group-text" style="background-color: #F5F5F5;">
+                                        <input class="form-control-login pe-0 @error('password') is-invalid @enderror" name="password" type="password" aria-label="Search">
+                                        <!-- <span class="input-group-text" style="background-color: #F5F5F5;">
                                             <a href=""><i class="fa fa-eye" aria-hidden="true"></i></a>
-                                        </span>
+                                        </span> -->
                                     </div>
                                 </div>
                             </div>
                             <div class="d-flex align-items-center justify-content-between mt-2 mb-3">
-                                <a class="small" href="/lupa-kata-sandi">Lupa kata sandi ?</a>
+                                <a class="small text-white" href="/lupa-kata-sandi">Lupa kata sandi ?</a>
                             </div>
                             <div class="text-center d-grid">
                                 <button type="submit" class="btn btn-success">Masuk</button>
@@ -50,7 +50,7 @@
                         </form>
                     </div>
                     <div class="card-footer text-center">
-                        <div class="small">Karyawan baru ? <a class="text-primary bold" href="{{ route('register') }}">Daftar sekarang!</a></div>
+                        <div class="small text-white fw-bold">Karyawan baru ? <a class="text-primary fw-bold" href="{{ route('register') }}">Daftar sekarang!</a></div>
                     </div>
                 </div>
             </div>

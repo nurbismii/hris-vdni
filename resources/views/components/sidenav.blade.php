@@ -81,7 +81,7 @@
                 </div> -->
 
                 <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseKelolaCuti" aria-expanded="false" aria-controls="collapseKelolaCuti">
-                    <div class="nav-link-icon"><i data-feather="calendar"></i></div>
+                    <div class="nav-link-icon"><i data-feather="folder-plus"></i></div>
                     Keuntungan dan Manfaat
                     <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
