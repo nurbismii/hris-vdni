@@ -137,7 +137,7 @@
 									<tbody>
 										<tr>
 											<th scope="row">Uang pesangon</th>
-											<td>Variabel pesango <sup>(*)</sup></td>
+											<td>Variabel pesangon <sup>(*)</sup></td>
 											<td>:</td>
 											<td>
 												<div class="mb-2">
@@ -623,14 +623,14 @@
 								$('#level_sp').val(data.level_sp);
 								$('#kelurahan').val(data.kelurahan);
 								$('#alamat').val(data.alamat_ktp);
-								$('#net_salary').val(data.total_diterima);
+								$('#net_salary').val(data.tot_diterima);
 								$('#basic_salary').val(data.gaji_pokok);
 								$('.remaining_leave').val(data.sisa_cuti);
 								$('.service_year').val(data.service_year);
 								$('#service_month_award').val(checkMonthYear(data.service_month));
 								$('.service_month').val(data.service_month);
-								$('.basic_salary').val(formatRupiah(data.gaji_pokok, "Rp. "));
-								$('.net_salary').val(formatRupiah(data.total_diterima, "Rp. "));
+								$('.basic_salary').val(formatRupiah(data.gaji_pokok, "Rp"));
+								$('.net_salary').val(formatRupiah(data.tot_diterima, "Rp"));
 							}
 						}
 					});
@@ -645,7 +645,7 @@
 				var subtotal_severance_rp = document.getElementById("subtotal_severance521").value;
 
 				if (subtotal_severance_rp > 0) {
-					$('#subtotal_severance521').val(formatRupiah(subtotal_severance_rp, "Rp. "));
+					$('#subtotal_severance521').val(formatRupiah(subtotal_severance_rp, "Rp"));
 				}
 
 				var subtotal_award = parseInt($('#service_month_award').val()) * parseInt($('#net_salary').val());
@@ -654,7 +654,7 @@
 				var subtotal_award_rp = document.getElementById("subtotal_award").value;
 
 				if (subtotal_award_rp > 0) {
-					$('#subtotal_award').val(formatRupiah(subtotal_award_rp, "Rp. "));
+					$('#subtotal_award').val(formatRupiah(subtotal_award_rp, "Rp"));
 				}
 
 				var subtotal_annual = (parseFloat($('.remaining_leave').val()) * parseInt($('#basic_salary').val())) / parseInt($('#bil_annual').val());
@@ -663,7 +663,7 @@
 				var subtotal_annual_rp = document.getElementById("subtotal_annual").value;
 
 				if (subtotal_annual_rp > 0) {
-					$('#subtotal_annual').val(formatRupiah(subtotal_annual_rp, "Rp. "));
+					$('#subtotal_annual').val(formatRupiah(subtotal_annual_rp, "Rp"));
 				}
 				// Perhitungan pesangon pasal 52 ayat 1 end
 
@@ -674,7 +674,7 @@
 				var subtotal_severance_rp51 = document.getElementById("subtotal_severance51").value;
 
 				if (subtotal_severance_rp51 > 0) {
-					$('#subtotal_severance51').val(formatRupiah(subtotal_severance_rp51, "Rp. "));
+					$('#subtotal_severance51').val(formatRupiah(subtotal_severance_rp51, "Rp"));
 				}
 
 				var subtotal_annual51 = (parseFloat($('.remaining_leave').val()) * parseInt($('#net_salary').val())) / parseInt($('#bil_annual51').val());
@@ -683,19 +683,19 @@
 				var subtotal_annual_rp51 = document.getElementById("subtotal_annual51").value;
 
 				if (subtotal_annual_rp51 > 0) {
-					$('#subtotal_annual51').val(formatRupiah(subtotal_annual_rp51, "Rp. "));
+					$('#subtotal_annual51').val(formatRupiah(subtotal_annual_rp51, "Rp"));
 				}
 				// Perhitungan pesangon pasal 51 end
 
 				// Perhitungan pesangon pasal 16
 				if ($('#list-pasal').val() === '16') {
 					var total_severance16 = (parseInt($('.service_month').val()) * parseInt($('#net_salary').val())) / parseInt($('#bil_compensation').val());
-					$('#total_severance16').val(total_severance16);
+					$('#total_severance16').val(hapusAngkaSetelahTitik(total_severance16));
 
 					var total_severance16_rp = document.getElementById("total_severance16").value;
 
 					if (total_severance16_rp > 0) {
-						$('#total_severance16').val(formatRupiah(total_severance16_rp, "Rp. "));
+						$('#total_severance16').val(formatRupiah(total_severance16_rp, "Rp"));
 					}
 				}
 				// Perhitungan pesangon pasal 16 end
@@ -716,7 +716,7 @@
 				var subtotal_annual522_rp = document.getElementById("subtotal_annual522").value;
 
 				if (subtotal_annual522_rp > 0) {
-					$('#subtotal_annual522').val(formatRupiah(subtotal_annual522_rp, "Rp. "));
+					$('#subtotal_annual522').val(formatRupiah(subtotal_annual522_rp, "Rp"));
 				}
 				/* Perhitunganb pesangon pasal 52 ayat 2 end */
 			});
@@ -726,7 +726,7 @@
 			return_cost521.addEventListener("keyup", function(e) {
 
 				// gunakan fungsi formatRupiah() untuk mengubah angka yang di ketik menjadi format angka
-				return_cost521.value = formatRupiah(this.value, "Rp. ");
+				return_cost521.value = formatRupiah(this.value, "Rp");
 
 				replace = this.value.replace("Rp", "");
 				checked = replace.split('.').join("");
@@ -742,7 +742,7 @@
 				var total_severance_rp = document.getElementById("total_severance").value;
 
 				if (total_severance_rp > 0) {
-					$('#total_severance').val(formatRupiah(total_severance_rp, "Rp. "));
+					$('#total_severance').val(formatRupiah(total_severance_rp, "Rp"));
 				}
 			});
 			// end
@@ -752,7 +752,7 @@
 			return_cost51.addEventListener("keyup", function(e) {
 
 				// gunakan fungsi formatRupiah() untuk mengubah angka yang di ketik menjadi format angka
-				return_cost51.value = formatRupiah(this.value, "Rp. ");
+				return_cost51.value = formatRupiah(this.value, "Rp");
 
 				replace = this.value.replace("Rp", "");
 				checked = replace.split('.').join("");
@@ -767,7 +767,7 @@
 				var total_severance_rp51 = document.getElementById("total_severance51").value;
 
 				if (total_severance_rp51 > 0) {
-					$('#total_severance51').val(formatRupiah(total_severance_rp51, "Rp. "));
+					$('#total_severance51').val(formatRupiah(total_severance_rp51, "Rp"));
 				}
 			});
 			// end
@@ -777,7 +777,7 @@
 			return_cost522.addEventListener("keyup", function(e) {
 
 				// gunakan fungsi formatRupiah() untuk mengubah angka yang di ketik menjadi format angka
-				return_cost522.value = formatRupiah(this.value, "Rp. ");
+				return_cost522.value = formatRupiah(this.value, "Rp");
 
 				replace = this.value.replace("Rp", "");
 				checked = replace.split('.').join("");
@@ -792,7 +792,7 @@
 				var total_severance522_rp = document.getElementById("total_severance522").value;
 
 				if (total_severance522_rp > 0) {
-					$('#total_severance522').val(formatRupiah(total_severance522_rp, "Rp. "));
+					$('#total_severance522').val(formatRupiah(total_severance522_rp, "Rp"));
 				}
 			});
 			// end
@@ -815,22 +815,30 @@
 				return data
 			}
 
+			function hapusAngkaSetelahTitik(angka) {
+				var string = angka.toString();
+				var result = string.split('.')[0];
+				return result;
+			}
+
 			/* Fungsi formatRupiah */
 			function formatRupiah(angka, prefix) {
-				var number_string = angka.replace(/[^,\d]/g, "").toString(),
-					split = number_string.split(","),
-					sisa = split[0].length % 3,
-					rupiah = split[0].substr(0, sisa),
-					ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+				// Hapus semua karakter yang bukan angka
+				var number_string = angka.replace(/[^\d]/g, "").toString();
 
-				// tambahkan titik jika yang di input sudah menjadi angka ribuan
+				// Pecah string menjadi bagian integer dan desimal (abaikan desimal)
+				var sisa = number_string.length % 3;
+				var rupiah = number_string.substr(0, sisa);
+				var ribuan = number_string.substr(sisa).match(/\d{3}/gi);
+
+				// Tambahkan titik sebagai pemisah ribuan
 				if (ribuan) {
-					separator = sisa ? "." : "";
+					var separator = sisa ? "." : "";
 					rupiah += separator + ribuan.join(".");
 				}
 
-				rupiah = split[1] != undefined ? rupiah + "," + split[1] : rupiah;
-				return prefix == undefined ? rupiah : rupiah ? "Rp" + rupiah : "";
+				// Kembalikan hasil dengan atau tanpa prefix "Rp"
+				return prefix == undefined ? rupiah : (rupiah ? prefix + rupiah : "");
 			}
 		});
 	</script>

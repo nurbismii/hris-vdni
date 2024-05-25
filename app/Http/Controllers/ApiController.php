@@ -29,7 +29,7 @@ class ApiController extends Controller
 
    public function getEmployeeById($id)
    {
-      $data = employee::leftjoin('salaries', 'salaries.employee_id', '=', 'employees.nik')
+      $data_hris = employee::leftjoin('salaries', 'salaries.employee_id', '=', 'employees.nik')
          ->leftjoin('divisis', 'divisis.id', '=', 'employees.divisi_id')
          ->leftjoin('departemens', 'departemens.id', '=', 'divisis.departemen_id')
          ->leftjoin('master_provinsi', 'master_provinsi.id', '=', 'employees.provinsi_id')
@@ -40,6 +40,18 @@ class ApiController extends Controller
          ->select(DB::raw("*, TIMESTAMPDIFF(YEAR, entry_date, CURDATE()) as service_year, TIMESTAMPDIFF(MONTH, entry_date, CURDATE()) as service_month"))
          ->orderBy('salaries.akhir_periode', 'desc')
          ->where('employees.nik', $id)->first();
+
+      $check_exist = DB::connection('epayslip')->table('data_karyawans')->select('id', 'nik', 'nama')
+         ->where('nik', $id)->first();
+
+      $data_slip = DB::connection('epayslip')->table('komponen_gajis')->select('*')
+         ->where('data_karyawan_id', $check_exist->id)
+         ->orderBy('id', 'DESC')
+         ->first();
+
+      $collection = collect($data_hris);
+      $merged = $collection->merge($data_slip);
+      $data = $merged->all();
 
       return response()->json($data);
    }
