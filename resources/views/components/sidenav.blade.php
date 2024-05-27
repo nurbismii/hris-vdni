@@ -23,7 +23,7 @@
                     Jejak aktivitas
                 </a>
                 <div class="sidenav-menu-heading">HR</div>
-                <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseUsers" aria-expanded="false" aria-controls="collapseUsers">
+                <a class="nav-link {{ (request()->segment(1) == 'users') ? '' : 'collapsed' }}" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseUsers" aria-expanded="false" aria-controls="collapseUsers">
                     <div class="nav-link-icon"><i data-feather="users"></i></div>
                     Pengguna
                     <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -34,7 +34,7 @@
                         <a class="nav-link {{ (request()->segment(2) == 'last-login') ? 'active' : '' }}" href="/users/last-login">Riwayat masuk</a>
                     </nav>
                 </div>
-                <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseEmployees" aria-expanded="false" aria-controls="collapseEmployees">
+                <a class="nav-link {{ (request()->segment(1) == 'employees' || request()->segment(1) == 'roles') ? '' : 'collapsed' }}" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseEmployees" aria-expanded="false" aria-controls="collapseEmployees">
                     <div class="nav-link-icon"><i data-feather="user-check"></i></div>
                     Karyawan
                     <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -52,7 +52,7 @@
                     Perusahaan
                 </a>
 
-                <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseCoreHr" aria-expanded="false" aria-controls="collapseCoreHr">
+                <a class="nav-link {{ (request()->segment(1) == 'industrial-relations') ? '' : 'collapsed' }}" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseCoreHr" aria-expanded="false" aria-controls="collapseCoreHr">
                     <div class="nav-link-icon"><i data-feather="link-2"></i></div>
                     Hubungan Industrial
                     <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -80,7 +80,7 @@
                     </nav>
                 </div> -->
 
-                <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseKelolaCuti" aria-expanded="false" aria-controls="collapseKelolaCuti">
+                <a class="nav-link {{ (request()->segment(1) == 'pengajuan-karyawan' || request()->segment(1) == 'roster' || request()->segment(3) == 'all-in') ? '' : 'collapsed' }}" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseKelolaCuti" aria-expanded="false" aria-controls="collapseKelolaCuti">
                     <div class="nav-link-icon"><i data-feather="folder-plus"></i></div>
                     Keuntungan dan Manfaat
                     <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -94,7 +94,7 @@
                     </nav>
                 </div>
 
-                <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseLaporan" aria-expanded="false" aria-controls="collapseLaporan">
+                <a class="nav-link {{ request()->segment(1) == 'wilayah' ? '' : 'collapsed' }}" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseLaporan" aria-expanded="false" aria-controls="collapseLaporan">
                     <div class="nav-link-icon"><i data-feather="calendar"></i></div>
                     Laporan
                     <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
