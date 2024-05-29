@@ -11,8 +11,4 @@ class SpReport extends Model
     protected $table = 'sp_report';
     protected $guarded = [];
 
-    public function employee()
-    {
-        return $this->hasOne(employee::class, 'nik', 'nik_karyawan');
-    }
 }

@@ -3,14 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Airports;
-use App\Models\CutiRoster;
 use App\Models\Divisi;
-use App\Models\Pasal;
 use App\Models\employee;
 use App\Models\Kabupaten;
 use App\Models\Kecamatan;
-use App\Models\salary;
-use App\Models\Severancepay;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;

@@ -250,6 +250,7 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
             route::post('/severance-pay/import/store', [SeverancepayController::class, 'importStore'])->name('severance.import.store');
 
             route::get('/sp-report', [ReportSpController::class, 'index']);
+            route::get('/sp-report/serverside', [ReportSpController::class, 'serverSidePeringatan']);
             route::get('/sp-report/edit/{id}', [ReportSpController::class, 'edit'])->name('spreport.edit');
             route::get('/sp-report/import', [ReportSpController::class, 'importView'])->name('spreport.import');
             route::post('/sp-report/import/store', [ReportSpController::class, 'importStore'])->name('spreport.import.store');

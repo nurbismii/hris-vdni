@@ -15,7 +15,6 @@ use App\Models\PosisiLama;
 use App\Models\Provinsi;
 use App\Models\Resign;
 use Carbon\Carbon;
-use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
@@ -74,9 +73,9 @@ class EmployeeController extends Controller
                 }
 
                 if ($request->get('status_resign') != '') {
-
                     $instance->where('status_resign', strtoupper($request->get('status_resign')));
                 }
+                
                 if ($request->get('jenis_kelamin') != '') {
                     $instance->where('jenis_kelamin', $request->get('jenis_kelamin'));
                 }
