@@ -51,7 +51,7 @@ class DetailAbsensiController extends Controller
 
     public function serverSideAllin()
     {
-        $data = employee::query();
+        $data = employee::where('kode_area_kerja', '!=', null)->select('*');
         return DataTables::of($data)->addColumn('action', function ($data) {
             return view('kehadiran._action', [
                 'data' => $data,
