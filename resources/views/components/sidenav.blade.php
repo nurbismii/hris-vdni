@@ -82,7 +82,7 @@
 
                 <a class="nav-link {{ (request()->segment(1) == 'pengajuan-karyawan' || request()->segment(1) == 'roster' || request()->segment(3) == 'all-in') ? '' : 'collapsed' }}" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseKelolaCuti" aria-expanded="false" aria-controls="collapseKelolaCuti">
                     <div class="nav-link-icon"><i data-feather="folder-plus"></i></div>
-                    Keuntungan dan Manfaat
+                    Kompensasi & keuntungan
                     <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
                 <div class="collapse {{ (request()->segment(1) == 'pengajuan-karyawan' || request()->segment(1) == 'roster' || request()->segment(3) == 'all-in') ? 'show' : '' }}" id="collapseKelolaCuti" data-bs-parent="#accordionSidenav">
@@ -105,8 +105,6 @@
                     </nav>
                 </div>
                 @endif
-
-
 
                 @if(strtolower(Auth::user()->job->permission_role ?? '') == 'admin divisi')
                 <div class="sidenav-menu-heading">Main menu</div>
