@@ -181,7 +181,7 @@
 										</tr>
 										<tr>
 											<th scope="row">Uang penghargaan</th>
-											<td>Variabel penghargaan <sup>(*)</sup></td>
+											<td>Masa kerja <sup>(Konversi bulan)</sup></td>
 											<td>:</td>
 											<td>
 												<div class="mb-2">
@@ -691,7 +691,7 @@
 
 				// Perhitunan pesangon pasal 51 start
 				var subtotal_severance51 = (parseFloat($('#bil_severance51').val()) * parseInt($('#net_salary').val()));
-				$('#subtotal_severance51').val(subtotal_severance51);
+				$('#subtotal_severance51').val(parseInt(subtotal_severance51));
 
 				var subtotal_severance_rp51 = document.getElementById("subtotal_severance51").value;
 
@@ -699,8 +699,8 @@
 					$('#subtotal_severance51').val(formatRupiah(subtotal_severance_rp51, "Rp"));
 				}
 
-				var subtotal_annual51 = (parseFloat($('.remaining_leave').val()) * parseInt($('#net_salary').val())) / parseInt($('#bil_annual51').val());
-				$('#subtotal_annual51').val(subtotal_annual51);
+				var subtotal_annual51 = (parseInt($('.remaining_leave').val()) * parseInt($('#net_salary').val())) / parseInt($('#bil_annual51').val());
+				$('#subtotal_annual51').val(parseInt(subtotal_annual51));
 
 				var subtotal_annual_rp51 = document.getElementById("subtotal_annual51").value;
 
@@ -722,9 +722,9 @@
 				}
 				// Perhitungan pesangon pasal 16 end
 
-				/* Perhitunganb pesangon pasal 52 ayat 2 */
+				/* Perhitungan pesangon pasal 52 ayat 2 */
 				var subtotal_severance522 = parseFloat($('#bil_severance522').val()) * parseInt($('#net_salary').val());
-				$('#subtotal_severance522').val(subtotal_severance522);
+				$('#subtotal_severance522').val(parseInt(subtotal_severance522));
 
 				var subtotal_severance522_rp = document.getElementById("subtotal_severance522").value;
 
@@ -733,14 +733,14 @@
 				}
 
 				var subtotal_annual522 = (parseFloat($('.remaining_leave').val()) * parseInt($('#net_salary').val())) / parseInt($('.bil_annual').val());
-				$('#subtotal_annual522').val(subtotal_annual522);
+				$('#subtotal_annual522').val(parseInt(subtotal_annual522));
 
 				var subtotal_annual522_rp = document.getElementById("subtotal_annual522").value;
 
 				if (subtotal_annual522_rp > 0) {
 					$('#subtotal_annual522').val(formatRupiah(subtotal_annual522_rp, "Rp"));
 				}
-				/* Perhitunganb pesangon pasal 52 ayat 2 end */
+				/* Perhitungan pesangon pasal 52 ayat 2 end */
 			});
 
 			// Keyup pesangon 52 ayat 1
