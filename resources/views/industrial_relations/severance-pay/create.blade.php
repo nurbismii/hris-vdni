@@ -637,6 +637,24 @@
 				}
 			});
 
+			/* Fungsi check month */
+			function checkMonthYear(data) {
+				var data;
+				if (data <= '35') {
+					data = '0'
+				}
+				if (data >= '36' && data <= '72') {
+					data = '2'
+				}
+				if (data >= '72' && data <= '108') {
+					data = '3'
+				}
+				if (data >= '109' && data <= '144') {
+					data = '4'
+				}
+				return data
+			}
+
 			$("#list-pasal").on('change', function() {
 				// Perhitungan pesangon pasal 52 ayat 1
 				var subtotal_severance521 = (parseFloat($('#bil_severance521').val()) * parseInt($('.service_year').val())) * parseInt($('#net_salary').val());
@@ -796,24 +814,6 @@
 				}
 			});
 			// end
-
-			/* Fungsi check month */
-			function checkMonthYear(data) {
-				var data;
-				if (data <= '35') {
-					data = '0'
-				}
-				if (data >= '36' && data <= '72') {
-					data = '2'
-				}
-				if (data >= '72' && data <= '108') {
-					data = '3'
-				}
-				if (data >= '109' && data <= '144') {
-					data = '4'
-				}
-				return data
-			}
 
 			function hapusAngkaSetelahTitik(angka) {
 				var string = angka.toString();
