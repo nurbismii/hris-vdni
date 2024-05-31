@@ -657,7 +657,7 @@
 					$('#subtotal_award').val(formatRupiah(subtotal_award_rp, "Rp"));
 				}
 
-				var subtotal_annual = (parseFloat($('.remaining_leave').val()) * parseInt($('#basic_salary').val())) / parseInt($('#bil_annual').val());
+				var subtotal_annual = (parseInt($('.remaining_leave').val()) * parseInt($('#basic_salary').val())) / parseInt($('#bil_annual').val());
 				$('#subtotal_annual').val(subtotal_annual);
 
 				var subtotal_annual_rp = document.getElementById("subtotal_annual").value;
