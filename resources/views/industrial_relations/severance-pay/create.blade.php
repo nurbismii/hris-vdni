@@ -117,7 +117,7 @@
 						</div>
 						<div class="col-md-12 mb-2">
 							<label class="small mb-2">test</label>
-							<input class="form-control" name="level_sp" type="text" id="service_month_award" readonly />
+							<input class="form-control service_month_award" name="level_sp" type="text" id="service_month_award" readonly />
 						</div>
 
 						<div class="mb-2">
@@ -185,7 +185,7 @@
 											<td>:</td>
 											<td>
 												<div class="mb-2">
-													<input class="form-control" type="text" name="service_year_award" id="service_month_award" readonly>
+													<input class="form-control service_month_award" type="text" name="service_year_award" id="service_month_award" readonly>
 												</div>
 											</td>
 										</tr>
@@ -601,6 +601,24 @@
 				}
 			})
 
+			/* Fungsi check month */
+			function checkMonthYear(data) {
+				var data;
+				if (data <= '35') {
+					data = '0'
+				}
+				if (data >= '36' && data <= '72') {
+					data = '2'
+				}
+				if (data >= '72' && data <= '108') {
+					data = '3'
+				}
+				if (data >= '109' && data <= '144') {
+					data = '4'
+				}
+				return data
+			}
+
 			$('#nik').on('change', function() {
 				var id = $(this).val();
 				if (id) {
@@ -631,7 +649,7 @@
 								$('#basic_salary').val(data.gaji_pokok);
 								$('.remaining_leave').val(data.sisa_cuti);
 								$('.service_year').val(data.service_year);
-								$('#service_month_award').val(checkMonthYear(data.service_month));
+								$('.service_month_award').val(checkMonthYear(data.service_month));
 								$('.service_month').val(data.service_month);
 								$('.basic_salary').val(formatRupiah(data.gaji_pokok, "Rp"));
 								$('.net_salary').val(formatRupiah(data.tot_diterima, "Rp"));
@@ -640,24 +658,6 @@
 					});
 				}
 			});
-
-			/* Fungsi check month */
-			function checkMonthYear(data) {
-				var data;
-				if (data <= '35') {
-					data = '0'
-				}
-				if (data >= '36' && data <= '72') {
-					data = '2'
-				}
-				if (data >= '72' && data <= '108') {
-					data = '3'
-				}
-				if (data >= '109' && data <= '144') {
-					data = '4'
-				}
-				return data
-			}
 
 			$("#list-pasal").on('change', function() {
 				// Perhitungan pesangon pasal 52 ayat 1
@@ -670,7 +670,7 @@
 					$('#subtotal_severance521').val(formatRupiah(subtotal_severance_rp, "Rp"));
 				}
 
-				var subtotal_award = parseInt($('#service_month_award').val()) * parseInt($('#net_salary').val());
+				var subtotal_award = parseInt($('.service_month_award').val()) * parseInt($('#net_salary').val());
 				$('#subtotal_award').val(subtotal_award);
 
 				var subtotal_award_rp = document.getElementById("subtotal_award").value;
