@@ -610,7 +610,7 @@
 				if (data >= '36' && data <= '72') {
 					data = '2'
 				}
-				if (data >= '72' && data <= '108') {
+				if (data >= '73' && data <= '108') {
 					data = '3'
 				}
 				if (data >= '109' && data <= '144') {
@@ -649,7 +649,7 @@
 								$('#basic_salary').val(data.gaji_pokok);
 								$('.remaining_leave').val(data.sisa_cuti);
 								$('.service_year').val(data.service_year);
-								$('.service_month_award').val(checkMonthYear(data.service_month));
+								$('.service_month_award').val(data.service_month_award);
 								$('.service_month').val(data.service_month);
 								$('.basic_salary').val(formatRupiah(data.gaji_pokok, "Rp"));
 								$('.net_salary').val(formatRupiah(data.tot_diterima, "Rp"));

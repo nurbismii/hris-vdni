@@ -37,6 +37,22 @@ class ApiController extends Controller
          ->orderBy('salaries.akhir_periode', 'desc')
          ->where('employees.nik', $id)->first();
 
+      if ($data_hris) {
+         // Apply the additional logic for service_month
+         if ($data_hris->service_month <= '35') {
+            $data_hris->service_month_award = 0;
+         }
+         if ($data_hris->service_month >= '36' && $data_hris->service_month <= '72') {
+            $data_hris->service_month_award = 2;
+         }
+         if ($data_hris->service_month >= '73' && $data_hris->service_month <= '108') {
+            $data_hris->service_month_award = 3;
+         }
+         if ($data_hris->service_month >= '109' && $data_hris->service_month <= '144') {
+            $data_hris->service_month_award = 4;
+         }
+      }
+
       $check_exist = DB::connection('epayslip')->table('data_karyawans')->select('id', 'nik', 'nama')
          ->where('nik', $id)->first();
 
