@@ -115,6 +115,10 @@
 							<label class="small mb-2">Tingkat SP</label>
 							<input class="form-control" name="level_sp" type="text" id="level_sp" readonly />
 						</div>
+						<div class="col-md-12 mb-2">
+							<label class="small mb-2">test</label>
+							<input class="form-control" name="level_sp" type="text" id="service_month_award" readonly />
+						</div>
 
 						<div class="mb-2">
 							<label class="small mb-1">Pasal</label>
