@@ -50,10 +50,6 @@ class AccountController extends Controller
         $contract = Contract::where('nik', Auth::user()->nik_karyawan)->latest()->first('tanggal_berakhir_kontrak');
 
         return view('account.billing', compact('datas', 'gaji_karyawan', 'contract'));
-        try {
-        } catch (\Throwable $e) {
-            return back()->with('error', 'Terjadi kesalaham');
-        }
     }
 
     public function show($id)
@@ -115,9 +111,6 @@ class AccountController extends Controller
             ->where('data_karyawan_id', $check_exist->id)
             ->where('id', $id)
             ->first();
-
-        $gaji_karyawan = DB::connection('epayslip')->table('komponen_gajis')->select('*')
-            ->where('data_karyawan_id', $check_exist->id)->latest()->first();
 
         $total_deduction = $data->jht + $data->jp + $data->pot_bpjskes + $data->unpaid_leave + $data->deduction_pph21;
         $total_diterima = ($data->gaji_pokok + $data->tunj_um + $data->tunj_pengawas + $data->tunj_transport + $data->tunj_mk + $data->tunj_koefisien + $data->rapel + $data->insentif + $data->tunj_lap);

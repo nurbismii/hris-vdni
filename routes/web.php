@@ -19,6 +19,7 @@ use App\Http\Controllers\Role\RoleController;
 use App\Http\Controllers\SeverancepayController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\WaktuAbsenController;
+use App\Http\Controllers\SalaryController;
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
@@ -217,21 +218,17 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
             // Maatwebsite excel end 
         });
 
-        // Route::group(['prefix' => 'salary'], function () {
-        //     route::get('/', [SalaryController::class, 'index']);
-        //     route::get('/history', [SalaryController::class, 'history']);
-        //     route::get('/components/{id}', [SalaryController::class, 'downloadSalaryComponent'])->name('components.donwload');
-        //     route::get('/payslip', [SalaryController::class, 'payslip'])->name('salary.payslip');
-        //     route::get('/payslip/print/{id}', [SalaryController::class, 'printPayslip'])->name('payslip.print');
-        //     route::post('/import-salarys', [SalaryController::class, 'importSalary'])->name('import.salary');
-        //     route::get('/export-template', [SalaryController::class, 'exportSalary'])->name('export.salary');
-        //     route::get('/show/{id}', [SalaryController::class, 'show'])->name('salary.show');
-        //     // route::get('/employee', [SalaryController::class, 'gajikaryawan'])->name('salary.employee');
-        //     route::get('/create/salary', [SalaryController::class, 'createSalary'])->name('create.salary');
-        //     route::post('/store/gaji-karyawan', [SalaryController::class, 'storeGajiKaryawan'])->name('store/gaji-karyawan');
-        //     route::get('/server-side', [SalaryController::class, 'serverSideSalary']);
-        //     route::post('/generate/payslip/{nik}', [SalaryController::class, 'generateSlip'])->name('generate.slip');
-        // });
+        Route::group(['prefix' => 'salary'], function () {
+            route::get('/', [SalaryController::class, 'index']);
+            route::get('/history', [SalaryController::class, 'history']);
+            route::get('/components/{id}', [SalaryController::class, 'downloadSalaryComponent'])->name('components.donwload');
+            route::get('/payslip/print/{id}', [SalaryController::class, 'printPayslip'])->name('payslip.print');
+            route::get('/show/{id}', [SalaryController::class, 'show'])->name('salary.show');
+            route::get('/employee', [SalaryController::class, 'gajikaryawan'])->name('salary.employee');
+            route::get('/create/salary', [SalaryController::class, 'createSalary'])->name('create.salary');
+            route::post('/store/gaji-karyawan', [SalaryController::class, 'storeGajiKaryawan'])->name('store/gaji-karyawan');
+            route::get('/server-side', [SalaryController::class, 'serverSideSalary']);
+        });
 
         Route::group(['prefix' => 'contract'], function () {
             route::get('/', [ContractController::class, 'index']);

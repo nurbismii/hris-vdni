@@ -28,18 +28,8 @@
                     <div class="col-auto mb-3">
                         <h1 class="page-header-title">
                             <div class="page-header-icon"><i data-feather="users"></i></div>
-                            Employee Salary
+                            Gaji Karyawan
                         </h1>
-                    </div>
-                    <div class="col-12 col-xl-auto mb-3">
-                        <a class="btn btn-sm btn-light text-primary" data-bs-toggle="modal" data-bs-target="#modalGenerate">
-                            <i class="me-1" data-feather="upload-cloud"></i>
-                            Genarate Slip
-                        </a>
-                        <a class="btn btn-sm btn-light text-primary" href="{{ route('create.salary') }}">
-                            <i class="me-1" data-feather="plus"></i>
-                            Add Salary
-                        </a>
                     </div>
                 </div>
             </div>
@@ -65,16 +55,12 @@
                                         <select class="form-select" name="departemen" id="departemen_search">
                                             <option value="">- Pilih Departemen -</option>
                                             @foreach($departement as $d)
-                                            <option value="{{ $d->id }}">{{ $d->departemen }}</option>
+                                            <option value="{{ $d->departemen }}">{{ $d->departemen }}</option>
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="col-md-6 mb-2">
-                                        <label class="small mb-1">Divisi</label>
-                                        <select class="form-control" name="divisi" id="divisi_search"></select>
-                                    </div>
                                 </div>
-                                <a class="btn btn-sm btn-light text-primary" href="/employees">
+                                <a class="btn btn-sm btn-light text-primary" href="/salary/employee">
                                     <i class="me-1" data-feather="trash"></i>
                                     Bersihkan filter
                                 </a>
@@ -89,13 +75,12 @@
                         <table id="data-table-salary" class="table table-hover" style="width: 100%;">
                             <thead>
                                 <tr>
-                                    <th>Employee</th>
-                                    <th>Employee ID</th>
-                                    <th>Departement</th>
+                                    <th>Karyawan</th>
+                                    <th>NIK</th>
+                                    <th>Departemen</th>
                                     <th>Divisi</th>
-                                    <th>Working days</th>
-                                    <th>Join Date</th>
-                                    <th>Action</th>
+                                    <th>Gaji pokok</th>
+                                    <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody> </tbody>
@@ -105,20 +90,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Modal add salary -->
-    <div class="modal fade" id="modalAddSalary" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Add salary</h5>
-                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                
-            </div>
-        </div>
-    </div>
-    <!-- Modal add salary end -->
 
     @push('scripts')
     <x-toastr />
@@ -144,7 +115,7 @@
             });
 
             var table = $('#data-table-salary').DataTable({
-                pageLength: 15,
+                pageLength: 10,
                 processing: true,
                 serverSide: true,
                 searching: true,
@@ -152,14 +123,14 @@
                 ajax: {
                     url: "/salary/server-side",
                     data: function(d) {
-                        d.departemen = $('#departemen_search').val()
-                        d.nama_divisi = $('#divisi_search').val()
+                        d.departemen = $('#departemen_search').val(),
+                        d.divisi = $('#divisi_search').val(),
                         d.search = $('input[type="search"]').val()
                     }
                 },
                 columns: [{
-                        data: 'nama_karyawan',
-                        name: 'nama_karyawan'
+                        data: 'nama',
+                        name: 'nama'
                     },
                     {
                         data: 'nik',
@@ -170,17 +141,21 @@
                         name: 'departemen',
                     },
                     {
-                        data: 'nama_divisi',
-                        name: 'nama_divisi',
+                        data: 'divisi',
+                        name: 'divisi',
                     },
                     {
-                        data: 'jumlah_hari_kerja',
-                        name: 'jumlah_hari_kerja',
-                    },
-
-                    {
-                        data: 'entry_date',
-                        name: 'entry_date',
+                        data: 'gaji_pokok',
+                        name: 'gaji_pokok',
+                        render: function(data, type, row) {
+                            rupiah = '';
+                            if (data > 0) {
+                                rupiah = 'Rp' + data.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
+                            } else {
+                                rupiah = '-';
+                            }
+                            return rupiah;
+                        }
                     },
                     {
                         data: 'action',
@@ -189,7 +164,7 @@
                     },
                 ],
                 order: [
-                    [0, 'desc']
+                    [1, 'desc']
                 ]
             });
 
@@ -201,36 +176,7 @@
                 table.draw();
             });
         });
-
-        $(document).ready(function() {
-            $('#departemen_search').on('change', function() {
-                var deptID = $(this).val();
-                if (deptID) {
-                    $.ajax({
-                        url: '/employees/divisi/' + deptID,
-                        type: "GET",
-                        data: {
-                            "_token": "{{ csrf_token() }}"
-                        },
-                        dataType: "json",
-                        success: function(data) {
-                            if (data) {
-                                $('#divisi_search').empty();
-                                $('#divisi_search').append('<option hidden>- Pilih Divisi -</option>');
-                                $.each(data, function(id, divisi) {
-                                    $('select[name="divisi"]').append('<option value="' + divisi.id + '">' + divisi.nama_divisi + '</option>');
-                                });
-                            } else {
-                                $('#divisi_search').empty();
-                            }
-                        }
-                    });
-                } else {
-                    $('#divisi_search').empty();
-                }
-            });
-        });
-
+        
         var rupiah_makan = document.getElementById("rupiah_makan");
         rupiah_makan.addEventListener("keyup", function(e) {
             // tambahkan 'Rp.' pada saat form di ketik

@@ -12,19 +12,19 @@
                     @endif
                 </a>
                 @endif
-                <div class="sidenav-menu-heading">Core</div>
+                <div class="sidenav-menu-heading">Info</div>
                 <a class="nav-link {{ (request()->segment(1) == 'dashboard') ? 'active' : '' }}" href="/dashboard">
                     <div class="nav-link-icon"><i data-feather="activity"></i></div>
-                    Dashboard
+                    Dasbor
                 </a>
                 @if(strtolower(Auth::user()->job->permission_role ?? '') == 'administrator')
                 <a class="nav-link {{ (request()->segment(1) == 'audit-trails') ? 'active' : '' }}" href="/audit-trails">
                     <div class="nav-link-icon"><i data-feather="clipboard"></i></div>
-                    Jejak aktivitas
+                    Jejak Aktivitas
                 </a>
-                <div class="sidenav-menu-heading">HR</div>
+                <div class="sidenav-menu-heading">Inti</div>
                 <a class="nav-link {{ (request()->segment(1) == 'users') ? '' : 'collapsed' }}" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseUsers" aria-expanded="false" aria-controls="collapseUsers">
-                    <div class="nav-link-icon"><i data-feather="users"></i></div>
+                    <div class="nav-link-icon"><i data-feather="user-check"></i></div>
                     Pengguna
                     <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
@@ -35,13 +35,13 @@
                     </nav>
                 </div>
                 <a class="nav-link {{ (request()->segment(1) == 'employees' || request()->segment(1) == 'roles') ? '' : 'collapsed' }}" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseEmployees" aria-expanded="false" aria-controls="collapseEmployees">
-                    <div class="nav-link-icon"><i data-feather="user-check"></i></div>
-                    Karyawan
+                    <div class="nav-link-icon"><i data-feather="users"></i></div>
+                    Para Karyawan
                     <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
                 <div class="collapse {{ (request()->segment(1) == 'employees' || request()->segment(1) == 'roles') ? 'show' : '' }}" id="collapseEmployees" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavemployee">
-                        <a class="nav-link {{ (request()->is('employees', 'employees')) ? 'active' : '' }}" href="{{ url('employees')}}">Data karyawan</a>
+                        <a class="nav-link {{ (request()->is('employees', 'employees')) ? 'active' : '' }}" href="{{ url('employees')}}">Daftar karyawan</a>
                         <!-- <a class="nav-link {{ (request()->segment(1) == 'roles') ? 'active' : '' }}" href="/roles">Peran dan akses</a> -->
                         <a class="nav-link {{ (request()->segment(2) == 'import') ? 'active' : '' }}" href="/employees/import">Impor karyawan</a>
                     </nav>
@@ -53,7 +53,7 @@
                 </a>
 
                 <a class="nav-link {{ (request()->segment(1) == 'industrial-relations') ? '' : 'collapsed' }}" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseCoreHr" aria-expanded="false" aria-controls="collapseCoreHr">
-                    <div class="nav-link-icon"><i data-feather="link-2"></i></div>
+                    <div class="nav-link-icon"><i data-feather="link"></i></div>
                     Hubungan Industrial
                     <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
@@ -62,33 +62,30 @@
                         <a class="nav-link {{ (request()->is('contract', 'contract')) ? 'active' : '' }}" href="/contract">PKWT 1</a>
                         <a class="nav-link {{ (request()->segment(2) == 'severance-pay') ? 'active' : '' }}" href="/industrial-relations/severance-pay">Pesangon</a>
                         <a class="nav-link {{ (request()->segment(2) == 'sp-report') ? 'active' : '' }}" href="/industrial-relations/sp-report">Peringatan</a>
-                        <a class="nav-link {{ (request()->segment(2) == 'resign') ? 'active' : '' }}" href="/industrial-relations/resign">Pengunduran diri</a>
+                        <a class="nav-link {{ (request()->segment(2) == 'resign') ? 'active' : '' }}" href="/industrial-relations/resign">Pengunduran Diri</a>
                     </nav>
                 </div>
 
-                <!-- <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapsePayroll" aria-expanded="false" aria-controls="collapsePayroll">
+                <a class="nav-link {{ (request()->segment(1) == 'salary' && request()->segment(2) == 'employee') ? '' : 'collapsed' }}" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapsePayroll" aria-expanded="false" aria-controls="collapsePayroll">
                     <div class="nav-link-icon"><i data-feather="credit-card"></i></div>
                     Penggajian
                     <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
                 <div class="collapse {{ (request()->segment(1) == 'salary') ? 'show' : '' }}" id="collapsePayroll" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav">
-                        <a class="nav-link" href="/salary/employee">Employee Salary</a>
-                        <a class="nav-link {{ (request()->segment(1) == 'salary' && request()->segment(2) == 'payslip') ? 'active' : '' }}" href="/salary/payslip">Slip gaji</a>
-                        <a class="nav-link {{ (request()->segment(1) == 'salary' && request()->segment(2) == '') ? 'active' : '' }}" href="/salary">Impor slip gaji</a>
-                        <a class="nav-link {{ (request()->segment(1) == 'salary' && request()->segment(2) == 'history') ? 'active' : '' }}" href="/salary/history">Riwayat impor</a>
+                        <a class="nav-link {{ (request()->segment(1) == 'salary') ? 'active' : '' }}" href="/salary/employee">Slip gaji</a>
                     </nav>
-                </div> -->
+                </div>
 
                 <a class="nav-link {{ (request()->segment(1) == 'pengajuan-karyawan' || request()->segment(1) == 'roster' || request()->segment(3) == 'all-in') ? '' : 'collapsed' }}" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseKelolaCuti" aria-expanded="false" aria-controls="collapseKelolaCuti">
                     <div class="nav-link-icon"><i data-feather="folder-plus"></i></div>
-                    Kompensasi & keuntungan
+                    Kompensasi & Benefit
                     <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
                 <div class="collapse {{ (request()->segment(1) == 'pengajuan-karyawan' || request()->segment(1) == 'roster' || request()->segment(3) == 'all-in') ? 'show' : '' }}" id="collapseKelolaCuti" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav">
-                        <a class="nav-link {{ (request()->segment(1) == 'pengajuan-karyawan') ? 'active' : '' }}" href="/pengajuan-karyawan">Cuti & Izin</a>
-                        <a class="nav-link {{ (request()->segment(1) == 'roster' && request()->segment(2) == '') ? 'active' : '' }}" href="/roster">Cuti Roster</a>
+                        <a class="nav-link {{ (request()->segment(1) == 'pengajuan-karyawan') ? 'active' : '' }}" href="/pengajuan-karyawan">Kelola Cuti & Izin</a>
+                        <a class="nav-link {{ (request()->segment(1) == 'roster' && request()->segment(2) == '') ? 'active' : '' }}" href="/roster">Kelola Cuti Roster</a>
                         <a class="nav-link {{ (request()->segment(2) == 'daftar-pengingat') ? 'active' : '' }}" href="/roster/daftar-pengingat">Pengingat</a>
                         <a class="nav-link {{ (request()->segment(3) == 'all-in') ? 'active' : '' }}" href="/absen/detail/all-in">Absensi</a>
                     </nav>
@@ -106,64 +103,9 @@
                 </div>
                 @endif
 
-                @if(strtolower(Auth::user()->job->permission_role ?? '') == 'admin divisi')
-                <div class="sidenav-menu-heading">Main menu</div>
+                @include('components.main-menu-admin-divisi')
 
-                <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseKelolaCuti" aria-expanded="false" aria-controls="collapseKelolaCuti">
-                    <div class="nav-link-icon"><i data-feather="calendar"></i></div>
-                    Pengajuan karyawan
-                    <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                </a>
-                <div class="collapse {{ (request()->segment(1) == 'pengajuan-karyawan' || request()->segment(1) == 'roster' || request()->segment(3) == 'all-in') ? 'show' : '' }}" id="collapseKelolaCuti" data-bs-parent="#accordionSidenav">
-                    <nav class="sidenav-menu-nested nav">
-                        <a class="nav-link {{ (request()->segment(1) == 'pengajuan-karyawan') ? 'active' : '' }}" href="/admin/cuti/">Cuti dan izin</a>
-                        <a class="nav-link {{ (request()->segment(3) == 'permohonan' && request()->segment(2) == 'roster') ? 'active' : '' }}" href="/admin/roster/permohonan">Cuti roster</a>
-                    </nav>
-                </div>
-                <a class="nav-link {{ (request()->segment(3) == '' && request()->segment(2) == 'roster') ? 'active' : '' }}" href="/admin/roster/">
-                    <div class="nav-link-icon"><i data-feather="bell"></i></div>
-                    Pengingat
-                </a>
-                @endif
-
-                @if(strtolower(Auth::user()->job->permission_role ?? '') == '')
-
-                <div class="sidenav-menu-heading">Main menu</div>
-
-                <a class="nav-link {{ (request()->segment(1) == 'karyawan' && request()->segment(2) == '') ? '' : 'collapsed' }}" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseKelolaCuti" aria-expanded="false" aria-controls="collapseKelolaCuti">
-                    <div class="nav-link-icon"><i data-feather="upload"></i></div>
-                    Pengajuan
-                    <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                </a>
-                <div class="collapse {{ (request()->segment(1) == 'karyawan' && request()->segment(2) == '') ? 'show' : '' }}" id="collapseKelolaCuti" data-bs-parent="#accordionSidenav">
-                    <nav class="sidenav-menu-nested nav">
-                        <a class="nav-link {{ (request()->segment(2) == 'cuti' && request()->segment(3) == 'roster') ? 'active' : '' }}" href="/karyawan/cuti/roster">Cuti roster</a>
-                        <a class="nav-link {{ (request()->segment(2) == 'cuti' && request()->segment(3) == '') ? 'active' : '' }}" href="/karyawan/cuti">Cuti tahunan</a>
-                        <a class="nav-link {{ (request()->segment(2) == 'izin-dibayarkan' && request()->segment(3) == '') ? 'active' : '' }}" href="/karyawan/izin-dibayarkan">Izin berbayar</a>
-                        <a class="nav-link {{ (request()->segment(2) == 'izin-tidak-dibayarkan' && request()->segment(3) == '') ? 'active' : '' }}" href="/karyawan/izin-tidak-dibayarkan">Izin tidak berbayar</a>
-                    </nav>
-                </div>
-
-                <a class="nav-link {{ (request()->segment(2) == 'pengajuan' || request()->segment(2) == 'status-permohonan') ? '' : 'collapsed' }}" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseStatusPengajuan" aria-expanded="false" aria-controls="collapseStatusPengajuan">
-                    <div class="nav-link-icon"><i data-feather="file-text"></i></div>
-                    Status pengajuan
-                    <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                </a>
-                <div class="collapse {{ (request()->segment(2) == 'status-permohonan' || request()->segment(2) == 'pengajuan') ? 'show' : '' }}" id="collapseStatusPengajuan" data-bs-parent="#accordionSidenav">
-                    <nav class="sidenav-menu-nested nav">
-                        <a class="nav-link {{ (request()->segment(2) == 'status-permohonan') ? 'active' : '' }}" href="/karyawan/status-permohonan">Cuti roster</a>
-                        <a class="nav-link {{ (request()->segment(2) == 'pengajuan') ? 'active' : '' }}" href="/account/pengajuan">Cuti tahunan dan izin</a>
-                    </nav>
-                </div>
-                <a class="nav-link {{ (request()->segment(1) == 'absen') ? 'active' : '' }}" href="/absen">
-                    <div class="nav-link-icon"><i data-feather="map-pin"></i></div>
-                    Presensi
-                </a>
-                <a class="nav-link {{ (request()->segment(1) == 'tiket') ? 'active' : '' }}" href="/tiket">
-                    <div class="nav-link-icon"><i data-feather="file"></i></div>
-                    Tiket
-                </a>
-                @endif
+                @include('components.main-menu-user')
 
                 @if(strtolower(Auth::user()->job->permission_role ?? '') == 'administrator')
                 <div class="sidenav-menu-heading">Pengaturan</div>
