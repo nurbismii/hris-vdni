@@ -195,8 +195,8 @@ class KaryawanRosterController extends Controller
                 'nik_karyawan' => $request->nik_karyawan,
                 'email' => $request->email,
                 'tanggal_pengajuan' => date('Y-m-d', strtotime($request->tanggal_pengajuan)),
-                'tgl_awal_kerja' => date('Y-m-d', strtotime($request->tgl_awal_kerja)),
-                'tgl_akhir_kerja' => date('Y-m-d', strtotime($request->tgl_akhir_kerja)),
+                'tgl_awal_kerja' => date('Y-m-d', strtotime($request->periode_awal)),
+                'tgl_akhir_kerja' => date('Y-m-d', strtotime($request->periode_akhir)),
                 'file' => $file_name ?? '',
                 'status_pengajuan' => 'menunggu',
                 'status_pengajuan_hrd' => 'menunggu'
@@ -205,8 +205,8 @@ class KaryawanRosterController extends Controller
 
         PeriodeKerjaRoster::create([
             'cuti_roster_id' => $data_roster->id,
-            'periode_awal' => date('Y-m-d', strtotime($request->periode_awal)),
-            'periode_akhir' => date('Y-m-d', strtotime($request->periode_akhir)),
+            'periode_awal' => date('Y-m-d', strtotime($request->tgl_awal_kerja)),
+            'periode_akhir' => date('Y-m-d', strtotime($request->tgl_akhir_kerja)),
             'satu' => $request->satu,
             'tanggal_satu' => date('Y-m-d', strtotime($request->tanggal_satu)),
             'dua' => $request->dua,

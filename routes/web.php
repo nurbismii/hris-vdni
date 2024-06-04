@@ -54,7 +54,7 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
         route::get('', [KaryawanRosterController::class, 'viewAdminDept']);
         route::get('pengajuan/{id}', [KaryawanRosterController::class, 'viewAdminDeptFormCuti'])->name('admindept.formcuti');
         route::get('pengajuan/print/{id}', [KaryawanRosterController::class, 'viewAdminPrint'])->name('admindept.print');
-        route::patch('/update/{id}', [CutiIzinController::class, 'cutiRosterUpdate'])->name('admindept.update.pengajuan');
+        route::patch('/update/{id}', [CutiIzinController::class, 'adminCutiRosterUpdate'])->name('admindept.update.pengajuan');
         route::get('/permohonan', [KaryawanRosterController::class, 'adminListPengajuan']);
     });
 

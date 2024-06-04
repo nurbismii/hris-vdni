@@ -19,7 +19,7 @@ class isAdminDivisi
     {
         $cek_role = Auth::user()->job->permission_role ?? '';
         if ($cek_role) {
-            if (strtolower($cek_role) == 'admin divisi') {
+            if (strtolower($cek_role) == 'administrator div') {
                 return $next($request);
             }
             abort(403);

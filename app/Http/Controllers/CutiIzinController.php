@@ -278,9 +278,18 @@ class CutiIzinController extends Controller
         return back()->with('success', 'Berhasil melakukan perubahan status pengajuan');
     }
 
+    public function adminCutiRosterUpdate(Request $request, $id)
+    {
+        CutiRoster::where('id', $id)->update([
+            'status_pengajuan' => $request->status_pengajuan,
+        ]);
+
+        return back()->with('success', 'Berhasil melakukan perubahan status pengajuan');
+    }
+
     public function cutiRosterShow($id)
     {
-        $data = CutiRoster::with('karyawan')->where('id', $id)->first();
+        $data = CutiRoster::with('karyawan', 'periode_kerja')->where('id', $id)->first();
         return view('comben.cuti-roster.show', compact('data'));
     }
 
@@ -482,6 +491,7 @@ class CutiIzinController extends Controller
             ->orderBy('cuti_roster.id', 'desc')
             ->select('cuti_roster.*', 'employees.nama_karyawan',  'periode_kerja_roster.tipe_rencana')
             ->where('cuti_roster.id', $id)
+            ->where('employees.divisi_id', Auth::user()->employee->divisi_id)
             ->first();
 
         return view('admin-dept.pengingat.permohonan-detail', compact('data'));
