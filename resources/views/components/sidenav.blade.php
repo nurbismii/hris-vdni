@@ -46,12 +46,13 @@
                         <a class="nav-link {{ (request()->segment(2) == 'import') ? 'active' : '' }}" href="/employees/import">Impor karyawan</a>
                     </nav>
                 </div>
-
                 <a class="nav-link {{ (request()->segment(1) == 'perusahaan') ? 'active' : '' }}" href="/perusahaan">
                     <div class="nav-link-icon"><i data-feather="codepen"></i></div>
                     Perusahaan
                 </a>
+                @endif
 
+                @if(strtolower(Auth::user()->job->permission_role ?? '') == 'administrator' || strtolower(Auth::user()->job->permission_role ?? '') == 'hubungan industrial')
                 <a class="nav-link {{ (request()->segment(1) == 'industrial-relations') ? '' : 'collapsed' }}" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseCoreHr" aria-expanded="false" aria-controls="collapseCoreHr">
                     <div class="nav-link-icon"><i data-feather="link"></i></div>
                     Hubungan Industrial
@@ -65,7 +66,9 @@
                         <a class="nav-link {{ (request()->segment(2) == 'resign') ? 'active' : '' }}" href="/industrial-relations/resign">Pengunduran Diri</a>
                     </nav>
                 </div>
-
+                @endif
+                
+                @if(strtolower(Auth::user()->job->permission_role ?? '') == 'administrator')
                 <a class="nav-link {{ (request()->segment(1) == 'salary' && request()->segment(2) == 'employee') ? '' : 'collapsed' }}" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapsePayroll" aria-expanded="false" aria-controls="collapsePayroll">
                     <div class="nav-link-icon"><i data-feather="credit-card"></i></div>
                     Penggajian
@@ -76,7 +79,9 @@
                         <a class="nav-link {{ (request()->segment(1) == 'salary') ? 'active' : '' }}" href="/salary/employee">Slip gaji</a>
                     </nav>
                 </div>
+                @endif
 
+                @if(strtolower(Auth::user()->job->permission_role ?? '') == 'administrator' || strtolower(Auth::user()->job->permission_role ?? '') == 'keuntungan dan manfaat')
                 <a class="nav-link {{ (request()->segment(1) == 'pengajuan-karyawan' || request()->segment(1) == 'roster' || request()->segment(3) == 'all-in') ? '' : 'collapsed' }}" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseKelolaCuti" aria-expanded="false" aria-controls="collapseKelolaCuti">
                     <div class="nav-link-icon"><i data-feather="folder-plus"></i></div>
                     Kompensasi & Benefit
@@ -90,7 +95,9 @@
                         <a class="nav-link {{ (request()->segment(3) == 'all-in') ? 'active' : '' }}" href="/absen/detail/all-in">Absensi</a>
                     </nav>
                 </div>
+                @endif
 
+                @if(strtolower(Auth::user()->job->permission_role ?? '') == 'administrator')
                 <a class="nav-link {{ request()->segment(1) == 'wilayah' ? '' : 'collapsed' }}" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseLaporan" aria-expanded="false" aria-controls="collapseLaporan">
                     <div class="nav-link-icon"><i data-feather="calendar"></i></div>
                     Laporan

@@ -1,4 +1,4 @@
-@if(strtolower(Auth::user()->job->permission_role ?? '') == 'admin divisi')
+@if(strtolower(Auth::user()->job->permission_role ?? '') == 'administrator div')
 <div class="sidenav-menu-heading">Main menu</div>
 
 <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseKelolaCuti" aria-expanded="false" aria-controls="collapseKelolaCuti">

@@ -19,7 +19,7 @@ class isAdmin
     {
         $cek_role = Auth::user()->job->permission_role ?? '';
         if ($cek_role) {
-            if (strtolower($cek_role) == 'administrator') {
+            if (strtolower($cek_role) == 'administrator' || strtolower($cek_role) == 'hubungan industrial' || strtolower($cek_role) == 'keuntungan dan manfaat' ) {
                 return $next($request);
             }
             abort(403);

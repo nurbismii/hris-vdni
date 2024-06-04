@@ -72,7 +72,7 @@ class UserController extends Controller
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
                 'status' => $request->status,
-                'role_id' => $request->role_id ?? '',
+                'role_id' => $request->role_id,
             ]);
             return back()->with('success', 'Pengguna baru berhasil ditambahkan');
         } catch (\Throwable $e) {

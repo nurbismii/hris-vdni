@@ -62,7 +62,7 @@
                                     {{ $row->email }}
                                 </div>
                             </td>
-                            <td>{{ $row->job->permission_role ?? 'User' }}</td>
+                            <td>{{ $row->job->permission_role ?? 'Pengguna' }}</td>
                             <td>{{ ucfirst($row->status) }}</td>
                             <td>{{ tgl_indo($row->employee->entry_date) ?? '' }}</td>
                             <td>
