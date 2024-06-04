@@ -90,9 +90,15 @@
                   <tr>
                     <th class="text-center" colspan="10">Tanggal Periode Kerja Roster <br> 工作日期</th>
                   </tr>
+                  @if($cuti->periode_awal > "2016-04-01")
                   <tr>
                     <th class="text-center" colspan="10">{{ tgl_indo($cuti->periode_awal) }} - {{ tgl_indo($cuti->periode_akhir) }} </th>
                   </tr>
+                  @else
+                  <tr>
+                    <th class="text-center" colspan="10">-</th>
+                  </tr>
+                  @endif
                   <tr class="text-center">
                     <th style="width: 20%;" rowspan="3">OFF 休息日</th>
                     <td colspan="1" style="width: 16%;">I</td>
@@ -166,7 +172,12 @@
                     $selisih =$tgl2 - $tgl1;
                     $hari = $selisih / 60 / 60 / 24;
                     @endphp
+
+                    @if($cuti->tgl_mulai_cuti != NULL)
                     <td colspan="5">{{ $hari + 1 }}</td>
+                    @else
+                    <td colspan="5">-</td>
+                    @endif
                   </tr>
                   <tr class="text-center">
                     <td>Cuti Tahunan 年假</td>
@@ -177,7 +188,12 @@
                     $selisih =$tgl2 - $tgl1;
                     $hari = $selisih / 60 / 60 / 24;
                     @endphp
+
+                    @if($cuti->tgl_mulai_cuti != NULL)
                     <td colspan="5">{{ $hari + 1 }}</td>
+                    @else
+                    <td colspan="5">-</td>
+                    @endif
                   </tr>
                   <tr class="text-center">
                     <td>OFF 休息日</td>
@@ -188,7 +204,12 @@
                     $selisih =$tgl2 - $tgl1;
                     $hari = $selisih / 60 / 60 / 24;
                     @endphp
+
+                    @if($cuti->tgl_mulai_cuti != NULL)
                     <td colspan="5">{{ $hari + 1 }}</td>
+                    @else
+                    <td colspan="5">-</td>
+                    @endif
                   </tr>
                   <tr>
                     <th class="text-center" colspan="10">Detail Pemesanan Tiket Pesawat Detail Pemesanan Tiket Pesawat 飞机票预订详情</th>
@@ -205,9 +226,9 @@
                   </tr>
                   <tr>
                     <td>Waktu</td>
-                    <td class="text-center" colspan="2">Pukul {{ $cuti->jam_keberangkatan }}</td>
+                    <td class="text-center" colspan="2">{{ $cuti->jam_keberangkatan }}</td>
                     <td>Waktu</td>
-                    <td class="text-center" colspan="6">Pukul {{ $cuti->jam_kepulangan }}</td>
+                    <td class="text-center" colspan="6">{{ $cuti->jam_kepulangan }}</td>
                   </tr>
                   <tr>
                     <td>Dari</td>

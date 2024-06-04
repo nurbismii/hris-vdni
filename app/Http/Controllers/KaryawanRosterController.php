@@ -198,7 +198,8 @@ class KaryawanRosterController extends Controller
                 'tgl_awal_kerja' => date('Y-m-d', strtotime($request->tgl_awal_kerja)),
                 'tgl_akhir_kerja' => date('Y-m-d', strtotime($request->tgl_akhir_kerja)),
                 'file' => $file_name ?? '',
-                'status_pengajuan' => 'menunggu'
+                'status_pengajuan' => 'menunggu',
+                'status_pengajuan_hrd' => 'menunggu'
             ]);
         }
 

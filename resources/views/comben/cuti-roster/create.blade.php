@@ -55,7 +55,49 @@
             <h5 class="card-title mb-4">
               <img src="{{ asset('assets/img/backgrounds/vdni-ikon.png') }}" style="height: 30px;" class="">
             </h5>
-            <form action="{{ route('store.pengajuan.roster') }}" method="POST" enctype="multipart/form-data">
+            <div class="table-responsive col-lg-12">
+              <table class="table table-borderless mb-2">
+                <thead class="border-bottom">
+                  <tr class="small text-uppercase text-muted">
+                    <th scope="col">RENCANA PADA MASA PERIODE ISTIRAHAT ROSTER 休假期的计划</th>
+                  </tr>
+                </thead>
+              </table>
+            </div>
+            <div class="row">
+              <div class="table-responsive col-lg-12">
+                <table class="table table-borderless mb-2">
+                  <tbody class="border-bottom">
+                    <tr>
+                      <td>
+                        Tidak ada pilihan
+                      </td>
+                      <td>
+                        <input class="form-check-input tipe-rencana" type="radio" name="tipe_rencana" value="0" checked>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        Cuti
+                      </td>
+                      <td>
+                        <input class="form-check-input tipe-rencana" type="radio" name="tipe_rencana" value="1">
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        Bekerja
+                      </td>
+                      <td>
+                        <input class="form-check-input tipe-rencana" type="radio" name="tipe_rencana" value="2">
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <form id="form-cuti" action="{{ route('store.pengajuan.roster') }}" method="POST" enctype="multipart/form-data">
               @csrf
               <!-- <div class="mb-3">
                 <select class="form-select search" name="search" id="nik"></select>
@@ -84,7 +126,7 @@
               <div class="row gx-3 mb-2">
                 <div class="col-md-6 mb-2">
                   <label class="small mb-2">Divisi</label>
-                  <input class="form-control" name="divisi" type="text" id="divisi" value="{{ Auth::user()->employee->divisi_id }}" readonly />
+                  <input class="form-control" name="divisi" type="text" id="divisi" value="{{ getNamaDivisi(Auth::user()->employee->divisi_id) }}" readonly />
                 </div>
                 <div class="col-md-6">
                   <label class="small mb-2">Tanggal Pengajuan</label>
@@ -340,6 +382,157 @@
               <div class="mb-3">
                 <label for="" class="mb-2">Berkas pendukung</label>
                 <input type="file" name="berkas_cuti" class="form-control" id="">
+              </div>
+              <hr class="my-4" />
+              <div class="d-grid">
+                <button class="btn btn-primary" type="submit">Simpan</button>
+              </div>
+            </form>
+
+            <form id="form-kerja" action="{{ route('store.pengajuan.roster') }}" method="POST" enctype="multipart/form-data">
+              @csrf
+              <div class="row gx-3 mb-2">
+                <div class="col-md-12 mb-2">
+                  <label class="small mb-2">Alasan</label>
+                  <textarea class="form-control" name="alasan_pilihan" id="" cols="30" rows="10"></textarea>
+                </div>
+              </div>
+              <div style="display: block;">
+                <div class="row gx-3 mb-2">
+                  <div class="col-md-6 mb-2">
+                    <label class="small mb-2">Nama</label>
+                    <input class="form-control" type="text" name="nama" id="nama_karyawan" value="{{ Auth::user()->employee->nama_karyawan }}" readonly />
+                    <input class="form-control" type="hidden" name="tipe_pilihan" value="2" />
+                  </div>
+                  <div class="col-md-6">
+                    <label class="small mb-2">Departemen</label>
+                    <input class="form-control" name="departemen" type="text" id="departemen" value="{{ Auth::user()->employee->divisi->departemen->departemen }}" readonly />
+                  </div>
+                </div>
+                <div class="row gx-3 mb-2">
+                  <div class="col-md-6 mb-2">
+                    <label class="small mb-2">NIK</label>
+                    <input class="form-control nik_karyawan" name="nik_karyawan" type="text" value="{{ Auth::user()->employee->nik }}" readonly />
+                  </div>
+                  <div class="col-md-6">
+                    <label class="small mb-2">Posisi</label>
+                    <input class="form-control" name="posisi" type="text" id="posisi" value="{{ Auth::user()->employee->posisi }}" readonly />
+                  </div>
+                </div>
+                <div class="row gx-3 mb-2">
+                  <div class="col-md-6 mb-2">
+                    <label class="small mb-2">Divisi</label>
+                    <input class="form-control" name="divisi" type="text" id="divisi" value="{{ getNamaDivisi(Auth::user()->employee->divisi_id) }}" readonly />
+                  </div>
+                  <div class="col-md-6">
+                    <label class="small mb-2">Tanggal Pengajuan</label>
+                    <input class="form-control date" name="tanggal_pengajuan" type="text" value="{{ date('Y-m-d') }}" readonly required />
+                  </div>
+                </div>
+                <div class="row gx-3 mb-2">
+                  <div class="col-md-6">
+                    <label class="small mb-2">Email</label>
+                    <input class="form-control" name="email" type="email" />
+                  </div>
+                  <div class="col-md-6 mb-2">
+                    <label class="small mb-2">No HP</label>
+                    <input class="form-control" name="no_telp" type="number" id="no_telp" />
+                  </div>
+                </div>
+              </div>
+              <hr class="mt-2 mb-2">
+              <p class="text-muted text-uppercase small">PERIODE ROSTER SAAT INI 目前休假明细</p>
+              <div class="row g-3 align-items-center mb-1">
+                <div class="col-lg-4">
+                  <label for="periode_awal" class="col-form-label">Tanggal Periode Kerja Roster</label>
+                </div>
+              </div>
+              <div class="row g-3 align-items-center mb-2">
+                <div class="col-lg-2">
+                  <label for="satu" class="col-form-label">I</label>
+                </div>
+                <div class="col-lg-5">
+                  <select name="satu" class="form-select" id="">
+                    <option value="OFF">OFF</option>
+                    <option value="BEKERJA">BEKERJA</option>
+                  </select>
+                </div>
+                <div class="col-lg-5">
+                  <input class="form-control date" name="tanggal_satu" type="text" placeholder="DD-MM-YYYY" required />
+                </div>
+              </div>
+              <div class="row g-3 align-items-center mb-2">
+                <div class="col-lg-2">
+                  <label for="satu" class="col-form-label">II</label>
+                </div>
+                <div class="col-lg-5">
+                  <select name="dua" class="form-select" id="">
+                    <option value="OFF">OFF</option>
+                    <option value="BEKERJA">BEKERJA</option>
+                  </select>
+                </div>
+                <div class="col-lg-5">
+                  <input class="form-control date" name="tanggal_dua" type="text" placeholder="DD-MM-YYYY" required />
+                </div>
+              </div>
+              <div class="row g-3 align-items-center mb-2">
+                <div class="col-lg-2">
+                  <label for="satu" class="col-form-label">III</label>
+                </div>
+                <div class="col-lg-5">
+                  <select name="tiga" class="form-select" id="">
+                    <option value="OFF">OFF</option>
+                    <option value="BEKERJA">BEKERJA</option>
+                  </select>
+                </div>
+                <div class="col-lg-5">
+                  <input class="form-control date" name="tanggal_tiga" type="text" placeholder="DD-MM-YYYY" required />
+                </div>
+              </div>
+              <div class="row g-3 align-items-center mb-2">
+                <div class="col-lg-2">
+                  <label for="satu" class="col-form-label">IV</label>
+                </div>
+                <div class="col-lg-5">
+                  <select name="empat" class="form-select" id="">
+                    <option value="OFF">OFF</option>
+                    <option value="BEKERJA">BEKERJA</option>
+                  </select>
+                </div>
+                <div class="col-lg-5">
+                  <input class="form-control date" name="tanggal_empat" type="text" placeholder="DD-MM-YYYY" required />
+                </div>
+              </div>
+              <div class="row g-3 align-items-center mb-2">
+                <div class="col-lg-2">
+                  <label for="satu" class="col-form-label">V</label>
+                </div>
+                <div class="col-lg-5">
+                  <select name="lima" class="form-select" id="">
+                    <option value="OFF">OFF</option>
+                    <option value="BEKERJA">BEKERJA</option>
+                  </select>
+                </div>
+                <div class="col-lg-5">
+                  <input class="form-control date" name="tanggal_lima" type="text" placeholder="DD-MM-YYYY" required />
+                </div>
+              </div>
+              <div class="row g-3 align-items-center mb-2">
+                <div class="col-lg-2">
+                  <label for="satu" class="col-form-label">Tanggal Bekerja Pada Periode Kerja Roster</label>
+                </div>
+                <div class="col-lg-5">
+                  <input class="form-control date" name="tgl_awal_kerja" type="text" placeholder="DD-MM-YYYY" required />
+                </div>
+                <div class="col-lg-5">
+                  <input class="form-control date" name="tgl_akhir_kerja" type="text" placeholder="DD-MM-YYYY" required />
+                  </td>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label for="" class="mb-2">Berkas pendukung</label>
+                <input type="file" name="berkas_cuti" class="form-control">
               </div>
               <hr class="my-4" />
               <div class="d-grid">
