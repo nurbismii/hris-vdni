@@ -300,7 +300,7 @@ class KaryawanRosterController extends Controller
 
     public function rosterAktif()
     {
-        return redirect('roster/daftar-pengingat');
+        return redirect('/kompensasi-dan-keuntungan/pengingat');
     }
 
     public function pengajuanCutiRosterDetail($id)

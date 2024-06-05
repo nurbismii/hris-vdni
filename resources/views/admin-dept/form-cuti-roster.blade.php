@@ -35,7 +35,7 @@
 						</h1>
 					</div>
 					<div class="col-12 col-xl-auto mb-3">
-						<a class="btn btn-sm btn-light text-blue" href="/admin/roster">
+						<a class="btn btn-sm btn-light text-blue" href="/admin/pengingat">
 							<i class="me-1" data-feather="x"></i>
 							Tutup
 						</a>

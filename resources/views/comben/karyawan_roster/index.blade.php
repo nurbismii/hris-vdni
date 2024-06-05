@@ -44,8 +44,8 @@
             </div>
             <div class="col-lg-12 mb-2">
                 <nav class="nav nav-borders">
-                    <a class="nav-link {{ (request()->segment(2) == 'daftar-pengingat') ? 'active' : '' }} ms-0" href="/roster/daftar-pengingat">Data Pengingat</a>
-                    <a class="nav-link {{ (request()->is('roster')) ? 'active' : '' }} ms-0" href="/roster/kalender">Data Roster</a>
+                    <a class="nav-link {{ (request()->segment(2) == 'pengingat') ? 'active' : '' }} ms-0" href="/kompensasi-dan-keuntungan/pengingat">Data Pengingat</a>
+                    <a class="nav-link {{ (request()->is('roster')) ? 'active' : '' }} ms-0" href="/kompensasi-dan-keuntungan/kalender">Data Roster</a>
                 </nav>
                 <hr class="mt-0 mb-4" />
                 <div class="card">

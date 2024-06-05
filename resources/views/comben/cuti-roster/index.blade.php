@@ -29,12 +29,12 @@
 							Data Pengajuan Cuti Roster
 						</h1>
 					</div>
-					<div class="col-12 col-xl-auto mb-3">
+					<!-- <div class="col-12 col-xl-auto mb-3">
 						<a class="btn btn-sm btn-light text-primary" href="/roster/create">
 							<i class="me-1" data-feather="plus"></i>
 							Tambah
 						</a>
-					</div>
+					</div> -->
 				</div>
 			</div>
 		</div>
@@ -123,7 +123,7 @@
 				searching: true,
 				responsive: true,
 				ajax: {
-					url: "roster/server-side",
+					url: "/roster/server-side",
 					data: function(d) {
 						d.status_pengajuan = $('#status_pengajuan').val(),
 							d.search = $('input[type="search"]').val()

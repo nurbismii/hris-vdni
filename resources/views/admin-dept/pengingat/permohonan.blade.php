@@ -28,7 +28,7 @@
     <x-message />
     <div class="row">
       <div class="col-lg-12 mb-2">
-        <form action="/admin/roster/permohonan" method="get">
+        <form action="/admin/permohonan" method="get">
           @csrf
           <div class="card">
             <div class="card-body" style="overflow-x: auto;">
@@ -39,7 +39,7 @@
                 <option value="ditolak">Ditolak</option>
               </select>
               <div class="mt-2">
-                <a class="btn btn-sm btn-light text-primary" href="/admin/roster/permohonan">
+                <a class="btn btn-sm btn-light text-primary" href="/admin/permohonan">
                   <i class="me-1" data-feather="trash"></i>
                   Bersihkan
                 </a>

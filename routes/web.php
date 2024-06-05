@@ -50,12 +50,12 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
     Route::post('/store/absen', [WaktuAbsenController::class, 'storeAbsen'])->name('store.absen');
     route::get('/lihat-pengingat', [KaryawanRosterController::class, 'pengingatPribadi']);
 
-    Route::group(['prefix' => 'admin/roster/', 'middleware' => ['isAdminDivisi']], function () {
-        route::get('', [KaryawanRosterController::class, 'viewAdminDept']);
+    Route::group(['prefix' => 'admin/', 'middleware' => ['isAdminDivisi']], function () {
+        route::get('/pengingat', [KaryawanRosterController::class, 'viewAdminDept']);
+        route::get('/permohonan', [KaryawanRosterController::class, 'adminListPengajuan']);
         route::get('pengajuan/{id}', [KaryawanRosterController::class, 'viewAdminDeptFormCuti'])->name('admindept.formcuti');
         route::get('pengajuan/print/{id}', [KaryawanRosterController::class, 'viewAdminPrint'])->name('admindept.print');
         route::patch('/update/{id}', [CutiIzinController::class, 'adminCutiRosterUpdate'])->name('admindept.update.pengajuan');
-        route::get('/permohonan', [KaryawanRosterController::class, 'adminListPengajuan']);
     });
 
     Route::group(['prefix' => 'admin/cuti/', 'middleware' => ['isAdminDivisi']], function () {
@@ -95,7 +95,6 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
         route::group(['middleware' => 'isAdmin'], function () {
             // Detail Absensi Controller
             route::get('/detail', [DetailAbsensiController::class, 'getDetailAbsensi']);
-            route::get('/detail/all-in', [DetailAbsensiController::class, 'getDetailAllIn']);
             route::post('/import-data-absen', [DetailAbsensiController::class, 'importAbsensi'])->name('import.absensi');
             route::post('/import-data-absen/destroy', [DetailAbsensiController::class, 'importDeleteAbsensi'])->name('import.destroy.absensi');
             route::get('/dropdown-bulan/{id}', [DetailAbsensiController::class, 'dropwdownBulan']);
@@ -126,12 +125,26 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
         route::get('/download/{id}', [CutiIzinController::class, 'downloadTiketPesawat'])->name('karyawan.download.tiket');
     });
 
+    Route::group(['prefix' => 'kompensasi-dan-keuntungan'], function (){
+        route::get('/cuti-izin', [CutiIzinController::class, 'index']);
+        // route::get('/cuti-izin/create', [CutiIzinController::class, 'cutiIzin']); can delete
+        route::get('/cuti-roster', [CutiIzinController::class, 'cutiRoster']);
+        route::get('/cuti-roster/detail/{id}', [CutiIzinController::class, 'cutiRosterShow'])->name('cutiroster.show'); 
+        route::post('/cuti-roster/update/{id}', [CutiIzinController::class, 'cutiRosterUpdate'])->name('cutiroster.update');
+        route::get('cuti-izin/import', [CutiIzinController::class, 'importViewPengajuan'])->name('import.pengajuan');
+
+        route::get('/pengingat', [KaryawanRosterController::class, 'reminder']);
+        route::get('/kalender', [KaryawanRosterController::class, 'index']);
+
+        route::get('/absen', [DetailAbsensiController::class, 'getDetailAllIn']);
+        route::get('/detail', [DetailAbsensiController::class, 'getDetailAbsensi']);
+
+    });
+
     Route::group(['prefix' => 'pengajuan-karyawan'], function () {
-        route::get('/', [CutiIzinController::class, 'index']);
         route::get('/server-side', [CutiIzinController::class, 'serverSidePengajuan']);
-        route::get('/import', [CutiIzinController::class, 'importViewPengajuan'])->name('import.pengajuan');
         route::post('/import/store', [CutiIzinController::class, 'importStorePengajuan'])->name('import.store.pengajuan');
-        route::get('/cuti', [CutiIzinController::class, 'cutiIzin']);
+        
         route::post('/store-cuti', [CutiIzinController::class, 'storeCutiIzin']);
         route::get('/izin-dibayarkan', [CutiIzinController::class, 'izinDibayar']);
         route::post('/store-izin-dibayarkan', [CutiIzinController::class, 'storeIzinDibayarkan']);
@@ -288,20 +301,15 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
         });
 
         Route::group(['prefix' => 'roster'], function () {
-            route::get('/', [CutiIzinController::class, 'cutiRoster']);
             route::get('/server-side', [CutiIzinController::class, 'serverSideCutiRoster']);
-            route::get('/create', [CutiIzinController::class, 'cutiRosterCreate']);
+            // route::get('/create', [CutiIzinController::class, 'cutiRosterCreate']); can delete
             route::post('/store', [CutiIzinController::class, 'cutiRosterStore'])->name('cutiroster.store');
-            route::post('/update/{id}', [CutiIzinController::class, 'cutiRosterUpdate'])->name('cutiroster.update');
-            route::get('/detail/{id}', [CutiIzinController::class, 'cutiRosterShow'])->name('cutiroster.show');
             route::post('/upload/tiket/{id}', [CutiIzinController::class, 'uploadTiketPesawat'])->name('cutiroster.upload.tiket');
             route::post('/download/tiket/{id}', [CutiIzinController::class, 'downloadTiketPesawat'])->name('cutiroster.download.tiket');
             route::get('/download/berkas/{id}', [CutiIzinController::class, 'downloadBerkas'])->name('cutiroster.download');
 
-            route::get('/kalender', [KaryawanRosterController::class, 'index']);
             route::post('/import-karyawan-roster', [KaryawanRosterController::class, 'importKaryawanRoster'])->name('import.karyawanRoster');
             route::post('/import-delete-karyawan-roster', [KaryawanRosterController::class, 'importDeleteKaryawanRoster'])->name('import.deleteKaryawanRoster');
-            route::get('/daftar-pengingat', [KaryawanRosterController::class, 'reminder']);
             route::get('/aktif', [KaryawanRosterController::class, 'rosterAktif']);
             route::patch('/update/status-pengajuan/{id}', [KaryawanRosterController::class, 'updateStatusPengajuan'])->name('update.statusPengajuan');
         });

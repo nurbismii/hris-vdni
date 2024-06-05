@@ -28,7 +28,7 @@
 		<x-message />
 		<div class="row">
 			<div class="col-lg-12 mb-2">
-				<form action="/admin/roster" method="get">
+				<form action="/admin/pengingat" method="get">
 					@csrf
 					<div class="card">
 						<div class="card-body" style="overflow-x: auto;">
@@ -44,7 +44,7 @@
 									<i class="me-1" data-feather="search"></i>
 									Filter
 								</button>
-								<a class="btn btn-sm btn-light text-primary" href="/roster/daftar-pengingat">
+								<a class="btn btn-sm btn-light text-primary" href="/kompensasi-dan-keuntungan/pengingat">
 									<i class="me-1" data-feather="trash"></i>
 									Bersihkan
 								</a>

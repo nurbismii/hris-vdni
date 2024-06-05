@@ -30,8 +30,8 @@
     <!-- Main page content-->
     <div class="container-fluid px-4 mt-3">
         <nav class="nav nav-borders">
-            <a class="nav-link {{ (request()->segment(2) == 'all-in') ? 'active' : '' }} ms-0" href="/absen/detail/all-in">Data Absensi</a>
-            <a class="nav-link {{ (request()->segment(2) == 'detail') ? 'active' : '' }} ms-0" href="/absen/detail">Import Data Absensi</a>
+            <a class="nav-link {{ (request()->segment(2) == 'all-in') ? 'active' : '' }} ms-0" href="/kompensasi-dan-keuntungan/absen">Data Absensi</a>
+            <a class="nav-link {{ (request()->segment(3) == 'import') ? 'active' : '' }} ms-0" href="/kompensasi-dan-keuntungan/absen/import">Import Data Absensi</a>
         </nav>
         <hr class="mt-0 mb-4" />
         <div class="row">

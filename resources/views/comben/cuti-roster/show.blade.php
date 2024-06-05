@@ -25,7 +25,7 @@
             </h1>
           </div>
           <div class="col-12 col-xl-auto mb-3">
-            <a class="btn btn-sm btn-light text-blue" href="/roster">
+            <a class="btn btn-sm btn-light text-blue" href="/kompensasi-dan-keuntungan/cuti-roster">
               <i class="me-1" data-feather="x"></i>
               Tutup
             </a>

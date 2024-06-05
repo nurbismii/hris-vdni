@@ -26,10 +26,10 @@
                         </h1>
                     </div>
                     <div class="col-12 col-xl-auto mb-3">
-                        <a class="btn btn-sm btn-light text-primary" href="pengajuan-karyawan/cuti">
+                        <!-- <a class="btn btn-sm btn-light text-primary" href="/kompensasi-dan-keuntungan/cuti-izin/create">
                             <i class="me-1" data-feather="plus"></i>
                             Tambah
-                        </a>
+                        </a> -->
                         <a class="btn btn-sm btn-light text-primary" href="{{ route('import.pengajuan') }}">
                             <i class="me-1" data-feather="upload-cloud"></i>
                             Bulk upload
@@ -124,7 +124,7 @@
                 searching: true,
                 responsive: true,
                 ajax: {
-                    url: "pengajuan-karyawan/server-side",
+                    url: "/pengajuan-karyawan/server-side",
                     data: function(d) {
                         d.tipe = $('#tipe').val(),
                             d.search = $('input[type="search"]').val()

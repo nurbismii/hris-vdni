@@ -27,14 +27,14 @@
     <div class="container-fluid px-4">
         <x-message />
         <nav class="nav nav-borders">
-            <a class="nav-link {{ (request()->segment(2) == 'daftar-pengingat') ? 'active' : '' }} ms-0" href="/roster/daftar-pengingat">Pengingat</a>
-            <a class="nav-link {{ (request()->is('roster')) ? 'active' : '' }} ms-0" href="/roster/kalender">Roster</a>
+            <a class="nav-link {{ (request()->segment(2) == 'pengingat') ? 'active' : '' }} ms-0" href="/kompensasi-dan-keuntungan/pengingat">Pengingat</a>
+            <a class="nav-link {{ (request()->segment(2) == 'kalender') ? 'active' : '' }} ms-0" href="/kompensasi-dan-keuntungan/kalender">Roster</a>
         </nav>
         <hr class="mt-0 mb-4" />
         <div class="row">
             @if(strtolower(Auth::user()->job->permission_role ?? '') == 'administrator')
             <div class="col-lg-12 mb-2">
-                <form action="/roster/daftar-pengingat" method="get">
+                <form action="/kompensasi-dan-keuntungan/pengingat" method="get">
                     @csrf
                     <div class="card">
                         <div class="card-body" style="overflow-x: auto;">
@@ -50,7 +50,7 @@
                                     <i class="me-1" data-feather="search"></i>
                                     Filter
                                 </button>
-                                <a class="btn btn-sm btn-light text-primary" href="/roster/daftar-pengingat">
+                                <a class="btn btn-sm btn-light text-primary" href="/kompensasi-dan-keuntungan/pengingat">
                                     <i class="me-1" data-feather="trash"></i>
                                     Bersihkan
                                 </a>
