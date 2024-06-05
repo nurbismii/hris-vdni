@@ -37,209 +37,245 @@
   <!-- Main page content-->
   <div class="container-xl px-4 mt-4">
     <div class="row">
-      <div class="col-xl-8">
-        <div class="card mb-4">
-          <div class="card-header">Data pengajuan</div>
-          <div class="card-body">
-            <form action="{{ route('cutiroster.store') }}" method="POST" enctype="multipart/form-data">
-              @csrf
-              <div class="row gx-3 mb-2">
-                <div class="col-md-6 mb-2">
-                  <label class="small mb-2">Nama</label>
-                  <input class="form-control" type="text" name="nama" value="{{$data->karyawan->nama_karyawan}}" readonly />
-                </div>
-                <div class="col-md-6">
-                  <label class="small mb-2">Departemen</label>
-                  <input class="form-control" name="departemen" type="text" value="{{$data->karyawan->divisi->departemen->departemen}}" readonly />
-                </div>
+      <div class="col-lg-8">
+        <div class="card invoice">
+          <div class="card-body p-2 p-md-4">
+            <div class="text-center lh-1 mb-2">
+              <h4 class="fw-bold">FORMULIR PERMOHONAN CUTI ROSTER</h4> <br>
+              @if($data->periode_kerja->tipe_rencana == '1')
+              <b>CUTI ROSTER</b>
+              @else
+              <b>BEKERJA</b>
+              @endif
+            </div>
+            <hr>
+            <div class="table-responsive">
+              <table class="table table-borderless mb-0">
+                <tbody>
+                  <tr>
+                    <th scope="row">Nomor Induk Karyawan</th>
+                    <td>{{$data->nik_karyawan}}</td>
+                    <td>Tanggal Pengajuan</td>
+                    <td>{{tgl_indo($data->tanggal_pengajuan)}}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Nama Karyawan</th>
+                    <td>{{ $data->karyawan->nama_karyawan }}</td>
+                    <td>Email</td>
+                    <td>{{ $data->email }}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Departemen</th>
+                    <td>{{$data->karyawan->divisi->nama_divisi}}</td>
+                    <td>Posisi</td>
+                    <td>{{$data->karyawan->posisi}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <!-- Invoice table 1-->
+
+            <div class="row">
+              <div class="table-responsive col-lg-12 mb-2">
+                <table class="table table-bordered mb-0">
+                  <thead class="border-bottom">
+                    <tr class="small text-uppercase text-muted">
+                      <th scope="col">Periode</th>
+                      <th>Tanggal</th>
+                      <th>Tipe</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="border-bottom">
+                      <td>I</td>
+                      <td class="fw-bold">{{ tgl_indo($data->periode_kerja->tanggal_satu)}}</td>
+                      <td>{{ $data->periode_kerja->satu }}</td>
+                    </tr>
+                    <tr class="border-bottom">
+                      <td>II</td>
+                      <td class="fw-bold">{{ tgl_indo($data->periode_kerja->tanggal_dua)}}</td>
+                      <td>{{ $data->periode_kerja->dua }}</td>
+                    </tr>
+                    <tr class="border-bottom">
+                      <td>III</td>
+                      <td class="fw-bold">{{ tgl_indo($data->periode_kerja->tanggal_tiga)}}</td>
+                      <td>{{ $data->periode_kerja->tiga }}</td>
+                    </tr>
+                    <tr class="border-bottom">
+                      <td>IV</td>
+                      <td class="fw-bold">{{ tgl_indo($data->periode_kerja->tanggal_empat)}}</td>
+                      <td>{{ $data->periode_kerja->empat }}</td>
+                    </tr>
+                    <tr class="border-bottom">
+                      <td>V</td>
+                      <td class="fw-bold">{{ tgl_indo($data->periode_kerja->tanggal_lima)}}</td>
+                      <td>{{ $data->periode_kerja->lima }}</td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
-              <div class="row gx-3 mb-2">
-                <div class="col-md-6 mb-2">
-                  <label class="small mb-2">NIK</label>
-                  <input class="form-control nik_karyawan" name="nik_karyawan" value="{{$data->nik_karyawan}}" readonly />
-                </div>
-                <div class="col-md-6">
-                  <label class="small mb-2">Posisi</label>
-                  <input class="form-control" name="posisi" type="text" value="{{$data->karyawan->posisi}}" readonly />
-                </div>
+              @if($data->periode_kerja->tipe_rencana == '1')
+              <div class="table-responsive col-lg-12">
+                <table class="table table-borderless mb-0">
+                  <thead class="border-bottom">
+                    <tr class="small text-uppercase text-muted">
+                      <th scope="col">Keberangkatan</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="border-bottom">
+                      <td>
+                        <div class="fw-bold">Cuti Roster</div>
+                      </td>
+                      <td class="text-end fw-bold">:</td>
+                      <td class="text-end fw-bold">{{ tgl_indo($data->tgl_mulai_cuti)}}</td>
+                    </tr>
+                    <tr class="border-bottom">
+                      <td>
+                        <div class="fw-bold">Cuti tahunan</div>
+                      </td>
+                      <td class="text-end fw-bold">:</td>
+                      <td class="text-end fw-bold">{{ $data->tgl_mulai_cuti_tahunan > '2016-04-01' ? tgl_indo($data->tgl_mulai_cuti_tahunan) : '-'}}</td>
+                    </tr>
+                    <tr class="border-bottom">
+                      <td>
+                        <div class="fw-bold">Tanggal mulai off</div>
+                      </td>
+                      <td class="text-end fw-bold">:</td>
+                      <td class="text-end fw-bold">{{ $data->tgl_mulai_off > '2016-04-01' ? tgl_indo($data->tgl_mulai_off) : '-'}}</td>
+                    </tr>
+                    <tr class="border-bottom">
+                      <td>
+                        <div class="fw-bold">Tanggal keberangkatan</div>
+                      </td>
+                      <td class="text-end fw-bold">:</td>
+                      <td class="text-end fw-bold">{{ $data->tgl_keberangkatan > '2016-04-01' ? tgl_indo($data->tgl_keberangkatan) : '-'}}</td>
+                    </tr>
+                    <tr class="border-bottom">
+                      <td>
+                        <div class="fw-bold">Waktu keberangkatan</div>
+                      </td>
+                      <td class="text-end fw-bold">:</td>
+                      <td class="text-end fw-bold">{{$data->jam_keberangkatan}}</td>
+                    </tr>
+                    <tr class="border-bottom">
+                      <td>
+                        <div class="fw-bold">Dari</div>
+                      </td>
+                      <td class="text-end fw-bold">:</td>
+                      <td class="text-end fw-bold">{{$data->kota_awal_keberangkatan}}</td>
+                    </tr>
+                    <tr class="border-bottom">
+                      <td>
+                        <div class="fw-bold">Tujuan</div>
+                      </td>
+                      <td class="text-end fw-bold">:</td>
+                      <td class="text-end fw-bold">{{$data->kota_tujuan_keberangkatan}}</td>
+                    </tr>
+                    <tr class="border-bottom">
+                      <td>
+                        <div class="fw-bold">Catatan</div>
+                      </td>
+                      <td class="text-end fw-bold">:</td>
+                      <td class="text-end fw-bold">{{$data->catatan_penting_keberangkatan}}</td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
-              <div class="row gx-3 mb-2">
-                <div class="col-md-6 mb-2">
-                  <label class="small mb-2">No HP</label>
-                  <input class="form-control" name="no_telp" type="number" value="{{$data->karyawan->no_telp}}" readonly />
-                </div>
-                <div class="col-md-6 mb-2">
-                  <label class="small mb-2">Divisi</label>
-                  <input class="form-control" name="divisi" type="text" value="{{$data->karyawan->divisi->nama_divisi}}" readonly />
-                </div>
+              <div class="table-responsive col-lg-12">
+                <table class="table table-borderless mb-0">
+                  <thead class="border-bottom">
+                    <tr class="small text-uppercase text-muted">
+                      <th scope="col">Kepulangan</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="border-bottom">
+                      <td>
+                        <div class="fw-bold">Cuti Roster Berakhir</div>
+                      </td>
+                      <td class="text-end fw-bold">:</td>
+                      <td class="text-end fw-bold">{{ $data->tgl_mulai_cuti_berakhir > '2016-04-01' ? tgl_indo($data->tgl_mulai_cuti_berakhir) : '-' }}</td>
+                    </tr>
+                    <tr class="border-bottom">
+                      <td>
+                        <div class="fw-bold">Cuti Tahunan Berakhir</div>
+                      </td>
+                      <td class="text-end fw-bold">:</td>
+                      <td class="text-end fw-bold">{{ $data->tgl_mulai_cuti_tahunan_berakhir > '2016-04-01' ? tgl_indo($data->tgl_mulai_cuti_tahunan_berakhir) : '-' }}</td>
+                    </tr>
+                    <tr class="border-bottom">
+                      <td>
+                        <div class="fw-bold">Tanggal Berakhir Off</div>
+                      </td>
+                      <td class="text-end fw-bold">:</td>
+                      <td class="text-end fw-bold">{{ $data->tgl_mulai_off_berakhir > '2016-04-01' ? tgl_indo($data->tgl_mulai_off_berakhir) : '-'}}</td>
+                    </tr>
+                    <tr class="border-bottom">
+                      <td>
+                        <div class="fw-bold">Tanggal Kepulangan</div>
+                      </td>
+                      <td class="text-end fw-bold">:</td>
+                      <td class="text-end fw-bold">{{tgl_indo($data->tgl_kepulangan)}}</td>
+                    </tr>
+                    <tr class="border-bottom">
+                      <td>
+                        <div class="fw-bold">Waktu Kepulangan</div>
+                      </td>
+                      <td class="text-end fw-bold">:</td>
+                      <td class="text-end fw-bold">{{$data->jam_kepulangan}}</td>
+                    </tr>
+                    <tr class="border-bottom">
+                      <td>
+                        <div class="fw-bold">Dari</div>
+                      </td>
+                      <td class="text-end fw-bold">:</td>
+                      <td class="text-end fw-bold">{{$data->kota_awal_kepulangan}}</td>
+                    </tr>
+                    <tr class="border-bottom">
+                      <td>
+                        <div class="fw-bold">Tujuan</div>
+                      </td>
+                      <td class="text-end fw-bold">:</td>
+                      <td class="text-end fw-bold">{{$data->kota_tujuan_kepulangan}}</td>
+                    </tr>
+                    <tr class="border-bottom">
+                      <td>
+                        <div class="fw-bold">Catatan</div>
+                      </td>
+                      <td class="text-end fw-bold">:</td>
+                      <td class="text-end fw-bold">{{$data->catatan_penting_keberangkatan}}</td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
-              <div class="row gx-3 mb-2">
-                <div class="col-md-6">
-                  <label class="small mb-2">Email</label>
-                  <input class="form-control" name="email" type="email" value="{{$data->email}}" />
-                </div>
-                <div class="col-md-6">
-                  <label class="small mb-2">Tanggal Pengajuan</label>
-                  <input class="form-control date" name="tanggal_pengajuan" type="text" value="{{tgl_indo($data->tanggal_pengajuan)}}" />
-                </div>
+              @else
+              @php
+              $tgl_cuti = new DateTime($data->tgl_awal_kerja);
+              $tgl_sekarang = new DateTime($data->tgl_akhir_kerja);
+              $tgl_jt_tempo = $tgl_sekarang->diff($tgl_cuti)->days;
+              @endphp
+              <div class="table-responsive col-lg-12">
+                <table class="table table-bordered mb-0">
+                  <thead class="border-bottom">
+                    <tr class="small text-uppercase text-muted">
+                      <th>Tanggal Bekerja Pada Cuti Roster</th>
+                      <th>Total</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="">
+                      <td class="fw-bold">{{ tgl_indo($data->tgl_awal_kerja) }} - {{ tgl_indo($data->tgl_akhir_kerja) }}</td>
+                      <td class="fw-bold">{{ $tgl_jt_tempo + 1}} Hari</td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
-              <hr class="mt-2 mb-2">
-              <div class="row">
-                <div class="table-responsive col-lg-12">
-                  <table class="table table-borderless mb-2">
-                    <thead class="border-bottom">
-                      <tr class="small text-uppercase text-muted">
-                        <th scope="col">Keberangkatan</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr class="border-bottom">
-                        <td width="30px">
-                          <div class="fw-bold">Tanggal cuti roster</div>
-                        </td>
-                        <td class="text-end fw-bold">
-                          <input class="form-control date" name="tgl_mulai_cuti" type="text" value="{{tgl_indo($data->tgl_mulai_cuti)}}" />
-                        </td>
-                      </tr>
-                      <tr class=" border-bottom">
-                        <td>
-                          <div class="fw-bold">Tanggal cuti tahunan</div>
-                        </td>
-                        <td class="text-end fw-bold">
-                          <input class="form-control date" name="tgl_mulai_cuti_tahunan" type="text" value="{{tgl_indo($data->tgl_mulai_cuti_tahunan)}}" />
-                        </td>
-                      </tr>
-                      <tr class="border-bottom">
-                        <td>
-                          <div class="fw-bold">Tanggal off</div>
-                        </td>
-                        <td class="text-end fw-bold">
-                          <input class="form-control date" name="tgl_mulai_off" type="text" value="{{tgl_indo($data->tgl_mulai_off)}}" />
-                        </td>
-                      </tr>
-                      <tr class="border-bottom">
-                        <td>
-                          <div class="fw-bold">Tanggal keberangkatan</div>
-                        </td>
-                        <td class="text-end fw-bold">
-                          <input class="form-control date" name="tanggal_keberangkatan" type="text" value="{{tgl_indo($data->tgl_keberangkatan)}}" required />
-                        </td>
-                      </tr>
-                      <tr class="border-bottom">
-                        <td>
-                          <div class="fw-bold">Waktu keberangkatan</div>
-                        </td>
-                        <td class="text-end fw-bold">
-                          <input class="form-control" name="jam_keberangkatan" type="text" maxlength="5" value="{{$data->jam_keberangkatan}}" required />
-                        </td>
-                      </tr>
-                      <tr class="border-bottom">
-                        <td>
-                          <div class="fw-bold">Dari</div>
-                        </td>
-                        <td class="text-end fw-bold">
-                          <input class="form-control" name="kota_awal_keberangkatan" value="{{$data->kota_awal_keberangkatan}}" required></input>
-                        </td>
-                      </tr>
-                      <tr class="border-bottom">
-                        <td>
-                          <div class="fw-bold">Tujuan</div>
-                        </td>
-                        <td class="text-end fw-bold">
-                          <input class="form-control" name="kota_tujuan_keberangkatan" value="{{$data->kota_tujuan_keberangkatan}}" required></input>
-                        </td>
-                      </tr>
-                      <tr class="border-bottom">
-                        <td>
-                          <div class="fw-bold">Catatan penting</div>
-                        </td>
-                        <td class="text-end fw-bold">
-                          <textarea name="catatan_penting_keberangkatan" class="form-control" value="{{$data->catatan_penting_keberangkatan}}" cols="30" rows="5"></textarea>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-                <div class="table-responsive col-lg-12">
-                  <table class="table table-borderless mb-2">
-                    <thead class="border-bottom">
-                      <tr class="small text-uppercase text-muted">
-                        <th scope="col">Keberangkatan</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr class="border-bottom">
-                        <td width="30px">
-                          <div class="fw-bold">Cuti roster berakhir</div>
-                        </td>
-                        <td class="text-end fw-bold">
-                          <input class="form-control date" name="tgl_mulai_cuti_berakhir" type="text" value="{{tgl_indo($data->tgl_mulai_cuti_berakhir)}}" required />
-                        </td>
-                      </tr>
-                      <tr class="border-bottom">
-                        <td>
-                          <div class="fw-bold">Cuti tahunan berakhir</div>
-                        </td>
-                        <td class="text-end fw-bold">
-                          <input class="form-control date" name="tgl_mulai_cuti_tahunan_berakhir" type="text" value="{{tgl_indo($data->tgl_mulai_cuti_tahunan_berakhir)}}" />
-                        </td>
-                      </tr>
-                      <tr class="border-bottom">
-                        <td>
-                          <div class="fw-bold">Off berakhir</div>
-                        </td>
-                        <td class="text-end fw-bold">
-                          <input class="form-control date" name="tgl_mulai_off_berakhir" type="text" value="{{tgl_indo($data->tgl_mulai_off_berakhir)}}" />
-                        </td>
-                      </tr>
-                      <tr class="border-bottom">
-                        <td>
-                          <div class="fw-bold">Tanggal kepulangan</div>
-                        </td>
-                        <td class="text-end fw-bold">
-                          <input class="form-control date" name="tgl_kepulangan" type="text" value="{{tgl_indo($data->tgl_kepulangan)}}" required />
-                        </td>
-                      </tr>
-                      <tr class="border-bottom">
-                        <td>
-                          <div class="fw-bold">Waktu kepulangan</div>
-                        </td>
-                        <td class="text-end fw-bold">
-                          <input class="form-control" name="jam_kepulangan" type="text" maxlength="5" value="{{$data->jam_kepulangan}}" required />
-                        </td>
-                      </tr>
-                      <tr class="border-bottom">
-                        <td>
-                          <div class="fw-bold">Dari</div>
-                        </td>
-                        <td class="text-end fw-bold">
-                          <input class="form-control" name="kota_awal_kepulangan" value="{{$data->kota_awal_kepulangan}}" required></input>
-                        </td>
-                      </tr>
-                      <tr class="border-bottom">
-                        <td>
-                          <div class="fw-bold">Tujuan</div>
-                        </td>
-                        <td class="text-end fw-bold">
-                          <input class="form-control" name="kota_tujuan_kepulangan" value="{{$data->kota_tujuan_kepulangan}}" required></input>
-                        </td>
-                      </tr>
-                      <tr class="border-bottom">
-                        <td>
-                          <div class="fw-bold">Catatan penting</div>
-                        </td>
-                        <td class="text-end fw-bold">
-                          <textarea name="catatan_penting_kepulangan" class="form-control" value="{{$data->catatan_penting_kepulangan}}" cols="30" rows="5"></textarea>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
+              @endif
+              <div class="mx-2 p-3 fw-bold">
+                Absensi 3 bulan terakhir : <a href="{{route('cutiroster.download', $data->id)}}" target="_blank" rel="noopener noreferrer">{{ $data->file }}</a>
               </div>
-              <div class="mb-3">
-                Berkas : <a href="{{route('cutiroster.download', $data->id)}}" target="_blank" rel="noopener noreferrer">{{ $data->file }}</a>
-              </div>
-            </form>
+            </div>
           </div>
         </div>
       </div>
@@ -265,6 +301,66 @@
                 <button class="btn btn-primary" type="submit">Perbarui status</button>
               </div>
             </form>
+          </div>
+        </div>
+        <div class="card mb-4 mt-3 mb-xl-0">
+          <div class="card-header">Ringkasan pengajuan</div>
+          <div class="card-body">
+
+            @php
+            $tgl1 = strtotime($data->tgl_mulai_cuti);
+            $tgl2 = strtotime($data->tgl_mulai_cuti_berakhir);
+            $selisih =$tgl2 - $tgl1;
+            $hari = $selisih / 60 / 60 / 24;
+
+            $tgl_cuti_tahunan1 = strtotime($data->tgl_mulai_cuti_tahunan);
+            $tgl_cuti_tahunan2 = strtotime($data->tgl_mulai_cuti_tahunan_berakhir);
+            $selisih_cuti_tahunan =$tgl_cuti_tahunan2 - $tgl_cuti_tahunan1;
+            $hari_cuti_tahunan = $selisih_cuti_tahunan / 60 / 60 / 24;
+
+            $tgl_off1 = strtotime($data->tgl_mulai_off);
+            $tgl_off2 = strtotime($data->tgl_mulai_off_berakhir);
+            $selisih_off =$tgl_off2 - $tgl_off1;
+            $hari_off = $selisih_off / 60 / 60 / 24;
+
+            $total = $hari + $hari_cuti_tahunan + $hari_off
+            @endphp
+
+            <div class="table-responsive col-lg-12">
+              <table class="table table-bordered mb-0">
+                <thead class="border-bottom">
+                  <tr class="small text-uppercase text-muted">
+                    <th>Tipe</th>
+                    <th>Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="">
+                    <td class="fw-bold">Cuti roster</td>
+                    <td class="fw-bold">{{ $hari + 1}} Hari</td>
+                  </tr>
+                  <tr class="">
+                    <td class="fw-bold">Cuti tahunan</td>
+                    @if($data->tgl_mulai_cuti_tahunan != NULL && $data->tgl_mulai_cuti_tahunan > '2016-04-01')
+                    <td class="fw-bold">{{ $hari_cuti_tahunan + 1}} Hari</td>
+                    @else
+                    <td class="fw-bold">-</td>
+                    @endif
+                  </tr>
+                  <tr class="">
+                    <td class="fw-bold">Off</td>
+                    @if($data->tgl_mulai_off != NULL && $data->tgl_mulai_off > '2016-04-01')
+                    <td class="fw-bold">{{ $hari_off + 1}} Hari</td>
+                    @else
+                    <td class="fw-bold">-</td>
+                    @endif
+                  </tr>
+                  <td class="fw-bold">Total</td>
+                    <td class="fw-bold">{{ $total + 1 }} Hari</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>

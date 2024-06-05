@@ -272,13 +272,16 @@
                 </table>
               </div>
               @endif
+              <div class="mx-2 p-3 fw-bold">
+                Absensi 3 bulan terakhir : <a href="{{route('cutiroster.download', $data->id)}}" target="_blank" rel="noopener noreferrer">{{ $data->file }}</a>
+              </div>
             </div>
           </div>
         </div>
       </div>
       <div class="col-xl-4">
         <div class="card mb-4 mb-xl-0">
-          <div class="card-header">Status Pengajuan</div>
+          <div class="card-header">Perbarui pengajuan</div>
           <div class="card-body">
             <form action="{{ route('cutiroster.update', $data->id) }}" method="post">
               @csrf
@@ -308,6 +311,61 @@
           </div>
         </div>
         <div class="card mb-4 mt-3 mb-xl-0">
+          <div class="card-header">Ringkasan pengajuan</div>
+          <div class="card-body">
+
+            @php
+            $tgl1 = strtotime($data->tgl_mulai_cuti);
+            $tgl2 = strtotime($data->tgl_mulai_cuti_berakhir);
+            $selisih =$tgl2 - $tgl1;
+            $hari = $selisih / 60 / 60 / 24;
+
+            $tgl_cuti_tahunan1 = strtotime($data->tgl_mulai_cuti_tahunan);
+            $tgl_cuti_tahunan2 = strtotime($data->tgl_mulai_cuti_tahunan_berakhir);
+            $selisih_cuti_tahunan =$tgl_cuti_tahunan2 - $tgl_cuti_tahunan1;
+            $hari_cuti_tahunan = $selisih_cuti_tahunan / 60 / 60 / 24;
+
+            $tgl_off1 = strtotime($data->tgl_mulai_off);
+            $tgl_off2 = strtotime($data->tgl_mulai_off_berakhir);
+            $selisih_off =$tgl_off2 - $tgl_off1;
+            $hari_off = $selisih_off / 60 / 60 / 24;
+            @endphp
+
+            <div class="table-responsive col-lg-12">
+              <table class="table table-bordered mb-0">
+                <thead class="border-bottom">
+                  <tr class="small text-uppercase text-muted">
+                    <th>Tipe</th>
+                    <th>Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="">
+                    <td class="fw-bold">Cuti roster</td>
+                    <td class="fw-bold">{{ $hari + 1}} Hari</td>
+                  </tr>
+                  <tr class="">
+                    <td class="fw-bold">Cuti tahunan</td>
+                    @if($data->tgl_mulai_cuti_tahunan != NULL && $data->tgl_mulai_cuti_tahunan > '2016-04-01')
+                    <td class="fw-bold">{{ $hari_cuti_tahunan + 1}} Hari</td>
+                    @else
+                    <td class="fw-bold">-</td>
+                    @endif
+                  </tr>
+                  <tr class="">
+                    <td class="fw-bold">Off</td>
+                    @if($data->tgl_mulai_off != NULL && $data->tgl_mulai_off > '2016-04-01')
+                    <td class="fw-bold">{{ $hari_off + 1}} Hari</td>
+                    @else
+                    <td class="fw-bold">-</td>
+                    @endif
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="card mb-4 mt-3 mb-xl-0">
           <div class="card-header">Upload tiket</div>
           <div class="card-body">
             <form action="{{ route('cutiroster.upload.tiket', $data->id) }}" enctype="multipart/form-data" method="post">
@@ -330,6 +388,7 @@
             </form>
           </div>
         </div>
+
       </div>
     </div>
   </div>

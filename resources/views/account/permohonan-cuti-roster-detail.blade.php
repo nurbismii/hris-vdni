@@ -165,7 +165,7 @@
                   </tr>
                   <tr class="text-center">
                     <td>Cuti Roster 轮休假</td>
-                    @if($cuti->tgl_mulai_cuti != NULL || cuti->tgl_mulai_cuti > '2016-04-01')
+                    @if($cuti->tgl_mulai_cuti != NULL && $cuti->tgl_mulai_cuti > '2016-04-01')
                     <td colspan="4">{{ tgl_indo($cuti->tgl_mulai_cuti) }} - {{ tgl_indo($cuti->tgl_mulai_cuti_berakhir) }}</td>
                     @else
                     <td colspan="4"></td>
@@ -178,7 +178,7 @@
                     $hari = $selisih / 60 / 60 / 24;
                     @endphp
 
-                    @if($cuti->tgl_mulai_cuti != NULL || cuti->tgl_mulai_cuti > '2016-04-01')
+                    @if($cuti->tgl_mulai_cuti != NULL && $cuti->tgl_mulai_cuti > '2016-04-01')
                     <td colspan="5">{{ $hari + 1 }}</td>
                     @else
                     <td colspan="5">-</td>
@@ -186,10 +186,10 @@
                   </tr>
                   <tr class="text-center">
                     <td>Cuti Tahunan 年假</td>
-                    @if($cuti->tgl_mulai_cuti_tahunan != NULL || cuti->tgl_mulai_cuti_tahunan > '2016-04-01')
+                    @if($cuti->tgl_mulai_cuti_tahunan != NULL && $cuti->tgl_mulai_cuti_tahunan > '2016-04-01')
                     <td colspan="4">{{ tgl_indo($cuti->tgl_mulai_cuti_tahunan) }} - {{ tgl_indo($cuti->tgl_mulai_cuti_tahunan_berakhir) }}</td>
                     @else
-                    <td colspan="4"></td>
+                    <td colspan="4">-</td>
                     @endif
 
                     @php
@@ -199,7 +199,7 @@
                     $hari = $selisih / 60 / 60 / 24;
                     @endphp
 
-                    @if($cuti->tgl_mulai_cuti != NULL || $cuti->tgl_mulai_cuti > '2016-04-01')
+                    @if($cuti->tgl_mulai_cuti_tahunan != NULL && $cuti->tgl_mulai_cuti_tahunan > '2016-04-01')
                     <td colspan="5">{{ $hari + 1 }}</td>
                     @else
                     <td colspan="5">-</td>
@@ -207,10 +207,10 @@
                   </tr>
                   <tr class="text-center">
                     <td>OFF 休息日</td>
-                    @if($cuti->tgl_mulai_off != NULL || cuti->tgl_mulai_off > '2016-04-01')
+                    @if($cuti->tgl_mulai_off != NULL && $cuti->tgl_mulai_off > '2016-04-01')
                     <td colspan="4">{{ tgl_indo($cuti->tgl_mulai_off) }} - {{ tgl_indo($cuti->tgl_mulai_off_berakhir) }}</td>
                     @else
-                    <td colspan="4"></td>
+                    <td colspan="4">-</td>
                     @endif
 
                     @php
@@ -220,7 +220,7 @@
                     $hari = $selisih / 60 / 60 / 24;
                     @endphp
 
-                    @if($cuti->tgl_mulai_cuti != NULL || cuti->tgl_mulai_cuti > '2016-04-01')
+                    @if($cuti->tgl_mulai_off != NULL && $cuti->tgl_mulai_off > '2016-04-01')
                     <td colspan="5">{{ $hari + 1 }}</td>
                     @else
                     <td colspan="5">-</td>
