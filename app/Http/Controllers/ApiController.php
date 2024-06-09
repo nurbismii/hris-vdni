@@ -9,6 +9,7 @@ use App\Models\Kabupaten;
 use App\Models\Kecamatan;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -16,11 +17,16 @@ class ApiController extends Controller
 {
    public function searchEmployee(Request $request)
    {
-      if ($request->has('q')) {
-         $search = $request->q;
-         $data = employee::select('nik', 'nama_karyawan')->where('nik', 'like', '%' . $search . '%')->limit(100)->get();
-         return response()->json($data);
-      }
+      $search = $request->q;
+      $data = employee::select('nik', 'nama_karyawan')->where('nik', 'like', '%' . $search . '%')->limit(10)->get();
+      return response()->json($data);
+   }
+
+   public function searchEmployeeByDiv(Request $request)
+   {
+      $search = $request->q;
+      $data = employee::select('nik', 'nama_karyawan')->where('status_resign', '!=',  null)->where('nik', 'like', '%' . $search . '%')->where('divisi_id', Auth::user()->employee->divisi_id)->limit(10)->get();
+      return response()->json($data);
    }
 
    public function getEmployeeById($id)

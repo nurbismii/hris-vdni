@@ -27,6 +27,10 @@
     <a class="nav-link {{ (request()->segment(2) == 'pengajuan') ? 'active' : '' }}" href="/account/pengajuan">Cuti tahunan dan izin</a>
   </nav>
 </div>
+<a class="nav-link {{ (request()->segment(2) == 'lembur') ? 'active' : '' }}" href="/karyawan/lembur">
+  <div class="nav-link-icon"><i data-feather="file-text"></i></div>
+  Lembur
+</a>
 <a class="nav-link {{ (request()->segment(1) == 'absen') ? 'active' : '' }}" href="/absen">
   <div class="nav-link-icon"><i data-feather="map-pin"></i></div>
   Presensi

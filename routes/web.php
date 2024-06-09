@@ -27,6 +27,7 @@ use App\Http\Controllers\ReportSpController;
 use App\Http\Controllers\ResignController;
 use App\Http\Controllers\WilayahController;
 use App\Http\Controllers\PerusahaanController;
+use App\Http\Controllers\LemburController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -125,11 +126,11 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
         route::get('/download/{id}', [CutiIzinController::class, 'downloadTiketPesawat'])->name('karyawan.download.tiket');
     });
 
-    Route::group(['prefix' => 'kompensasi-dan-keuntungan'], function (){
+    Route::group(['prefix' => 'kompensasi-dan-keuntungan'], function () {
         route::get('/cuti-izin', [CutiIzinController::class, 'index']);
         // route::get('/cuti-izin/create', [CutiIzinController::class, 'cutiIzin']); can delete
         route::get('/cuti-roster', [CutiIzinController::class, 'cutiRoster']);
-        route::get('/cuti-roster/detail/{id}', [CutiIzinController::class, 'cutiRosterShow'])->name('cutiroster.show'); 
+        route::get('/cuti-roster/detail/{id}', [CutiIzinController::class, 'cutiRosterShow'])->name('cutiroster.show');
         route::post('/cuti-roster/update/{id}', [CutiIzinController::class, 'cutiRosterUpdate'])->name('cutiroster.update');
         route::get('cuti-izin/import', [CutiIzinController::class, 'importViewPengajuan'])->name('import.pengajuan');
 
@@ -139,12 +140,15 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
         route::get('/absen', [DetailAbsensiController::class, 'getDetailAllIn']);
         route::get('/detail', [DetailAbsensiController::class, 'getDetailAbsensi']);
 
+        route::get('/lembur', [LemburController::class, 'lembur']);
+        route::get('/lembur/list', [LemburController::class, 'serverSideLemburAll']);
+        route::get('/lembur/show/{id}', [LemburController::class, 'lemburShow'])->name('lembur.show.hr');
     });
 
     Route::group(['prefix' => 'pengajuan-karyawan'], function () {
         route::get('/server-side', [CutiIzinController::class, 'serverSidePengajuan']);
         route::post('/import/store', [CutiIzinController::class, 'importStorePengajuan'])->name('import.store.pengajuan');
-        
+
         route::post('/store-cuti', [CutiIzinController::class, 'storeCutiIzin']);
         route::get('/izin-dibayarkan', [CutiIzinController::class, 'izinDibayar']);
         route::post('/store-izin-dibayarkan', [CutiIzinController::class, 'storeIzinDibayarkan']);
@@ -327,8 +331,25 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
             route::get('/pdf/{area}/{provinsi}/{kabupaten}/{kecamatan}', [WilayahController::class, 'exportPdf'])->name('export-wilayah-pdf');
         });
     });
+
+    Route::group(['prefix' => 'admin/lembur', 'middleware' => ['isAdminDivisi']], function () {
+        route::get('/', [LemburController::class, 'index']);
+        route::get('/server-side-lembur', [LemburController::class, 'serverSideLembur']);
+        route::get('/create', [LemburController::class, 'create']);
+        route::post('/store', [LemburController::class, 'store'])->name('store.lembur');
+        route::get('/show/{id}', [LemburController::class, 'show'])->name('show.lembur');
+        route::patch('/update/{id}', [LemburController::class, 'update'])->name('update.lembur');
+    });
+
+    Route::group(['prefix' => 'karyawan'], function () {
+        route::get('/lembur', [LemburController::class, 'karyawanLembur']);
+        route::get('/show/{id}', [LemburController::class, 'karyawanLemburShow'])->name('karyawan.lembur.show');
+        route::patch('/update/{id}', [LemburController::class, 'karyawanLemburUpdate'])->name('karyawan.lembur.update');
+    });
+
     Route::group(['prefix' => 'api/hrcorner/'], function () {
         route::get('search-employee', [ApiController::class, 'searchEmployee']);
+        route::get('search-employee-div', [ApiController::class, 'searchEmployeeByDiv']);
         route::get('detail-employee/{id}', [ApiController::class, 'getEmployeeById']);
         route::get('airports', [ApiController::class, 'getAirport']);
         route::get('divisi/{id}', [ApiController::class, 'getDivisi']);
