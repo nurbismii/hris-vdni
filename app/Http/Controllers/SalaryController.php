@@ -125,8 +125,8 @@ class SalaryController extends Controller
             ->where('data_karyawans.nik', $id)
             ->first();
 
-        $total_deduction = $data->jht + $data->jp + $data->pot_bpjskes + $data->unpaid_leave + $data->deduction_pph21;
-        $total_diterima = ($data->gaji_pokok + $data->tunj_um + $data->tunj_pengawas + $data->tunj_transport + $data->tunj_mk + $data->tunj_koefisien + $data->rapel + $data->insentif + $data->tunj_lap);
+        $total_deduction = $data->jht + $data->jp + $data->pot_bpjskes + $data->unpaid_leave + $data->deduction_pph21 + $data->deduction;
+        $total_diterima = ($data->gaji_pokok + $data->tunj_um + $data->ot  + $data->tunj_pengawas + $data->tunj_transport + $data->tunj_mk + $data->tunj_koefisien + $data->rapel + $data->insentif + $data->tunj_lap);
         $gaji_bersih = ($total_diterima - $total_deduction);
 
         return view('payslip.show', compact('data', 'total_diterima', 'total_deduction', 'gaji_bersih'));

@@ -307,13 +307,13 @@
               badge = '';
               switch (data) {
                 case 1:
-                  badge = '<span class="badge bg-danger">' + 'Tanggal Merah' + '</span>';
+                  badge = '<span class="badge bg-danger">' + "Tanggal Merah" + '</span>';
                   break;
                 case 2:
-                  badge = '<span class="badge bg-primary">' + 'OFF' + '</span>';
+                  badge = '<span class="badge bg-primary">' + "OFF" + '</span>';
                   break;
                 case 3:
-                  badge = '<span class="badge bg-secondary">' + 'Kelebihan Jam' + '</span>';
+                  badge = '<span class="badge bg-secondary">' + "Kelebihan Jam" + '</span>';
                   break;
               }
               return badge;

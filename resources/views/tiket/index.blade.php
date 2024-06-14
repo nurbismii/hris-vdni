@@ -47,7 +47,7 @@
               <td>{{ $data->kota_awal_keberangkatan }}</td>
               <td>{{ $data->kota_tujuan_keberangkatan }}</td>
               <td>
-                <a href="{{route('karyawan.download.tiket', $data->id)}}" target="_blank" rel="noopener noreferrer">Unduh...</a>
+                <a href="{{route('karyawan.download.tiket', $data->id)}}" target="_blank" rel="noopener noreferrer"><i data-feather="download"></i></a>
               </td>
             </tr>
             @endforeach
