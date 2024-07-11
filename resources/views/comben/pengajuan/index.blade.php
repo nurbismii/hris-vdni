@@ -141,7 +141,7 @@
                     url: "/pengajuan-karyawan/server-side",
                     data: function(d) {
                         d.tipe = $('#tipe').val(),
-                        d.status_hod = $('#status_hrd').val(),
+                        d.status_hod = $('#status_hod').val(),
                         d.status_hrd = $('#status_hrd').val(),
                         d.search = $('input[type="search"]').val()   
                     }
