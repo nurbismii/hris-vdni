@@ -7,7 +7,6 @@ use App\Models\CutiIzin;
 use App\Models\CutiRoster;
 use App\Models\employee;
 use App\Models\Kabupaten;
-use App\Models\Pengingat;
 use Carbon\Carbon;
 use DateTime;
 use Illuminate\Http\Request;
@@ -205,8 +204,21 @@ class CutiIzinController extends Controller
 
     public function updateStatusPengajuanDiterima($id)
     {
-        CutiIzin::where('id', $id)->update([
-            'status_hrd' => 'Diterima'
+        $CT = 1;
+
+        $data = CutiIzin::where('id', $id)->first();
+
+        $data_employee = employee::where('nik', $data->nik_karyawan)->first();
+
+        if ($data->kategori_cuti == $CT) {
+            $data_employee->update([
+                'sisa_cuti' => $data_employee->sisa_cuti - $data->jumlah
+            ]);
+            return back()->with('success', 'Pengajuan telah diterima');
+        }
+
+        $data_employee->update([
+            'sisa_cuti_covid' => $data_employee->sisa_cuti - $data->jumlah
         ]);
 
         return back()->with('success', 'Pengajuan telah diterima');
@@ -219,7 +231,7 @@ class CutiIzinController extends Controller
             'status_hrd' => $data->status_hrd == 'Diterima' ? 'Menunggu' : 'Ditolak',
         ]);
 
-        return back()->with('warning', 'Pengajuan telah ditolak');
+        return back()->with('success', 'Pengajuan telah ditolak');
     }
 
     public function cutiRosterCreate()
@@ -388,7 +400,7 @@ class CutiIzinController extends Controller
 
             DB::beginTransaction();
 
-            $data = CutiIzin::create([
+            CutiIzin::create([
                 'nik_karyawan' => $request->nik,
                 'tanggal' => $request->tanggal_pengajuan,
                 'keterangan' => $request->keterangan,
@@ -402,9 +414,6 @@ class CutiIzinController extends Controller
                 'tipe' => 'cuti',
             ]);
 
-            employee::where('nik', $data->nik_karyawan)->update([
-                'sisa_cuti' => $request->sisa_cuti - $data->jumlah
-            ]);
             DB::commit();
 
             return back()->with('success', 'Berhasil melakukan pengajuan');
