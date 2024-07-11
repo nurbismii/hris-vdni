@@ -224,7 +224,7 @@ class CutiIzinController extends Controller
             'status_hrd' => 'Diterima',
         ]);
         $data_employee->update([
-            'sisa_cuti_covid' => $data_employee->sisa_cuti - $data->jumlah
+            'sisa_cuti_covid' => $data_employee->sisa_cuti_covid - $data->jumlah
         ]);
 
         return back()->with('success', 'Pengajuan telah diterima');
