@@ -47,12 +47,26 @@
                     <div class="card-body" style="overflow-x:auto;">
                         <table id="data-table-pengajuan" class="table table-hover" style="width: 100%;">
                             <div class="row gx-3 mb-3">
-                                <div class="col-md-12 mb-3">
+                                <div class="col-md-4 mb-3">
                                     <select name="status_hrd" class="form-select" id="tipe">
                                         <option value="" selected>- Pilih tipe pengajuan -</option>
                                         <option value="cuti">Cuti</option>
                                         <option value="izin dibayarkan">Izin Dibayarkan</option>
                                         <option value="izin tidak dibayarkan">Izin Tidak Dibayarkan</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <select name="status_hod" class="form-select" id="status_hod">
+                                        <option value="" selected>- Pilih status HOD -</option>
+                                        <option value="Diterima">Diterima</option>
+                                        <option value="Ditolak">Ditolak</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <select name="status_hrd" class="form-select" id="status_hrd">
+                                        <option value="" selected>- Pilih status HR -</option>
+                                        <option value="Diterima">Diterima</option>
+                                        <option value="Ditolak">Ditolak</option>
                                     </select>
                                 </div>
                             </div>
@@ -127,7 +141,9 @@
                     url: "/pengajuan-karyawan/server-side",
                     data: function(d) {
                         d.tipe = $('#tipe').val(),
-                            d.search = $('input[type="search"]').val()
+                        d.status_hod = $('#status_hrd').val(),
+                        d.status_hrd = $('#status_hrd').val(),
+                        d.search = $('input[type="search"]').val()   
                     }
                 },
                 columns: [{
@@ -222,6 +238,14 @@
             });
 
             $('#tipe').change(function() {
+                table.draw();
+            });
+
+            $('#status_hrd').change(function() {
+                table.draw();
+            });
+
+            $('#status_hod').change(function() {
                 table.draw();
             });
         });

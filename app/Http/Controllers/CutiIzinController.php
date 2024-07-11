@@ -42,6 +42,12 @@ class CutiIzinController extends Controller
                     if ($request->tipe == 'cuti' || $request->tipe == 'izin dibayarkan' || $request->tipe == 'izin tidak dibayarkan') {
                         $instance->where('tipe', $request->get('tipe'));
                     }
+                    if ($request->tipe == 'Menunggu' || $request->tipe == 'Diterima') {
+                        $instance->where('status_hrd', $request->get('status_hrd'));
+                    }
+                    if ($request->tipe == 'Menunggu' || $request->tipe == 'Diterima') {
+                        $instance->where('status_hod', $request->get('status_hod'));
+                    }
                     if (!empty($request->get('search'))) {
                         $instance->where(function ($w) use ($request) {
                             $search = $request->get('search');
@@ -206,26 +212,23 @@ class CutiIzinController extends Controller
     {
         $CT = 1;
 
-        $data = CutiIzin::where('id', $id)->first();
+        $data = CutiIzin::find($id);
+
+        if ($data->status_hrd == 'Diterima') {
+            return back()->with('info', 'Pengajuan ini telah diterima');
+        }
 
         $data_employee = employee::where('nik', $data->nik_karyawan)->first();
 
-        if ($data->kategori_cuti == $CT) {
-            $data->update([
-                'status_hrd' => 'Diterima',
-            ]);
-            $data_employee->update([
-                'sisa_cuti' => $data_employee->sisa_cuti - $data->jumlah
-            ]);
-            return back()->with('success', 'Pengajuan telah diterima');
-        }
+        // Update status cuti
+        $data->update(['status_hrd' => 'Diterima']);
 
-        $data->update([
-            'status_hrd' => 'Diterima',
-        ]);
-        $data_employee->update([
-            'sisa_cuti_covid' => $data_employee->sisa_cuti_covid - $data->jumlah
-        ]);
+        // Update sisa cuti berdasarkan kategori
+        if ($data->kategori_cuti == $CT) {
+            $data_employee->decrement('sisa_cuti', $data->jumlah);
+        } else {
+            $data_employee->decrement('sisa_cuti_covid', $data->jumlah);
+        }
 
         return back()->with('success', 'Pengajuan telah diterima');
     }
