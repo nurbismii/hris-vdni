@@ -59,6 +59,7 @@
                                     <select name="status_hod" class="form-select" id="status_hod">
                                         <option value="" selected>- Pilih status HOD -</option>
                                         <option value="Diterima">Diterima</option>
+                                        <option value="Menunggu">Menunggu</option>
                                         <option value="Ditolak">Ditolak</option>
                                     </select>
                                 </div>
@@ -66,6 +67,7 @@
                                     <select name="status_hrd" class="form-select" id="status_hrd">
                                         <option value="" selected>- Pilih status HR -</option>
                                         <option value="Diterima">Diterima</option>
+                                        <option value="Menunggu">Menunggu</option>
                                         <option value="Ditolak">Ditolak</option>
                                     </select>
                                 </div>
@@ -141,9 +143,9 @@
                     url: "/pengajuan-karyawan/server-side",
                     data: function(d) {
                         d.tipe = $('#tipe').val(),
-                        d.status_hod = $('#status_hod').val(),
-                        d.status_hrd = $('#status_hrd').val(),
-                        d.search = $('input[type="search"]').val()   
+                            d.status_hod = $('#status_hod').val(),
+                            d.status_hrd = $('#status_hrd').val(),
+                            d.search = $('input[type="search"]').val()
                     }
                 },
                 columns: [{

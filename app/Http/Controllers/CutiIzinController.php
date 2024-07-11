@@ -78,9 +78,7 @@ class CutiIzinController extends Controller
                 return back()->with('info', 'Hak cuti kamu tidak mencukupi...');
             }
 
-            DB::beginTransaction();
-
-            $data = CutiIzin::create([
+            CutiIzin::create([
                 'nik_karyawan' => $request->nik,
                 'tanggal' => $request->tanggal_pengajuan,
                 'keterangan' => $request->keterangan,
@@ -90,11 +88,6 @@ class CutiIzinController extends Controller
                 'status_pemohon' => 'ya',
                 'tipe' => 'cuti',
             ]);
-
-            employee::where('nik', $data->nik_karyawan)->update([
-                'sisa_cuti' => $request->sisa_cuti - $data->jumlah
-            ]);
-            DB::commit();
 
             return back()->with('success', 'Berhasil melakukan pengajuan');
         } catch (\Throwable $e) {
@@ -236,8 +229,16 @@ class CutiIzinController extends Controller
     public function updateStatusPengajuanDitolak($id)
     {
         $data = CutiIzin::where('id', $id)->first();
+
+        if ($data->status_hrd == 'Diterima') {
+            employee::where('nik', $data->nik_karyawan)->increment('sisa_cuti', $data->jumlah);
+            $data->update([
+                'status_hrd' => 'Ditolak',
+            ]);
+        }
+
         $data->update([
-            'status_hrd' => $data->status_hrd == 'Diterima' ? 'Menunggu' : 'Ditolak',
+            'status_hrd' => 'Ditolak',
         ]);
 
         return back()->with('success', 'Pengajuan telah ditolak');
