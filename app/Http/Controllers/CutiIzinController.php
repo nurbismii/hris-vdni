@@ -42,10 +42,10 @@ class CutiIzinController extends Controller
                     if ($request->tipe == 'cuti' || $request->tipe == 'izin dibayarkan' || $request->tipe == 'izin tidak dibayarkan') {
                         $instance->where('tipe', $request->get('tipe'));
                     }
-                    if ($request->tipe == 'Menunggu' || $request->tipe == 'Diterima') {
+                    if ($request->status_hrd == 'Menunggu' || $request->status_hrd == 'Diterima') {
                         $instance->where('status_hrd', $request->get('status_hrd'));
                     }
-                    if ($request->tipe == 'Menunggu' || $request->tipe == 'Diterima') {
+                    if ($request->status_hod == 'Menunggu' || $request->status_hod == 'Diterima') {
                         $instance->where('status_hod', $request->get('status_hod'));
                     }
                     if (!empty($request->get('search'))) {
