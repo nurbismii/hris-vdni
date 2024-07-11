@@ -211,12 +211,18 @@ class CutiIzinController extends Controller
         $data_employee = employee::where('nik', $data->nik_karyawan)->first();
 
         if ($data->kategori_cuti == $CT) {
+            $data->update([
+                'status_hrd' => 'Diterima',
+            ]);
             $data_employee->update([
                 'sisa_cuti' => $data_employee->sisa_cuti - $data->jumlah
             ]);
             return back()->with('success', 'Pengajuan telah diterima');
         }
 
+        $data->update([
+            'status_hrd' => 'Diterima',
+        ]);
         $data_employee->update([
             'sisa_cuti_covid' => $data_employee->sisa_cuti - $data->jumlah
         ]);
