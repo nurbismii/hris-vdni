@@ -65,9 +65,8 @@
                                 </div>
                                 <div class="col-md-4 mb-3">
                                     <select name="status_hrd" class="form-select" id="status_hrd">
-                                        <option value="" selected>- Pilih status HR -</option>
                                         <option value="Diterima">Diterima</option>
-                                        <option value="Menunggu">Menunggu</option>
+                                        <option value="Menunggu" selected>Menunggu</option>
                                         <option value="Ditolak">Ditolak</option>
                                     </select>
                                 </div>

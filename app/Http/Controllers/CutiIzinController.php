@@ -26,7 +26,7 @@ class CutiIzinController extends Controller
     {
         try {
             $data = CutiIzin::leftjoin('employees', 'employees.nik', '=', 'cuti_izin.nik_karyawan')
-                ->orderBy('cuti_izin.created_at', 'desc')
+                ->orderBy('cuti_izin.tanggal', 'desc')
                 ->select('cuti_izin.*', 'employees.nama_karyawan');
             return DataTables::of($data)
                 ->addIndexColumn()
