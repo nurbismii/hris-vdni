@@ -265,11 +265,11 @@ if (!function_exists('getDataRekrut')) {
         $chart_rekrut = '';
 
         foreach ($data_contract as $d) {
-            $validation[] = date('Y', strtotime($d->tanggal_mulai_kontrak));
+            $validation[] = date('Y', strtotime($d->entry_date));
         }
 
         foreach ($data_contract as $d) {
-            $rekrutmen_record[] = date('m-d', strtotime($d->tanggal_mulai_kontrak));
+            $rekrutmen_record[] = date('m-d', strtotime($d->entry_date));
         }
 
         for ($i = 0; $i < count($rekrutmen_record); $i++) :

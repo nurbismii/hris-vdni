@@ -3,21 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreDashboardRequest;
-use App\Mail\SendEmailVerification;
-use App\Models\Absensi;
-use App\Models\AuditTrail;
-use App\Models\Contract;
 use App\Models\Divisi;
-use App\Models\employee;
-use App\Models\Kabupaten;
-use App\Models\Kecamatan;
 use App\Models\Kelurahan;
 use App\Models\parameter_dashboard;
-use App\Models\Provinsi;
-use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\{Provinsi, employee, Contract, User, Kabupaten, Kecamatan, Absensi, AuditTrail};
+
 
 class DashboardController extends Controller
 {
@@ -45,7 +38,7 @@ class DashboardController extends Controller
 
             $provinsi = Provinsi::all();
 
-            $data_contract = Contract::all();
+            $data_contract = $data_karyawan = employee::select('nik', 'entry_date')->get();
             $total_pwkt1_perbulan = Contract::where('tanggal_mulai_kontrak', 'like', '%' . $bulan_sekarang . '%')
                 ->count();
 
@@ -63,18 +56,10 @@ class DashboardController extends Controller
                 ->where('status_resign', 'Aktif')
                 ->get();
 
-            $total_karyawan_vdni = employee::where('status_resign', 'Aktif')->where('area_kerja', 'VDNI')
-                ->count();
-
-            $total_karyawan_vdnip = employee::where('status_resign', 'Aktif')->where('area_kerja', 'VDNIP')
-                ->count();
-
-            $total_karyawan_laki = employee::where('status_resign', 'Aktif')->where('jenis_kelamin', 'L')
-                ->count();
-
-            $total_karyawan_perempuan = employee::where('status_resign', 'Aktif')->where('jenis_kelamin', 'P')
-                ->count();
-
+            $total_karyawan_vdni = employee::where('status_resign', 'Aktif')->where('area_kerja', 'VDNI')->count();
+            $total_karyawan_vdnip = employee::where('status_resign', 'Aktif')->where('area_kerja', 'VDNIP')->count();
+            $total_karyawan_laki = employee::where('status_resign', 'Aktif')->where('jenis_kelamin', 'L')->count();
+            $total_karyawan_perempuan = employee::where('status_resign', 'Aktif')->where('jenis_kelamin', 'P')->count();
             $total_karyawan = employee::where('status_resign', 'Aktif')->count();
 
             $req_awal_prd = $request->mulai_periode != '' ? $request->mulai_periode : $tanggal_hari_ini;
@@ -87,30 +72,20 @@ class DashboardController extends Controller
 
             /* Code for chart  */
             $chart_rekrut = getDataRekrut($data_contract, $tahun_sekarang);
-
             $chart_resign = getDataResign($karyawan_resign, $tahun_sekarang);
-
             $chart_status_kontrak = getDataStatusKaryawan($data_karyawan);
-
             $chart_status_karyawan = getDataStatus($status_karyawan);
-
             $umur_karyawan = getUmur($data_karyawan);
             /* Code for chart  end */
 
             $area_kerja = $request->area_kerja ?? 'VDNI';
-
             $provinsi_id = $request->provinsi_id ?? '74';
-
             $kabupaten_id = $request->kabupaten ?? '7403';
-
             $kecamatan_id = $request->kecamatan ?? '7403105';
 
             $prov_res = Provinsi::where('id', $provinsi_id)->first();
-
             $kab_res = Kabupaten::where('id', $kabupaten_id)->first();
-
             $kec_res = Kecamatan::where('id', $kecamatan_id)->first();
-
             $check_request = employee::select('provinsi_id', 'kabupaten_id', 'kecamatan_id', 'kelurahan_id')
                 ->where('kabupaten_id', $kabupaten_id)
                 ->where('kecamatan_id', $kecamatan_id)
@@ -130,15 +105,10 @@ class DashboardController extends Controller
                 ->get();
 
             $nama = $data_karyawan_by_kab->pluck('kelurahan')->toArray();
-
             $res_kelurahan = getJumlahPekerjaByKelurahan($nama);
-
             $jumlah_pekerja_by_kelurahan = jumlahPekerjaByKelurahan($res_kelurahan);
-
             $daftar_nama_kelurahan = daftarNamaKelurahan($res_kelurahan);
-
             $presensi_terakhir = Absensi::orderBy('created_at', 'desc')->limit(5)->get();
-
             $jumlah_hit_perhari = AuditTrail::whereDate('created_at', Carbon::today())->count();
 
             return view('dashboard', compact(
