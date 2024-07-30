@@ -232,6 +232,7 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
             route::post('/import-employee', [EmployeeController::class, 'importEmployee'])->name('import.employee');
             route::post('/update-import-employee', [EmployeeController::class, 'updateImportEmployee'])->name('updateImport.employee');
             route::post('/destroy-import-employee', [EmployeeController::class, 'destroyImportEmployee'])->name('destroyImport.employee');
+            route::get('/download-employee', [EmployeeController::class, 'employeesExport'])->name('employees.export');
             // Maatwebsite excel end 
         });
 

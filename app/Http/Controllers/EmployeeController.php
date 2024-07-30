@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exports\EmployeeExport;
+use App\Exports\EmployeesExport;
 use App\Http\Requests\StoreEmployeeRequest;
 use App\Imports\EmployeesDeleteImport;
 use App\Imports\EmployeesImport;
@@ -75,7 +76,7 @@ class EmployeeController extends Controller
                 if ($request->get('status_resign') != '') {
                     $instance->where('status_resign', strtoupper($request->get('status_resign')));
                 }
-                
+
                 if ($request->get('jenis_kelamin') != '') {
                     $instance->where('jenis_kelamin', $request->get('jenis_kelamin'));
                 }
@@ -316,5 +317,10 @@ class EmployeeController extends Controller
         $provinsi = Provinsi::all();
 
         return view('employee.monthly.index', compact('depts', 'provinsi'));
+    }
+
+    public function employeesExport()
+    {
+        return Excel::download(new EmployeesExport, 'Employees HRIS.xlsx');
     }
 }

@@ -137,7 +137,7 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <div class="pull-right">
+                        <!-- <div class="pull-right">
                             <div class="pull-left float-end">
                                 <nav role="navigation">
                                     <ul class="ul-dropdown">
@@ -153,7 +153,8 @@
                                     </ul>
                                 </nav>
                             </div>
-                        </div>
+                        </div> -->
+                        <a href="{{ route('employees.export') }}" class="btn btn-success btn-sm float-end"><i class="me-1" data-feather="download"></i> | Excel</a>
                     </div>
                     <div class="card-body" style="overflow-x:auto;">
                         <div class="row gx-3 mb-3">
