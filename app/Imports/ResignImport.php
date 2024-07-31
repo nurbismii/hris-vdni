@@ -18,6 +18,7 @@ class ResignImport implements ToCollection, WithHeadingRow, WithValidation
      */
     public function collection(Collection $collection)
     {
+        $datas = [];
         foreach ($collection as $collect) {
             $check_exist = Resign::where('nik_karyawan', $collect['nik_karyawan'])->first();
             if (!$check_exist) {
