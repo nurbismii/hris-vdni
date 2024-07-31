@@ -44,6 +44,7 @@ class UpdateDataResignKaryawan extends Command
         $today = date('Y-m-d', strtotime($today));
         $data = Resign::whereDate('tanggal_keluar', '<=', $today)->where('flg_kirim', null)->get();
         Log::info($data);
+        Log::info($today);
         foreach ($data as $row) {
             employee::where('nik', $row->nik_karyawan)->update([
                 'tgl_resign' => $row->tanggal_keluar,
