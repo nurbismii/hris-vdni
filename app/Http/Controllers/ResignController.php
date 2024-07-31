@@ -26,7 +26,7 @@ class ResignController extends Controller
     public function serverSideResign(Request $request)
     {
         $data = Resign::join('employees', 'employees.nik', '=', 'resign.nik_karyawan')
-            ->select(DB::raw("*"));
+            ->select('resign.*', 'employees.nama_karyawan');
         return DataTables::of($data)
             ->addIndexColumn()
             ->addColumn('action', function ($data) {
