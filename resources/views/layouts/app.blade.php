@@ -58,42 +58,6 @@
         </div>
     </div>
     @stack('scripts')
-    <script type="text/javascript">
-        function setCookie(key, value, expiry) {
-            var expires = new Date();
-            expires.setTime(expires.getTime() + (expiry * 24 * 60 * 60 * 1000));
-            document.cookie = key + '=' + value + ';expires=' + expires.toUTCString();
-        }
-
-        function googleTranslateElementInit() {
-            setCookie('googtrans', '/en/ch', 60);
-            new google.translate.TranslateElement({
-                pageLanguage: 'en_US'
-            }, 'google_translate_element');
-        }
-
-        function triggerHtmlEvent(element, eventName) {
-            var event;
-            if (document.createEvent) {
-                event = document.createEvent('HTMLEvents');
-                event.initEvent(eventName, true, true);
-                element.dispatchEvent(event);
-            } else {
-                event = document.createEventObject();
-                event.eventType = eventName;
-                element.fireEvent('on' + event.eventType, event);
-            }
-        }
-        $(document).ready(function() {
-            $(document).on("click", ".lang-select", function() {
-                var theLang = $(this).attr('data-lang');
-                $(".goog-te-combo").val(theLang);
-                window.location = $(this).attr('href');
-                window.location.reload();
-            });
-        });
-    </script>
-    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 
 </html>
