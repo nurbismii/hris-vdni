@@ -18,15 +18,10 @@ class SpreportImport implements ToCollection, WithHeadingRow, WithValidation
         $datas = array();
 
         foreach ($collection as $collect) {
-
             $check_exist = employee::select('nik')->where('nik', $collect['nik'])->first();
-
             if ($check_exist) {
                 $sp_exist = SpReport::where('nik_karyawan', $check_exist->nik)->where('no_sp', $collect['no_sp'])->first();
-
-                if ($sp_exist) {
-                    Log::info($sp_exist);
-                } else {
+                if (!$sp_exist) {
                     $datas[] = [
                         'nik_karyawan' => $collect['nik'],
                         'no_sp' => $collect['no_sp'],
