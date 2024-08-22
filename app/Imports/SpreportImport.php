@@ -15,6 +15,8 @@ class SpreportImport implements ToCollection, WithHeadingRow, WithValidation
 {
     public function collection(Collection $collection)
     {
+        $datas[] = [];
+
         foreach ($collection as $collect) {
 
             $check_exist = employee::select('nik')->where('nik', $collect['nik'])->first();
