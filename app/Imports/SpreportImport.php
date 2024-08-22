@@ -22,23 +22,21 @@ class SpreportImport implements ToCollection, WithValidation, SkipsOnFailure
         $datas = array();
 
         foreach ($collection as $collect) {
-            $check_exist = employee::select('nik')->where('nik', $collect['nik'])->first();
-            if ($check_exist) {
-                $sp_exist = SpReport::where('nik_karyawan', $check_exist->nik)
-                    ->where('no_sp', $collect['no_sp'])
-                    ->first();
+            
+            $sp_exist = SpReport::where('nik_karyawan', $collect['nik'])
+                ->where('no_sp', $collect['no_sp'])
+                ->first();
 
-                if (!$sp_exist) {
-                    $datas[] = [
-                        'nik_karyawan' => $collect['nik'],
-                        'no_sp' => $collect['no_sp'],
-                        'level_sp' => $collect['level_sp'],
-                        'tgl_mulai' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(intVal($collect['tgl_mulai']))),
-                        'tgl_berakhir' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(intVal($collect['tgl_berakhir']))),
-                        'keterangan' => $collect['keterangan'],
-                        'pelapor' => $collect['pelapor'],
-                    ];
-                }
+            if (!$sp_exist) {
+                $datas[] = [
+                    'nik_karyawan' => $collect['nik'],
+                    'no_sp' => $collect['no_sp'],
+                    'level_sp' => $collect['level_sp'],
+                    'tgl_mulai' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(intVal($collect['tgl_mulai']))),
+                    'tgl_berakhir' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(intVal($collect['tgl_berakhir']))),
+                    'keterangan' => $collect['keterangan'],
+                    'pelapor' => $collect['pelapor'],
+                ];
             }
         }
 
