@@ -35,19 +35,19 @@ class ReportSpController extends Controller
                 ]);
             })->filter(function ($instance) use ($request) {
 
-                if($request->get('level_sp') != '') {
+                if ($request->get('level_sp') != '') {
                     $instance->where('level_sp', $request->get('level_sp'));
                 }
 
                 if ($request->get('periode_sp') != '') {
                     $periode = $request->periode_sp;
                     $periode = $periode . '-16';
-    
+
                     $minus_one_month = date('Y-m-d', strtotime("$periode -1 Month"));
                     $plus_one_month_minus_one_day = date('Y-m-d', strtotime("$minus_one_month +1 Month -1 Day"));
-     
+
                     $instance->whereBetween('tgl_mulai', [$minus_one_month, $plus_one_month_minus_one_day]);
-                 }
+                }
 
                 if (!empty($request->get('search'))) {
                     $instance->where(function ($w) use ($request) {
@@ -114,8 +114,23 @@ class ReportSpController extends Controller
      */
     public function importStore(Request $request)
     {
-        Excel::import(new SpreportImport, $request->file('file'));
-        return back()->with('success', 'Import was successful');
+        try {
+            Excel::import(new SpreportImport, $request->file('file'));
+            return back()->with('success', 'Import was successful');
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            $failures = $e->failures();
+
+            foreach ($failures as $failure) {
+                $row = $failure->row(); // row that went wrong
+                $attribute = $failure->attribute(); // either heading key (if using heading row concern) or column index
+                $errors = $failure->errors(); // Actual error messages from Laravel validator
+                $values = $failure->values(); // The values of the row that has failed.
+            }
+
+            return back()->with('error', 'There were validation errors during the import.');
+        } catch (\Exception $e) {
+            return back()->with('error', 'An error occurred during the import: ' . $e->getMessage());
+        }
     }
 
     /**
