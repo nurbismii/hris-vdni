@@ -6,13 +6,17 @@ use App\Models\employee;
 use App\Models\SpReport;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
+use Maatwebsite\Excel\Concerns\SkipsFailures;
+use Maatwebsite\Excel\Concerns\SkipsOnFailure;
+use Maatwebsite\Excel\Concerns\Importable;
 
-class SpreportImport implements ToCollection, WithHeadingRow, WithValidation
+class SpreportImport implements ToCollection, WithValidation, SkipsOnFailure
 {
+    use Importable, SkipsFailures;
+
     public function collection(Collection $collection)
     {
         $datas = array();
@@ -20,7 +24,10 @@ class SpreportImport implements ToCollection, WithHeadingRow, WithValidation
         foreach ($collection as $collect) {
             $check_exist = employee::select('nik')->where('nik', $collect['nik'])->first();
             if ($check_exist) {
-                $sp_exist = SpReport::where('nik_karyawan', $check_exist->nik)->where('no_sp', $collect['no_sp'])->first();
+                $sp_exist = SpReport::where('nik_karyawan', $check_exist->nik)
+                    ->where('no_sp', $collect['no_sp'])
+                    ->first();
+
                 if (!$sp_exist) {
                     $datas[] = [
                         'nik_karyawan' => $collect['nik'],
@@ -35,8 +42,10 @@ class SpreportImport implements ToCollection, WithHeadingRow, WithValidation
             }
         }
 
-        foreach (array_chunk($datas, 300) as $chunk) {
-            SpReport::insert($chunk);
+        if (!empty($datas)) {
+            foreach (array_chunk($datas, 300) as $chunk) {
+                SpReport::insert($chunk);
+            }
         }
     }
 
@@ -44,6 +53,10 @@ class SpreportImport implements ToCollection, WithHeadingRow, WithValidation
     {
         return [
             'nik' => 'required',
+            'no_sp' => 'required',
+            'level_sp' => 'required',
+            'tgl_mulai' => 'required|date',
+            'tgl_berakhir' => 'required|date|after:tgl_mulai',
         ];
     }
 
@@ -51,6 +64,13 @@ class SpreportImport implements ToCollection, WithHeadingRow, WithValidation
     {
         return [
             'nik.required' => 'NIK karyawan harus wajib diisi',
+            'no_sp.required' => 'Nomor SP harus diisi',
+            'level_sp.required' => 'Level SP harus diisi',
+            'tgl_mulai.required' => 'Tanggal mulai harus diisi',
+            'tgl_mulai.date' => 'Tanggal mulai harus dalam format tanggal yang benar',
+            'tgl_berakhir.required' => 'Tanggal berakhir harus diisi',
+            'tgl_berakhir.date' => 'Tanggal berakhir harus dalam format tanggal yang benar',
+            'tgl_berakhir.after' => 'Tanggal berakhir harus setelah tanggal mulai',
         ];
     }
 }
