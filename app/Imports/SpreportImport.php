@@ -15,7 +15,7 @@ class SpreportImport implements ToCollection, WithHeadingRow, WithValidation
 {
     public function collection(Collection $collection)
     {
-        $datas[] = [];
+        $datas = array();
 
         foreach ($collection as $collect) {
 
