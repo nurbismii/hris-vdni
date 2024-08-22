@@ -6,6 +6,7 @@ use App\Models\employee;
 use App\Models\SpReport;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
@@ -22,7 +23,7 @@ class SpreportImport implements ToCollection, WithValidation, SkipsOnFailure
         $datas = array();
 
         foreach ($collection as $collect) {
-            
+
             $sp_exist = SpReport::where('nik_karyawan', $collect['nik'])
                 ->where('no_sp', $collect['no_sp'])
                 ->first();
@@ -41,6 +42,7 @@ class SpreportImport implements ToCollection, WithValidation, SkipsOnFailure
         }
 
         if (!empty($datas)) {
+            Log::info("Ready to import...");
             foreach (array_chunk($datas, 300) as $chunk) {
                 SpReport::insert($chunk);
             }
