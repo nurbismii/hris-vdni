@@ -20,8 +20,6 @@ class SpreportImport implements ToCollection, WithValidation, SkipsOnFailure
 
     public function collection(Collection $collection)
     {
-        $datas = array();
-
         foreach ($collection as $collect) {
 
             $sp_exist = SpReport::where('nik_karyawan', $collect['nik'])
@@ -54,9 +52,6 @@ class SpreportImport implements ToCollection, WithValidation, SkipsOnFailure
         return [
             'nik' => 'required',
             'no_sp' => 'required',
-            'level_sp' => 'required',
-            'tgl_mulai' => 'required|date',
-            'tgl_berakhir' => 'required|date|after:tgl_mulai',
         ];
     }
 
@@ -65,12 +60,6 @@ class SpreportImport implements ToCollection, WithValidation, SkipsOnFailure
         return [
             'nik.required' => 'NIK karyawan harus wajib diisi',
             'no_sp.required' => 'Nomor SP harus diisi',
-            'level_sp.required' => 'Level SP harus diisi',
-            'tgl_mulai.required' => 'Tanggal mulai harus diisi',
-            'tgl_mulai.date' => 'Tanggal mulai harus dalam format tanggal yang benar',
-            'tgl_berakhir.required' => 'Tanggal berakhir harus diisi',
-            'tgl_berakhir.date' => 'Tanggal berakhir harus dalam format tanggal yang benar',
-            'tgl_berakhir.after' => 'Tanggal berakhir harus setelah tanggal mulai',
         ];
     }
 }
