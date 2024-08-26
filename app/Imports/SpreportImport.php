@@ -5,6 +5,7 @@ namespace App\Imports;
 use App\Models\employee;
 use App\Models\SpReport;
 use Carbon\Carbon;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Concerns\ToCollection;
@@ -20,6 +21,8 @@ class SpreportImport implements ToCollection, WithValidation, SkipsOnFailure
 
     public function collection(Collection $collection)
     {
+        $datas = array();
+
         foreach ($collection as $collect) {
 
             $sp_exist = SpReport::where('nik_karyawan', $collect['nik'])
@@ -27,7 +30,7 @@ class SpreportImport implements ToCollection, WithValidation, SkipsOnFailure
                 ->first();
 
             if (!$sp_exist) {
-                $datas[] = [
+                $datas = [
                     'nik_karyawan' => $collect['nik'],
                     'no_sp' => $collect['no_sp'],
                     'level_sp' => $collect['level_sp'],
