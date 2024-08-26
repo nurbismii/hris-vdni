@@ -15,13 +15,13 @@ use Maatwebsite\Excel\Concerns\SkipsFailures;
 use Maatwebsite\Excel\Concerns\SkipsOnFailure;
 use Maatwebsite\Excel\Concerns\Importable;
 
-class SpreportImport implements ToCollection, WithValidation, SkipsOnFailure
+class SpreportImport implements ToCollection, WithValidation, SkipsOnFailure, WithHeadingRow
 {
     use Importable, SkipsFailures;
 
     public function collection(Collection $collection)
     {
-        $datas = array();
+        $datas = [];
 
         foreach ($collection as $collect) {
 
@@ -30,7 +30,7 @@ class SpreportImport implements ToCollection, WithValidation, SkipsOnFailure
                 ->first();
 
             if (!$sp_exist) {
-                $datas = [
+                $datas[] = [
                     'nik_karyawan' => $collect['nik'],
                     'no_sp' => $collect['no_sp'],
                     'level_sp' => $collect['level_sp'],
@@ -39,12 +39,15 @@ class SpreportImport implements ToCollection, WithValidation, SkipsOnFailure
                     'keterangan' => $collect['keterangan'],
                     'pelapor' => $collect['pelapor'],
                 ];
+            } else {
+                Log::info($sp_exist);
             }
         }
 
         if (count($datas) > 0) {
             Log::info("Ready to import...");
-            foreach (array_chunk($datas, 300) as $chunk) {
+            Log::info($datas);
+            foreach (array_chunk($datas, 500) as $chunk) {
                 SpReport::insert($chunk);
             }
         }
