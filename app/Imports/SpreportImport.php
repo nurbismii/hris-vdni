@@ -39,7 +39,7 @@ class SpreportImport implements ToCollection, WithValidation, SkipsOnFailure
             }
         }
 
-        if (!empty($datas)) {
+        if (count($datas) > 0) {
             Log::info("Ready to import...");
             foreach (array_chunk($datas, 300) as $chunk) {
                 SpReport::insert($chunk);
