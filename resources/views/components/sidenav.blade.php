@@ -15,7 +15,7 @@
                 <div class="sidenav-menu-heading">Info</div>
                 <a class="nav-link {{ (request()->segment(1) == 'dashboard') ? 'active' : '' }}" href="/dashboard">
                     <div class="nav-link-icon"><i data-feather="activity"></i></div>
-                    Dasbor
+                    Dashboard
                 </a>
                 @if(strtolower(Auth::user()->job->permission_role ?? '') == 'administrator')
                 <a class="nav-link {{ (request()->segment(1) == 'audit-trails') ? 'active' : '' }}" href="/audit-trails">
@@ -36,14 +36,14 @@
                 </div>
                 <a class="nav-link {{ (request()->segment(1) == 'employees' || request()->segment(1) == 'roles') ? '' : 'collapsed' }}" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseEmployees" aria-expanded="false" aria-controls="collapseEmployees">
                     <div class="nav-link-icon"><i data-feather="users"></i></div>
-                    Para Karyawan
+                    Karyawan
                     <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
                 <div class="collapse {{ (request()->segment(1) == 'employees' || request()->segment(1) == 'roles') ? 'show' : '' }}" id="collapseEmployees" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavemployee">
                         <a class="nav-link {{ (request()->is('employees', 'employees')) ? 'active' : '' }}" href="{{ url('employees')}}">Daftar karyawan</a>
                         <!-- <a class="nav-link {{ (request()->segment(1) == 'roles') ? 'active' : '' }}" href="/roles">Peran dan akses</a> -->
-                        <a class="nav-link {{ (request()->segment(2) == 'import') ? 'active' : '' }}" href="/employees/import">Impor karyawan</a>
+                        <a class="nav-link {{ (request()->segment(2) == 'import') ? 'active' : '' }}" href="/employees/import">Import karyawan</a>
                     </nav>
                 </div>
                 <a class="nav-link {{ (request()->segment(1) == 'perusahaan') ? 'active' : '' }}" href="/perusahaan">

@@ -81,7 +81,7 @@
                     <div class="card-body">
                         <div class="text-center lh-1 mb-2">
                             <h4 class="fw-bold">PT VDNI</h4> <br>
-                            <img src="{{ public_path('assets/img/backgrounds/vdni-ikon.png') }}" style="height: 50px;" alt=""><br> <br>
+                            <img src="{{ asset('assets/img/backgrounds/vdni-ikon.png') }}" style="height: 50px;" alt=""><br> <br>
                             <span class="fw-normal mb-2"> Slip gaji </span> <br> <br>
                             <span class="fw-normal"> Periode ({{ date('F Y', strtotime($data->mulai_periode)) }} - {{ date('F Y', strtotime($data->akhir_periode)) }})</span>
                         </div>
@@ -133,7 +133,7 @@
                                                 <div class="">Gaji pokok</div>
                                             </td>
                                             <td width="20px">:</td>
-                                            <td class="">Rp {{ number_format($data->gaji_pokok, 0, ",", ".") }}</td>
+                                            <td class="">Rp{{ number_format($data->gaji_pokok, 0, ",", ".") }}</td>
                                         </tr>
                                         @endif
                                         <!-- Invoice item 2-->
@@ -143,7 +143,7 @@
                                                 <div class="">Tunj. Uang Makan</div>
                                             </td>
                                             <td width="20px">:</td>
-                                            <td class="">Rp {{ number_format($data->tunj_um, 0, ",", ".") }}</td>
+                                            <td class="">Rp{{ number_format($data->tunj_um, 0, ",", ".") }}</td>
                                         </tr>
                                         @endif
                                         <!-- Invoice item 3-->
@@ -153,7 +153,7 @@
                                                 <div class="">Tunj. Pengawas</div>
                                             </td>
                                             <td width="20px">:</td>
-                                            <td class="">Rp {{ number_format($data->tunj_pengawas, 0, ",", ".") }}</td>
+                                            <td class="">Rp{{ number_format($data->tunj_pengawas, 0, ",", ".") }}</td>
                                         </tr>
                                         @endif
                                         @if($data->tunj_koefisien > 0)
@@ -162,7 +162,7 @@
                                                 <div class="">Tunj. Koefisien</div>
                                             </td>
                                             <td width="20px">:</td>
-                                            <td class="">Rp {{ number_format($data->tunj_koefisien, 0, ",", ".") }}</td>
+                                            <td class="">Rp{{ number_format($data->tunj_koefisien, 0, ",", ".") }}</td>
                                         </tr>
                                         @endif
                                         @if($data->tunj_mk > 0)
@@ -171,7 +171,7 @@
                                                 <div class="">Tunj. Masa Kerja</div>
                                             </td>
                                             <td width="20px">:</td>
-                                            <td class="">Rp {{ number_format($data->tunj_mk, 0, ",", ".") }}</td>
+                                            <td class="">Rp{{ number_format($data->tunj_mk, 0, ",", ".") }}</td>
                                         </tr>
                                         @endif
                                         <!-- Invoice item 4-->
@@ -181,14 +181,14 @@
                                                 <div class="">Tunj. Transport</div>
                                             </td>
                                             <td width="20px">:</td>
-                                            <td class="">Rp {{ number_format($data->tunj_transport, 0, ",", ".") ?? '-' }}</td>
+                                            <td class="">Rp{{ number_format($data->tunj_transport, 0, ",", ".") ?? '-' }}</td>
                                         </tr>
                                         @endif
                                         @if($data->tunj_lap)
                                         <tr>
                                             <td>Tunj. Lapangan</td>
                                             <td>:</td>
-                                            <td>Rp {{ number_format($data->tunj_lap, 0, ",", ".") }}</td>
+                                            <td>Rp{{ number_format($data->tunj_lap, 0, ",", ".") }}</td>
                                         </tr>
                                         @endif
                                         @if($data->ot > 0)
@@ -197,7 +197,7 @@
                                                 <div class="">Lembur</div>
                                             </td>
                                             <td width="20px">:</td>
-                                            <td class="">Rp {{ number_format($data->ot, 0, ",", ".") }}</td>
+                                            <td class="">Rp{{ number_format($data->ot, 0, ",", ".") }}</td>
                                         </tr>
                                         @endif
                                         @if($data->hm > 0)
@@ -206,7 +206,7 @@
                                                 <div class="">Hour machine</div>
                                             </td>
                                             <td width="20px">:</td>
-                                            <td class="">Rp {{ number_format($data->hm) ?? '-' }}</td>
+                                            <td class="">Rp{{ number_format($data->hm) ?? '-' }}</td>
                                         </tr>
                                         @endif
                                         @if($data->insentif > 0)
@@ -215,7 +215,7 @@
                                                 <div class="">Insentif</div>
                                             </td>
                                             <td width="20px">:</td>
-                                            <td class="">Rp {{ number_format($data->insentif, 0, ",", ".") ?? '-' }}</td>
+                                            <td class="">Rp{{ number_format($data->insentif, 0, ",", ".") ?? '-' }}</td>
                                         </tr>
                                         @endif
                                         @if($data->rapel > 0)
@@ -224,7 +224,7 @@
                                                 <div class="">Rapel</div>
                                             </td>
                                             <td width="20px">:</td>
-                                            <td class="">Rp {{ number_format($data->rapel, 0, ",", ".") ?? '-' }}</td>
+                                            <td class="">Rp{{ number_format($data->rapel, 0, ",", ".") ?? '-' }}</td>
                                         </tr>
                                         @endif
                                         @if($data->bonus > 0)
@@ -233,7 +233,7 @@
                                                 <div class="">Bonus</div>
                                             </td>
                                             <td width="20px">:</td>
-                                            <td class="">Rp {{ number_format($data->bonus, 0, ",", ".") ?? '-' }}</td>
+                                            <td class="">Rp{{ number_format($data->bonus, 0, ",", ".") ?? '-' }}</td>
                                         </tr>
                                         @endif
                                         @if($data->thr > 0)
@@ -242,7 +242,7 @@
                                                 <div class="">Tunj. hari raya</div>
                                             </td>
                                             <td width="20px">:</td>
-                                            <td class="">Rp {{ number_format($data->thr, 0, ",", ".") ?? '-' }}</td>
+                                            <td class="">Rp{{ number_format($data->thr, 0, ",", ".") ?? '-' }}</td>
                                         </tr>
                                         @endif
                                     </tbody>
@@ -262,7 +262,7 @@
                                         <tr class="">
                                             <td class="">BPJS TK JHT</td>
                                             <td width="20px">:</td>
-                                            <td class="">Rp {{ number_format($data->jht, 0, ",", ".") }}</td>
+                                            <td class="">Rp{{ number_format($data->jht, 0, ",", ".") }}</td>
                                         </tr>
                                         @endif
                                         <!-- Invoice item 2-->
@@ -270,7 +270,7 @@
                                         <tr class="">
                                             <td class="">BPJS TK JP</td>
                                             <td width="20px">:</td>
-                                            <td class="">Rp {{ number_format($data->jp, 0, ",", ".") }}</td>
+                                            <td class="">Rp{{ number_format($data->jp, 0, ",", ".") }}</td>
                                         </tr>
                                         @endif
                                         <!-- Invoice item 3-->
@@ -278,28 +278,28 @@
                                         <tr class="">
                                             <td class="">BPSJ Kesehatan</td>
                                             <td width="20px">:</td>
-                                            <td class="">Rp {{ number_format($data->pot_bpjskes, 0, ",", ".") }}</td>
+                                            <td class="">Rp{{ number_format($data->pot_bpjskes, 0, ",", ".") }}</td>
                                         </tr>
                                         @endif
                                         @if($data->unpaid_leave > 0)
                                         <tr class="">
                                             <td class="">Deduction Unpaid Leave</td>
                                             <td width="20px">:</td>
-                                            <td class="">Rp {{ number_format($data->unpaid_leave, 0, ",", ".") }}</td>
+                                            <td class="">Rp{{ number_format($data->unpaid_leave, 0, ",", ".") }}</td>
                                         </tr>
                                         @endif
                                         @if($data->deduction > 0)
                                         <tr class="">
                                             <td class="">Deduction</td>
                                             <td width="20px">:</td>
-                                            <td class="">Rp {{ number_format($data->deduction, 0, ",", ".") }}</td>
+                                            <td class="">Rp{{ number_format($data->deduction, 0, ",", ".") }}</td>
                                         </tr>
                                         @endif
                                         @if($data->deduction_pph21 > 0)
                                         <tr class="">
                                             <td class="">Deduction PPH 21</td>
                                             <td width="20px">:</td>
-                                            <td class="">Rp {{ number_format($data->deduction_pph21, 0, ",", ".") }}</td>
+                                            <td class="">Rp{{ number_format($data->deduction_pph21, 0, ",", ".") }}</td>
                                         </tr>
                                         @endif
                                         <tr class="mb-2">
@@ -314,14 +314,14 @@
                                                 </div>
                                             </td>
                                             <td width="20px">:</td>
-                                            <td class="pb-0">Rp.{{ number_format($total_diterima, 0, ",",".") }}</td>
+                                            <td class="pb-0">Rp{{ number_format($total_diterima, 0, ",",".") }}</td>
                                         </tr>
                                         <tr class="">
                                             <td class="pb-0">
                                                 <div class="text-uppercase small fw-200">Total deduction</div>
                                             </td>
                                             <td width="20px">:</td>
-                                            <td class="pb-0">Rp.{{ number_format($total_deduction, 0, ",",".") }}</td>
+                                            <td class="pb-0">Rp{{ number_format($total_deduction, 0, ",",".") }}</td>
                                         </tr>
                                         <tr>
                                             <td class="pb-0">
@@ -329,7 +329,7 @@
                                             </td>
                                             <td>:</td>
                                             <td class="pb-0">
-                                                <div class="h6 mb-0 fw-700 text-green">Rp {{ number_format($data->tot_diterima, 0, ",", ".") }} </div>
+                                                <div class="h6 mb-0 fw-700 text-green">Rp{{ number_format($data->tot_diterima, 0, ",", ".") }} </div>
                                             </td>
                                         </tr>
                                     </tbody>
