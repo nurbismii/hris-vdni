@@ -176,6 +176,16 @@
                                     <td class="text-end fw-bold">{{ number_format($data->rapel) }}</td>
                                 </tr>
                                 @endif
+                                @if($data->insentif > 0)
+                                <tr class="border-bottom">
+                                    <td>
+                                        <div class="fw-bold">insentif</div>
+                                    </td>
+                                    <td class="text-end fw-bold">:</td>
+                                    <td class="text-end fw-bold">Rp</td>
+                                    <td class="text-end fw-bold">{{ number_format($data->insentif) }}</td>
+                                </tr>
+                                @endif
                             </tbody>
                         </table>
                     </div>

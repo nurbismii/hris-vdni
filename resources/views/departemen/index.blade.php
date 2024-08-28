@@ -137,7 +137,7 @@
                         <div class="mb-3">
                             <label class="small mb-1">Departemen</label>
                             <input type="text" class="form-control" name="departemen" value="{{ $row->departemen }}">
-                            <input type="text" class="form-control" name="perusahaan_id" value="{{ $data_pt->id }}">
+                            <input type="hidden" class="form-control" name="perusahaan_id" value="{{ $data_pt->id }}">
                         </div>
                         <div class="mb-3">
                             <label class="small mb-1">Kepala Departemen</label>

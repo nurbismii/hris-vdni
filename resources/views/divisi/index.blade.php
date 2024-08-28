@@ -36,6 +36,10 @@
                             <i class="me-1" data-feather="plus"></i>
                             Tambah Divisi
                         </a>
+                        <a class="btn btn-sm btn-light text-primary" data-bs-toggle="modal" data-bs-target="#perbaruiDiv">
+                            <i class="me-1" data-feather="edit-3"></i>
+                            Perbarui Divisi
+                        </a>
                     </div>
                 </div>
             </div>
@@ -203,6 +207,46 @@
                             <div class="col-md-12">
                                 <label class="small mb-1">Divisi</label>
                                 <input type="text" class="form-control" name="divisi" value="{{ $data->nama_divisi }}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">No</button>
+                        <button class="btn btn-primary" type="submit">Yes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    @endforeach
+    <!-- Modal edit divisi -->
+
+    <!-- Modal perbarui divisi -->
+    @foreach($divisi as $data)
+    <div class="modal fade" id="perbaruiDiv" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Pilih departemen</h5>
+                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{{ route('updateDivisi') }}" method="POST" enctype="application/x-www-form-urlencoded" class="nav flex-column" id="stickyNav">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="row gx-3 mb-3">
+                            <div class="col-md-12 mb-3">
+                                <label class="small mb-1">Departemen</label>
+                                <input type="text" name="" value="{{ $data->departemen->departemen }}" class="form-control" readonly>
+                                <input type="text" name="dept_id" value="{{ $data->departemen->id }}" class="form-control" readonly>
+                            </div>
+                            <div class="col-md-12">
+                                <label class="small mb-1">Divisi yang ditambahkan</label>
+                                <select name="div_id" class="form-select">
+                                    <option value="">Pilih Divisi</option>
+                                    @foreach($list_div as $ld)
+                                    <option value="{{ $ld->id }}">{{ $ld->nama_divisi}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                     </div>

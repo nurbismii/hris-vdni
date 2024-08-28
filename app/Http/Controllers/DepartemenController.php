@@ -79,7 +79,17 @@ class DepartemenController extends Controller
     public function divisi($id)
     {
         $data = Departemen::where('id', $id)->first();
+        $list_div = Divisi::all();
         $divisi = Divisi::where('departemen_id', $data->id)->get();
-        return view('divisi.index', compact('data', 'divisi'))->with('no');
+        return view('divisi.index', compact('data', 'divisi', 'list_div'))->with('no');
+    }
+
+    public function updateDivisi(Request $request)
+    {
+        Divisi::where('id', $request->div_id)->update([
+            'departemen_id' => $request->dept_id
+        ]);
+
+        return back()->with('success', 'Divisi baru telah berhasil ditambahkan');
     }
 }

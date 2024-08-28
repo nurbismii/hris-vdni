@@ -131,8 +131,8 @@
 										@endif
 									</div>
 									<div class="timeline-item-content">
-										<a class="fw-bold text-dark text-xs" href="#!">[{{strtoupper($row->tipe)}}] - {{ $row->keterangan }} </a> <br>
-										<a class="fw-bold text-dark text-xs" href="#!">({{$row->jumlah}} Hari)</a> <br>
+										<a class="fw-bold text-dark text-xs" href="#!">{{ucfirst($row->tipe)}} - {{$row->tipe == '1' ? 'Tahunan' : 'Covid' }} </a> <br>
+										<a class="fw-bold text-dark text-xs" href="#!">{{$row->jumlah}} Hari</a> <br>
 									</div>
 								</div>
 								@empty
@@ -166,7 +166,7 @@
 									<div class="timeline-item-content">
 										<a class="fw-bold text-dark" href="#!">{{ getNamaDepartemen($row->posisi_lama->departemen_lama_id) ?? '' }} </a> <br>
 										<a class="fw-bold text-xs" href="#!">{{ getNamaDivisi($row->posisi_lama->divisi_lama_id) ?? '' }} </a><br>
-										<a class="fw-bold text-xs" href="#!">{{ $row->jabatan ?? '' }} </a>
+										<a class="fw-bold text-xs" href="#!">{{ $row->posisi_lama->jabatan_lama ?? '' }} </a>
 									</div>
 								</div>
 								<div class="timeline-item" data-bs-toggle="tooltip" data-bs-placement="right" title="">

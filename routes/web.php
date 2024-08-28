@@ -296,6 +296,7 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
             route::patch('/update/{id}', [DepartemenController::class, 'update'])->name('departemen.update');
             route::delete('/destroy/{id}', [DepartemenController::class, 'destroy'])->name('departemen.destroy');
             route::get('/{id}/divisi', [DepartemenController::class, 'divisi'])->name('departemen.divisi');
+            route::post('/tambah/divisi', [DepartemenController::class, 'updateDivisi'])->name('updateDivisi');
         });
 
         Route::group(['prefix' => 'divisi'], function () {
