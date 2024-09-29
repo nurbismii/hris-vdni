@@ -275,51 +275,51 @@ if (!function_exists('getDataRekrut')) {
         for ($i = 0; $i < count($rekrutmen_record); $i++) :
 
             if ($validation[$i] == $tahun_sekarang) :
-                if ($rekrutmen_record[$i] >= '01-16' && $rekrutmen_record[$i] <= '02-15') {
+                if ($rekrutmen_record[$i] >= '12-16' && $rekrutmen_record[$i] <= '02-15') {
                     $jan[] = $rekrutmen_record[$i];
                 }
 
-                if ($rekrutmen_record[$i] >= '02-16' && $rekrutmen_record[$i] <= '03-15') {
+                if ($rekrutmen_record[$i] >= '01-16' && $rekrutmen_record[$i] <= '02-15') {
                     $feb[] = $rekrutmen_record[$i];
                 }
 
-                if ($rekrutmen_record[$i] >= '03-16' && $rekrutmen_record[$i] <= '04-15') {
+                if ($rekrutmen_record[$i] >= '02-16' && $rekrutmen_record[$i] <= '03-15') {
                     $maret[] = $rekrutmen_record[$i];
                 }
 
-                if ($rekrutmen_record[$i] >= '04-16' && $rekrutmen_record[$i] <= '05-15') {
+                if ($rekrutmen_record[$i] >= '03-16' && $rekrutmen_record[$i] <= '04-15') {
                     $april[] = $rekrutmen_record[$i];
                 }
 
-                if ($rekrutmen_record[$i] >= '05-16' && $rekrutmen_record[$i] <= '06-15') {
+                if ($rekrutmen_record[$i] >= '04-16' && $rekrutmen_record[$i] <= '05-15') {
                     $mei[] = $rekrutmen_record[$i];
                 }
 
-                if ($rekrutmen_record[$i] >= '06-16' && $rekrutmen_record[$i] <= '07-15') {
+                if ($rekrutmen_record[$i] >= '05-16' && $rekrutmen_record[$i] <= '06-15') {
                     $juni[] = $rekrutmen_record[$i];
                 }
 
-                if ($rekrutmen_record[$i] >= '07-16' && $rekrutmen_record[$i] <= '08-15') {
+                if ($rekrutmen_record[$i] >= '06-16' && $rekrutmen_record[$i] <= '07-15') {
                     $juli[] = $rekrutmen_record[$i];
                 }
 
-                if ($rekrutmen_record[$i] >= '08-16' && $rekrutmen_record[$i] <= '09-15') {
+                if ($rekrutmen_record[$i] >= '07-16' && $rekrutmen_record[$i] <= '08-15') {
                     $agust[] = $rekrutmen_record[$i];
                 }
 
-                if ($rekrutmen_record[$i] >= '09-16' && $rekrutmen_record[$i] <= '10-15') {
+                if ($rekrutmen_record[$i] >= '08-16' && $rekrutmen_record[$i] <= '09-15') {
                     $sept[] = $rekrutmen_record[$i];
                 }
 
-                if ($rekrutmen_record[$i] >= '10-16' && $rekrutmen_record[$i] <= '11-15') {
+                if ($rekrutmen_record[$i] >= '09-16' && $rekrutmen_record[$i] <= '10-15') {
                     $okt[] = $rekrutmen_record[$i];
                 }
 
-                if ($rekrutmen_record[$i] >= '11-16' && $rekrutmen_record[$i] <= '12-15') {
+                if ($rekrutmen_record[$i] >= '10-16' && $rekrutmen_record[$i] <= '11-15') {
                     $nov[] = $rekrutmen_record[$i];
                 }
 
-                if ($rekrutmen_record[$i] >= '12-16' && $rekrutmen_record[$i] <= '01-15' && $tahun_sekarang == $validation[$i]) {
+                if ($rekrutmen_record[$i] >= '11-16' && $rekrutmen_record[$i] <= '12-15' && $tahun_sekarang == $validation[$i]) {
                     $dec[] = $rekrutmen_record[$i];
                 }
             endif;
