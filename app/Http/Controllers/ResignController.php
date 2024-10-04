@@ -25,8 +25,10 @@ class ResignController extends Controller
 
     public function serverSideResign(Request $request)
     {
-        $data = Resign::join('employees', 'employees.nik', '=', 'resign.nik_karyawan')
-            ->select('resign.*', 'employees.nama_karyawan');
+        // Build the initial query with join and select
+        $data = Resign::with('employee')->select('resign.nik_karyawan', 'resign.tanggal_keluar', 'resign.tipe');
+        
+        // Use DataTables to handle the data
         return DataTables::of($data)
             ->addIndexColumn()
             ->addColumn('action', function ($data) {
@@ -35,31 +37,35 @@ class ResignController extends Controller
                     'url_edit' => route('resign.edit', $data->nik_karyawan),
                     'url_surat' => route('resign.surat', $data->nik_karyawan),
                 ]);
-            })->filter(function ($instance) use ($request) {
-                if ($request->tipe == 'RESIGN SESUAI PROSEDUR' || $request->tipe == 'RESIGN TIDAK SESUAI PROSEDUR' || $request->tipe == 'PB RESIGN' || $request->tipe == 'PHK' || $request->tipe == 'PB PHK' || $request->tipe == 'PUTUS KONTRAK') {
-                    $instance->where('tipe', $request->get('tipe'));
+            })
+            ->filter(function ($instance) use ($request) {
+                // Filter by 'tipe' if it's in the allowed list
+                $validTipe = ['RESIGN SESUAI PROSEDUR', 'RESIGN TIDAK SESUAI PROSEDUR', 'PB RESIGN', 'PHK', 'PB PHK', 'PUTUS KONTRAK'];
+                if (in_array($request->tipe, $validTipe)) {
+                    $instance->where('tipe', $request->tipe);
                 }
-                if (!empty($request->get('search'))) {
-                    $instance->where(function ($w) use ($request) {
-                        $search = $request->get('search');
-                        $w->orWhere('nik_karyawan', 'LIKE', "%$search%")
-                            ->orWhere('nama_karyawan', 'LIKE', "%$search%");
+    
+                // Filter by search term if provided
+                if ($search = $request->get('search')) {
+                    $instance->where(function ($query) use ($search) {
+                        $query->orWhere('nik_karyawan', 'LIKE', "%$search%")
+                              ->orWhere('nama_karyawan', 'LIKE', "%$search%");
                     });
                 }
-                if ($request->get('periode_resign') != '') {
-
-                    $periode_resign = $request->periode_resign;
-                    $periode_resign = $periode_resign . '-16';
-
+    
+                // Filter by 'periode_resign' if provided
+                if ($request->get('periode_resign')) {
+                    $periode_resign = $request->get('periode_resign') . '-16';
                     $minus_one_month = date('Y-m-d', strtotime("$periode_resign -1 Month"));
                     $plus_one_month_minus_one_day = date('Y-m-d', strtotime("$minus_one_month +1 Month -1 Day"));
-
+                    
                     $instance->whereBetween('tanggal_keluar', [$minus_one_month, $plus_one_month_minus_one_day]);
                 }
             })
             ->rawColumns(['action'])
             ->make(true);
     }
+    
 
     public function edit($id)
     {

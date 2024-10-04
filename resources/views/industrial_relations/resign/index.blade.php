@@ -67,7 +67,6 @@
 									<th>NIK</th>
 									<th>Nama</th>
 									<th>Tanggal resign</th>
-									<th>Alasan</th>
 									<th>Tipe</th>
 									<th>Aksi</th>
 								</tr>
@@ -130,22 +129,18 @@
 						d.periode_resign = $('#periode_resign').val()
 					}
 				},
-				
+
 				columns: [{
 						data: 'nik_karyawan',
 						name: 'nik_karyawan'
 					},
 					{
-						data: 'nama_karyawan',
-						name: 'nama_karyawan',
+						data: 'employee.nama_karyawan',
+						name: 'employee.nama_karyawan',
 					},
 					{
 						data: 'tanggal_keluar',
 						name: 'tanggal_keluar',
-					},
-					{
-						data: 'alasan_keluar',
-						name: 'alasan_keluar',
 					},
 					{
 						data: 'tipe',
@@ -167,8 +162,8 @@
 			});
 
 			$('#periode_resign').change(function() {
-        table.draw();
-      });
+				table.draw();
+			});
 
 		});
 	</script>

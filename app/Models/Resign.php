@@ -11,4 +11,9 @@ class Resign extends Model
 
     protected $table = 'resign';
     protected $guarded = [];
+
+    public function employee()
+    {
+        return $this->hasOne(employee::class, 'nik', 'nik_karyawan');
+    }
 }
