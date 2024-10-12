@@ -102,7 +102,7 @@
                   <input class="form-control" id="posisi" name="posisi" type="text" readonly required />
                 </div>
                 <div class="mb-3">
-                  <label class="small mb-1" for="posisi">Tipe Lembur</label>
+                  <label class="small mb-1">Tipe Lembur</label>
                   <select name="tipe_lembur" class="form-select" id="" required>
                     <option value="" disabled>Pilih Tipe Lembur :</option>
                     <option value="1">SPL Tanggal Merah</option>
@@ -128,12 +128,12 @@
                   </div>
                 </div>
                 <div class="mb-3">
-                  <label class="small mb-1" for="posisi">Keterangan</label>
-                  <textarea class="form-control" id="posisi" type="text" name="keterangan" required> </textarea>
+                  <label class="small mb-1">Keterangan</label>
+                  <textarea class="form-control" type="text" name="keterangan" required> </textarea>
                 </div>
                 <hr class="my-4" />
                 <div class="d-flex justify-content-between">
-                  <button class="btn btn-light" type="reset">Batal</button>
+                  <a href="/admin/lembur" class="btn btn-light">Tutup</a>
                   <button class="btn btn-primary" type="submit">Kirim</button>
                 </div>
               </form>

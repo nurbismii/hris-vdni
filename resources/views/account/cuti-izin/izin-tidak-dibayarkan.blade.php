@@ -1,4 +1,4 @@
-<x-app-layout title="Cuti Tahunan">
+<x-app-layout title="Izin tidak dibayarkan">
     @push('styles')
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css" rel="stylesheet" />
@@ -27,13 +27,13 @@
                     <div class="col-auto mb-3">
                         <h1 class="page-header-title">
                             <div class="page-header-icon"><i data-feather="archive"></i></div>
-                            Cuti, Izin berbayar dan izin tidak berbayar
+                            Cuti,Paid leave dan Unpaid leave
                         </h1>
                     </div>
                     <div class="col-12 col-xl-auto mb-3">
                         <a class="btn btn-sm btn-light text-blue" href="/">
                             <i class="me-1" data-feather="x"></i>
-                            Close
+                            Tutup
                         </a>
                     </div>
                 </div>
@@ -42,23 +42,22 @@
     </header>
     <!-- Main page content-->
     <div class="container-xl px-4 mt-4">
+        <!-- Wizard card example with navigation-->
         <nav class="nav nav-borders">
-            <a class="nav-link {{ (request()->segment(2) == 'cuti') ? 'active' : '' }} ms-0" href="/karyawan/cuti">Cuti</a>
-            <!-- <a class="nav-link {{ (request()->segment(2) == 'cuti-roster') ? 'active' : '' }} ms-0" href="/pengajuan-karyawan/cuti-roster">Cuti Roster</a> -->
-            <a class="nav-link {{ (request()->segment(2) == 'izin-dibayarkan') ? 'active' : '' }} ms-0" href="/karyawan/izin-dibayarkan">Izin berbayar</a>
-            <a class="nav-link {{ (request()->segment(2) == 'izin-tidak-dibayarkan') ? 'active' : '' }} ms-0" href="/karyawan/izin-tidak-dibayarkan">Izin tidak berbayar</a>
+            <a class="nav-link {{ (request()->segment(2) == 'cuti') ? 'active' : '' }} ms-0" href="/ess/cuti/tahunan">Cuti</a>
+            <a class="nav-link {{ (request()->segment(2) == 'izin-dibayarkan') ? 'active' : '' }} ms-0" href="/ess/izin-dibayarkan">Izin berbayar</a>
+            <a class="nav-link {{ (request()->segment(2) == 'izin-tidak-dibayarkan') ? 'active' : '' }} ms-0" href="/ess/izin-tidak-dibayarkan">Izin tidak berbayar</a>
         </nav>
         <hr class="mt-0 mb-4">
-        <!-- Wizard card example with navigation-->
         <div class="card">
             <div class="card-body">
                 <div class="row justify-content-center">
                     <div class="col-xxl-6 col-xl-8">
-                        <h3 class="text-primary text-center">Formulir Cuti</h3>
+                        <h3 class="text-primary text-center">Formulir izin tidak dibayarkan</h3>
                         <h5 class="card-title mb-4">
                             <img src="{{ asset('assets/img/backgrounds/vdni-ikon.png') }}" style="height: 30px;" class="">
                         </h5>
-                        <form action="/pengajuan-karyawan/store-cuti" method="POST" enctype="multipart/form-data">
+                        <form action="/pengajuan-karyawan/store-izin-tidak-dibayarkan" method="POST" enctype="multipart/form-data">
                             @csrf
                             <!-- <div class="mb-3">
                                 <select class="form-select search" name="search" id="nik"></select>
@@ -80,25 +79,21 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label class="small mb-2">Tanggal Pengajuan</label>
-                                    <input class="form-control" name="tanggal_pengajuan" type="text" value="{{ date('Y-m-d') }}" readonly/>
+                                    <input class="form-control" name="tanggal_pengajuan" type="text" value="{{ date('Y-m-d') }}" readonly />
                                 </div>
                             </div>
                             <div class="col-md-12 mb-2">
-                                <label class="small mb-2">Alasan Cuti</label>
+                                <label class="small mb-2">Alasan izin</label>
                                 <textarea name="keterangan" class="form-control" cols="30" rows="10"></textarea>
                             </div>
                             <div class="row gx-3 mb-2">
-                                <div class="col-md-5 mb-2">
-                                    <label class="small mb-2">Tanggal mulai cuti</label>
+                                <div class="col-md-6 mb-2">
+                                    <label class="small mb-2">Tanggal mulai izin</label>
                                     <input class="form-control" name="tgl_mulai_cuti" type="date" required />
                                 </div>
-                                <div class="col-md-5 mb-2">
-                                    <label class="small mb-2">Tanggal akhir cuti</label>
+                                <div class="col-md-6 mb-2">
+                                    <label class="small mb-2">Tanggal akhir izin</label>
                                     <input class="form-control" name="tgl_akhir_cuti" type="date" required />
-                                </div>
-                                <div class="col-md-2">
-                                    <label class="small mb-2">Cuti tersedia</label>
-                                    <input name="sisa_cuti" class="form-control" type="text" id="sisa_cuti" value="{{ Auth::user()->employee->sisa_cuti }}" readonly />
                                 </div>
                             </div>
                             <hr class="my-4" />

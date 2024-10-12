@@ -70,8 +70,8 @@
                             <tr>
                                 <th scope="row">Posisi</th>
                                 <td>{{ $data->posisi }}</td>
-                                <td>Overtime</td>
-                                <td>{{ $data->ot }}</td>
+                                <td>Hour Machine</td>
+                                <td>{{ $data->jml_hour_machine }}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -154,16 +154,6 @@
                                     <td class="text-end fw-bold">:</td>
                                     <td class="text-end fw-bold">Rp</td>
                                     <td class="text-end fw-bold">{{ number_format($data->ot) }}</td>
-                                </tr>
-                                @endif
-                                @if($data->jml_hour_machine > 0)
-                                <tr class="border-bottom">
-                                    <td>
-                                        <div class="fw-bold">Hour Machine</div>
-                                    </td>
-                                    <td class="text-end fw-bold">:</td>
-                                    <td class="text-end fw-bold">Rp</td>
-                                    <td class="text-end fw-bold">{{ number_format($data->jml_hour_machine) }}</td>
                                 </tr>
                                 @endif
                                 @if($data->rapel > 0)

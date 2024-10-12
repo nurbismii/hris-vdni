@@ -1,35 +1,38 @@
 <?php
 
-use App\Http\Controllers\AbsensiController;
-use App\Http\Controllers\AccountController;
-use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\ContractController;
-use App\Http\Controllers\CutiIzinController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\DepartemenController;
-use App\Http\Controllers\DetailAbsensiController;
-use App\Http\Controllers\DivisiController;
-use App\Http\Controllers\EmployeeController;
-use App\Http\Controllers\KaryawanRosterController;
-use App\Http\Controllers\KeteranganAbsensiController;
-use App\Http\Controllers\LokasiAbsenController;
-use App\Http\Controllers\PasalController;
-use App\Http\Controllers\PeriodeRosterController;
-use App\Http\Controllers\Role\RoleController;
-use App\Http\Controllers\SeverancepayController;
-use App\Http\Controllers\User\UserController;
-use App\Http\Controllers\WaktuAbsenController;
-use App\Http\Controllers\SalaryController;
-use App\Http\Controllers\ApiController;
-use App\Http\Controllers\Auth\ForgotPasswordController;
-use App\Http\Controllers\Auth\ResetPasswordController;
-use App\Http\Controllers\ReportSpController;
-use App\Http\Controllers\ResignController;
-use App\Http\Controllers\WilayahController;
-use App\Http\Controllers\PerusahaanController;
-use App\Http\Controllers\LemburController;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+// Import controllers
+use App\Http\Controllers\{
+    AbsensiController,
+    AccountController,
+    ApiController,
+    Auth\ForgotPasswordController,
+    Auth\RegisterController,
+    Auth\ResetPasswordController,
+    CutiIzinController,
+    DashboardController,
+    DepartemenController,
+    DivisiController,
+    EmployeeController,
+    KaryawanRosterController,
+    LemburController,
+    LokasiAbsenController,
+    PasalController,
+    PeriodeRosterController,
+    PerusahaanController,
+    ReportSpController,
+    ResignController,
+    Role\RoleController,
+    SalaryController,
+    SeverancepayController,
+    User\UserController,
+    WaktuAbsenController,
+    WilayahController
+};
+
+
+
 
 Route::get('/konfirmasi/{id}', [RegisterController::class, 'konfirmasiEmail'])->name('email.confirm');
 Route::get('/lupa-kata-sandi', [ForgotPasswordController::class, 'index']);
@@ -54,60 +57,60 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
     Route::group(['prefix' => 'admin/', 'middleware' => ['isAdminDivisi']], function () {
         route::get('/pengingat', [KaryawanRosterController::class, 'viewAdminDept']);
         route::get('/permohonan', [KaryawanRosterController::class, 'adminListPengajuan']);
+        route::get('permohonan/detail/{id}', [CutiIzinController::class, 'viewAdminDeptDetailPengajuan'])->name('detail.pengajuan.roster');
         route::get('pengajuan/{id}', [KaryawanRosterController::class, 'viewAdminDeptFormCuti'])->name('admindept.formcuti');
         route::get('pengajuan/print/{id}', [KaryawanRosterController::class, 'viewAdminPrint'])->name('admindept.print');
         route::patch('/update/{id}', [CutiIzinController::class, 'adminCutiRosterUpdate'])->name('admindept.update.pengajuan');
+
+        Route::group(['prefix' => 'lembur/'], function () {
+            route::get('/', [LemburController::class, 'index']);
+            route::get('/server-side-lembur', [LemburController::class, 'serverSideLembur']);
+            route::get('/create', [LemburController::class, 'create']);
+            route::post('/store', [LemburController::class, 'store'])->name('store.lembur');
+            route::get('/show/{id}', [LemburController::class, 'show'])->name('show.lembur');
+            route::patch('/update/{id}', [LemburController::class, 'update'])->name('update.lembur');
+        });
+
+        Route::group(['prefix' => 'cuti/'], function () {
+            route::get('/', [CutiIzinController::class, 'viewAdminDeptCuti']);
+            route::get('/tahunan', [CutiIzinController::class, 'viewAdminDeptCutiTahunan']);
+            route::post('/tahunan/store', [CutiIzinController::class, 'adminDeptstoreCutiTahunan']);
+            route::get('/paidleave', [CutiIzinController::class, 'viewAdminDeptPaidLeave']);
+            route::post('/paidleave/store', [CutiIzinController::class, 'viewAdminStorePaidLeave']);
+            route::get('unpaidleave', [CutiIzinController::class, 'viewAdminDeptUnpaidLeave']);
+            route::post('/unpaidleave/store', [CutiIzinController::class, 'viewAdminStoreUnpaidLeave']);
+            route::get('/update/status/{id}', [CutiIzinController::class, 'adminUpdateStatusPengajuan'])->name('adminupdate.statuspengajuan');
+            route::get('/server-side', [CutiIzinController::class, 'serversideAdminCuti']);
+        });
     });
 
-    Route::group(['prefix' => 'admin/cuti/', 'middleware' => ['isAdminDivisi']], function () {
-        route::get('/', [CutiIzinController::class, 'viewAdminDeptCuti']);
-        route::get('/detail/{id}', [CutiIzinController::class, 'viewAdminDeptDetailPengajuan'])->name('detail.pengajuan.roster');
-        route::get('/tahunan', [CutiIzinController::class, 'viewAdminDeptCutiTahunan']);
-        route::post('/tahunan/store', [CutiIzinController::class, 'adminDeptstoreCutiTahunan']);
-        route::get('/paidleave', [CutiIzinController::class, 'viewAdminDeptPaidLeave']);
-        route::post('/paidleave/store', [CutiIzinController::class, 'viewAdminStorePaidLeave']);
-        route::get('unpaidleave', [CutiIzinController::class, 'viewAdminDeptUnpaidLeave']);
-        route::post('/unpaidleave/store', [CutiIzinController::class, 'viewAdminStoreUnpaidLeave']);
-        route::get('/update/status/{id}', [CutiIzinController::class, 'adminUpdateStatusPengajuan'])->name('adminupdate.statuspengajuan');
-        route::get('/server-side', [CutiIzinController::class, 'serversideAdminCuti']);
-    });
-
-    Route::group(['prefix' => 'karyawan'], function () {
+    Route::group(['prefix' => 'ess'], function () {
         route::get('/', [CutiIzinController::class, 'index']);
         route::get('/server-side', [CutiIzinController::class, 'serverSidePengajuan']);
-        route::get('/cuti', [CutiIzinController::class, 'cutiIzin']);
+        route::get('/cuti/tahunan', [CutiIzinController::class, 'cutiIzin']);
         route::get('/cuti/roster', [CutiIzinController::class, 'cutiRosterCreate']);
         route::post('/store-cuti', [CutiIzinController::class, 'storeCutiIzin']);
         route::get('/izin-dibayarkan', [CutiIzinController::class, 'izinDibayar']);
         route::post('/store-izin-dibayarkan', [CutiIzinController::class, 'storeIzinDibayarkan']);
         route::get('izin-tidak-dibayarkan', [CutiIzinController::class, 'izinTidakDibayarkan']);
         route::post('/store-izin-tidak-dibayarkan', [CutiIzinController::class, 'storeIzinTidakDibayarkan']);
-        route::get('/status-permohonan', [AccountController::class, 'statusPermohonan']);
         route::post('/pengajuan/store', [KaryawanRosterController::class, 'pengajuanCutiRoster'])->name('store.pengajuan.roster');
         route::get('/detail/{id}', [KaryawanRosterController::class, 'pengajuanCutiRosterDetail'])->name('show.pengajuan.roster');
         route::delete('/delete/{id}', [KaryawanRosterController::class, 'pengajuanCutiRosterHapus'])->name('destroy.pengajuan.roster');
+        route::get('/lembur', [LemburController::class, 'karyawanLembur']);
+        route::get('/show/{id}', [LemburController::class, 'karyawanLemburShow'])->name('karyawan.lembur.show');
+        route::patch('/update/{id}', [LemburController::class, 'karyawanLemburUpdate'])->name('karyawan.lembur.update');
+
+        Route::group(['prefix' => 'status'], function () {
+            route::get('/permohonan', [AccountController::class, 'statusPermohonan']);
+            route::get('/pengajuan', [AccountController::class, 'pengajuan']);
+        });
     });
 
     Route::group(['prefix' => 'absen'], function () {
         route::get('/', [AbsensiController::class, 'index']);
         route::post('/store', [AbsensiController::class, 'store'])->name('store.absensi');
         route::patch('/update/{id}', [AbsensiController::class, 'update'])->name('update.absensi');
-
-        route::group(['middleware' => 'isAdmin'], function () {
-            // Detail Absensi Controller
-            route::get('/detail', [DetailAbsensiController::class, 'getDetailAbsensi']);
-            route::post('/import-data-absen', [DetailAbsensiController::class, 'importAbsensi'])->name('import.absensi');
-            route::post('/import-data-absen/destroy', [DetailAbsensiController::class, 'importDeleteAbsensi'])->name('import.destroy.absensi');
-            route::get('/dropdown-bulan/{id}', [DetailAbsensiController::class, 'dropwdownBulan']);
-            route::get('/server-side', [DetailAbsensiController::class, 'serverSideAllin']);
-            route::get('/all-in/detail/{nik}', [DetailAbsensiController::class, 'show'])->name('all-in/detail');
-            // End Detail Absensi Controller
-
-            // Keterangan Absen
-            route::post('/import-keterangan', [KeteranganAbsensiController::class, 'ImportKeteranganAbsen'])->name('import.keterangan');
-            route::delete('/destroy/ket/{id}', [KeteranganAbsensiController::class, 'destroy'])->name('destroy.ket');
-            // End Keterangan Absen
-        });
     });
 
     Route::group(['prefix' => 'account'], function () {
@@ -128,7 +131,6 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
 
     Route::group(['prefix' => 'kompensasi-dan-keuntungan'], function () {
         route::get('/cuti-izin', [CutiIzinController::class, 'index']);
-        // route::get('/cuti-izin/create', [CutiIzinController::class, 'cutiIzin']); can delete
         route::get('/cuti-roster', [CutiIzinController::class, 'cutiRoster']);
         route::get('/cuti-roster/detail/{id}', [CutiIzinController::class, 'cutiRosterShow'])->name('cutiroster.show');
         route::post('/cuti-roster/update/{id}', [CutiIzinController::class, 'cutiRosterUpdate'])->name('cutiroster.update');
@@ -136,9 +138,6 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
 
         route::get('/pengingat', [KaryawanRosterController::class, 'reminder']);
         route::get('/kalender', [KaryawanRosterController::class, 'index']);
-
-        route::get('/absen', [DetailAbsensiController::class, 'getDetailAllIn']);
-        route::get('/detail', [DetailAbsensiController::class, 'getDetailAbsensi']);
 
         route::get('/lembur', [LemburController::class, 'lembur']);
         route::get('/lembur/list', [LemburController::class, 'serverSideLemburAll']);
@@ -212,7 +211,6 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
 
         Route::group(['prefix' => 'employees'], function () {
             route::get('/', [EmployeeController::class, 'index'])->name('karyawan.index');
-            route::get('/karyawan/data-lanjut', [EmployeeController::class, 'dataLanjut'])->name('karyawan.data-lanjut');
             route::get('/create', [EmployeeController::class, 'create']);
             route::patch('update/{id}', [EmployeeController::class, 'update'])->name('update.employee');
             route::patch('/update/kontrak/{id}', [EmployeeController::class, 'updateKontrak'])->name('update.kontrak');
@@ -238,22 +236,10 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
 
         Route::group(['prefix' => 'salary'], function () {
             route::get('/', [SalaryController::class, 'index']);
-            route::get('/history', [SalaryController::class, 'history']);
-            route::get('/components/{id}', [SalaryController::class, 'downloadSalaryComponent'])->name('components.donwload');
             route::get('/payslip/print/{id}', [SalaryController::class, 'printPayslip'])->name('payslip.print');
             route::get('/show/{id}', [SalaryController::class, 'show'])->name('salary.show');
             route::get('/employee', [SalaryController::class, 'gajikaryawan'])->name('salary.employee');
-            route::get('/create/salary', [SalaryController::class, 'createSalary'])->name('create.salary');
-            route::post('/store/gaji-karyawan', [SalaryController::class, 'storeGajiKaryawan'])->name('store/gaji-karyawan');
             route::get('/server-side', [SalaryController::class, 'serverSideSalary']);
-        });
-
-        Route::group(['prefix' => 'contract'], function () {
-            route::get('/', [ContractController::class, 'index']);
-            route::get('/server-side', [ContractController::class, 'serverSide']);
-            route::post('/import-pkwt', [ContractController::class, 'importContract']);
-            route::post('/destroy-import-pkwt', [ContractController::class, 'destroyImportContract'])->name('destroyImport.contract');
-            route::get('/show/{nik}', [ContractController::class, 'show'])->name('contract.show');
         });
 
         Route::group(['prefix' => 'industrial-relations'], function () {
@@ -308,7 +294,6 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
 
         Route::group(['prefix' => 'roster'], function () {
             route::get('/server-side', [CutiIzinController::class, 'serverSideCutiRoster']);
-            // route::get('/create', [CutiIzinController::class, 'cutiRosterCreate']); can delete
             route::post('/store', [CutiIzinController::class, 'cutiRosterStore'])->name('cutiroster.store');
             route::post('/upload/tiket/{id}', [CutiIzinController::class, 'uploadTiketPesawat'])->name('cutiroster.upload.tiket');
             route::post('/download/tiket/{id}', [CutiIzinController::class, 'downloadTiketPesawat'])->name('cutiroster.download.tiket');
@@ -332,21 +317,6 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
             route::get('/excel/{area}/{provinsi}/{kabupaten}/{kecamatan}', [WilayahController::class, 'exportExcel'])->name('export-wilayah-excel');
             route::get('/pdf/{area}/{provinsi}/{kabupaten}/{kecamatan}', [WilayahController::class, 'exportPdf'])->name('export-wilayah-pdf');
         });
-    });
-
-    Route::group(['prefix' => 'admin/lembur', 'middleware' => ['isAdminDivisi']], function () {
-        route::get('/', [LemburController::class, 'index']);
-        route::get('/server-side-lembur', [LemburController::class, 'serverSideLembur']);
-        route::get('/create', [LemburController::class, 'create']);
-        route::post('/store', [LemburController::class, 'store'])->name('store.lembur');
-        route::get('/show/{id}', [LemburController::class, 'show'])->name('show.lembur');
-        route::patch('/update/{id}', [LemburController::class, 'update'])->name('update.lembur');
-    });
-
-    Route::group(['prefix' => 'karyawan'], function () {
-        route::get('/lembur', [LemburController::class, 'karyawanLembur']);
-        route::get('/show/{id}', [LemburController::class, 'karyawanLemburShow'])->name('karyawan.lembur.show');
-        route::patch('/update/{id}', [LemburController::class, 'karyawanLemburUpdate'])->name('karyawan.lembur.update');
     });
 
     Route::group(['prefix' => 'api/hrcorner/'], function () {

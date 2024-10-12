@@ -65,7 +65,7 @@ class CutiIzinController extends Controller
 
     public function cutiIzin()
     {
-        return view('comben.cuti-izin.cuti');
+        return view('account.cuti-izin.cuti');
     }
 
     public function storeCutiIzin(Request $request)
@@ -86,7 +86,10 @@ class CutiIzinController extends Controller
                 'tanggal_mulai' => $request->tgl_mulai_cuti,
                 'tanggal_berakhir' => $request->tgl_akhir_cuti,
                 'status_pemohon' => 'ya',
+                'status_hr' => 'Menunggu',
+                'status_penanggung_jawab' => 'Menunggu',
                 'tipe' => 'cuti',
+                'kategori_cuti' => 1
             ]);
 
             return back()->with('success', 'Berhasil melakukan pengajuan');
@@ -110,7 +113,7 @@ class CutiIzinController extends Controller
 
     public function izinDibayar()
     {
-        return view('comben.cuti-izin.izin-dibayarkan');
+        return view('account.cuti-izin.izin-dibayarkan');
     }
 
     public function storeIzinDibayarkan(Request $request)
@@ -144,7 +147,7 @@ class CutiIzinController extends Controller
     {
         $data = employee::where('nik', Auth::user()->employee->nik)->first();
         $tanggal_sekarang = date('Y-m-d', strtotime(Carbon::now()));
-        return view('comben.cuti-izin.izin-tidak-dibayarkan', compact('data', 'tanggal_sekarang'));
+        return view('account.cuti-izin.izin-tidak-dibayarkan', compact('data', 'tanggal_sekarang'));
     }
 
     public function storeIzinTidakDibayarkan(Request $request)

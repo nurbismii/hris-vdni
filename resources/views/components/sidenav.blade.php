@@ -60,7 +60,6 @@
                 </a>
                 <div class="collapse {{ (request()->segment(1) == 'industrial-relations') ? 'show' : '' }}" id="collapseCoreHr" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav">
-                        <a class="nav-link {{ (request()->is('contract', 'contract')) ? 'active' : '' }}" href="/contract">PKWT 1</a>
                         <a class="nav-link {{ (request()->segment(2) == 'severance-pay') ? 'active' : '' }}" href="/industrial-relations/severance-pay">Pesangon</a>
                         <a class="nav-link {{ (request()->segment(2) == 'sp-report') ? 'active' : '' }}" href="/industrial-relations/sp-report">Peringatan</a>
                         <a class="nav-link {{ (request()->segment(2) == 'resign') ? 'active' : '' }}" href="/industrial-relations/resign">Pengunduran Diri</a>
@@ -93,7 +92,7 @@
                         <a class="nav-link {{ (request()->segment(1) == 'kompensasi-dan-keuntungan' && request()->segment(2) == 'cuti-roster') ? 'active' : '' }}" href="/kompensasi-dan-keuntungan/cuti-roster">Kelola Cuti Roster</a>
                         <a class="nav-link {{ (request()->segment(1) == 'kompensasi-dan-keuntungan' && request()->segment(2) == 'lembur') ? 'active' : '' }}" href="/kompensasi-dan-keuntungan/lembur">Kelola Lembur</a>
                         <a class="nav-link {{ (request()->segment(1) == 'kompensasi-dan-keuntungan' && request()->segment(2) == 'pengingat') ? 'active' : '' }}" href="/kompensasi-dan-keuntungan/pengingat">Pengingat</a>
-                        <a class="nav-link {{ (request()->segment(1) == 'kompensasi-dan-keuntungan' && request()->segment(2) == 'absen') ? 'active' : '' }}" href="/kompensasi-dan-keuntungan/absen">Absensi</a>
+                        <!-- <a class="nav-link {{ (request()->segment(1) == 'kompensasi-dan-keuntungan' && request()->segment(2) == 'absen') ? 'active' : '' }}" href="/kompensasi-dan-keuntungan/absen">Absensi</a> -->
                     </nav>
                 </div>
                 @endif

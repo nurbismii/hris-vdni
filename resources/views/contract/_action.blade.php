@@ -1,1 +1,0 @@
-<a href="{{ $url_show }}" title="{{ $contract->nama }}" class="btn btn-link btn-icon btn-xs"><i class="fas fa-info-circle"></i></a>

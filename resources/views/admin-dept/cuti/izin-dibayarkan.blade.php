@@ -85,32 +85,32 @@
                             <hr class="my-4" />
                             <div class="col-md-12 mb-2">
                                 <div class="form-check">
-                                    <input class="form-check-input" id="flexRadioDefault1" type="radio" name="tipe_izin" value="Izin Menikah ( 3 Hari )">
-                                    <label class="form-check-label" for="flexRadioDefault1">Izin Menikah ( 3 Hari )</label>
+                                    <input class="form-check-input" id="izinMenikah" type="radio" name="tipe_izin" value="Izin Menikah ( 3 Hari )">
+                                    <label class="form-check-label" for="izinMenikah">Izin Menikah ( 3 Hari )</label>
                                 </div>
                             </div>
                             <div class="col-md-12 mb-2">
                                 <div class="form-check">
-                                    <input class="form-check-input" id="flexRadioDefault1" type="radio" name="tipe_izin" value="Izin menikahkan anak ( 2 Hari )">
-                                    <label class="form-check-label" for="flexRadioDefault1">Izin menikahkan anak ( 2 Hari )</label>
+                                    <input class="form-check-input" id="izinMelahirkan" type="radio" name="tipe_izin" value="Izin menikahkan anak ( 2 Hari )">
+                                    <label class="form-check-label" for="izinMelahirkan">Izin menikahkan anak ( 2 Hari )</label>
                                 </div>
                             </div>
                             <div class="col-md-12 mb-2">
                                 <div class="form-check">
-                                    <input class="form-check-input" id="flexRadioDefault1" type="radio" name="tipe_izin" value="izin Khitan / Baptis anak ( 2 Hari )">
-                                    <label class="form-check-label" for="flexRadioDefault1">izin Khitan / Baptis anak ( 2 Hari )</label>
+                                    <input class="form-check-input" id="izinKhitan" type="radio" name="tipe_izin" value="izin Khitan / Baptis anak ( 2 Hari )">
+                                    <label class="form-check-label" for="izinKhitan">izin Khitan / Baptis anak ( 2 Hari )</label>
                                 </div>
                             </div>
                             <div class="col-md-12 mb-2">
                                 <div class="form-check">
-                                    <input class="form-check-input" id="flexRadioDefault1" type="radio" name="tipe_izin" value="Izin istri melahirkan / Keguguran ( 2 Hari )">
-                                    <label class="form-check-label" for="flexRadioDefault1">Izin istri melahirkan / Keguguran ( 2 Hari )</label>
+                                    <input class="form-check-input" id="izinKeguguran" type="radio" name="tipe_izin" value="Izin istri melahirkan / Keguguran ( 2 Hari )">
+                                    <label class="form-check-label" for="izinKeguguran">Izin istri melahirkan / Keguguran ( 2 Hari )</label>
                                 </div>
                             </div>
                             <div class="col-md-12 mb-2">
                                 <div class="form-check">
-                                    <input class="form-check-input" id="flexRadioDefault1" type="radio" name="tipe_izin" value="Izin Duka keluarga ( Suami/istri,orang tua/mertua,anak/menantu,saudara kandung ) meninggal ( 2 Hari )">
-                                    <label class="form-check-label" for="flexRadioDefault1">
+                                    <input class="form-check-input" id="izinDuka" type="radio" name="tipe_izin" value="Izin Duka keluarga ( Suami/istri,orang tua/mertua,anak/menantu,saudara kandung ) meninggal ( 2 Hari )">
+                                    <label class="form-check-label" for="izinDuka">
                                         Izin Duka keluarga<sup>*</sup>
                                         ( Suami/istri,orang tua/mertua,anak/menantu,saudara kandung ) meninggal ( 2 Hari )
                                     </label>
@@ -118,8 +118,8 @@
                             </div>
                             <div class="col-md-12 mb-2">
                                 <div class="form-check">
-                                    <input class="form-check-input" id="flexRadioDefault1" type="radio" name="tipe_izin" value="Cuti melahirkan ( 3 Bulan )">
-                                    <label class="form-check-label" for="flexRadioDefault1">Cuti melahirkan ( 3 Bulan )</label>
+                                    <input class="form-check-input" id="izinIstirahatMelahirkan" type="radio" name="tipe_izin" value="Cuti melahirkan ( 3 Bulan )">
+                                    <label class="form-check-label" for="izinIstirahatMelahirkan">Cuti melahirkan ( 3 Bulan )</label>
                                 </div>
                             </div>
                             <hr class="my-4" />

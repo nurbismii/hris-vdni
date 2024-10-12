@@ -26,7 +26,7 @@
             </h1>
           </div>
           <div class="col-12 col-xl-auto mb-3">
-            <a class="btn btn-sm btn-light text-blue" href="/karyawan/lembur">
+            <a class="btn btn-sm btn-light text-blue" href="/ess/lembur">
               <i class="me-1" data-feather="x"></i>
               Tutup
             </a>
@@ -91,8 +91,20 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <td>{{ $data->persetujuan_karyawan }}</td>
-                    <td>{{ $data->persetujuan_hod }}</td>
+                    <td>
+                      @if(strtoupper($data->persetujuan_karyawan) == "DITERIMA")
+                      <div class="text-center">
+                        <img src="{{ asset('assets/img/backgrounds/logo-disetujui.png') }}" style="height: 80px; width:120px" class="text-center">
+                      </div>
+                      @endif
+                    </td>
+                    <td>
+                      @if(strtoupper($data->persetujuan_hod) == "DITERIMA")
+                      <div class="text-center">
+                        <img src="{{ asset('assets/img/backgrounds/logo-disetujui.png') }}" style="height: 80px; width:120px" class="text-center">
+                      </div>
+                      @endif
+                    </td>
                   </tr>
                 </tbody>
               </table>

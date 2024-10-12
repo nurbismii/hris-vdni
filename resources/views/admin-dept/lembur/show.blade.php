@@ -91,8 +91,20 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <td>{{ $data->persetujuan_karyawan }}</td>
-                    <td>{{ $data->persetujuan_hod }}</td>
+                    <td>
+                      @if(strtoupper($data->persetujuan_karyawan) == "DITERIMA")
+                      <div class="text-center">
+                        <img src="{{ asset('assets/img/backgrounds/logo-disetujui.png') }}" style="height: 80px; width:120px" class="text-center">
+                      </div>
+                      @endif
+                    </td>
+                    <td>
+                      @if(strtoupper($data->persetujuan_hod) == "DITERIMA")
+                      <div class="text-center">
+                        <img src="{{ asset('assets/img/backgrounds/logo-disetujui.png') }}" style="height: 80px; width:120px" class="text-center">
+                      </div>
+                      @endif
+                    </td>
                   </tr>
                 </tbody>
               </table>

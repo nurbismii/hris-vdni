@@ -6,51 +6,123 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <style>
+        body {
+            background-color: #f4f7fc;
+            font-family: 'Roboto', sans-serif;
+        }
+
         a {
-            color: #79818d;
+            color: #1a73e8;
             text-decoration: none;
+        }
+
+        .form-control-login {
+            border-radius: 0.375rem;
+            border: 1px solid #e3e6f0;
+            padding: 0.75rem 1rem;
+            background-color: #fff;
+        }
+
+        .form-control-login:focus {
+            box-shadow: 0 0 0 0.2rem rgba(58, 123, 253, 0.25);
+        }
+
+        .card {
+            border: none;
+            border-radius: 0.75rem;
+        }
+
+        .card-header {
+            background-color: transparent;
+            border-bottom: none;
+        }
+
+        .btn-success {
+            background-color: #1a73e8;
+            border: none;
+            border-radius: 0.375rem;
+            padding: 0.75rem;
+        }
+
+        .btn-success:hover {
+            background-color: #1765c5;
+        }
+
+        .small {
+            color: #6b7280;
+        }
+
+        .small a {
+            color: #1a73e8;
+            text-decoration: none;
+        }
+
+        .small a:hover {
+            text-decoration: underline;
+        }
+
+        .input-group-text {
+            background-color: transparent;
+            border: none;
+        }
+
+        .input-group-joined {
+            position: relative;
+        }
+
+        .input-group-joined .form-control-login {
+            padding-right: 2.5rem;
+        }
+
+        .input-group-joined .toggle-password {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
         }
     </style>
     @endpush
+
     <div class="container-xl px-4">
         <div class="row justify-content-center">
-            <div class="col-lg-5">
+            <div class="col-lg-4">
                 <div class="mt-4">
                     <x-message />
                 </div>
-                <div class="card-opacation shadow-lg border-0 rounded-lg mt-5">
+                <div class="card shadow-sm border-0 rounded-lg mt-5">
                     <div class="card-header text-center">
-                        <h3 class="fw-bold my-2 text-white">Masuk</h3>
-                        <img src="{{ asset('assets/img/backgrounds/icon.png') }}" class="text-center" style="height: 55px;" alt="">
+                        <h3 class="fw-bold mb-0">Masuk</h3>
+                        <img src="{{ asset('assets/img/backgrounds/icon.png') }}" class="mt-3" style="height: 50px;" alt="Logo">
                     </div>
                     <div class="card-body">
                         <form action="{{ route('login') }}" method="POST">
                             @csrf
-                            <div class="mb-3">
-                                <label class="small mb-1 text-white">Email</label>
-                                <input class="form-control-login @error('email') is-invalid @enderror" type="email" name="email" />
+                            <div class="mb-4">
+                                <label class="small mb-1">Email</label>
+                                <input class="form-control-login @error('email') is-invalid @enderror" type="email" name="email" required />
                             </div>
-                            <div class="mb-3">
+                            <div class="mb-4">
                                 <div class="form-group">
-                                    <label class="small mb-1 text-white">Password</label>
+                                    <label class="small mb-1">Password</label>
                                     <div class="input-group input-group-joined" id="show_hide_password">
-                                        <input class="form-control-login pe-0 @error('password') is-invalid @enderror" name="password" type="password" aria-label="Search">
-                                        <!-- <span class="input-group-text" style="background-color: #F5F5F5;">
-                                            <a href=""><i class="fa fa-eye" aria-hidden="true"></i></a>
-                                        </span> -->
+                                        <input class="form-control-login @error('password') is-invalid @enderror" name="password" type="password" id="password-input" />
+                                        <span class="input-group-text toggle-password" style="cursor:pointer; background-color: transparent;">
+                                            <i class="fa fa-eye" id="toggle-icon" style="font-size: 14px;"></i>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="d-flex align-items-center justify-content-between mt-2 mb-3">
-                                <a class="small text-white" href="/lupa-kata-sandi">Lupa kata sandi ?</a>
+                            <div class="d-flex justify-content-between mb-3">
+                                <a class="small" href="/lupa-kata-sandi">Lupa kata sandi?</a>
                             </div>
-                            <div class="text-center d-grid">
+                            <div class="d-grid">
                                 <button type="submit" class="btn btn-success">Masuk</button>
                             </div>
                         </form>
                     </div>
                     <div class="card-footer text-center">
-                        <div class="small text-white fw-bold">Karyawan baru ? <a class="text-primary fw-bold" href="{{ route('register') }}">Daftar sekarang!</a></div>
+                        <div class="small">Karyawan baru? <a class="fw-bold" href="{{ route('register') }}">Daftar sekarang!</a></div>
                     </div>
                 </div>
             </div>
@@ -60,23 +132,27 @@
     @push('scripts')
     <script>
         $(document).ready(function() {
-            $("#show_hide_password a").on('click', function(event) {
-                event.preventDefault();
-                if ($('#show_hide_password input').attr("type") == "text") {
-                    $('#show_hide_password input').attr('type', 'password');
-                    $('#show_hide_password i').addClass("fa-eye-slash");
-                    $('#show_hide_password i').removeClass("fa-eye");
-                } else if ($('#show_hide_password input').attr("type") == "password") {
-                    $('#show_hide_password input').attr('type', 'text');
-                    $('#show_hide_password i').removeClass("fa-eye-slash");
-                    $('#show_hide_password i').addClass("fa-eye");
+            // Attach event listener to the span or icon
+            $("#show_hide_password .toggle-password").on('click', function() {
+                // Get the password input field
+                var passwordInput = $('#password-input');
+                var toggleIcon = $('#toggle-icon');
+
+                // Check the current type of the input field
+                if (passwordInput.attr("type") === "password") {
+                    // Change to text to show password
+                    passwordInput.attr("type", "text");
+                    // Change icon to eye-slash
+                    toggleIcon.removeClass("fa-eye").addClass("fa-eye-slash");
+                } else {
+                    // Change back to password
+                    passwordInput.attr("type", "password");
+                    // Change icon back to eye
+                    toggleIcon.removeClass("fa-eye-slash").addClass("fa-eye");
                 }
             });
         });
     </script>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-    <script src="{{ asset('js/scripts.js')}}"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     @endpush
 </x-auth-layout>

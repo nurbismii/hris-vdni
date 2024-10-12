@@ -106,11 +106,6 @@ class SalaryController extends Controller
             ->make(true);
     }
 
-    public function createSalary()
-    {
-        return view('/payslip/create-gaji-karyawan');
-    }
-
     public function show(Request $request, $id)
     {
         $now = new DateTime();
@@ -130,17 +125,5 @@ class SalaryController extends Controller
         $gaji_bersih = ($total_diterima - $total_deduction);
 
         return view('payslip.show', compact('data', 'total_diterima', 'total_deduction', 'gaji_bersih'));
-    }
-
-    public function history()
-    {
-        $datas = fileSalary::orderBy('id', 'DESC')->limit(100)->get();
-        return view('payslip.history', compact('datas'))->with('no');
-    }
-
-    public function downloadSalaryComponent($id)
-    {
-        $data = fileSalary::where('id', $id)->first();
-        return response()->download(public_path('salaries/' . $data->path));
     }
 }
