@@ -27,7 +27,7 @@ class AbsensiController extends Controller
         $jam_masuk = $absen_hari_ini->jam_masuk ?? 'Belum Absen';
         $jam_pulang = $absen_hari_ini->jam_pulang ?? 'Belum Absen';
 
-        return view('kehadiran.index', compact('datas', 'jam_pulang', 'jam_masuk', 'absen_hari_ini'))->with('no');
+        return view('account.kehadiran.index', compact('datas', 'jam_pulang', 'jam_masuk', 'absen_hari_ini'))->with('no');
     }
 
     public function store(Request $request)

@@ -22,13 +22,13 @@
 					<div class="col-auto mb-3">
 						<h1 class="page-header-title">
 							<div class="page-header-icon"><i data-feather="user"></i></div>
-							Payslip
+							Slip Gaji
 						</h1>
 					</div>
 					<div class="col-12 col-xl-auto mb-3">
 						<a class="btn btn-sm btn-light text-blue" href="/account/profile">
 							<i class="me-1" data-feather="x"></i>
-							Close
+							Tutup
 						</a>
 					</div>
 				</div>
@@ -38,57 +38,7 @@
 	<!-- Main page content-->
 	<div class="container-xl px-4 mt-4">
 		<hr class="mt-0 mb-4" />
-		<x-message />
 		<div class="row">
-			<div class="col-lg-6 mb-3">
-				<!-- Billing card 1-->
-				<div class="card h-100 border-start-lg border-start-primary">
-					<div class="card-body">
-						<div class="small text-muted">Current salary</div>
-						<div class="h3">Rp.{{ number_format($gaji_karyawan->gaji_pokok) ?? 'Tidak diketahui'}}</div>
-						<a class="text-arrow-icon small" href="#!">
-							Detail
-							<i data-feather="arrow-right"></i>
-						</a>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-6 mb-4">
-				<!-- Billing card 3-->
-				<div class="card h-100 border-start-lg border-start-success">
-					<div class="card-body">
-						<div class="small text-muted">Contract expired</div>
-						@if($contract)
-						<div class="h3">{{ date('d F Y', strtotime($contract->tanggal_berakhir_kontrak)) ?? 'Belum di proses' }}</div>
-						@endif
-						<a class="text-arrow-icon small text-success" href="{{ route('contract') }}">
-							Detail
-							<i data-feather="arrow-right"></i>
-						</a>
-					</div>
-				</div>
-			</div>
-			<!-- <div class="col-lg-12 mb-3">
-				<form action="/roster/daftar-pengingat" method="get">
-					@csrf
-					<div class="card">
-						<div class="card-body" style="overflow-x: auto;">
-							<label for="">Period</label>
-							<input type="month" name="periode" class="form-control">
-							<div class="mt-2">
-								<button class="btn btn-sm btn-light text-primary" type="submit">
-									<i class="me-1" data-feather="search"></i>
-									Filter
-								</button>
-								<a class="btn btn-sm btn-light text-primary" data-bs-toggle="modal" data-bs-target="#modalDeleteEmployee">
-									<i class="me-1" data-feather="trash"></i>
-									Remove filter
-								</a>
-							</div>
-						</div>
-					</div>
-				</form>
-			</div> -->
 			@foreach($datas as $data)
 			<div class="col-xl-4 mb-2">
 				<a class="card card-angles lift-sm h-100" href="{{ route('invoice', $data->id) }}" role="button">
@@ -107,7 +57,6 @@
 			@endforeach
 		</div>
 	</div>
-
 	@push('scripts')
 	<x-toastr />
 

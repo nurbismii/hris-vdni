@@ -129,7 +129,7 @@ class AccountController extends Controller
     public function tiket()
     {
         $datas = CutiRoster::where('nik_karyawan', Auth::user()->employee->nik)->get();
-        return view('tiket.index', compact('datas'));
+        return view('account.tiket.index', compact('datas'));
     }
 
     public function updateAkun(Request $request, $id)

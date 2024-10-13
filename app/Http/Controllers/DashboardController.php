@@ -10,13 +10,17 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\{Provinsi, employee, Contract, User, Kabupaten, Kecamatan, Absensi, AuditTrail};
-
+use App\Repositories\Absensi\AbsensiRepository;
 
 class DashboardController extends Controller
 {
-    public function __construct()
+    public $absensiRepo;
+
+    public function __construct(AbsensiRepository $absensiRepo)
     {
         $this->middleware(['auth']);
+
+        $this->absensiRepo = $absensiRepo;
     }
 
     public function index(Request $request)
@@ -142,6 +146,12 @@ class DashboardController extends Controller
             ));
         }
 
+        $datas = $this->absensiRepo->getAbsensiByNik();
+
+        $absen_hari_ini = $this->absensiRepo->getAbsensiHariIni();
+        $jam_masuk = $absen_hari_ini->jam_masuk ?? 'Belum Absen';
+        $jam_pulang = $absen_hari_ini->jam_pulang ?? 'Belum Absen';
+
         $day = date('D', strtotime(today()));
 
         $dayList = array(
@@ -158,7 +168,7 @@ class DashboardController extends Controller
         $karyawan = User::with('employee')->where('nik_karyawan', Auth::user()->nik_karyawan)->first();
         $divisi = Divisi::with('departemen')->where('id', $karyawan->employee->divisi_id)->first();
 
-        return view('dashboard-user', compact('data', 'hari_ini', 'divisi'));
+        return view('dashboard-user', compact('data', 'hari_ini', 'divisi', 'jam_pulang', 'jam_masuk', 'absen_hari_ini'));
     }
 
     public function settingDashboard(Request $request)

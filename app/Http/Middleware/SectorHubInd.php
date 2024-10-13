@@ -19,7 +19,7 @@ class SectorHubInd
     {
         $cek_role = Auth::user()->job->permission_role ?? '';
         if ($cek_role) {
-            if (strtolower($cek_role) == 'hubungan industrial') {
+            if (strtolower($cek_role) == 'hubungan industrial' || strtolower($cek_role) == 'administrator') {
                 return $next($request);
             }
             abort(403);

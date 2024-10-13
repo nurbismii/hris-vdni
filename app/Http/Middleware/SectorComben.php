@@ -19,7 +19,7 @@ class SectorComben
     {
         $cek_role = Auth::user()->job->permission_role ?? '';
         if ($cek_role) {
-            if (strtolower($cek_role) == 'keuntungan dan manfaat') {
+            if (strtolower($cek_role) == 'keuntungan dan manfaat' || strtolower($cek_role) == 'administrator') {
                 return $next($request);
             }
             abort(403);
