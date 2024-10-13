@@ -31,9 +31,6 @@ use App\Http\Controllers\{
     WilayahController
 };
 
-
-
-
 Route::get('/konfirmasi/{id}', [RegisterController::class, 'konfirmasiEmail'])->name('email.confirm');
 Route::get('/lupa-kata-sandi', [ForgotPasswordController::class, 'index']);
 Route::post('/reset-kata-sandi', [ResetPasswordController::class, 'resetPassword'])->name('reset.password');
@@ -129,21 +126,6 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
         route::get('/download/{id}', [CutiIzinController::class, 'downloadTiketPesawat'])->name('karyawan.download.tiket');
     });
 
-    Route::group(['prefix' => 'kompensasi-dan-keuntungan'], function () {
-        route::get('/cuti-izin', [CutiIzinController::class, 'index']);
-        route::get('/cuti-roster', [CutiIzinController::class, 'cutiRoster']);
-        route::get('/cuti-roster/detail/{id}', [CutiIzinController::class, 'cutiRosterShow'])->name('cutiroster.show');
-        route::post('/cuti-roster/update/{id}', [CutiIzinController::class, 'cutiRosterUpdate'])->name('cutiroster.update');
-        route::get('cuti-izin/import', [CutiIzinController::class, 'importViewPengajuan'])->name('import.pengajuan');
-
-        route::get('/pengingat', [KaryawanRosterController::class, 'reminder']);
-        route::get('/kalender', [KaryawanRosterController::class, 'index']);
-
-        route::get('/lembur', [LemburController::class, 'lembur']);
-        route::get('/lembur/list', [LemburController::class, 'serverSideLemburAll']);
-        route::get('/lembur/show/{id}', [LemburController::class, 'lemburShow'])->name('lembur.show.hr');
-    });
-
     Route::group(['prefix' => 'pengajuan-karyawan'], function () {
         route::get('/server-side', [CutiIzinController::class, 'serverSidePengajuan']);
         route::post('/import/store', [CutiIzinController::class, 'importStorePengajuan'])->name('import.store.pengajuan');
@@ -161,23 +143,42 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
     Route::group(['middleware' => 'isAdmin'], function () {
 
         Route::get('/audit-trails', [DashboardController::class, 'auditTrails']);
+
+        Route::group(['prefix' => 'kompensasi-dan-keuntungan', 'middleware' => ['sec.comben']], function () {
+            route::get('/cuti-izin', [CutiIzinController::class, 'index']);
+            route::get('/cuti-roster', [CutiIzinController::class, 'cutiRoster']);
+            route::get('/cuti-roster/detail/{id}', [CutiIzinController::class, 'cutiRosterShow'])->name('cutiroster.show');
+            route::post('/cuti-roster/update/{id}', [CutiIzinController::class, 'cutiRosterUpdate'])->name('cutiroster.update');
+            route::get('cuti-izin/import', [CutiIzinController::class, 'importViewPengajuan'])->name('import.pengajuan');
+            route::get('/pengingat', [KaryawanRosterController::class, 'reminder']);
+            route::get('/kalender', [KaryawanRosterController::class, 'index']);
+            route::get('/lembur', [LemburController::class, 'lembur']);
+            route::get('/lembur/list', [LemburController::class, 'serverSideLemburAll']);
+            route::get('/lembur/show/{id}', [LemburController::class, 'lemburShow'])->name('lembur.show.hr');
+        });
+
+        Route::group(['prefix' => 'salary', 'middleware' => ['sec.comben']], function () {
+            route::get('/', [SalaryController::class, 'index']);
+            route::get('/payslip/print/{id}', [SalaryController::class, 'printPayslip'])->name('payslip.print');
+            route::get('/show/{id}', [SalaryController::class, 'show'])->name('salary.show');
+            route::get('/employee', [SalaryController::class, 'gajikaryawan'])->name('salary.employee');
+            route::get('/server-side', [SalaryController::class, 'serverSideSalary']);
+        });
+
         Route::group(['prefix' => 'setting'], function () {
             route::get('/dashboard', [DashboardController::class, 'settingDashboard']);
             route::post('/store', [DashboardController::class, 'store'])->name('store.dashboard');
             route::get('/edit/{id}', [DashboardController::class, 'edit'])->name('edit.dashboard');
             route::patch('/update/{id}', [DashboardController::class, 'update'])->name('update.dashboard');
             route::delete('/destroy/{id}', [DashboardController::class, 'destroy'])->name('destroy.dashboard');
-
             route::get('/waktu-absen', [WaktuAbsenController::class, 'index']);
             route::post('/store/waktu-absen', [WaktuAbsenController::class, 'storeWaktuAbsen'])->name('store.waktu_absen');
             route::patch('/update/waktu-absen/{id}', [WaktuAbsenController::class, 'update'])->name('update.waktu_absen');
             route::delete('/delete/waktu-absen/{id}', [WaktuAbsenController::class, 'destroy'])->name('delete.waktu_absen');
-
             route::get('/lokasi-absen', [LokasiAbsenController::class, 'index']);
             route::post('/store/lokasi-absen', [LokasiAbsenController::class, 'store'])->name('store.lokasi');
             route::patch('/update/lokasi-absen/{id}', [LokasiAbsenController::class, 'update'])->name('update.lokasi');
             route::delete('/delete/lokasi-absen/{id}', [LokasiAbsenController::class, 'destroy'])->name('delete.lokasi');
-
             route::get('/pasal', [PasalController::class, 'index']);
             route::post('/store/pasal', [PasalController::class, 'store'])->name('store.pasal');
             route::patch('/update/pasal/{id}', [PasalController::class, 'update'])->name('update.pasal');
@@ -191,7 +192,6 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
             route::get('/edit/{id}', [UserController::class, 'edit'])->name('edit.user');
             route::patch('/update/{id}', [UserController::class, 'update'])->name('update.user');
             route::delete('/destroy/{id}', [UserController::class, 'destroy'])->name('destroy.user');
-
             route::get('/download-example-user', [UserController::class, 'downloadExampleUser'])->name('download.exampleUser');
             route::get('/import', [UserController::class, 'import']);
             route::post('/import-user', [UserController::class, 'importUser'])->name('import.user');
@@ -234,15 +234,7 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
             // Maatwebsite excel end 
         });
 
-        Route::group(['prefix' => 'salary'], function () {
-            route::get('/', [SalaryController::class, 'index']);
-            route::get('/payslip/print/{id}', [SalaryController::class, 'printPayslip'])->name('payslip.print');
-            route::get('/show/{id}', [SalaryController::class, 'show'])->name('salary.show');
-            route::get('/employee', [SalaryController::class, 'gajikaryawan'])->name('salary.employee');
-            route::get('/server-side', [SalaryController::class, 'serverSideSalary']);
-        });
-
-        Route::group(['prefix' => 'industrial-relations'], function () {
+        Route::group(['prefix' => 'industrial-relations', 'middleware' => ['sec.hubind']], function () {
             route::get('/severance-pay', [SeverancepayController::class, 'index']);
             route::get('/severance-pay/create', [SeverancepayController::class, 'create'])->name('severance.create');
             route::post('/severance-pay/store', [SeverancepayController::class, 'store'])->name('severance.store');

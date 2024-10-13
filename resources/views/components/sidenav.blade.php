@@ -17,7 +17,7 @@
                     <div class="nav-link-icon"><i data-feather="activity"></i></div>
                     Dashboard
                 </a>
-                @if(strtolower(Auth::user()->job->permission_role ?? '') == 'administrator')
+                @if(Auth::user()->role_id == 1 || Auth::user()->role_id == 3 || Auth::user()->role_id == 4)
                 <a class="nav-link {{ (request()->segment(1) == 'audit-trails') ? 'active' : '' }}" href="/audit-trails">
                     <div class="nav-link-icon"><i data-feather="clipboard"></i></div>
                     Jejak Aktivitas
@@ -67,7 +67,7 @@
                 </div>
                 @endif
 
-                @if(strtolower(Auth::user()->job->permission_role ?? '') == 'administrator')
+                @if(strtolower(Auth::user()->job->permission_role ?? '') == 'administrator' || strtolower(Auth::user()->job->permission_role ?? '') == 'keuntungan dan manfaat')
                 <a class="nav-link {{ (request()->segment(1) == 'salary' && request()->segment(2) == 'employee') ? '' : 'collapsed' }}" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapsePayroll" aria-expanded="false" aria-controls="collapsePayroll">
                     <div class="nav-link-icon"><i data-feather="credit-card"></i></div>
                     Penggajian
@@ -92,7 +92,6 @@
                         <a class="nav-link {{ (request()->segment(1) == 'kompensasi-dan-keuntungan' && request()->segment(2) == 'cuti-roster') ? 'active' : '' }}" href="/kompensasi-dan-keuntungan/cuti-roster">Kelola Cuti Roster</a>
                         <a class="nav-link {{ (request()->segment(1) == 'kompensasi-dan-keuntungan' && request()->segment(2) == 'lembur') ? 'active' : '' }}" href="/kompensasi-dan-keuntungan/lembur">Kelola Lembur</a>
                         <a class="nav-link {{ (request()->segment(1) == 'kompensasi-dan-keuntungan' && request()->segment(2) == 'pengingat') ? 'active' : '' }}" href="/kompensasi-dan-keuntungan/pengingat">Pengingat</a>
-                        <!-- <a class="nav-link {{ (request()->segment(1) == 'kompensasi-dan-keuntungan' && request()->segment(2) == 'absen') ? 'active' : '' }}" href="/kompensasi-dan-keuntungan/absen">Absensi</a> -->
                     </nav>
                 </div>
                 @endif

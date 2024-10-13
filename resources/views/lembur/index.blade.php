@@ -188,7 +188,7 @@
                   <th>Nama</th>
                   <th>Mulai</th>
                   <th>Berakhir</th>
-                  <th>Total</th>
+                  <th>Total Jam</th>
                   <th>Tipe Lembur</th>
                   <th>Karyawan</th>
                   <th>HOD</th>
@@ -305,16 +305,14 @@
             name: 'tipe_lembur',
             render: function(data, type, row) {
               badge = '';
-              switch (data) {
-                case 1:
-                  badge = '<span class="badge bg-danger">' + "Tanggal Merah" + '</span>';
-                  break;
-                case 2:
-                  badge = '<span class="badge bg-primary">' + "OFF" + '</span>';
-                  break;
-                case 3:
-                  badge = '<span class="badge bg-secondary">' + "Kelebihan Jam" + '</span>';
-                  break;
+              if (data == 1) {
+                badge = '<span class="badge bg-danger">' + "Tanggal Merah" + '</span>';
+              }
+              if (data == 2) {
+                badge = '<span class="badge bg-primary">' + "OFF" + '</span>';
+              }
+              if (data == 3) {
+                badge = '<span class="badge bg-secondary">' + "Kelebihan Jam" + '</span>';
               }
               return badge;
             }

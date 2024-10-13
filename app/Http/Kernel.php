@@ -63,12 +63,13 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        'login' => \App\Http\Middleware\Login::class,
         'employee.registered' => \App\Http\Middleware\EmployeesRegistered::class,
         'audit.trails' => \App\Http\Middleware\AuditTrails::class,
         'ngrok' => \App\Http\Middleware\NgrokMiddleware::class,
         'isAdmin' => \App\Http\Middleware\isAdmin::class,
         'isAdminDivisi' => \App\Http\Middleware\isAdminDivisi::class,
         'email.verify' => \App\Http\Middleware\EmailVerification::class,
+        'sec.hubind' => \App\Http\Middleware\SectorHubInd::class,
+        'sec.comben' => \App\Http\Middleware\SectorComben::class 
     ];
 }
