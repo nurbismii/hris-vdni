@@ -30,7 +30,7 @@
                         </a>
                         <a class="btn btn-sm btn-light text-primary" data-bs-toggle="modal" data-bs-target="#addDept">
                             <i class="me-1" data-feather="plus"></i>
-                            Tambah Departemen
+                             Departemen
                         </a>
                     </div>
                 </div>

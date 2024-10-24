@@ -26,7 +26,7 @@
           <div class="col-12 col-xl-auto mb-3">
             <a class="btn btn-sm btn-light text-primary" data-bs-toggle="modal" data-bs-target="#addCompany">
               <i class="me-1" data-feather="plus"></i>
-              Tambah perusahaan
+              Perusahaan
             </a>
           </div>
         </div>
@@ -43,6 +43,7 @@
               <th>No</th>
               <th>Kode</th>
               <th>Nama Perusahaan</th>
+              <th>Departemen</th>
               <th>Aksi</th>
             </tr>
           </thead>
@@ -53,14 +54,11 @@
               <td>{{ $row->kode_perusahaan }}</td>
               <td>{{ $row->nama_perusahaan }}</td>
               <td>
-                <div class="dropdown">
-                  <button class="btn btn-secondary btn-sm dropdown-toggle" id="dropdownFadeIn" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Opsi</button>
-                  <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownFadeIn">
-                    <a class="dropdown-item" href="{{ route('perusahaan.show', $row->id) }}">Daftar departemen</a>
-                    <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#editCompany{{ $row->id }}">Edit</a>
-                    <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#hapusCompany{{ $row->id }}">Hapus</a>
-                  </div>
-                </div>
+                <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="{{ route('perusahaan.show', $row->id) }}"><i data-feather="eye"></i></a>
+              </td>
+              <td>
+                <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" data-bs-toggle="modal" data-bs-target="#editCompany{{ $row->id }}"><i data-feather="edit"></i></a>
+                <a type="submit" class="btn btn-datatable btn-icon btn-transparent-dark" data-bs-toggle="modal" data-bs-target="#hapusCompany{{ $row->id }}"><i data-feather="trash-2"></i></a>
               </td>
             </tr>
             @endforeach

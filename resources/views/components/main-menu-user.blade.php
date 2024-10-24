@@ -5,7 +5,7 @@
 <!-- Pengajuan -->
 <a class="nav-link {{ (request()->is('ess/cuti*') || request()->is('ess/izin-dibayarkan') || request()->is('ess/izin-tidak-dibayarkan')) ? '' : 'collapsed' }}" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseKelolaCuti" aria-expanded="{{ (request()->is('ess/cuti*') || request()->is('ess/izin-dibayarkan') || request()->is('ess/izin-tidak-dibayarkan')) ? 'true' : 'false' }}" aria-controls="collapseKelolaCuti">
   <div class="nav-link-icon"><i data-feather="upload"></i></div>
-  Pengajuan Cuti dan Izin
+  Pengajuan Cuti & Izin
   <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
 </a>
 <div class="collapse {{ (request()->is('ess/cuti*') || request()->is('ess/izin-dibayarkan') || request()->is('ess/izin-tidak-dibayarkan')) ? 'show' : '' }}" id="collapseKelolaCuti" data-bs-parent="#accordionSidenav">

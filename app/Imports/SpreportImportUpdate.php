@@ -26,15 +26,12 @@ class SpreportImportUpdate implements ToCollection, WithValidation, WithHeadingR
     public function collection(Collection $collection)
     {
         foreach ($collection as $collect) {
-
-            $data = $this->sp->where('nik_karyawan', $collect['nik'])->first();
-
             $sp_exist = $this->sp->where('nik_karyawan', $collect['nik'])
                 ->where('no_sp', $collect['no_sp'])
                 ->first();
 
-            if (!$sp_exist && $data) {
-                $data->where('nik_karyawan', $collect['nik'])->update([
+            if (!$sp_exist) {
+                $sp_exist->update([
                     'no_sp' => $collect['no_sp'],
                     'level_sp' => $collect['level_sp'],
                     'tgl_mulai' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(intVal($collect['tgl_mulai']))),
