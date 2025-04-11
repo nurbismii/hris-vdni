@@ -43,11 +43,6 @@ class UserController extends Controller
         return view('user.create', compact('roles'));
     }
 
-    public function import()
-    {
-        return view('user.import');
-    }
-
     public function store(Request $request)
     {
         try {
@@ -143,16 +138,5 @@ class UserController extends Controller
         } catch (\Throwable $e) {
             return back()->with('error', 'Terjadi kesalahan!');
         }
-    }
-
-    public function downloadExampleUser()
-    {
-        return Excel::download(new UserExport, 'User-Tempalate.xlsx');
-    }
-
-    public function importUser(Request $request)
-    {
-        Excel::import(new UsersImport, $request->file('file'));
-        return back()->with('success', 'Impor pengguna berhasil');
     }
 }

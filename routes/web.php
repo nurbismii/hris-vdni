@@ -107,6 +107,8 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
     Route::group(['prefix' => 'absen'], function () {
         route::get('/', [AbsensiController::class, 'index']);
         route::post('/store', [AbsensiController::class, 'store'])->name('store.absensi');
+        route::patch('/update/istirhat/{id}', [AbsensiController::class, 'updateJamIstirahat'])->name('update.absensi.istirahat');
+        route::patch('/update/kembali-istirahat{id}', [AbsensiController::class, 'updateJamKembaliIstirahat'])->name('update.absensi.kembali.istirahat');
         route::patch('/update/{id}', [AbsensiController::class, 'update'])->name('update.absensi');
     });
 
@@ -192,9 +194,6 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
             route::get('/edit/{id}', [UserController::class, 'edit'])->name('edit.user');
             route::patch('/update/{id}', [UserController::class, 'update'])->name('update.user');
             route::delete('/destroy/{id}', [UserController::class, 'destroy'])->name('destroy.user');
-            route::get('/download-example-user', [UserController::class, 'downloadExampleUser'])->name('download.exampleUser');
-            route::get('/import', [UserController::class, 'import']);
-            route::post('/import-user', [UserController::class, 'importUser'])->name('import.user');
             route::get('/last-login', [UserController::class, 'lastLogin'])->name('last.login');
             route::get('/server-side', [UserController::class, 'serverSide']);
         });

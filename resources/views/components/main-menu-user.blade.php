@@ -4,8 +4,8 @@
 
 <!-- Pengajuan -->
 <a class="nav-link {{ (request()->is('ess/cuti*') || request()->is('ess/izin-dibayarkan') || request()->is('ess/izin-tidak-dibayarkan')) ? '' : 'collapsed' }}" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseKelolaCuti" aria-expanded="{{ (request()->is('ess/cuti*') || request()->is('ess/izin-dibayarkan') || request()->is('ess/izin-tidak-dibayarkan')) ? 'true' : 'false' }}" aria-controls="collapseKelolaCuti">
-  <div class="nav-link-icon"><i data-feather="upload"></i></div>
-  Pengajuan Cuti & Izin
+  <div class="nav-link-icon"><i data-feather="edit-2"></i></div>
+  Pengajuan
   <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
 </a>
 <div class="collapse {{ (request()->is('ess/cuti*') || request()->is('ess/izin-dibayarkan') || request()->is('ess/izin-tidak-dibayarkan')) ? 'show' : '' }}" id="collapseKelolaCuti" data-bs-parent="#accordionSidenav">
@@ -19,7 +19,7 @@
 
 <!-- Status Pengajuan -->
 <a class="nav-link {{ request()->is('ess/status*') ? '' : 'collapsed' }}" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseStatusPengajuan" aria-expanded="{{ request()->is('ess/status*') ? 'true' : 'false' }}" aria-controls="collapseStatusPengajuan">
-  <div class="nav-link-icon"><i data-feather="star"></i></div>
+  <div class="nav-link-icon"><i data-feather="check"></i></div>
   Status Pengajuan
   <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
 </a>
@@ -33,7 +33,7 @@
 
 
 <a class="nav-link {{ request()->is('account/slip-gaji') ? 'active' : '' }}" href="/account/slip-gaji">
-  <div class="nav-link-icon"><i data-feather="dollar-sign"></i></div>
+  <div class="nav-link-icon"><i data-feather="credit-card"></i></div>
   Slip Gaji
 </a>
 

@@ -150,6 +150,8 @@ class DashboardController extends Controller
 
         $absen_hari_ini = $this->absensiRepo->getAbsensiHariIni();
         $jam_masuk = $absen_hari_ini->jam_masuk ?? 'Belum Absen';
+        $jam_istirahat = $absen_hari_ini->jam_istirahat ?? 'Belum Absen';
+        $jam_kembali_istirahat = $absen_hari_ini->jam_kembali_istirahat ?? 'Belum Absen';
         $jam_pulang = $absen_hari_ini->jam_pulang ?? 'Belum Absen';
 
         $day = date('D', strtotime(today()));
@@ -168,7 +170,7 @@ class DashboardController extends Controller
         $karyawan = User::with('employee')->where('nik_karyawan', Auth::user()->nik_karyawan)->first();
         $divisi = Divisi::with('departemen')->where('id', $karyawan->employee->divisi_id)->first();
 
-        return view('dashboard-user', compact('data', 'hari_ini', 'divisi', 'jam_pulang', 'jam_masuk', 'absen_hari_ini'));
+        return view('dashboard-user', compact('data', 'hari_ini', 'divisi', 'jam_pulang', 'jam_masuk', 'jam_istirahat', 'jam_kembali_istirahat', 'absen_hari_ini'));
     }
 
     public function settingDashboard(Request $request)

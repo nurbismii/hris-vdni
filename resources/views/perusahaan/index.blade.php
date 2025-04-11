@@ -54,7 +54,7 @@
               <td>{{ $row->kode_perusahaan }}</td>
               <td>{{ $row->nama_perusahaan }}</td>
               <td>
-                <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" href="{{ route('perusahaan.show', $row->id) }}"><i data-feather="eye"></i></a>
+                <a class="btn btn-sm btn-primary" href="{{ route('perusahaan.show', $row->id) }}"> Daftar departemen</a>
               </td>
               <td>
                 <a class="btn btn-datatable btn-icon btn-transparent-dark me-2" data-bs-toggle="modal" data-bs-target="#editCompany{{ $row->id }}"><i data-feather="edit"></i></a>

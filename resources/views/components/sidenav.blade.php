@@ -23,26 +23,26 @@
                     Jejak Aktivitas
                 </a>
                 <div class="sidenav-menu-heading">Inti</div>
-                <a class="nav-link {{ (request()->segment(1) == 'users') ? '' : 'collapsed' }}" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseUsers" aria-expanded="false" aria-controls="collapseUsers">
+                <a class="nav-link {{ (request()->segment(1) == 'users' || request()->segment(1) == 'roles') ? '' : 'collapsed' }}" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseUsers" aria-expanded="false" aria-controls="collapseUsers">
                     <div class="nav-link-icon"><i data-feather="user-check"></i></div>
                     Pengguna
                     <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
-                <div class="collapse {{ (request()->segment(1) == 'users') ? 'show' : '' }}" id="collapseUsers" data-bs-parent="#accordionSidenav">
+                <div class="collapse {{ (request()->segment(1) == 'users' || request()->segment(1) == 'roles') ? 'show' : '' }}" id="collapseUsers" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav">
                         <a class="nav-link {{ (request()->is('users', 'users')) ? 'active' : '' }}" href="/users">Data Pengguna</a>
+                        <a class="nav-link {{ (request()->segment(1) == 'roles') ? 'active' : '' }}" href="/roles">Peran dan akses</a>
                         <a class="nav-link {{ (request()->segment(2) == 'last-login') ? 'active' : '' }}" href="/users/last-login">Riwayat masuk</a>
                     </nav>
                 </div>
-                <a class="nav-link {{ (request()->segment(1) == 'employees' || request()->segment(1) == 'roles') ? '' : 'collapsed' }}" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseEmployees" aria-expanded="false" aria-controls="collapseEmployees">
+                <a class="nav-link {{ (request()->segment(1) == 'employees') ? '' : 'collapsed' }}" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseEmployees" aria-expanded="false" aria-controls="collapseEmployees">
                     <div class="nav-link-icon"><i data-feather="users"></i></div>
                     Karyawan
                     <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
-                <div class="collapse {{ (request()->segment(1) == 'employees' || request()->segment(1) == 'roles') ? 'show' : '' }}" id="collapseEmployees" data-bs-parent="#accordionSidenav">
+                <div class="collapse {{ (request()->segment(1) == 'employees' ) ? 'show' : '' }}" id="collapseEmployees" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavemployee">
                         <a class="nav-link {{ (request()->is('employees', 'employees')) ? 'active' : '' }}" href="{{ url('employees')}}">Data karyawan</a>
-                        <!-- <a class="nav-link {{ (request()->segment(1) == 'roles') ? 'active' : '' }}" href="/roles">Peran dan akses</a> -->
                         <a class="nav-link {{ (request()->segment(2) == 'import') ? 'active' : '' }}" href="/employees/import">Bulk karyawan</a>
                     </nav>
                 </div>
@@ -55,7 +55,7 @@
                 @if(strtolower(Auth::user()->job->permission_role ?? '') == 'administrator' || strtolower(Auth::user()->job->permission_role ?? '') == 'hubungan industrial')
                 <a class="nav-link {{ (request()->segment(1) == 'industrial-relations') ? '' : 'collapsed' }}" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseCoreHr" aria-expanded="false" aria-controls="collapseCoreHr">
                     <div class="nav-link-icon"><i data-feather="link"></i></div>
-                    HubInd
+                    Hubungan Industrial
                     <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
                 <div class="collapse {{ (request()->segment(1) == 'industrial-relations') ? 'show' : '' }}" id="collapseCoreHr" data-bs-parent="#accordionSidenav">
@@ -83,7 +83,7 @@
                 @if(strtolower(Auth::user()->job->permission_role ?? '') == 'administrator' || strtolower(Auth::user()->job->permission_role ?? '') == 'keuntungan dan manfaat')
                 <a class="nav-link {{ (request()->segment(1) == 'kompensasi-dan-keuntungan') ? '' : 'collapsed' }}" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseKelolaCuti" aria-expanded="false" aria-controls="collapseKelolaCuti">
                     <div class="nav-link-icon"><i data-feather="folder-plus"></i></div>
-                    Comben
+                    Compen & Benefit
                     <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
                 <div class="collapse {{ (request()->segment(1) == 'kompensasi-dan-keuntungan') ? 'show' : '' }}" id="collapseKelolaCuti" data-bs-parent="#accordionSidenav">

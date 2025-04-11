@@ -25,10 +25,6 @@
                         </h1>
                     </div>
                     <div class="col-12 col-xl-auto mb-3">
-                        <a class="btn btn-sm btn-light text-primary" href="/users/import">
-                            <i class="me-1" data-feather="users"></i>
-                            Bulk
-                        </a>
                         <a class="btn btn-sm btn-light text-primary" href="/users/create">
                             <i class="me-1" data-feather="user-plus"></i>
                             Tambah

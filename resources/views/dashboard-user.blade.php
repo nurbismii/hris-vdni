@@ -135,6 +135,34 @@
                         </div>
                     </div>
 
+                    <div class="col-md-6 mb-3">
+                        <div class="card bg-dark text-white h-100">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <div class="text-white-75 small">Istirahat</div>
+                                        <div class="text-lg fw-bold">{{ $absen_hari_ini->jam_istirahat ?? '-- : -- : --' }}</div>
+                                    </div>
+                                    <i class="feather-xl text-white-50" data-feather="check-square"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <div class="card bg-dark text-white h-100">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <div class="text-white-75 small">Kembali bekerja</div>
+                                        <div class="text-lg fw-bold">{{ $absen_hari_ini->jam_kembali_istirahat ?? '-- : -- : --' }}</div>
+                                    </div>
+                                    <i class="feather-xl text-white-50" data-feather="check-square"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Card Keluar -->
                     <div class="col-md-6 mb-3">
                         <div class="card bg-dark text-white h-100">
@@ -244,7 +272,38 @@
                         </button>
                         @endif
                     </form>
+
                     @isset($absen_hari_ini->id)
+                    @if($jam_istirahat == 'Belum Absen')
+                    <form action="{{ route('update.absensi.istirahat', $absen_hari_ini->id) }}" method="POST" class="nav flex-column" id="stickyNav">
+                        @csrf
+                        {{ method_field('patch') }}
+                        <input type="hidden" name="nik_karyawan" value="{{ Auth::user()->nik_karyawan }}">
+                        <input type="hidden" name="lat" id="latUpdate">
+                        <input type="hidden" name="lng" id="lngUpdate">
+                        <button class="btn btn-light text-primary" type="submit">
+                            <i class="me-1" data-feather="log-out"></i>
+                            Istirahat
+                        </button>
+                    </form>
+                    @endif
+                    @endisset
+
+                    @if($jam_kembali_istirahat == 'Belum Absen' && $jam_istirahat != 'Belum Absen')
+                    <form action="{{ route('update.absensi.kembali.istirahat', $absen_hari_ini->id) }}" method="POST" class="nav flex-column" id="stickyNav">
+                        @csrf
+                        {{ method_field('patch') }}
+                        <input type="hidden" name="nik_karyawan" value="{{ Auth::user()->nik_karyawan }}">
+                        <input type="hidden" name="lat" id="latUpdate">
+                        <input type="hidden" name="lng" id="lngUpdate">
+                        <button class="btn btn-light text-primary" type="submit">
+                            <i class="me-1" data-feather="log-out"></i>
+                            Kembali bekerja
+                        </button>
+                    </form>
+                    @endif
+
+                    @if($jam_pulang == 'Belum Absen' && $jam_kembali_istirahat != 'Belum Absen')
                     <form action="{{ route('update.absensi', $absen_hari_ini->id) }}" method="POST" class="nav flex-column" id="stickyNav">
                         @csrf
                         {{ method_field('patch') }}
@@ -256,7 +315,8 @@
                             Keluar
                         </button>
                     </form>
-                    @endisset
+                    @endif
+
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-light text-blue btn-sm" type="button" data-bs-dismiss="modal">Close</button>
