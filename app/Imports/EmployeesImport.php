@@ -6,93 +6,130 @@ use App\Models\Divisi;
 use App\Models\employee;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
+use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Maatwebsite\Excel\Concerns\WithChunkReading;
+use Maatwebsite\Excel\Concerns\WithBatchInserts;
 use Maatwebsite\Excel\Concerns\WithValidation;
 
-class EmployeesImport implements ToCollection, WithHeadingRow, WithValidation
+class EmployeesImport implements ToCollection, WithHeadingRow, WithChunkReading, WithBatchInserts, WithValidation
 {
-    public function collection(Collection $collection)
+    protected $allDivisi;
+    protected $existingNiks;
+
+    public function __construct()
     {
-        $datas = [];
-        foreach ($collection as $collect) {
+        $this->allDivisi = Divisi::pluck('id', 'nama_divisi')->mapWithKeys(function ($id, $name) {
+            return [strtolower(trim($name)) => $id];
+        })->toArray();
 
-            $divisi = Divisi::where('nama_divisi', $collect['divisi_id'])->first();
+        $this->existingNiks = employee::pluck('nik')->toArray();
+    }
 
-            $datas[] = [
-                'nik' => $collect['nik'],
-                'no_sk_pkwtt' => $collect['no_sk_pkwtt'],
-                'nama_karyawan' => $collect['nama_karyawan'],
-                'nama_ibu_kandung' => $collect['nama_ibu_kandung'],
-                'nama_bapak' => $collect['nama_bapak'],
-                'agama' => $collect['agama'],
-                'no_ktp' => str_replace(["'", "`"], "", $collect['no_ktp']),
-                'no_kk' => str_replace(["'", "`"], "", $collect['no_kk']),
-                'kode_area_kerja' => $collect['kode_area_kerja'],
-                'jenis_kelamin' => $collect['jenis_kelamin'] == 'M 男' ? 'L' : 'P',
-                'status_perkawinan' => $collect['status_perkawinan'] == 'TK' ? 'Belum Kawin' : 'Kawin',
-                'status_karyawan' => $collect['status_karyawan'],
-                'tgl_resign' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(intVal($collect['tgl_resign']))),
-                'alasan_resign' => $collect['alasan_resign'],
-                'status_resign' => $collect['status_resign'],
-                'no_telp' => $collect['no_telp'],
-                'tgl_lahir' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(intVal($collect['tgl_lahir']))),
-                'provinsi_id' => $collect['provinsi_id'],
-                'kabupaten_id' => $collect['kabupaten_id'],
-                'kecamatan_id' => strval($collect['kecamatan_id']),
-                'kelurahan_id' => strval($collect['kelurahan_id']),
-                'alamat_ktp' => $collect['alamat_ktp'],
-                'alamat_domisili' => $collect['alamat_domisili'],
-                'rt' => $collect['rt'],
-                'rw' => $collect['rw'],
-                'kode_pos' => $collect['kode_pos'],
-                'area_kerja' => $collect['area_kerja'],
-                'golongan_darah' => $collect['golongan_darah'],
-                'entry_date' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(intVal($collect['entry_date']))),
-                'npwp' => str_replace(array('-', '.'), "", $collect['npwp']),
-                'status_pajak' => $collect['status_pajak'],
-                'bpjs_kesehatan' => $collect['bpjs_kesehatan'],
-                'bpjs_tk' => $collect['bpjs_tk'],
-                'vaksin' => $collect['vaksin'],
-                'jam_kerja' => strtoupper($collect['jam_kerja']),
-                'posisi' => $collect['posisi'],
-                'jabatan' => $collect['jabatan'],
-                'divisi_id' => $divisi->id,
-                'tinggi' => $collect['tinggi'],
-                'berat' => $collect['berat'],
-                'hobi' => $collect['hobi'],
-                'no_jamsostek' => $collect['no_jamsostek'],
-                'no_asuransi' => $collect['no_asuransi'],
-                'no_kartu_asuransi' => $collect['no_kartu_asuransi'],
-                'nama_bank' => $collect['nama_bank'],
-                'no_rekening' => $collect['no_rekening'],
-                'nama_instansi_pendidikan' => $collect['nama_instansi_pendidikan'],
-                'pendidikan_terakhir' => $collect['pendidikan_terakhir'],
-                'jurusan' => $collect['jurusan'],
-                'tanggal_kelulusan' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(intVal($collect['tanggal_kelulusan']))),
-                'tanggal_menikah' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(intVal($collect['tanggal_menikah']))),
-                'sisa_cuti' => $collect['sisa_cuti'],
-                'sisa_cuti_covid' => $collect['sisa_cuti_covid'],
-            ];
+    public function collection(Collection $rows)
+    {
+        foreach ($rows as $row) {
+            // Skip jika NIK sudah ada di database
+            if (in_array($row['nik'], $this->existingNiks)) {
+                continue;
+            }
+
+            $kelurahanId = strval($row['kelurahan_id']);
+            $provinsiId = substr($kelurahanId, 0, 2);
+            $kabupatenId = substr($kelurahanId, 0, 4);
+            $kecamatanId = substr($kelurahanId, 0, 7);
+
+            $divisiId = $this->allDivisi[strtolower(trim($row['divisi']))] ?? null;
+
+            employee::create([
+                'nik' => $row['nik'],
+                'no_sk_pkwtt' => $row['no_sk_pkwtt'],
+                'nama_karyawan' => $row['nama_karyawan'],
+                'nama_ibu_kandung' => $row['nama_ibu_kandung'],
+                'nama_bapak' => $row['nama_bapak'],
+                'agama' => $row['agama'],
+                'no_ktp' => str_replace(["'", "`"], "", $row['no_ktp']),
+                'no_kk' => str_replace(["'", "`"], "", $row['no_kk']),
+                'kode_area_kerja' => $row['kode_area_kerja'],
+                'jenis_kelamin' => $row['jenis_kelamin'] == 'M 男' ? 'L' : 'P',
+                'status_perkawinan' => $row['status_perkawinan'] == 'TK' ? 'Belum Kawin' : 'Kawin',
+                'status_karyawan' => $row['status_karyawan'],
+                'tgl_resign' => $this->parseDate($row['tgl_resign']),
+                'alasan_resign' => $row['alasan_resign'],
+                'status_resign' => $row['status_resign'],
+                'no_telp' => $row['no_telp'],
+                'tgl_lahir' => $this->parseDate($row['tgl_lahir']),
+                'provinsi_id' => $provinsiId,
+                'kabupaten_id' => $kabupatenId,
+                'kecamatan_id' => $kecamatanId,
+                'kelurahan_id' => $kelurahanId,
+                'alamat_ktp' => $row['alamat_ktp'],
+                'alamat_domisili' => $row['alamat_domisili'],
+                'rt' => $row['rt'],
+                'rw' => $row['rw'],
+                'kode_pos' => $row['kode_pos'],
+                'area_kerja' => $row['area_kerja'],
+                'golongan_darah' => $row['golongan_darah'],
+                'entry_date' => $this->parseDate($row['entry_date']),
+                'npwp' => str_replace(['-', '.'], '', $row['npwp']),
+                'status_pajak' => $row['status_pajak'],
+                'bpjs_kesehatan' => $row['bpjs_kesehatan'],
+                'bpjs_tk' => $row['bpjs_tk'],
+                'vaksin' => $row['vaksin'],
+                'jam_kerja' => strtoupper($row['jam_kerja']),
+                'posisi' => $row['posisi'],
+                'jabatan' => $row['jabatan'],
+                'divisi_id' => $divisiId,
+                'tinggi' => $row['tinggi'],
+                'berat' => $row['berat'],
+                'hobi' => $row['hobi'],
+                'no_jamsostek' => $row['no_jamsostek'],
+                'no_asuransi' => $row['no_asuransi'],
+                'no_kartu_asuransi' => $row['no_kartu_asuransi'],
+                'nama_bank' => $row['nama_bank'],
+                'no_rekening' => $row['no_rekening'],
+                'nama_instansi_pendidikan' => $row['nama_instansi_pendidikan'],
+                'pendidikan_terakhir' => $row['pendidikan_terakhir'],
+                'jurusan' => $row['jurusan'],
+                'tanggal_kelulusan' => $this->parseDate($row['tanggal_kelulusan']),
+                'tanggal_menikah' => $this->parseDate($row['tanggal_menikah']),
+                'sisa_cuti' => $row['sisa_cuti'],
+                'sisa_cuti_covid' => $row['sisa_cuti_covid'],
+            ]);
         }
+    }
 
-        foreach (array_chunk($datas, 500) as $chunk) {
-            employee::insert($chunk);
-        }
+    public function chunkSize(): int
+    {
+        return 200;
+    }
+
+    public function batchSize(): int
+    {
+        return 100;
     }
 
     public function rules(): array
     {
         return [
-            'nik' => 'required|unique:employees,nik',
+            'nik' => 'required',
         ];
     }
 
     public function customValidationMessages()
     {
         return [
-            'nik.unique' => 'NIK Karyawan telah digunakan',
             'nik.required' => 'NIK karyawan harus diisi',
         ];
+    }
+
+    private function parseDate($value)
+    {
+        try {
+            return Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(intval($value)));
+        } catch (\Throwable $th) {
+            return null;
+        }
     }
 }
