@@ -118,6 +118,8 @@
                         <tr>
                             <th>Tanggal</th>
                             <th>Masuk</th>
+                            <th>Istirahat</th>
+                            <th>Kembali</th>
                             <th>Keluar</th>
                             <th>Status</th>
                         </tr>
@@ -127,6 +129,8 @@
                         <tr>
                             <td>{{ date('d F Y', strtotime($row->created_at)) }}</td>
                             <td>{{ $row->jam_masuk }}</td>
+                            <td>{{ $row->jam_istirahat }}</td>
+                            <td>{{ $row->jam_kembali }}</td>
                             <td>{{ $row->jam_pulang }}</td>
                             <td>{{ $row->status }}</td>
                         </tr>
@@ -159,7 +163,7 @@
                         </button>
                         @endif
                     </form>
-                    @if($jam_istirahat == 'Belum Absen')
+                    @if($jam_istirahat == 'Belum Absen' && $absen_hari_ini)
                     <form action="{{ route('update.absensi.istirahat', $absen_hari_ini->id) }}" method="POST" class="nav flex-column" id="stickyNav">
                         @csrf
                         {{ method_field('patch') }}

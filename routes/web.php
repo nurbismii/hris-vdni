@@ -41,16 +41,23 @@ Auth::routes();
 
 Route::post('/new-register', [RegisterController::class, 'register'])->name('register.employee')->middleware('employee.registered');
 Route::get('/', [DashboardController::class, 'index'])->middleware('email.verify');
-Route::get('dashboard/fetch-kabupaten/{id}', [DashboardController::class, 'fetchKabupaten']);
-Route::get('dashboard/fetch-kecamatan/{id}', [DashboardController::class, 'fetchKecamatan']);
-Route::get('dashboard/fetch-kelurahan/{id}', [DashboardController::class, 'fetchKelurahan']);
+
+
 
 Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], function () {
 
-    Route::get('/dashboard', [DashboardController::class, 'index']);
+    Route::group(['prefix' => 'dashboard'], function () {
+        Route::get('/', [DashboardController::class, 'index']);
+        Route::get('fetch-kabupaten/{id}', [DashboardController::class, 'fetchKabupaten']);
+        Route::get('fetch-kecamatan/{id}', [DashboardController::class, 'fetchKecamatan']);
+        Route::get('fetch-kelurahan/{id}', [DashboardController::class, 'fetchKelurahan']);
+    });
+
+
     Route::post('/store/absen', [WaktuAbsenController::class, 'storeAbsen'])->name('store.absen');
     route::get('/lihat-pengingat', [KaryawanRosterController::class, 'pengingatPribadi']);
 
+    // ROUTE GROUP BAGIAN ADMIN
     Route::group(['prefix' => 'admin/', 'middleware' => ['isAdminDivisi']], function () {
         route::get('/pengingat', [KaryawanRosterController::class, 'viewAdminDept']);
         route::get('/permohonan', [KaryawanRosterController::class, 'adminListPengajuan']);
@@ -81,6 +88,7 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
         });
     });
 
+    // ROUTE GROUP BAGIAN ESS
     Route::group(['prefix' => 'ess'], function () {
         route::get('/', [CutiIzinController::class, 'index']);
         route::get('/server-side', [CutiIzinController::class, 'serverSidePengajuan']);

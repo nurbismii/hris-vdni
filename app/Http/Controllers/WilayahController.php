@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exports\WilayahExport;
 use App\Models\employee;
 use App\Models\Provinsi;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use PDF;
@@ -60,7 +61,16 @@ class WilayahController extends Controller
 
     public function exportExcel($area, $provinsi_id, $kabupaten_id, $kecamatan_id)
     {
-        return Excel::download(new WilayahExport($area, $provinsi_id, $kabupaten_id, $kecamatan_id), 'Wilayah-exported.xlsx');
+        $bulan_sekarang = date('Y-m', strtotime(Carbon::now()));
+
+        $tanggal_hari_ini = $bulan_sekarang . '-16';
+        $tanggal_hari_ini = date('Y-m-d', strtotime("$tanggal_hari_ini -1 Month"));
+        $bulan_depan = date('Y-m-d', strtotime("$tanggal_hari_ini +1 Month -1 Day"));
+
+        $start_date = $tanggal_hari_ini;
+        $end_date = $bulan_depan;
+
+        return Excel::download(new WilayahExport($start_date, $end_date), 'Laporan Karyawan Perwilayah.xlsx');
     }
 
     public function exportPdf($area, $provinsi_id, $kabupaten_id, $kecamatan_id)

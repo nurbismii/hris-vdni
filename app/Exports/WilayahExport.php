@@ -2,56 +2,82 @@
 
 namespace App\Exports;
 
-use App\Models\employee;
-use Maatwebsite\Excel\Concerns\FromCollection;
-use Maatwebsite\Excel\Concerns\WithHeadings;
+use App\Models\Employee;
+use Maatwebsite\Excel\Concerns\FromArray;
+use Maatwebsite\Excel\Concerns\WithTitle;
+use Maatwebsite\Excel\Concerns\WithEvents;
+use Maatwebsite\Excel\Events\AfterSheet;
 
-class WilayahExport implements FromCollection, WithHeadings
+class WilayahExport implements FromArray, WithTitle, WithEvents
 {
-    protected $area;
-    protected $provinsi_id;
-    protected $kabupaten_id;
-    protected $kecamatan_id;
+    protected $startDate;
+    protected $endDate;
 
-    function __construct($area, $provinsi_id, $kabupaten_id, $kecamatan_id)
+    public function __construct($startDate, $endDate)
     {
-        $this->area = explode(',', $area);
-        $this->provinsi_id = explode(',', $provinsi_id);
-        $this->kabupaten_id = explode(',', $kabupaten_id);
-        $this->kecamatan_id = explode(',', $kecamatan_id);
+        $this->startDate = $startDate;
+        $this->endDate = $endDate;
     }
-    /**
-     * @return \Illuminate\Support\Collection
-     */
-    public function collection()
+
+    public function array(): array
     {
-        $datas = employee::select('area_kerja', 'provinsi_id', 'kabupaten_id', 'kecamatan_id', 'kelurahan_id')
-            ->whereIn('provinsi_id', $this->provinsi_id)
-            ->whereIn('kabupaten_id', $this->kabupaten_id)
-            ->whereIn('kecamatan_id', $this->kecamatan_id)
+        $data = [];
+
+        // Judul dan periode
+        $data[] = ['DATA KARYAWAN PER JENIS KELAMIN'];
+        $data[] = ["PERIODE {$this->startDate} - {$this->endDate}"];
+        $data[] = [''];
+        $data[] = [
+            'NO', 'AREA', 'PROVINSI', 'KABUPATEN', 'KECAMATAN', 'KELURAHAN',
+            'PEREMPUAN', 'LAKI-LAKI', 'TOTAL'
+        ];
+
+        // Query data
+        $results = Employee::selectRaw('
+                area_kerja,
+                provinsi_id,
+                kabupaten_id,
+                kecamatan_id,
+                kelurahan_id,
+                SUM(CASE WHEN jenis_kelamin = "Perempuan" THEN 1 ELSE 0 END) as perempuan,
+                SUM(CASE WHEN jenis_kelamin = "Laki-laki" THEN 1 ELSE 0 END) as laki_laki,
+                COUNT(*) as total
+            ')
             ->where('status_resign', 'Aktif')
-            ->whereIn('area_kerja', $this->area)
-            ->selectRaw('COUNT(*) as jumlah_karyawan')
             ->groupBy('area_kerja', 'provinsi_id', 'kabupaten_id', 'kecamatan_id', 'kelurahan_id')
-            ->orderBy('jumlah_karyawan', 'desc')
+            ->orderByDesc('total')
             ->get();
 
-        foreach ($datas as $row) {
-            $wilayah[] = [
-                'area' => $row->area_kerja,
-                'provinsi' => getNamaProvinsi($row->provinsi_id),
-                'kabupaten' => getNamaKabupaten($row->kabupaten_id),
-                'kecamatan' => getNamaKecamatan($row->kecamatan_id),
-                'kelurahan' => getNamaKelurahan($row->kelurahan_id),
-                'total_karyawan_kelurahan' => $row->jumlah_karyawan,
+        $no = 1;
+        foreach ($results as $row) {
+            $data[] = [
+                $no++,
+                $row->area_kerja,
+                getNamaProvinsi($row->provinsi_id),
+                getNamaKabupaten($row->kabupaten_id),
+                getNamaKecamatan($row->kecamatan_id),
+                getNamaKelurahan($row->kelurahan_id),
+                $row->perempuan,
+                $row->laki_laki,
+                $row->total,
             ];
         }
 
-        return collect($wilayah);
+        return $data;
     }
 
-    public function headings(): array
+    public function title(): string
     {
-        return ["AREA", "PROVINSI", "KABUPATEN", "KECAMATAN", "KELURAHAN", "TOTAL KARYAWAN BY KELURAHAN"];
+        return 'Laporan Per Wilayah & Gender';
+    }
+
+    public function registerEvents(): array
+    {
+        return [
+            AfterSheet::class => function (AfterSheet $event) {
+                $event->sheet->getStyle('A1:A2')->getFont()->setBold(true);
+                $event->sheet->getStyle('A4:I4')->getFont()->setBold(true);
+            },
+        ];
     }
 }

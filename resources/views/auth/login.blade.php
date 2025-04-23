@@ -12,7 +12,7 @@
         }
 
         a {
-            color: #1a73e8;
+            color:rgb(23, 201, 23);
             text-decoration: none;
         }
 
@@ -24,7 +24,7 @@
         }
 
         .form-control-login:focus {
-            box-shadow: 0 0 0 0.2rem rgba(58, 123, 253, 0.25);
+            box-shadow: 0 0 0 0.2rem rgba(31, 98, 233, 0.3);
         }
 
         .card {
@@ -38,14 +38,14 @@
         }
 
         .btn-success {
-            background-color: #1a73e8;
+            background-color:rgb(23, 201, 23);
             border: none;
             border-radius: 0.375rem;
             padding: 0.75rem;
         }
 
         .btn-success:hover {
-            background-color: #1765c5;
+            background-color: rgb(23, 201, 23);
         }
 
         .small {
@@ -53,7 +53,7 @@
         }
 
         .small a {
-            color: #1a73e8;
+            color: rgb(23, 201, 23);
             text-decoration: none;
         }
 
