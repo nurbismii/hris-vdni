@@ -2,7 +2,7 @@
 
 namespace App\Exports;
 
-use App\Models\Employee;
+use App\Models\employee;
 use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\WithTitle;
 use Maatwebsite\Excel\Concerns\WithEvents;
