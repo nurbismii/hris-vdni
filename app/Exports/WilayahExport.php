@@ -46,8 +46,8 @@ class WilayahExport implements FromArray, WithTitle, WithEvents
                 kabupaten_id,
                 kecamatan_id,
                 kelurahan_id,
-                SUM(CASE WHEN jenis_kelamin = "Perempuan" THEN 1 ELSE 0 END) as perempuan,
-                SUM(CASE WHEN jenis_kelamin = "Laki-laki" THEN 1 ELSE 0 END) as laki_laki,
+                SUM(CASE WHEN jenis_kelamin = "P" THEN 1 ELSE 0 END) as perempuan,
+                SUM(CASE WHEN jenis_kelamin = "L" THEN 1 ELSE 0 END) as laki_laki,
                 COUNT(*) as total
             ')
             ->where('status_resign', 'Aktif')
