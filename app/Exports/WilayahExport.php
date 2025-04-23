@@ -28,12 +28,19 @@ class WilayahExport implements FromArray, WithTitle, WithEvents
         $data[] = ["PERIODE {$this->startDate} - {$this->endDate}"];
         $data[] = [''];
         $data[] = [
-            'NO', 'AREA', 'PROVINSI', 'KABUPATEN', 'KECAMATAN', 'KELURAHAN',
-            'PEREMPUAN', 'LAKI-LAKI', 'TOTAL'
+            'NO',
+            'AREA',
+            'PROVINSI',
+            'KABUPATEN',
+            'KECAMATAN',
+            'KELURAHAN',
+            'PEREMPUAN',
+            'LAKI-LAKI',
+            'TOTAL'
         ];
 
         // Query data
-        $results = Employee::selectRaw('
+        $results = employee::selectRaw('
                 area_kerja,
                 provinsi_id,
                 kabupaten_id,
