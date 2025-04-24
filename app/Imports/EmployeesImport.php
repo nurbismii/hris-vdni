@@ -29,11 +29,18 @@ class EmployeesImport implements ToCollection, WithHeadingRow, WithChunkReading,
 
     public function collection(Collection $rows)
     {
+        $newNiks = [];
+
         foreach ($rows as $row) {
-            // Skip jika NIK sudah ada di database
-            if (in_array($row['nik'], $this->existingNiks)) {
+            $nik = $row['nik'];
+
+            // Skip jika NIK sudah ada di database atau sudah diproses dalam loop ini
+            if (in_array($nik, $this->existingNiks) || in_array($nik, $newNiks)) {
                 continue;
             }
+
+            // Tambahkan NIK ke daftar yang sudah diproses
+            $newNiks[] = $nik;
 
             $kelurahanId = strval($row['kelurahan_id']);
             $provinsiId = substr($kelurahanId, 0, 2);
@@ -43,7 +50,7 @@ class EmployeesImport implements ToCollection, WithHeadingRow, WithChunkReading,
             $divisiId = $this->allDivisi[strtolower(trim($row['divisi']))] ?? null;
 
             employee::create([
-                'nik' => $row['nik'],
+                'nik' => $nik,
                 'no_sk_pkwtt' => $row['no_sk_pkwtt'],
                 'nama_karyawan' => $row['nama_karyawan'],
                 'nama_ibu_kandung' => $row['nama_ibu_kandung'],
