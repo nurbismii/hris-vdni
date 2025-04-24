@@ -113,6 +113,24 @@ class WilayahExport implements FromArray, WithTitle, WithEvents
             $this->mergeInstructions[] = ["C{$kabStart}:C{$kabEnd}"];
         }
 
+        $groupedByProv = $employees->groupBy('provinsi_id');
+        foreach ($groupedByProv as $provId => $emp) {
+            $provName = getNamaProvinsi($provId);
+            $start = null;
+            $end = null;
+
+            foreach ($allRows as $idx => $row) {
+                if ($row[1] === $provName) {
+                    if ($start === null) $start = $idx + 2;
+                    $end = $idx + 2;
+                }
+            }
+
+            if ($start !== null && $end !== null && $start !== $end) {
+                $this->mergeInstructions[] = ["B{$start}:B{$end}"];
+            }
+        }
+
         return array_merge($data, $allRows);
     }
 
