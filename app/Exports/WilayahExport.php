@@ -2,7 +2,7 @@
 
 namespace App\Exports;
 
-use App\Models\Employee;
+use App\Models\employee;
 use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\WithTitle;
 use Maatwebsite\Excel\Concerns\WithEvents;
@@ -31,7 +31,7 @@ class WilayahExport implements FromArray, WithTitle, WithEvents
             'PRESENTASE KABUPATEN'
         ];
 
-        $employees = Employee::where('status_resign', 'Aktif')->get();
+        $employees = employee::where('status_resign', 'Aktif')->get();
         $kabupatenTotals = $employees->groupBy('kabupaten_id')->map->count();
 
         $grouped = $employees->groupBy([function ($item) {
