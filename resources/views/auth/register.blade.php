@@ -102,14 +102,14 @@
                             @csrf
                             <div class="mb-3">
                                 <label class="small mb-1">Nomor Induk Karyawan</label>
-                                <input class="form-control-login @error('employee_id') is-invalid @enderror" type="number" name="employee_id" placeholder="Masukkan NIK" />
+                                <input class="form-control @error('employee_id') is-invalid @enderror" type="number" name="employee_id" placeholder="Masukkan NIK" />
                                 @error('employee_id')
                                 <span class="invalid-feedback">{{ $message }}</span>
                                 @enderror
                             </div>
                             <div class="mb-3">
                                 <label class="small mb-1">Email</label>
-                                <input class="form-control-login @error('email') is-invalid @enderror" type="email" name="email" placeholder="contoh@gmail.com" />
+                                <input class="form-control @error('email') is-invalid @enderror" type="email" name="email" placeholder="contoh@gmail.com" />
                                 @error('email')
                                 <span class="invalid-feedback">{{ $message }}</span>
                                 @enderror
@@ -118,7 +118,7 @@
                                 <label class="small mb-1">Kata sandi</label>
                                 <div class="form-group">
                                     <div class="input-group input-group-joined" id="show_hide_password">
-                                        <input class="form-control-login @error('password') is-invalid @enderror" name="password" type="password" id="password-input" />
+                                        <input class="form-control @error('password') is-invalid @enderror" name="password" type="password" id="password-input" />
                                         <span class="input-group-text toggle-password" style="cursor:pointer; background-color: transparent;">
                                             <i class="fa fa-eye" id="toggle-icon" style="font-size: 14px;"></i>
                                         </span>
@@ -133,7 +133,7 @@
                                 <label class="small mb-1">Konfirmasi kata sandi</label>
                                 <div class="form-group">
                                     <div class="input-group input-group-joined" id="show_hide_password_confirm">
-                                        <input class="form-control-login @error('password_confirm') is-invalid @enderror" name="password_confirm" type="password" id="password-input-confirm" />
+                                        <input class="form-control @error('password_confirm') is-invalid @enderror" name="password_confirm" type="password" id="password-input-confirm" />
                                         <span class="input-group-text toggle-password" style="cursor:pointer; background-color: transparent;">
                                             <i class="fa fa-eye" id="toggle-confirm-icon" style="font-size: 14px;"></i>
                                         </span>

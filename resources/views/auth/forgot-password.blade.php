@@ -50,7 +50,7 @@
               @csrf
               <div class="mb-3">
                 <label class="small mb-1">Email</label>
-                <input class="form-control-login @error('email') is-invalid @enderror" type="email" name="email" placeholder="Masukkan Email" required />
+                <input class="form-control @error('email') is-invalid @enderror" type="email" name="email" placeholder="Masukkan Email" required />
                 @error('email')
                 <span class="invalid-feedback">{{ $message }}</span>
                 @enderror
