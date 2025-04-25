@@ -99,7 +99,7 @@ class WilayahExport implements FromArray, WithTitle, WithEvents
                 getNamaProvinsi($row['provinsi_id']), // Ubah $row->provinsi_id menjadi $row['provinsi_id']
                 getNamaKabupaten($row['kabupaten_id']), // Ubah $row->kabupaten_id menjadi $row['kabupaten_id']
                 getNamaKecamatan($row['kecamatan_id']), // Ubah $row->kecamatan_id menjadi $row['kecamatan_id']
-                getNamaKelurahan($row['kelurahan_id']), // Ubah $row->kelurahan_id menjadi $row['kelurahan_id']
+                getNamaKelurahanMultiple($row['kelurahan_id']), // Ubah $row->kelurahan_id menjadi $row['kelurahan_id']
                 $row['perempuan'], // Ubah $row->perempuan menjadi $row['perempuan']
                 $row['laki_laki'], // Ubah $row->laki_laki menjadi $row['laki_laki']
                 $row['total'], // Ubah $row->total menjadi $row['total']

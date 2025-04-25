@@ -71,6 +71,27 @@ if (!function_exists('getNamaKelurahan')) {
     }
 }
 
+if (!function_exists('getNamaKelurahanMultiple')) {
+    function getNamaKelurahanMultiple($ids)
+    {
+        if (empty($ids)) {
+            return 'BELUM DIKETAHUI';
+        }
+
+        // Pisahkan ID menjadi array
+        $idArray = is_string($ids) ? explode(',', $ids) : (array) $ids;
+
+        // Ambil nama-nama kelurahan
+        $kelurahans = Kelurahan::whereIn('id', $idArray)->pluck('kelurahan')->toArray();
+
+        if (count($kelurahans) > 0) {
+            return implode(', ', $kelurahans);
+        }
+
+        return 'BELUM DIKETAHUI';
+    }
+}
+
 if (!function_exists('getCountPengingat')) {
     function getCountPengingat()
     {
@@ -557,7 +578,7 @@ if (!function_exists('daftarNamaKelurahan')) {
             if ($i == $count)
                 break;
         }
-        
+
         return $nama_kelurahan;
     }
 }
