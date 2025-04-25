@@ -17,8 +17,7 @@ class WilayahExport implements FromArray, WithTitle, WithEvents
 
     public function array(): array
     {
-        $data = [];
-        $data[] = [
+        $data = [[
             'NO',
             'PROVINSI',
             'KABUPATEN',
@@ -29,56 +28,43 @@ class WilayahExport implements FromArray, WithTitle, WithEvents
             'PRESENTASE DESA',
             'PRESENTASE KECAMATAN/KABUPATEN',
             'PRESENTASE KABUPATEN'
-        ];
+        ]];
 
         $employees = employee::where('status_resign', 'Aktif')->get();
         $kabupatenTotals = $employees->groupBy('kabupaten_id')->map->count();
+        $totalAll = $employees->count();
 
-        $grouped = $employees->groupBy([function ($item) {
-            return $item->provinsi_id . '-' . $item->kabupaten_id . '-' . $item->kecamatan_id . '-' . $item->kelurahan_id;
-        }]);
+        $grouped = $employees->groupBy([
+            fn($item) => $item->provinsi_id . '-' . $item->kabupaten_id,
+            fn($item) => $item->kecamatan_id,
+            fn($item) => $item->kelurahan_id,
+        ]);
 
         $allRows = [];
         $no = 1;
         $rowIndex = 2;
 
-        $groupedByKab = $grouped->groupBy(function ($rows, $key) {
-            $first = $rows->first();
-            return $first ? getNamaProvinsi($first->provinsi_id) . '-' . getNamaKabupaten($first->kabupaten_id) : null;
-        });
+        $provGroupMap = [];
 
-        foreach ($groupedByKab as $kabKey => $kecamatanGroup) {
-            if (!$kabKey) continue;
-            [$provName, $kabName] = explode('-', $kabKey);
-            if (!$provName || !$kabName) continue;
+        foreach ($grouped as $provKabKey => $kecGroups) {
+            [$provId, $kabId] = explode('-', $provKabKey);
+            $provName = getNamaProvinsi($provId);
+            $kabName = getNamaKabupaten($kabId);
+            $totalKab = $kabupatenTotals[$kabId] ?? 0;
+            $persenKab = $totalAll > 0 ? round(($totalKab / $totalAll) * 100, 2) : 0;
 
             $kabStart = $rowIndex + 1;
+            $totalKabCount = 0;
 
-            $groupedKec = $kecamatanGroup->groupBy(function ($rows, $key) {
-                $first = $rows->first();
-                return $first ? $first->kecamatan_id : null;
-            });
-
-            foreach ($groupedKec as $kecId => $desaGroup) {
-                if (!$kecId) continue;
-
+            foreach ($kecGroups as $kecId => $desaGroups) {
                 $kecStart = $rowIndex + 1;
-                $totalKec = $desaGroup->flatten()->count();
-                $totalKab = $kabupatenTotals[$kabName] ?? 0;
+                $totalKec = collect($desaGroups)->flatten()->count();
                 $persenKecKab = $totalKab > 0 ? round(($totalKec / $totalKab) * 100, 2) : 0;
-                $persenKab = round(($totalKab / $employees->count()) * 100, 2);
 
                 $desaRows = [];
 
-                foreach (
-                    $desaGroup->groupBy(function ($rows, $key) {
-                        $first = $rows->first();
-                        return $first ? $first->kelurahan_id : null;
-                    }) as $desaId => $items
-                ) {
-                    if (!$desaId) continue;
-
-                    $totalDesa = $items->flatten()->count();
+                foreach ($desaGroups as $desaId => $items) {
+                    $totalDesa = $items->count();
                     $persenDesa = $totalKec > 0 ? round(($totalDesa / $totalKec) * 100, 2) : 0;
 
                     $desaRows[] = [
@@ -93,6 +79,8 @@ class WilayahExport implements FromArray, WithTitle, WithEvents
                         $persenKecKab . '%',
                         '',
                     ];
+
+                    $totalKabCount += $totalDesa;
                 }
 
                 if (isset($desaRows[0])) {
@@ -108,27 +96,50 @@ class WilayahExport implements FromArray, WithTitle, WithEvents
                 }
             }
 
-            $kabEnd = $rowIndex;
+            // Subtotal Kabupaten
+            $allRows[] = [
+                '',
+                '',
+                '',
+                "Subtotal Kabupaten {$kabName}",
+                '',
+                $totalKabCount,
+                '',
+                '',
+                '',
+                $persenKab . '%'
+            ];
+            $rowIndex++;
+
+            $kabEnd = $rowIndex - 1;
             $this->mergeInstructions[] = ["B{$kabStart}:B{$kabEnd}"];
             $this->mergeInstructions[] = ["C{$kabStart}:C{$kabEnd}"];
+
+            // Catat provinsi untuk subtotal nanti
+            $provGroupMap[$provName][] = [
+                'count' => $totalKabCount,
+                'lastRow' => $rowIndex
+            ];
         }
 
-        $groupedByProv = $employees->groupBy('provinsi_id');
-        foreach ($groupedByProv as $provId => $emp) {
-            $provName = getNamaProvinsi($provId);
-            $start = null;
-            $end = null;
+        // Subtotal Provinsi
+        foreach ($provGroupMap as $provName => $infos) {
+            $totalProv = array_sum(array_column($infos, 'count'));
+            $lastRow = end($infos)['lastRow'];
 
-            foreach ($allRows as $idx => $row) {
-                if ($row[1] === $provName) {
-                    if ($start === null) $start = $idx + 2;
-                    $end = $idx + 2;
-                }
-            }
-
-            if ($start !== null && $end !== null && $start !== $end) {
-                $this->mergeInstructions[] = ["B{$start}:B{$end}"];
-            }
+            $allRows[] = [
+                '',
+                '',
+                '',
+                "Subtotal Provinsi {$provName}",
+                '',
+                $totalProv,
+                '',
+                '',
+                '',
+                round(($totalProv / $totalAll) * 100, 2) . '%'
+            ];
+            $rowIndex++;
         }
 
         return array_merge($data, $allRows);
@@ -182,6 +193,32 @@ class WilayahExport implements FromArray, WithTitle, WithEvents
 
                 foreach (range('A', 'J') as $col) {
                     $sheet->getDelegate()->getColumnDimension($col)->setAutoSize(true);
+                }
+
+                for ($i = 2; $i <= $highestRow; $i++) {
+                    $colD = $sheet->getCell("D{$i}")->getValue();
+
+                    // Warna subtotal kabupaten
+                    if (is_string($colD) && str_starts_with($colD, 'Subtotal Kabupaten')) {
+                        $sheet->getStyle("A{$i}:J{$i}")->applyFromArray([
+                            'fill' => [
+                                'fillType' => Fill::FILL_SOLID,
+                                'startColor' => ['rgb' => 'D9D9D9'], // abu-abu muda
+                            ],
+                            'font' => ['bold' => true],
+                        ]);
+                    }
+
+                    // Warna subtotal provinsi
+                    if (is_string($colD) && str_starts_with($colD, 'Subtotal Provinsi')) {
+                        $sheet->getStyle("A{$i}:J{$i}")->applyFromArray([
+                            'fill' => [
+                                'fillType' => Fill::FILL_SOLID,
+                                'startColor' => ['rgb' => 'B7E1CD'], // hijau muda
+                            ],
+                            'font' => ['bold' => true],
+                        ]);
+                    }
                 }
             },
         ];
