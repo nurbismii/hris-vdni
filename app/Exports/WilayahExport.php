@@ -53,24 +53,24 @@ class WilayahExport implements FromArray, WithTitle, WithEvents
             ->where('status_resign', 'Aktif')
             ->groupBy('area_kerja', 'provinsi_id', 'kabupaten_id', 'kecamatan_id', 'kelurahan_id')
             ->orderByRaw("
-        CASE 
-            WHEN provinsi_id = 74 THEN 1
-            ELSE 99
-        END ASC,
-        CASE 
-            WHEN area_kerja = 'VDNI' THEN 1
-            WHEN area_kerja = 'VDNIP' THEN 2
-            ELSE 99
-        END ASC,
-        CASE 
-            WHEN kabupaten_id = 7403 AND kecamatan_id = 7403101 THEN 1
-            WHEN kabupaten_id = 7403 AND kecamatan_id = 7403103 THEN 2
-            WHEN kabupaten_id = 7403 AND kecamatan_id = 7403105 THEN 3
-            WHEN kabupaten_id = 7403 THEN 4
-            ELSE 999
-        END ASC,
-        kecamatan_id ASC
-    ")
+            CASE 
+                WHEN provinsi_id = 74 THEN 1
+                ELSE 99
+            END ASC,
+            CASE 
+                WHEN area_kerja = 'VDNI' THEN 1
+                WHEN area_kerja = 'VDNIP' THEN 2
+                ELSE 99
+            END ASC,
+            CASE 
+                WHEN kabupaten_id = 7403 AND kecamatan_id = 7403101 THEN 1
+                WHEN kabupaten_id = 7403 AND kecamatan_id = 7403103 THEN 2
+                WHEN kabupaten_id = 7403 AND kecamatan_id = 7403105 THEN 3
+                WHEN kabupaten_id = 7403 THEN 4
+                ELSE 999
+            END ASC,
+            kecamatan_id ASC
+        ")
             ->get()
             ->groupBy(function ($item) {
                 // Gabungkan berdasarkan provinsi_id, kabupaten_id, dan kecamatan_id
@@ -89,7 +89,24 @@ class WilayahExport implements FromArray, WithTitle, WithEvents
                     'total' => $group->sum('total')
                 ];
             })
-            ->values(); 
+            ->values(); // Reset keys after grouping
+
+        $no = 1;
+        foreach ($results as $row) {
+            $data[] = [
+                $no++,
+                $row['area_kerja'],  // Ubah $row->area_kerja menjadi $row['area_kerja']
+                getNamaProvinsi($row['provinsi_id']), // Ubah $row->provinsi_id menjadi $row['provinsi_id']
+                getNamaKabupaten($row['kabupaten_id']), // Ubah $row->kabupaten_id menjadi $row['kabupaten_id']
+                getNamaKecamatan($row['kecamatan_id']), // Ubah $row->kecamatan_id menjadi $row['kecamatan_id']
+                getNamaKelurahan($row['kelurahan_id']), // Ubah $row->kelurahan_id menjadi $row['kelurahan_id']
+                $row['perempuan'], // Ubah $row->perempuan menjadi $row['perempuan']
+                $row['laki_laki'], // Ubah $row->laki_laki menjadi $row['laki_laki']
+                $row['total'], // Ubah $row->total menjadi $row['total']
+            ];
+        }
+
+        return $data;
     }
 
     public function title(): string
