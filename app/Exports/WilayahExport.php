@@ -49,60 +49,37 @@ class WilayahExport implements FromArray, WithTitle, WithEvents
         SUM(CASE WHEN jenis_kelamin = "P" THEN 1 ELSE 0 END) as perempuan,
         SUM(CASE WHEN jenis_kelamin = "L" THEN 1 ELSE 0 END) as laki_laki,
         COUNT(*) as total
-    ')
+')
             ->where('status_resign', 'Aktif')
             ->groupBy('area_kerja', 'provinsi_id', 'kabupaten_id', 'kecamatan_id', 'kelurahan_id')
             ->orderByRaw("
-            CASE 
-                WHEN provinsi_id = 74 THEN 1
-                ELSE 99
-            END ASC,
-            CASE 
-                WHEN area_kerja = 'VDNI' THEN 1
-                WHEN area_kerja = 'VDNIP' THEN 2
-                ELSE 99
-            END ASC,
-            CASE 
-                WHEN kabupaten_id = 7403 AND kecamatan_id = 7403101 THEN 1
-                WHEN kabupaten_id = 7403 AND kecamatan_id = 7403103 THEN 2
-                WHEN kabupaten_id = 7403 AND kecamatan_id = 7403105 THEN 3
-                WHEN kabupaten_id = 7403 THEN 4
-                ELSE 999
-            END ASC,
-            kecamatan_id ASC
-        ")
-            ->get()
-            ->groupBy(function ($item) {
-                // Gabungkan berdasarkan provinsi_id, kabupaten_id, dan kecamatan_id
-                return $item->provinsi_id . '-' . $item->kabupaten_id . '-' . $item->kecamatan_id;
-            })
-            ->map(function ($group) {
-                // Gabungkan nilai dari area_kerja, perempuan, laki_laki, dan total
-                return [
-                    'area_kerja' => $group->pluck('area_kerja')->unique()->implode(', '),
-                    'provinsi_id' => $group->first()->provinsi_id,
-                    'kabupaten_id' => $group->first()->kabupaten_id,
-                    'kecamatan_id' => $group->first()->kecamatan_id,
-                    'kelurahan_id' => $group->pluck('kelurahan_id')->unique()->implode(', '),
-                    'perempuan' => $group->sum('perempuan'),
-                    'laki_laki' => $group->sum('laki_laki'),
-                    'total' => $group->sum('total')
-                ];
-            })
-            ->values(); // Reset keys after grouping
+        CASE 
+            WHEN area_kerja = 'VDNI' THEN 1
+            WHEN area_kerja = 'VDNIP' THEN 2
+            ELSE 99
+        END ASC,
+        CASE 
+            WHEN kabupaten_id = 7403 AND kecamatan_id = 7403101 THEN 1
+            WHEN kabupaten_id = 7403 AND kecamatan_id = 7403103 THEN 2
+            WHEN kabupaten_id = 7403 AND kecamatan_id = 7403105 THEN 3
+            ELSE 999
+        END ASC,
+        kabupaten_id,
+        kecamatan_id")
+            ->get();
 
         $no = 1;
         foreach ($results as $row) {
             $data[] = [
                 $no++,
-                $row['area_kerja'],  // Ubah $row->area_kerja menjadi $row['area_kerja']
-                getNamaProvinsi($row['provinsi_id']), // Ubah $row->provinsi_id menjadi $row['provinsi_id']
-                getNamaKabupaten($row['kabupaten_id']), // Ubah $row->kabupaten_id menjadi $row['kabupaten_id']
-                getNamaKecamatan($row['kecamatan_id']), // Ubah $row->kecamatan_id menjadi $row['kecamatan_id']
-                getNamaKelurahanMultiple($row['kelurahan_id']), // Ubah $row->kelurahan_id menjadi $row['kelurahan_id']
-                $row['perempuan'], // Ubah $row->perempuan menjadi $row['perempuan']
-                $row['laki_laki'], // Ubah $row->laki_laki menjadi $row['laki_laki']
-                $row['total'], // Ubah $row->total menjadi $row['total']
+                $row->area_kerja,
+                getNamaProvinsi($row->provinsi_id),
+                getNamaKabupaten($row->kabupaten_id),
+                getNamaKecamatan($row->kecamatan_id),
+                getNamaKelurahan($row->kelurahan_id),
+                $row->perempuan,
+                $row->laki_laki,
+                $row->total,
             ];
         }
 
