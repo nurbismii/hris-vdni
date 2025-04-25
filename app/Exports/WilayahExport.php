@@ -54,6 +54,10 @@ class WilayahExport implements FromArray, WithTitle, WithEvents
             ->groupBy('area_kerja', 'provinsi_id', 'kabupaten_id', 'kecamatan_id', 'kelurahan_id')
             ->orderByRaw("
         CASE 
+            WHEN provinsi_id = 74 THEN 1
+            ELSE 99
+        END ASC,
+        CASE 
             WHEN area_kerja = 'VDNI' THEN 1
             WHEN area_kerja = 'VDNIP' THEN 2
             ELSE 99
