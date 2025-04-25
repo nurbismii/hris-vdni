@@ -435,21 +435,21 @@
                 ajax: {
                     url: "employees/server-side",
                     data: function(d) {
-                        d.status_karyawan = $('#status_karyawan').val()
-                        d.status_resign = $('#status_resign').val()
-                        d.area_kerja = $('#area_kerja').val()
-                        d.departemen = $('#departemen').val()
-                        d.jabatan = $('#jabatan').val()
-                        d.nama_divisi = $('#divisi').val()
-                        d.jenis_kelamin = $('#jenis_kelamin').val()
-                        d.pendidikan_terakhir = $('#pendidikan_terakhir').val()
-                        d.awal_umur = $('#awal_umur').val()
-                        d.akhir_umur = $('#akhir_umur').val()
-                        d.provinsi_id = $('#provinsi_id').val()
-                        d.kabupaten_id = $('#kabupaten_id').val()
-                        d.kecamatan_id = $('#kecamatan_id').val()
-                        d.kelurahan_id = $('#kelurahan_id').val()
-                        d.search = $('input[type="search"]').val()
+                        d.status_karyawan = $('#status_karyawan').val() || "";
+                        d.status_resign = $('#status_resign').val() || "";
+                        d.area_kerja = $('#area_kerja').val() || "";
+                        d.departemen = $('#departemen').val() || "";
+                        d.jabatan = $('#jabatan').val() || "";
+                        d.nama_divisi = $('#divisi').val() || "";
+                        d.jenis_kelamin = $('#jenis_kelamin').val() || "";
+                        d.pendidikan_terakhir = $('#pendidikan_terakhir').val() || "";
+                        d.awal_umur = $('#awal_umur').val() || "";
+                        d.akhir_umur = $('#akhir_umur').val() || "";
+                        d.provinsi_id = $('#provinsi_id').val() || "";
+                        d.kabupaten_id = $('#kabupaten_id').val() || "";
+                        d.kecamatan_id = $('#kecamatan_id').val() || "";
+                        d.kelurahan_id = $('#kelurahan_id').val() || "";
+                        d.search = $('input[type="search"]').val() || "";
                     }
                 },
                 columns: [{

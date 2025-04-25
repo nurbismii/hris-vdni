@@ -52,7 +52,7 @@ class WilayahExport implements FromArray, WithTitle, WithEvents
             ')
             ->where('status_resign', 'Aktif')
             ->groupBy('area_kerja', 'provinsi_id', 'kabupaten_id', 'kecamatan_id', 'kelurahan_id')
-            ->orderByDesc('total')
+            ->orderByDesc('kecamatan_id')
             ->get();
 
         $no = 1;

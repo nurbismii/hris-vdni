@@ -85,12 +85,24 @@ class EmployeeController extends Controller
                     $instance->where('pendidikan_terakhir', $request->get('pendidikan_terakhir'));
                 }
 
-                if (($request->get('awal_umur') != '') && ($request->get('akhir_umur') != '')) {
-                    $instance->whereBetween('tgl_lahir', [date('Y-m-d', strtotime(Carbon::today()->subYears($request->get('akhir_umur')))), date('Y-m-d', strtotime(Carbon::today()->subYears($request->get('awal_umur'))))]);
+                // Revisi: penanganan umur agar lebih fleksibel
+                $awal = $request->get('awal_umur');
+                $akhir = $request->get('akhir_umur');
+
+                if ($awal != '' && $akhir != '') {
+                    $startDate = date('Y-m-d', strtotime(Carbon::today()->subYears($akhir)));
+                    $endDate = date('Y-m-d', strtotime(Carbon::today()->subYears($awal)));
+                    $instance->whereBetween('tgl_lahir', [$startDate, $endDate]);
                 }
 
-                if (($request->get('awal_umur') != '') && ($request->get('akhir_umur') == '')) {
-                    $instance->whereYear('tgl_lahir', date('Y-m-d', strtotime(Carbon::today()->subYears($request->get('awal_umur')))));
+                if ($awal != '' && $akhir == '') {
+                    $cutoffDate = date('Y-m-d', strtotime(Carbon::today()->subYears($awal)));
+                    $instance->where('tgl_lahir', '<=', $cutoffDate);
+                }
+
+                if ($awal == '' && $akhir != '') {
+                    $cutoffDate = date('Y-m-d', strtotime(Carbon::today()->subYears($akhir)));
+                    $instance->where('tgl_lahir', '>=', $cutoffDate);
                 }
 
                 if ($request->get('provinsi_id') != '') {
@@ -108,7 +120,6 @@ class EmployeeController extends Controller
                 if ($request->get('kelurahan_id') != '') {
                     $instance->where('kelurahan_id', $request->get('kelurahan_id'));
                 }
-
 
                 if (!empty($request->get('search'))) {
                     $instance->where(function ($w) use ($request) {
