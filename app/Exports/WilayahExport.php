@@ -48,7 +48,8 @@ class WilayahExport implements FromArray, WithTitle, WithEvents
         kelurahan_id,
         SUM(CASE WHEN jenis_kelamin = "P" THEN 1 ELSE 0 END) as perempuan,
         SUM(CASE WHEN jenis_kelamin = "L" THEN 1 ELSE 0 END) as laki_laki,
-        COUNT(*) as total')
+        COUNT(*) as total
+    ')
             ->where('status_resign', 'Aktif')
             ->groupBy('area_kerja', 'provinsi_id', 'kabupaten_id', 'kecamatan_id', 'kelurahan_id')
             ->orderByRaw("
@@ -61,10 +62,11 @@ class WilayahExport implements FromArray, WithTitle, WithEvents
             WHEN kabupaten_id = 7403 AND kecamatan_id = 7403101 THEN 1
             WHEN kabupaten_id = 7403 AND kecamatan_id = 7403103 THEN 2
             WHEN kabupaten_id = 7403 AND kecamatan_id = 7403105 THEN 3
+            WHEN kabupaten_id = 7403 THEN 4
             ELSE 999
         END ASC,
-        kabupaten_id,
-        kecamatan_id")
+        kecamatan_id ASC
+    ")
             ->get();
 
         $no = 1;
