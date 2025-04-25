@@ -389,6 +389,125 @@
     <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.print.min.js"></script>
 
     <script>
+        $(document).ready(function() {
+            $('#departemen').on('change', function() {
+                var deptID = $(this).val();
+                if (deptID) {
+                    $.ajax({
+                        url: '/employees/divisi/' + deptID,
+                        type: "GET",
+                        data: {
+                            "_token": "{{ csrf_token() }}"
+                        },
+                        dataType: "json",
+                        success: function(data) {
+                            if (data) {
+                                $('#divisi').empty();
+                                $('#divisi').append('<option hidden>- Pilih Divisi -</option>');
+                                $.each(data, function(id, divisi) {
+                                    $('select[name="divisi"]').append('<option value="' + divisi.id + '">' + divisi.nama_divisi + '</option>');
+                                });
+                            } else {
+                                $('#divisi').empty();
+                            }
+                        }
+                    });
+                } else {
+                    $('#divisi').empty();
+                }
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $('#provinsi_id').on('change', function() {
+                var provinsiID = $(this).val();
+                if (provinsiID) {
+                    $.ajax({
+                        url: 'dashboard/fetch-kabupaten/' + provinsiID,
+                        type: "GET",
+                        data: {
+                            "_token": "{{ csrf_token() }}"
+                        },
+                        dataType: "json",
+                        success: function(data) {
+                            if (data) {
+                                $('#kabupaten_id').empty();
+                                $('#kabupaten_id').append('<option hidden>- Pilih kabupaten -</option>');
+                                $.each(data, function(id, kabupaten) {
+                                    $('select[name="kabupaten"]').append('<option value="' + kabupaten.id + '">' + kabupaten.kabupaten + '</option>');
+                                });
+                            } else {
+                                $('#kabupaten_id').empty();
+                            }
+                        }
+                    });
+                } else {
+                    $('#kabupaten_id').empty();
+                }
+            });
+
+            $('#kabupaten_id').on('change', function() {
+                var kabupatenID = $(this).val();
+                if (kabupatenID) {
+                    $.ajax({
+                        url: 'dashboard/fetch-kecamatan/' + kabupatenID,
+                        type: "GET",
+                        data: {
+                            "_token": "{{ csrf_token() }}"
+                        },
+                        dataType: "json",
+                        success: function(data) {
+                            if (data) {
+                                $('#kecamatan_id').empty();
+                                $('#kecamatan_id').append('<option hidden>- Pilih kecamatan -</option>');
+                                $.each(data, function(id, kecamatan) {
+                                    $('select[name="kecamatan"]').append('<option value="' + kecamatan.id + '">' + kecamatan.kecamatan + '</option>');
+                                })
+                            } else {
+                                $('#kecamatan_id').empty();
+                            }
+                        }
+                    });
+                }
+            });
+
+            $('#kecamatan_id').on('change', function() {
+                var kecamatanID = $(this).val();
+                if (kecamatanID) {
+                    $.ajax({
+                        url: 'dashboard/fetch-kelurahan/' + kecamatanID,
+                        type: "GET",
+                        data: {
+                            "_token": "{{ csrf_token() }}"
+                        },
+                        dataType: "json",
+                        success: function(data) {
+                            if (data) {
+                                $('#kelurahan_id').empty();
+                                $('#kelurahan_id').append('<option hidden>- Pilih kelurahan/desa -</option>');
+                                console.log(data);
+                                $.each(data, function(id, kelurahan) {
+                                    $('select[name="kelurahan"]').append('<option value="' + kelurahan.id + '">' + kelurahan.kelurahan + '</option>');
+                                })
+                            } else {
+                                $('#kelurahan_id2').empty();
+                            }
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+
+    <script>
         $(function() {
             $.ajaxSetup({
                 headers: {
@@ -676,125 +795,6 @@
 
                 // Toggle the visibility
                 column.visible(!column.visible());
-            });
-        });
-    </script>
-
-    <script>
-        $(document).ready(function() {
-            $('#departemen').on('change', function() {
-                var deptID = $(this).val();
-                if (deptID) {
-                    $.ajax({
-                        url: '/employees/divisi/' + deptID,
-                        type: "GET",
-                        data: {
-                            "_token": "{{ csrf_token() }}"
-                        },
-                        dataType: "json",
-                        success: function(data) {
-                            if (data) {
-                                $('#divisi').empty();
-                                $('#divisi').append('<option hidden>- Pilih Divisi -</option>');
-                                $.each(data, function(id, divisi) {
-                                    $('select[name="divisi"]').append('<option value="' + divisi.id + '">' + divisi.nama_divisi + '</option>');
-                                });
-                            } else {
-                                $('#divisi').empty();
-                            }
-                        }
-                    });
-                } else {
-                    $('#divisi').empty();
-                }
-            });
-        });
-    </script>
-
-    <script>
-        $(document).ready(function() {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-
-            $('#provinsi_id').on('change', function() {
-                var provinsiID = $(this).val();
-                if (provinsiID) {
-                    $.ajax({
-                        url: 'dashboard/fetch-kabupaten/' + provinsiID,
-                        type: "GET",
-                        data: {
-                            "_token": "{{ csrf_token() }}"
-                        },
-                        dataType: "json",
-                        success: function(data) {
-                            if (data) {
-                                $('#kabupaten_id').empty();
-                                $('#kabupaten_id').append('<option hidden>- Pilih kabupaten -</option>');
-                                $.each(data, function(id, kabupaten) {
-                                    $('select[name="kabupaten"]').append('<option value="' + kabupaten.id + '">' + kabupaten.kabupaten + '</option>');
-                                });
-                            } else {
-                                $('#kabupaten').empty();
-                            }
-                        }
-                    });
-                } else {
-                    $('#kabupaten').empty();
-                }
-            });
-
-            $('#kabupaten_id').on('change', function() {
-                var kabupatenID = $(this).val();
-                if (kabupatenID) {
-                    $.ajax({
-                        url: 'dashboard/fetch-kecamatan/' + kabupatenID,
-                        type: "GET",
-                        data: {
-                            "_token": "{{ csrf_token() }}"
-                        },
-                        dataType: "json",
-                        success: function(data) {
-                            if (data) {
-                                $('#kecamatan_id').empty();
-                                $('#kecamatan_id').append('<option hidden>- Pilih kecamatan -</option>');
-                                $.each(data, function(id, kecamatan) {
-                                    $('select[name="kecamatan"]').append('<option value="' + kecamatan.id + '">' + kecamatan.kecamatan + '</option>');
-                                })
-                            } else {
-                                $('#kecamatan').empty();
-                            }
-                        }
-                    });
-                }
-            });
-
-            $('#kecamatan_id').on('change', function() {
-                var kecamatanID = $(this).val();
-                if (kecamatanID) {
-                    $.ajax({
-                        url: 'dashboard/fetch-kelurahan/' + kecamatanID,
-                        type: "GET",
-                        data: {
-                            "_token": "{{ csrf_token() }}"
-                        },
-                        dataType: "json",
-                        success: function(data) {
-                            if (data) {
-                                $('#kelurahan_id').empty();
-                                $('#kelurahan_id').append('<option hidden>- Pilih kelurahan/desa -</option>');
-                                console.log(data);
-                                $.each(data, function(id, kelurahan) {
-                                    $('select[name="kelurahan"]').append('<option value="' + kelurahan.id + '">' + kelurahan.kelurahan + '</option>');
-                                })
-                            } else {
-                                $('#kelurahan').empty();
-                            }
-                        }
-                    });
-                }
             });
         });
     </script>
