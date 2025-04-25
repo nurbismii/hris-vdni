@@ -89,23 +89,7 @@ class WilayahExport implements FromArray, WithTitle, WithEvents
                     'total' => $group->sum('total')
                 ];
             })
-            ->values(); // Reset keys after grouping
-        $no = 1;
-        foreach ($results as $row) {
-            $data[] = [
-                $no++,
-                $row->area_kerja,
-                getNamaProvinsi($row->provinsi_id),
-                getNamaKabupaten($row->kabupaten_id),
-                getNamaKecamatan($row->kecamatan_id),
-                getNamaKelurahan($row->kelurahan_id),
-                $row->perempuan,
-                $row->laki_laki,
-                $row->total,
-            ];
-        }
-
-        return $data;
+            ->values(); 
     }
 
     public function title(): string
