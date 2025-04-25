@@ -71,8 +71,25 @@ class WilayahExport implements FromArray, WithTitle, WithEvents
         END ASC,
         kecamatan_id ASC
     ")
-            ->get();
-
+            ->get()
+            ->groupBy(function ($item) {
+                // Gabungkan berdasarkan provinsi_id, kabupaten_id, dan kecamatan_id
+                return $item->provinsi_id . '-' . $item->kabupaten_id . '-' . $item->kecamatan_id;
+            })
+            ->map(function ($group) {
+                // Gabungkan nilai dari area_kerja, perempuan, laki_laki, dan total
+                return [
+                    'area_kerja' => $group->pluck('area_kerja')->unique()->implode(', '),
+                    'provinsi_id' => $group->first()->provinsi_id,
+                    'kabupaten_id' => $group->first()->kabupaten_id,
+                    'kecamatan_id' => $group->first()->kecamatan_id,
+                    'kelurahan_id' => $group->pluck('kelurahan_id')->unique()->implode(', '),
+                    'perempuan' => $group->sum('perempuan'),
+                    'laki_laki' => $group->sum('laki_laki'),
+                    'total' => $group->sum('total')
+                ];
+            })
+            ->values(); // Reset keys after grouping
         $no = 1;
         foreach ($results as $row) {
             $data[] = [
