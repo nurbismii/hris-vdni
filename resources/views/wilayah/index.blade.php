@@ -138,7 +138,9 @@
 			<div class="col-sm-7">
 				<div class="card">
 					<div class="card-body" style="overflow-x: auto;">
-						<div class="chart-bar mb-4 mb-lg-0" style="height: 30rem;"><canvas id="pieLaporanWilayah" width="100%" height="0"></canvas></div>
+						<div class="chart-bar mb-4 mb-lg-0" style="height: 30rem;">
+							<canvas id="pieLaporanWilayah" width="100%" height="0"></canvas>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -149,37 +151,47 @@
 						@php
 						$totalKaryawanKabupaten = 0;
 						@endphp
-						@foreach ($kecamatans as $kecamatanId => $karyawan)
+						@foreach ($kecamatans as $kecamatanId => $kelurahans)
 						@php
+						$totalKaryawanPerempuan = 0;
+						$totalKaryawanLelaki = 0;
 						$totalKaryawanKecamatan = 0;
 						@endphp
 						<table class="table table-bordered">
 							<thead>
 								<tr class="table-primary">
-									<th colspan="2" class="text-center text-uppercase">{{ getNamaKabupaten($kabupatenId) }}</th>
+									<th colspan="4" class="text-center text-uppercase">{{ getNamaKabupaten($kabupatenId) }}</th>
 								</tr>
 								<tr class="table-active">
-									<th colspan="2" class="text-center text-uppercase">Kecamatan {{ getNamaKecamatan($kecamatanId) }}</th>
+									<th colspan="4" class="text-center text-uppercase">Kecamatan {{ getNamaKecamatan($kecamatanId) }}</th>
 								</tr>
 								<tr>
-									<th>Kelurahan ID</th>
-									<th>Jumlah Karyawan</th>
+									<th width="40%">Kelurahan/Desa</th>
+									<th width="20%">Perempuan</th>
+									<th width="20%">Laki laki</th>
+									<th width="20%">Jumlah Karyawan</th>
 								</tr>
 							</thead>
 							<tbody>
-								@foreach ($karyawan as $data)
+								@foreach ($kelurahans as $kelurahanId => $data)
 								<tr>
-									<td>{{ getNamaKelurahan($data->kelurahan_id) }}</td>
-									<td>{{ $data->jumlah_karyawan }}</td>
+									<td>{{ getNamaKelurahan($data['kelurahan_id']) }}</td>
+									<td>{{ $data['perempuan'] }}</td>
+									<td>{{ $data['laki-laki'] }}</td>
+									<td>{{ $data['jumlah'] }}</td>
 								</tr>
 								@php
-								$totalKaryawanKecamatan += $data->jumlah_karyawan;
-								$totalKaryawanKabupaten += $data->jumlah_karyawan;
+								$totalKaryawanPerempuan += $data['perempuan'];
+								$totalKaryawanLelaki+= $data['laki-laki'];
+								$totalKaryawanKecamatan += $data['jumlah'];
+								$totalKaryawanKabupaten += $data['jumlah'];
 								@endphp
 								@endforeach
 								<tr>
-									<td><strong>Total Karyawan Kecamatan</strong></td>
-									<td><strong>{{ $totalKaryawanKecamatan }}</strong></td>
+									<td><strong>Total </strong></td>
+									<td class="text-center"><strong>{{ $totalKaryawanPerempuan }}</strong></td>
+									<td class="text-center"><strong>{{ $totalKaryawanLelaki }}</strong></td>
+									<td class="text-center"><strong>{{ $totalKaryawanKecamatan }}</strong></td>
 								</tr>
 							</tbody>
 						</table>
@@ -189,6 +201,7 @@
 				</div>
 			</div>
 		</div>
+
 	</div>
 
 	<script>
