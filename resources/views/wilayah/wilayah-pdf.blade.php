@@ -166,7 +166,7 @@
 		<tbody>
 			@foreach ($groupedByKelurahan as $kelurahanId => $info)
 			<tr>
-				<td>{{ getNamaKelurahan($kelurahanId) }}</td>
+				<td>{{ getNamaKelurahanMultiple($kelurahanId) }}</td>
 				<td class="text-end">{{ $info['perempuan'] }}</td>
 				<td class="text-end">{{ $info['laki-laki'] }}</td>
 				<td class="text-end">{{ $info['jumlah'] }}</td>
