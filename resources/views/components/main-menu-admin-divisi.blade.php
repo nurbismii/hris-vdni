@@ -7,7 +7,7 @@
 
 <a class="nav-link {{ (request()->segment(2) == 'cuti' || request()->segment(2) == 'permohonan') ? '' : 'collapsed' }}" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseKelolaCuti" aria-expanded="false" aria-controls="collapseKelolaCuti">
   <div class="nav-link-icon"><i data-feather="calendar"></i></div>
-  Kelola Cuti
+  Kelola Pengajuan
   <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
 </a>
 <div class="collapse {{ (request()->segment(1) == 'admin' && request()->segment(2) == 'cuti' || request()->segment(2) == 'permohonan') ? 'show' : '' }}" id="collapseKelolaCuti" data-bs-parent="#accordionSidenav">
@@ -19,7 +19,7 @@
 
 <a class="nav-link {{ (request()->segment(2) == 'lembur') ? '' : 'collapsed' }}" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseKelolaLembur" aria-expanded="false" aria-controls="collapseKelolaLembur">
   <div class="nav-link-icon"><i data-feather="user-plus"></i></div>
-  Kelola Lembur
+  Kelola Overtime
   <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
 </a>
 <div class="collapse {{ (request()->segment(1) == 'admin' && request()->segment(2) == 'lembur') ? 'show' : '' }}" id="collapseKelolaLembur" data-bs-parent="#accordionSidenav">

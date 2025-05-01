@@ -40,7 +40,7 @@
 <!-- Lembur -->
 <a class="nav-link {{ request()->is('ess/lembur') ? 'active' : '' }}" href="/ess/lembur">
   <div class="nav-link-icon"><i data-feather="file-text"></i></div>
-  Lembur
+  Permintaan Lembur
 </a>
 
 <!-- Presensi -->

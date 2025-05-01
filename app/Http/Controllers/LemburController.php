@@ -80,6 +80,7 @@ class LemburController extends Controller
             'nik_karyawan' => $request->nik_karyawan,
             'dept_id' => $request->dept_id,
             'div_id' => $request->div_id,
+            'posisi' => $request->posisi,
             'tanggal_pengajuan' => $request->tanggal_pengajuan,
             'mulai_lembur' => $request->mulai_lembur,
             'berakhir_lembur' => $request->berakhir_lembur,
