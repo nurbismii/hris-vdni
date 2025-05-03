@@ -125,8 +125,6 @@ class WilayahController extends Controller
             }
         }
 
-        return $groupedData;
-
         return view('wilayah.index', [
             'arr_jumlah_karyawan' => $arr_jumlah_karyawan,
             'arr_nama_kelurahan' => $arr_nama_kelurahan,
