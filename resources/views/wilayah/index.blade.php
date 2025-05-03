@@ -1,357 +1,119 @@
-<x-app-layout title="Wilayah">
-	@push('styles')
-	<link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
-	<link href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css" rel="stylesheet" />
-	<link rel="icon" type="image/x-icon" href="{{ asset('assets/img/favicon.png')}}" />
-	<link href="{{ asset('css/styles.css')}}" rel="stylesheet" />
-	<link href="{{ asset('css/bootstrap.min.css')}}" rel="stylesheet" />
-	<script data-search-pseudo-elements defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js" crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.28.0/feather.min.js" crossorigin="anonymous"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-	<!-- Toastr -->
-	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-	<!-- Select2 Bootstrap -->
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" />
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
-	@endpush
+@extends('layouts.app')
 
-	<header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
-		<div class="container-fluid px-s4">
-			<div class="page-header-content">
-				<div class="row align-items-center justify-content-between pt-3">
-					<div class="col-auto mb-3">
-						<h1 class="page-header-title">
-							<div class="page-header-icon"><i data-feather="user"></i></div>
-							Wilayah
-						</h1>
-					</div>
-				</div>
-			</div>
-		</div>
-	</header>
-	<!-- Main page content-->
-	<div class="container-fluid px-4">
-		<div class="col-xl-12 mb-1">
-			<div class="card card-angles card-collapsable mb-3">
-				<a class="card-header" href="#collapseFilterKaryawan" data-bs-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample">Filter area
-					<div class="card-collapsable-arrow">
-						<i class="fas fa-chevron-down"></i>
-					</div>
-				</a>
-				<div class="collapse show" id="collapseFilterKaryawan">
-					<form action="{{ url('wilayah') }}" method="get">
-						@csrf
-						<div class="card-body">
-							<div class="row gx-4 mb-3">
-								<div class="col-md-3 mb-2">
-									<select name="company_id[]" class="form-select" data-placeholder="Pilih perusahaan" id="company" multiple>
-										<option value="VDNI">PT VDNI</option>
-										<option value="VDNIP">PT VDNIP</option>
-									</select>
-								</div>
-								<div class="col-md-3 mb-2">
-									<select name="provinsi_level[]" class="form-select" data-placeholder="Pilih provinsi" id="provinsi_level" multiple>
-										@foreach($provinsi as $row)
-										<option value="{{ $row->id }}">{{ $row->provinsi }}</option>
-										@endforeach
-									</select>
-								</div>
-								<div class="col-md-3 mb-2">
-									<select name="kabupaten_level[]" class="form-select" data-placeholder="Pilih kabupaten" id="kabupaten_level" multiple></select>
-								</div>
-								<div class="col-md-3 mb-2">
-									<select name="kecamatan_level[]" multiple class="form-select" data-placeholder="Pilih kecamatan" id="kecamatan_level"></select>
-								</div>
-							</div>
-							<button class="btn btn-primary float-end text-white" type="submit">
-								<i class="me-1" data-feather="search"></i>
-								Cari
-							</button>
-							<a class="btn btn-danger text-white" href="/wilayah">
-								<i class="me-1" data-feather="trash"></i>
-								Bersihkan
-							</a>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
+@section('content')
+<div class="container">
+    <h2 class="mb-4">Laporan Wilayah Karyawan</h2>
 
-		<div class="card mb-2">
-			<div class="card-body" style="overflow-x: auto;">
-				<a href="{{ route('export-wilayah-excel', ['area' => implode(',', $area_kerja), 'provinsi' => implode(',', $provinsi_id), 'kabupaten' => implode(',', $kabupaten_id), 'kecamatan' => implode(',', $kecamatan_id)]) }}" class="btn btn-success mb-2 mx-2 float-end">Export excel</a>
-				<a href="{{ route('export-wilayah-pdf', ['area' => implode(',', $area_kerja), 'provinsi' => implode(',', $provinsi_id), 'kabupaten' => implode(',', $kabupaten_id), 'kecamatan' => implode(',', $kecamatan_id)]) }}" class="btn btn-danger mb-2 float-end">Export pdf</a>
-				<div class="mt-5">
-					<b>HASIL LAPORAN WILAYAH :</b>
-					<div class="p-3">
-						<table class="table table-bordered">
-							<tr>
-								<th width="20%">Area kerja</th>
-								<td width="5px">:</td>
-								<td>
-									@for($i=0; $i < count($area_kerja); $i++) {{ $area_kerja[$i] }} @endfor </td>
-							</tr>
-							<tr>
-								<th width="20%">Provinsi</th>
-								<td width="5px">:</td>
-								<td>@for($i=0; $i < count($provinsi_id); $i++) {{ getNamaProvinsi($provinsi_id[$i]) }} @endfor </td>
-								</td>
-							</tr>
-							<tr>
-								<th>Kabupaten</th>
-								<td>:</td>
-								<td>@for($i=0; $i < count($kabupaten_id); $i++) @if($i==count($kabupaten_id) - 2) {{getNamaKabupaten($kabupaten_id[$i])}} dan @else {{getNamaKabupaten($kabupaten_id[$i])}} @endif @if($i < count($kabupaten_id) - 2) , @endif @endfor .</td>
-								</td>
-							</tr>
-							<tr>
-								<th>Kecamatan</th>
-								<td>:</td>
-								<td>@for($i=0; $i < count($kecamatan_id); $i++) @if($i==count($kecamatan_id) - 2) {{ getNamaKecamatan($kecamatan_id[$i]) }} dan @else {{ getNamaKecamatan($kecamatan_id[$i]) }}@endif @if($i < count($kecamatan_id) - 2), @endif @endfor .</td>
-								</td>
-							</tr>
+    <!-- Filter -->
+    <form method="GET" action="{{ route('wilayah.index') }}" class="row g-3 mb-4">
+        <div class="col-md-3">
+            <label for="area_kerja">Area Kerja</label>
+            <select class="form-select select2" name="area_kerja" id="area_kerja">
+                <option value="">Semua</option>
+                @foreach ($area_kerja as $area)
+                    <option value="{{ $area }}" {{ request('area_kerja') == $area ? 'selected' : '' }}>{{ $area }}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label for="provinsi_id">Provinsi</label>
+            <select class="form-select select2" name="provinsi_id" id="provinsi_id">
+                <option value="">Semua</option>
+                @foreach ($provinsi as $prov)
+                    <option value="{{ $prov->id }}" {{ request('provinsi_id') == $prov->id ? 'selected' : '' }}>{{ $prov->nama }}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="col-md-3 align-self-end">
+            <button type="submit" class="btn btn-primary">Terapkan</button>
+        </div>
+        <div class="col-md-3 align-self-end text-end">
+            <a href="{{ route('wilayah.export', request()->query()) }}" class="btn btn-success">Export Excel</a>
+        </div>
+    </form>
 
-							@php
-							$total_objek = 0;
-							@endphp
+    <!-- Tabel -->
+    <div class="table-responsive">
+        <table class="table table-bordered table-sm align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th rowspan="2">#</th>
+                    <th rowspan="2">Provinsi</th>
+                    <th rowspan="2">Kabupaten</th>
+                    <th rowspan="2">Kecamatan</th>
+                    <th rowspan="2">Kelurahan</th>
+                    <th colspan="3" class="text-center">Jumlah Karyawan</th>
+                </tr>
+                <tr>
+                    <th>L</th>
+                    <th>P</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse ($array as $prov)
+                    @foreach ($prov['children'] as $kab)
+                        @foreach ($kab['children'] as $kec)
+                            @foreach ($kec['children'] as $kel)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $prov['nama'] }}</td>
+                                    <td>{{ $kab['nama'] }}</td>
+                                    <td>{{ $kec['nama'] }}</td>
+                                    <td>{{ $kel['nama'] }}</td>
+                                    <td>{{ $kel['l'] }}</td>
+                                    <td>{{ $kel['p'] }}</td>
+                                    <td>{{ $kel['total'] }}</td>
+                                </tr>
+                            @endforeach
+                        @endforeach
+                    @endforeach
+                @empty
+                    <tr>
+                        <td colspan="8" class="text-center">Tidak ada data</td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
 
-							@foreach($array as $kabupaten)
-							@foreach($kabupaten as $kecamatan)
-							@php
-							$total_objek += count($kecamatan);
-							@endphp
-							@endforeach
-							@endforeach
+    <!-- Chart -->
+    <canvas id="chartKelurahan" height="100" class="mt-5"></canvas>
+</div>
+@endsection
 
-							<tr>
-								<th>Jumlah kelurahan/desa</th>
-								<td>:</td>
-								<td>{{ $total_objek }}</td>
-							</tr>
-						</table>
-					</div>
-				</div>
-			</div>
-		</div>
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('chartKelurahan').getContext('2d');
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: @json($arr_nama_kelurahan),
+            datasets: [{
+                label: 'Jumlah Karyawan',
+                data: @json($arr_jumlah_karyawan),
+                backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: { stepSize: 10 }
+                }
+            }
+        }
+    });
 
-		<div class="row">
-			<div class="col-sm-7">
-				<div class="card">
-					<div class="card-body" style="overflow-x: auto;">
-						<div class="chart-bar mb-4 mb-lg-0" style="height: 30rem;">
-							<canvas id="pieLaporanWilayah" width="100%" height="0"></canvas>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-sm-5">
-				<div class="card">
-					<div class="card-body" style="overflow-x: auto;">
-						@foreach ($response as $kabupatenId => $kecamatans)
-						@php
-						$totalKaryawanKabupaten = 0;
-						@endphp
-						@foreach ($kecamatans as $kecamatanId => $kelurahans)
-						@php
-						$totalKaryawanPerempuan = 0;
-						$totalKaryawanLelaki = 0;
-						$totalKaryawanKecamatan = 0;
-						@endphp
-						<table class="table table-bordered">
-							<thead>
-								<tr class="table-primary">
-									<th colspan="4" class="text-center text-uppercase">{{ getNamaKabupaten($kabupatenId) }}</th>
-								</tr>
-								<tr class="table-active">
-									<th colspan="4" class="text-center text-uppercase">Kecamatan {{ getNamaKecamatan($kecamatanId) }}</th>
-								</tr>
-								<tr>
-									<th width="40%">Kelurahan/Desa</th>
-									<th width="20%">Perempuan</th>
-									<th width="20%">Laki laki</th>
-									<th width="20%">Jumlah Karyawan</th>
-								</tr>
-							</thead>
-							<tbody>
-								@foreach ($kelurahans as $kelurahanId => $data)
-								<tr>
-									<td>{{ getNamaKelurahan($data['kelurahan_id']) }}</td>
-									<td>{{ $data['perempuan'] }}</td>
-									<td>{{ $data['laki-laki'] }}</td>
-									<td>{{ $data['jumlah'] }}</td>
-								</tr>
-								@php
-								$totalKaryawanPerempuan += $data['perempuan'];
-								$totalKaryawanLelaki+= $data['laki-laki'];
-								$totalKaryawanKecamatan += $data['jumlah'];
-								$totalKaryawanKabupaten += $data['jumlah'];
-								@endphp
-								@endforeach
-								<tr>
-									<td><strong>Total </strong></td>
-									<td class="text-center"><strong>{{ $totalKaryawanPerempuan }}</strong></td>
-									<td class="text-center"><strong>{{ $totalKaryawanLelaki }}</strong></td>
-									<td class="text-center"><strong>{{ $totalKaryawanKecamatan }}</strong></td>
-								</tr>
-							</tbody>
-						</table>
-						@endforeach
-						@endforeach
-					</div>
-				</div>
-			</div>
-		</div>
-
-	</div>
-
-	<script>
-		$(document).ready(function() {
-			// Inisialisasi Select2
-			$('#company').select2({
-				width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
-				theme: "bootstrap-5",
-				allowClear: true,
-				placeholder: 'Pilih Provinsi',
-			});
-
-			$('#provinsi_level').select2({
-				width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
-				theme: "bootstrap-5",
-				allowClear: true,
-				placeholder: 'Pilih Provinsi',
-			});
-
-			$('#kabupaten_level').select2({
-				width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
-				theme: "bootstrap-5",
-				allowClear: true,
-				placeholder: 'Pilih kabupaten',
-			});
-
-			$('#kecamatan_level').select2({
-				width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
-				theme: "bootstrap-5",
-				allowClear: true,
-				placeholder: 'Pilih kabupaten',
-			});
-
-			// Definisikan variabel selectedValues di luar blok event
-			var selectedValuesProv = [];
-
-			// Event select2:select
-			$('#provinsi_level').on('select2:select', function(e) {
-				var selectedValue = e.params.data.id;
-				selectedValuesProv.push(selectedValue);
-				console.log(selectedValuesProv);
-
-				// Kirim nilai array ke endpoint
-				postSelectedValuesToEndpointProv(selectedValuesProv);
-			});
-
-			// Event select2:unselect
-			$('#provinsi_level').on('select2:unselect', function(e) {
-				var unselectedValue = e.params.data.id;
-				var index = selectedValues.indexOf(unselectedValue);
-				if (index !== -1) {
-					selectedValuesProv.splice(index, 1);
-				}
-				console.log(selectedValuesProv);
-
-				// Kirim nilai array ke endpoint
-				postSelectedValuesToEndpointProv(selectedValuesProv);
-			});
-
-			// Fungsi untuk mengirim nilai array ke endpoint
-			function postSelectedValuesToEndpointProv(selectedValuesProv) {
-				if (selectedValuesProv.length > 0) {
-					$.ajax({
-						headers: {
-							'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-						},
-						url: "/api/hrcorner/data-kabupaten",
-						method: "POST",
-						data: {
-							selectedValuesProv: selectedValuesProv
-						},
-						success: function(data) {
-							$('#kabupaten_level').html(data);
-							$('#kabupaten_level').select2('destroy').select2();
-							// Lakukan sesuatu dengan respons dari server (opsional)
-						},
-						error: function(xhr, status, error) {
-							console.error("Kesalahan:", error);
-							// Tangani kesalahan jika diperlukan (opsional)
-						}
-					});
-				}
-			}
-
-			var selectedValuesKab = [];
-
-			// Event select2:select
-			$('#kabupaten_level').on('select2:select', function(e) {
-				var selectedValue = e.params.data.id;
-				selectedValuesKab.push(selectedValue);
-				console.log(selectedValuesKab);
-
-				// Kirim nilai array ke endpoint
-				postSelectedValuesToEndpointKab(selectedValuesKab);
-			});
-
-			// Event select2:unselect
-			$('#kabupaten_level').on('select2:unselect', function(e) {
-				var unselectedValue = e.params.data.id;
-				var index = selectedValues.indexOf(unselectedValue);
-				if (index !== -1) {
-					selectedValuesKab.splice(index, 1);
-				}
-				console.log(selectedValuesKab);
-
-				// Kirim nilai array ke endpoint
-				postSelectedValuesToEndpointKab(selectedValuesKab);
-			});
-
-			// Fungsi untuk mengirim nilai array ke endpoint
-			function postSelectedValuesToEndpointKab(selectedValuesKab) {
-				if (selectedValuesKab.length > 0) {
-					$.ajax({
-						headers: {
-							'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-						},
-						url: "/api/hrcorner/data-kecamatan",
-						method: "POST",
-						data: {
-							selectedValuesKab: selectedValuesKab
-						},
-						success: function(data) {
-							$('#kecamatan_level').html(data);
-							$('#kecamatan_level').select2('destroy').select2();
-							// Lakukan sesuatu dengan respons dari server (opsional)
-						},
-						error: function(xhr, status, error) {
-							console.error("Kesalahan:", error);
-							// Tangani kesalahan jika diperlukan (opsional)
-						}
-					});
-				}
-			}
-		});
-	</script>
-
-	<script>
-		var jumlah_karyawan = JSON.parse('{!! json_encode($arr_jumlah_karyawan)!!}')
-
-		var nama_kelurahan = JSON.parse('{!! json_encode($arr_nama_kelurahan)!!}')
-	</script>
-
-	@push('scripts')
-	<x-toastr />
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
-	<script src="{{ asset('assets/vendors/chart.js/Chart.min.js')}}"></script>
-	<script src="{{ asset('assets/js/chartWilayah.js')}}"></script>
-
-	<script src="{{ asset('js/app.js') }}"></script>
-	@endpush
-</x-app-layout>
+    $(document).ready(function() {
+        $('.select2').select2({ theme: 'bootstrap-5' });
+    });
+</script>
+@endpush
