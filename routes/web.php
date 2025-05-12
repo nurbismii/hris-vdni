@@ -312,9 +312,9 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
         });
 
         Route::group(['prefix' => 'wilayah'], function () {
-            route::get('/', [WilayahController::class, 'index']);
-            route::get('/excel/{area}/{provinsi}/{kabupaten}/{kecamatan}', [WilayahController::class, 'exportExcel'])->name('export-wilayah-excel');
-            route::get('/pdf/{area}/{provinsi}/{kabupaten}/{kecamatan}', [WilayahController::class, 'exportPdf'])->name('export-wilayah-pdf');
+            route::get('/', [WilayahController::class, 'index'])->name('wilayah.index');
+            route::get('/excel', [WilayahController::class, 'exportExcel'])->name('export-wilayah-excel');
+            route::get('/pdf', [WilayahController::class, 'exportPdf'])->name('export-wilayah-pdf');
         });
     });
 

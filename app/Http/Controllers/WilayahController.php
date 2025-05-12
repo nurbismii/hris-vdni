@@ -4,9 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Exports\WilayahExport;
 use App\Models\employee;
+use App\Models\Kabupaten;
+use App\Models\Kecamatan;
+use App\Models\Kelurahan;
 use App\Models\Provinsi;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use PDF;
 
@@ -19,24 +23,28 @@ class WilayahController extends Controller
      */
     public function index(Request $request)
     {
-        $provinsi = Provinsi::all();
+        $provinsi_all = Provinsi::all();
 
         // Default filter
-        $provinsi_id = $request->provisi_level ?? ['74'];
-        $kabupaten_id = $request->kabupaten_level ?? ['7403'];
-        $kecamatan_id = $request->kecamatan_level ?? ['7403105'];
-        $area_kerja = $request->company_id ?? ['VDNI'];
+        $area_kerja = $request->area_kerja ?? ['VDNI', 'VDNIP'];
 
         $arr_jumlah_karyawan = [];
         $arr_nama_kelurahan = [];
+        $arr_region_data = []; // Menyimpan nama dan jumlah per region
+
+        // Preload semua nama wilayah
+        $nama_provinsi = Provinsi::pluck('provinsi', 'id')->toArray();
+        $nama_kabupaten = Kabupaten::pluck('kabupaten', 'id')->toArray();
+        $nama_kecamatan = Kecamatan::pluck('kecamatan', 'id')->toArray();
+        $nama_kelurahan = Kelurahan::pluck('kelurahan', 'id')->toArray();
 
         // Ambil data karyawan per wilayah dan jenis kelamin
-        $response = employee::select('provinsi_id', 'kabupaten_id', 'kecamatan_id', 'kelurahan_id', 'jenis_kelamin')
+        $response = DB::table('employees')
+            ->selectRaw('provinsi_id, kabupaten_id, kecamatan_id, kelurahan_id, LOWER(jenis_kelamin) as gender, COUNT(*) as jumlah_karyawan')
             ->where('status_resign', 'Aktif')
             ->whereIn('area_kerja', $area_kerja)
-            ->selectRaw('COUNT(*) as jumlah_karyawan')
-            ->groupBy('provinsi_id', 'kabupaten_id', 'kecamatan_id', 'kelurahan_id', 'jenis_kelamin')
-            ->orderBy('jumlah_karyawan', 'desc')
+            ->groupBy('provinsi_id', 'kabupaten_id', 'kecamatan_id', 'kelurahan_id', 'gender')
+            ->orderByDesc('jumlah_karyawan')
             ->get();
 
         // Struktur data terformat
@@ -46,17 +54,16 @@ class WilayahController extends Controller
             'Non Sulawesi' => [],
         ];
 
-        $sulawesi_ids = ['71', '62', '73', '75', '76'];
+        $sulawesi_ids = ['71', '72', '73', '75', '76'];
         $sultra_ids = ['74'];
 
+        // Proses data karyawan dan kelompokan berdasarkan wilayah
         foreach ($response as $data) {
             $prov_id = $data->provinsi_id;
             $kab_id = $data->kabupaten_id;
             $kec_id = $data->kecamatan_id;
             $kel_id = $data->kelurahan_id;
-
-            $jk = strtolower($data->jenis_kelamin);
-            $gender = $jk === 'l' || $jk === 'laki-laki' ? 'laki-laki' : ($jk === 'p' || $jk === 'perempuan' ? 'perempuan' : null);
+            $gender = $data->gender === 'l' || $data->gender === 'laki-laki' ? 'laki-laki' : ($data->gender === 'p' || $data->gender === 'perempuan' ? 'perempuan' : null);
             if (!$gender) continue;
 
             // Tentukan grup wilayah
@@ -71,7 +78,7 @@ class WilayahController extends Controller
             // Inisialisasi struktur data
             if (!isset($groupedData[$region][$prov_id])) {
                 $groupedData[$region][$prov_id] = [
-                    'nama' => getNamaProvinsi($prov_id),
+                    'nama' => $nama_provinsi[$prov_id] ?? 'BELUM DIKETAHUI',
                     'jumlah' => 0,
                     'kabupaten' => []
                 ];
@@ -79,7 +86,7 @@ class WilayahController extends Controller
 
             if (!isset($groupedData[$region][$prov_id]['kabupaten'][$kab_id])) {
                 $groupedData[$region][$prov_id]['kabupaten'][$kab_id] = [
-                    'nama' => getNamaKabupaten($kab_id),
+                    'nama' => $nama_kabupaten[$kab_id] ?? 'BELUM DIKETAHUI',
                     'jumlah' => 0,
                     'kecamatan' => []
                 ];
@@ -87,7 +94,7 @@ class WilayahController extends Controller
 
             if (!isset($groupedData[$region][$prov_id]['kabupaten'][$kab_id]['kecamatan'][$kec_id])) {
                 $groupedData[$region][$prov_id]['kabupaten'][$kab_id]['kecamatan'][$kec_id] = [
-                    'nama' => getNamaKecamatan($kec_id),
+                    'nama' => $nama_kecamatan[$kec_id] ?? 'BELUM DIKETAHUI',
                     'jumlah' => 0,
                     'kelurahan' => []
                 ];
@@ -95,7 +102,7 @@ class WilayahController extends Controller
 
             if (!isset($groupedData[$region][$prov_id]['kabupaten'][$kab_id]['kecamatan'][$kec_id]['kelurahan'][$kel_id])) {
                 $groupedData[$region][$prov_id]['kabupaten'][$kab_id]['kecamatan'][$kec_id]['kelurahan'][$kel_id] = [
-                    'nama' => getNamaKelurahan($kel_id),
+                    'nama' => $nama_kelurahan[$kel_id] ?? 'BELUM DIKETAHUI',
                     'laki-laki' => 0,
                     'perempuan' => 0,
                     'jumlah' => 0
@@ -112,34 +119,46 @@ class WilayahController extends Controller
         }
 
         // Siapkan data chart kelurahan
-        foreach ($groupedData as $region) {
+        foreach ($groupedData as $regionKey => $region) {
+            $regionJumlah = 0; // Variabel untuk menyimpan jumlah karyawan per region
+            $regionNama = $regionKey; // Variabel untuk menyimpan nama region
+
             foreach ($region as $provinsi) {
                 foreach ($provinsi['kabupaten'] as $kabupaten) {
                     foreach ($kabupaten['kecamatan'] as $kecamatan) {
                         foreach ($kecamatan['kelurahan'] as $kelurahan) {
+                            // Menambahkan jumlah karyawan ke total per region
                             $arr_jumlah_karyawan[] = $kelurahan['jumlah'];
                             $arr_nama_kelurahan[] = $kelurahan['nama'];
+
+                            // Menambahkan jumlah kelurahan ke jumlah region
+                            $regionJumlah += $kelurahan['jumlah'];
                         }
                     }
                 }
             }
+
+            // Menyimpan nama dan jumlah per region
+            $arr_region_data[] = [
+                'region_nama' => $regionNama,
+                'region_jumlah' => $regionJumlah
+            ];
         }
+        
 
         return view('wilayah.index', [
             'arr_jumlah_karyawan' => $arr_jumlah_karyawan,
             'arr_nama_kelurahan' => $arr_nama_kelurahan,
+            'arr_region_data' => $arr_region_data, // Data nama region dan jumlah karyawan
             'array' => json_decode(json_encode($groupedData), true),
             'response' => $groupedData,
             'area_kerja' => $area_kerja,
-            'provinsi' => $provinsi,
-            'provinsi_id' => $provinsi_id,
-            'kabupaten_id' => $kabupaten_id,
-            'kecamatan_id' => $kecamatan_id,
+            'provinsi_all' => $provinsi_all,
         ]);
     }
 
 
-    public function exportExcel($area, $provinsi_id, $kabupaten_id, $kecamatan_id)
+    public function exportExcel()
     {
         $bulan_sekarang = date('Y-m', strtotime(Carbon::now()));
 
