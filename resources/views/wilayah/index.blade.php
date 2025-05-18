@@ -186,7 +186,7 @@
                                                 @endforeach
 
                                                 {{-- Total Kabupaten --}}
-                                                <tr class="row-total-kab table-light fw-semibold">
+                                                <tr class="row-total-kab table-primary fw-semibold">
                                                     <td colspan="5" class="text-end">TOTAL KAB. {{ $kab['nama'] }}</td>
                                                     <td>{{ $kab_total_l }}</td>
                                                     <td>{{ $kab_total_p }}</td>
