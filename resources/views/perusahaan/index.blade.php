@@ -80,11 +80,11 @@
             @csrf
             <div class="mb-3">
               <label class="small mb-1">Kode perusahaan</label>
-              <input type="text" class="form-control" name="departemen">
+              <input type="text" class="form-control" name="kode_perusahaan">
             </div>
             <div class="mb-3">
               <label class="small mb-1">Nama perusahaan</label>
-              <input type="text" class="form-control" name="kepala_dept">
+              <input type="text" class="form-control" name="nama_perusahaan">
             </div>
           </div>
           <div class="modal-footer">
