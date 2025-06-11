@@ -43,6 +43,7 @@ class EmployeeController extends Controller
         $data = employee::leftjoin('divisis', 'divisis.id', '=', 'employees.divisi_id')
             ->leftjoin('departemens', 'departemens.id', '=', 'divisis.departemen_id')
             ->where('kode_area_kerja', '!=', null)
+            ->whereIn('area_kerja', ['VDNI', 'VDNIP'])
             ->select(DB::raw('*, tgl_lahir, TIMESTAMPDIFF(YEAR, tgl_lahir, NOW()) AS umur'));
 
         return DataTables::of($data)
