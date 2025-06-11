@@ -24,13 +24,17 @@
                         </h1>
                     </div>
                     <div class="col-12 col-xl-auto mb-3">
+                        <a class="btn btn-sm btn-light text-primary" href="{{ route('export.div') }}">
+                            <i class="me-1" data-feather="printer"></i>
+                            Export
+                        </a>
                         <a class="btn btn-sm btn-light text-primary" onclick="history.back()">
                             <i class="me-1" data-feather="arrow-left"></i>
                             Kembali
                         </a>
                         <a class="btn btn-sm btn-light text-primary" data-bs-toggle="modal" data-bs-target="#addDept">
                             <i class="me-1" data-feather="plus"></i>
-                             Departemen
+                            Departemen
                         </a>
                     </div>
                 </div>

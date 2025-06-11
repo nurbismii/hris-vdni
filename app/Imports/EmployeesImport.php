@@ -2,6 +2,7 @@
 
 namespace App\Imports;
 
+use App\Models\Departemen;
 use App\Models\Divisi;
 use App\Models\employee;
 use Carbon\Carbon;
@@ -15,11 +16,16 @@ use Maatwebsite\Excel\Concerns\WithValidation;
 
 class EmployeesImport implements ToCollection, WithHeadingRow, WithChunkReading, WithBatchInserts, WithValidation
 {
+    protected $allDepartemen;
     protected $allDivisi;
     protected $existingNiks;
 
     public function __construct()
     {
+        $this->allDepartemen = Departemen::pluck('id', 'departemen')->mapWithKey(function ($id, $name) {
+            return [strtolower(trim($name)) => $id];
+        })->toArray();
+
         $this->allDivisi = Divisi::pluck('id', 'nama_divisi')->mapWithKeys(function ($id, $name) {
             return [strtolower(trim($name)) => $id];
         })->toArray();
@@ -47,7 +53,8 @@ class EmployeesImport implements ToCollection, WithHeadingRow, WithChunkReading,
             $kabupatenId = substr($kelurahanId, 0, 4);
             $kecamatanId = substr($kelurahanId, 0, 7);
 
-            $divisiId = $this->allDivisi[strtolower(trim($row['divisi']))] ?? null;
+            $departemenId = $this->allDepartemen[strtolower(trim($row['departemen']))] ?? null; 
+            $divisiId = $this->allDivisi[strtolower(trim($row['divisi']))] ?? null; 
 
             employee::create([
                 'nik' => $nik,
@@ -87,6 +94,7 @@ class EmployeesImport implements ToCollection, WithHeadingRow, WithChunkReading,
                 'jam_kerja' => strtoupper($row['jam_kerja']),
                 'posisi' => $row['posisi'],
                 'jabatan' => $row['jabatan'],
+                'departemen_id' => $departemenId,
                 'divisi_id' => $divisiId,
                 'tinggi' => $row['tinggi'],
                 'berat' => $row['berat'],

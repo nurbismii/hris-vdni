@@ -12,4 +12,8 @@ class Departemen extends Model
     protected $table = 'departemens';
     protected $guarded = [];
 
+    public function perusahaan()
+    {
+        return $this->hasOne(Perusahaan::class, 'id', 'perusahaan_id');
+    }
 }
