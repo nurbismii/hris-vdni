@@ -22,7 +22,7 @@ class EmployeesImport implements ToCollection, WithHeadingRow, WithChunkReading,
 
     public function __construct()
     {
-        $this->allDepartemen = Departemen::pluck('id', 'departemen')->mapWithKey(function ($id, $name) {
+        $this->allDepartemen = Departemen::pluck('id', 'departemen')->mapWithKeys(function ($id, $name) {
             return [strtolower(trim($name)) => $id];
         })->toArray();
 
