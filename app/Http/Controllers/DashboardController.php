@@ -52,11 +52,13 @@ class DashboardController extends Controller
                 ->limit(6)
                 ->get();
 
-            $karyawan_resign = employee::select('tgl_resign', 'status_resign')
+            $karyawan_resign = employee::select('area_kerja', 'tgl_resign', 'status_resign')
+                ->whereIn('area_kerja', ['VDNI', 'VDNIP'])
                 ->where('status_resign', '!=', 'Aktif')
                 ->get();
 
-            $data_karyawan = employee::select('nik', 'status_resign', 'status_karyawan', 'provinsi_id', 'kabupaten_id', 'kecamatan_id', 'kelurahan_id', 'tgl_lahir')
+            $data_karyawan = employee::select('nik', 'area_kerja', 'status_resign', 'status_karyawan', 'provinsi_id', 'kabupaten_id', 'kecamatan_id', 'kelurahan_id', 'tgl_lahir')
+                ->whereIn('area_kerja', ['VDNI', 'VDNIP'])
                 ->where('status_resign', 'Aktif')
                 ->get();
 
