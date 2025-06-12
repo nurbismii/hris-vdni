@@ -64,9 +64,9 @@ class DashboardController extends Controller
 
             $total_karyawan_vdni = employee::where('status_resign', 'Aktif')->where('area_kerja', 'VDNI')->count();
             $total_karyawan_vdnip = employee::where('status_resign', 'Aktif')->where('area_kerja', 'VDNIP')->count();
-            $total_karyawan_laki = employee::where('status_resign', 'Aktif')->where('jenis_kelamin', 'L')->count();
-            $total_karyawan_perempuan = employee::where('status_resign', 'Aktif')->where('jenis_kelamin', 'P')->count();
-            $total_karyawan = employee::where('status_resign', 'Aktif')->count();
+            $total_karyawan_laki = employee::where('status_resign', 'Aktif')->whereIn('area_kerja', ['VDNI', 'VDNIP'])->where('jenis_kelamin', 'L')->count();
+            $total_karyawan_perempuan = employee::where('status_resign', 'Aktif')->whereIn('area_kerja', ['VDNI', 'VDNIP'])->where('jenis_kelamin', 'P')->count();
+            $total_karyawan = employee::where('status_resign', 'Aktif')->whereIn('area_kerja', ['VDNI', 'VDNIP'])->count();
 
             $req_awal_prd = $request->mulai_periode != '' ? $request->mulai_periode : $tanggal_hari_ini;
             $req_akhir_prd = $request->akhir_periode != '' ? $request->akhir_periode : $bulan_depan;
