@@ -29,7 +29,7 @@ class EmployeesUpdateImport implements ToCollection, WithHeadingRow, WithValidat
             $employee = $this->employee->where('nik', $row['nik'])->first();
 
             // Ambil divisi_id
-            $divisi = Divisi::where('id', $row['divisi_id'])->first();
+            $divisi = Divisi::where('nama_divisi', $row['divisi'])->first();
             $divisiId = optional($divisi)->id;
 
             // Helper date converter
@@ -75,7 +75,7 @@ class EmployeesUpdateImport implements ToCollection, WithHeadingRow, WithValidat
                 'jam_kerja' => $row['jam_kerja'],
                 'posisi' => $row['posisi'],
                 'jabatan' => $row['jabatan'],
-                'divisi_id' => $divisiId,
+                'divisi_id' => $divisiId ?? null,
                 'tinggi' => $row['tinggi'],
                 'berat' => $row['berat'],
                 'hobi' => $row['hobi'],
