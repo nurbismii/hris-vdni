@@ -35,83 +35,86 @@ class EmployeesImport implements ToCollection, WithHeadingRow, WithChunkReading,
 
     public function collection(Collection $rows)
     {
+        $newRows = [];
         $newNiks = [];
 
         foreach ($rows as $row) {
-            $nik = $row['nik'];
+            $nik = $row['nik'] ?? null;
 
-            // Skip jika NIK sudah ada di database atau sudah diproses dalam loop ini
-            if (in_array($nik, $this->existingNiks) || in_array($nik, $newNiks)) {
+            if (empty($nik) || in_array($nik, $this->existingNiks) || in_array($nik, $newNiks)) {
                 continue;
             }
 
-            // Tambahkan NIK ke daftar yang sudah diproses
             $newNiks[] = $nik;
 
-            $kelurahanId = strval($row['kelurahan_id']);
+            $kelurahanId = strval($row['kelurahan_id'] ?? '');
             $provinsiId = substr($kelurahanId, 0, 2);
             $kabupatenId = substr($kelurahanId, 0, 4);
             $kecamatanId = substr($kelurahanId, 0, 7);
 
-            $departemenId = $this->allDepartemen[strtolower(trim($row['departemen']))] ?? null; 
-            $divisiId = $this->allDivisi[strtolower(trim($row['divisi']))] ?? null; 
+            $departemenId = $this->allDepartemen[strtolower(trim($row['departemen'] ?? ''))] ?? null;
+            $divisiId = $this->allDivisi[strtolower(trim($row['divisi'] ?? ''))] ?? null;
 
-            employee::create([
+            $newRows[] = [
                 'nik' => $nik,
-                'no_sk_pkwtt' => $row['no_sk_pkwtt'],
-                'nama_karyawan' => $row['nama_karyawan'],
-                'nama_ibu_kandung' => $row['nama_ibu_kandung'],
-                'nama_bapak' => $row['nama_bapak'],
-                'agama' => $row['agama'],
-                'no_ktp' => str_replace(["'", "`"], "", $row['no_ktp']),
-                'no_kk' => str_replace(["'", "`"], "", $row['no_kk']),
-                'kode_area_kerja' => $row['kode_area_kerja'],
-                'jenis_kelamin' => $row['jenis_kelamin'] == 'M 男' ? 'L' : 'P',
-                'status_perkawinan' => $row['status_perkawinan'] == 'TK' ? 'Belum Kawin' : 'Kawin',
-                'status_karyawan' => $row['status_karyawan'],
-                'tgl_resign' => $this->parseDate($row['tgl_resign']),
-                'alasan_resign' => $row['alasan_resign'],
-                'status_resign' => $row['status_resign'],
-                'no_telp' => $row['no_telp'],
-                'tgl_lahir' => $this->parseDate($row['tgl_lahir']),
+                'no_sk_pkwtt' => $row['no_sk_pkwtt'] ?? null,
+                'nama_karyawan' => $row['nama_karyawan'] ?? null,
+                'nama_ibu_kandung' => $row['nama_ibu_kandung'] ?? null,
+                'nama_bapak' => $row['nama_bapak'] ?? null,
+                'agama' => $row['agama'] ?? null,
+                'no_ktp' => str_replace(["'", "`"], "", $row['no_ktp'] ?? ''),
+                'no_kk' => str_replace(["'", "`"], "", $row['no_kk'] ?? ''),
+                'kode_area_kerja' => $row['kode_area_kerja'] ?? null,
+                'jenis_kelamin' => ($row['jenis_kelamin'] ?? '') == 'M 男' ? 'L' : 'P',
+                'status_perkawinan' => ($row['status_perkawinan'] ?? '') == 'TK' ? 'Belum Kawin' : 'Kawin',
+                'status_karyawan' => $row['status_karyawan'] ?? null,
+                'tgl_resign' => $this->parseDate($row['tgl_resign'] ?? null),
+                'alasan_resign' => $row['alasan_resign'] ?? null,
+                'status_resign' => $row['status_resign'] ?? null,
+                'no_telp' => $row['no_telp'] ?? null,
+                'tgl_lahir' => $this->parseDate($row['tgl_lahir'] ?? null),
                 'provinsi_id' => $provinsiId,
                 'kabupaten_id' => $kabupatenId,
                 'kecamatan_id' => $kecamatanId,
                 'kelurahan_id' => $kelurahanId,
-                'alamat_ktp' => $row['alamat_ktp'],
-                'alamat_domisili' => $row['alamat_domisili'],
-                'rt' => $row['rt'],
-                'rw' => $row['rw'],
-                'kode_pos' => $row['kode_pos'],
-                'area_kerja' => $row['area_kerja'],
-                'golongan_darah' => $row['golongan_darah'],
-                'entry_date' => $this->parseDate($row['entry_date']),
-                'npwp' => str_replace(['-', '.'], '', $row['npwp']),
-                'status_pajak' => $row['status_pajak'],
-                'bpjs_kesehatan' => $row['bpjs_kesehatan'],
-                'bpjs_tk' => $row['bpjs_tk'],
-                'vaksin' => $row['vaksin'],
-                'jam_kerja' => strtoupper($row['jam_kerja']),
-                'posisi' => $row['posisi'],
-                'jabatan' => $row['jabatan'],
+                'alamat_ktp' => $row['alamat_ktp'] ?? null,
+                'alamat_domisili' => $row['alamat_domisili'] ?? null,
+                'rt' => $row['rt'] ?? null,
+                'rw' => $row['rw'] ?? null,
+                'kode_pos' => $row['kode_pos'] ?? null,
+                'area_kerja' => $row['area_kerja'] ?? null,
+                'golongan_darah' => $row['golongan_darah'] ?? null,
+                'entry_date' => $this->parseDate($row['entry_date'] ?? null),
+                'npwp' => str_replace(['-', '.'], '', $row['npwp'] ?? ''),
+                'status_pajak' => $row['status_pajak'] ?? null,
+                'bpjs_kesehatan' => $row['bpjs_kesehatan'] ?? null,
+                'bpjs_tk' => $row['bpjs_tk'] ?? null,
+                'vaksin' => $row['vaksin'] ?? null,
+                'jam_kerja' => strtoupper($row['jam_kerja'] ?? ''),
+                'posisi' => $row['posisi'] ?? null,
+                'jabatan' => $row['jabatan'] ?? null,
                 'departemen_id' => $departemenId,
                 'divisi_id' => $divisiId,
-                'tinggi' => $row['tinggi'],
-                'berat' => $row['berat'],
-                'hobi' => $row['hobi'],
-                'no_jamsostek' => $row['no_jamsostek'],
-                'no_asuransi' => $row['no_asuransi'],
-                'no_kartu_asuransi' => $row['no_kartu_asuransi'],
-                'nama_bank' => $row['nama_bank'],
-                'no_rekening' => $row['no_rekening'],
-                'nama_instansi_pendidikan' => $row['nama_instansi_pendidikan'],
-                'pendidikan_terakhir' => $row['pendidikan_terakhir'],
-                'jurusan' => $row['jurusan'],
-                'tanggal_kelulusan' => $this->parseDate($row['tanggal_kelulusan']),
-                'tanggal_menikah' => $this->parseDate($row['tanggal_menikah']),
-                'sisa_cuti' => $row['sisa_cuti'],
-                'sisa_cuti_covid' => $row['sisa_cuti_covid'],
-            ]);
+                'tinggi' => $row['tinggi'] ?? null,
+                'berat' => $row['berat'] ?? null,
+                'hobi' => $row['hobi'] ?? null,
+                'no_jamsostek' => $row['no_jamsostek'] ?? null,
+                'no_asuransi' => $row['no_asuransi'] ?? null,
+                'no_kartu_asuransi' => $row['no_kartu_asuransi'] ?? null,
+                'nama_bank' => $row['nama_bank'] ?? null,
+                'no_rekening' => $row['no_rekening'] ?? null,
+                'nama_instansi_pendidikan' => $row['nama_instansi_pendidikan'] ?? null,
+                'pendidikan_terakhir' => $row['pendidikan_terakhir'] ?? null,
+                'jurusan' => $row['jurusan'] ?? null,
+                'tanggal_kelulusan' => $this->parseDate($row['tanggal_kelulusan'] ?? null),
+                'tanggal_menikah' => $this->parseDate($row['tanggal_menikah'] ?? null),
+                'sisa_cuti' => $row['sisa_cuti'] ?? null,
+                'sisa_cuti_covid' => $row['sisa_cuti_covid'] ?? null,
+            ];
+        }
+
+        if (!empty($newRows)) {
+            employee::upsert($newRows, ['nik'], array_keys($newRows[0]));
         }
     }
 
