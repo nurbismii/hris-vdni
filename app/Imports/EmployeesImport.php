@@ -7,7 +7,7 @@ use App\Models\Divisi;
 use App\Models\employee;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
-use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
@@ -18,7 +18,6 @@ class EmployeesImport implements ToCollection, WithHeadingRow, WithChunkReading,
 {
     protected $allDepartemen;
     protected $allDivisi;
-    protected $existingNiks;
 
     public function __construct()
     {
@@ -29,8 +28,6 @@ class EmployeesImport implements ToCollection, WithHeadingRow, WithChunkReading,
         $this->allDivisi = Divisi::pluck('id', 'nama_divisi')->mapWithKeys(function ($id, $name) {
             return [strtolower(trim($name)) => $id];
         })->toArray();
-
-        $this->existingNiks = employee::pluck('nik')->toArray();
     }
 
     public function collection(Collection $rows)
@@ -41,7 +38,8 @@ class EmployeesImport implements ToCollection, WithHeadingRow, WithChunkReading,
         foreach ($rows as $row) {
             $nik = $row['nik'] ?? null;
 
-            if (empty($nik) || in_array($nik, $this->existingNiks) || in_array($nik, $newNiks)) {
+            // skip jika NIK kosong atau duplikat dalam 1 file
+            if (empty($nik) || in_array($nik, $newNiks)) {
                 continue;
             }
 
@@ -115,6 +113,11 @@ class EmployeesImport implements ToCollection, WithHeadingRow, WithChunkReading,
 
         if (!empty($newRows)) {
             employee::upsert($newRows, ['nik'], array_keys($newRows[0]));
+
+            Log::info('📥 Import berhasil', [
+                'total_data' => count($newRows),
+                'info' => 'Berhasil insert/update berdasarkan nik',
+            ]);
         }
     }
 
