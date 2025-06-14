@@ -22,8 +22,20 @@ class EmployeesUpdateImport implements ToCollection, WithHeadingRow, WithValidat
 
     public function collection(Collection $collection)
     {
-        $nikList = $collection->pluck('nik')->filter()->unique()->toArray();
-        $existingEmployees = $this->employee->whereIn('nik', $nikList)->pluck('nik')->all();
+        // Ambil dan filter NIK unik dari file
+        $nikList = $collection->pluck('nik')->filter()->toArray();
+
+        // Cek duplikat NIK dalam file
+        $duplicateInFile = array_diff_assoc($nikList, array_unique($nikList));
+        if (!empty($duplicateInFile)) {
+            throw new \Exception("Terdapat NIK duplikat dalam file: " . implode(', ', array_unique($duplicateInFile)));
+        }
+
+        // Ambil NIK yang sudah ada di database
+        $existingEmployees = $this->employee
+            ->whereIn('nik', $nikList)
+            ->pluck('nik')
+            ->all();
 
         $dataToUpsert = [];
 
@@ -62,10 +74,10 @@ class EmployeesUpdateImport implements ToCollection, WithHeadingRow, WithValidat
                 'status_resign' => $row['status_resign'],
                 'no_telp' => $row['no_telp'],
                 'tgl_lahir' => $toCarbon($row['tgl_lahir']),
-                'provinsi_id' => $provinsiId,
-                'kabupaten_id' => $kabupatenId,
-                'kecamatan_id' => $kecamatanId,
-                'kelurahan_id' => $kelurahanId,
+                'provinsi_id' => $provinsiId ?? null,
+                'kabupaten_id' => $kabupatenId ?? null,
+                'kecamatan_id' => $kecamatanId ?? null,
+                'kelurahan_id' => $kelurahanId ?? null,
                 'alamat_ktp' => $row['alamat_ktp'],
                 'alamat_domisili' => $row['alamat_domisili'],
                 'rt' => $row['rt'],
@@ -103,9 +115,10 @@ class EmployeesUpdateImport implements ToCollection, WithHeadingRow, WithValidat
             $dataToUpsert[] = $data;
         }
 
-        // Gunakan upsert agar insert/update dalam satu operasi
+        // Lakukan upsert jika ada data
         if (!empty($dataToUpsert)) {
-            Employee::upsert($dataToUpsert, ['nik'], array_keys($dataToUpsert[0]));
+            $updateColumns = array_diff(array_keys($dataToUpsert[0]), ['nik']);
+            Employee::upsert($dataToUpsert, ['nik'], $updateColumns);
         }
     }
 
