@@ -23,7 +23,9 @@ class EmployeesUpdateImport implements ToCollection, WithHeadingRow, WithValidat
     public function collection(Collection $collection)
     {
         $nikList = $collection->pluck('nik')->filter()->unique()->toArray();
-        $this->employee->whereIn('nik', $nikList)->pluck('nik')->all();
+        $existingEmployees = $this->employee->whereIn('nik', $nikList)->pluck('nik')->all();
+
+        $dataToUpsert = [];
 
         foreach ($collection as $row) {
             if (empty($row['nik'])) {
@@ -98,12 +100,12 @@ class EmployeesUpdateImport implements ToCollection, WithHeadingRow, WithValidat
                 'sisa_cuti_covid' => $row['sisa_cuti_covid'],
             ];
 
-            $dataToinsert[] = $data;
+            $dataToUpsert[] = $data;
         }
 
         // Gunakan upsert agar insert/update dalam satu operasi
-        if (!empty($dataToinsert)) {
-            employee::insert($dataToinsert);
+        if (!empty($dataToUpsert)) {
+            Employee::upsert($dataToUpsert, ['nik'], array_keys($dataToUpsert[0]));
         }
     }
 
