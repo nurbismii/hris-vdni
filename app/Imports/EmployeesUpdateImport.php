@@ -32,6 +32,11 @@ class EmployeesUpdateImport implements ToCollection, WithHeadingRow, WithValidat
             $divisi = Divisi::where('nama_divisi', $row['divisi'])->first();
             $divisiId = optional($divisi)->id;
 
+            $kelurahanId = strval($row['kelurahan_id']);
+            $provinsiId = substr($kelurahanId, 0, 2);
+            $kabupatenId = substr($kelurahanId, 0, 4);
+            $kecamatanId = substr($kelurahanId, 0, 7);
+
             // Helper date converter
             $toCarbon = fn($val) => is_numeric($val)
                 ? Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject((int)$val))
@@ -55,10 +60,10 @@ class EmployeesUpdateImport implements ToCollection, WithHeadingRow, WithValidat
                 'status_resign' => $row['status_resign'],
                 'no_telp' => $row['no_telp'],
                 'tgl_lahir' => $toCarbon($row['tgl_lahir']),
-                'provinsi_id' => $row['provinsi_id'],
-                'kabupaten_id' => $row['kabupaten_id'],
-                'kecamatan_id' => $row['kecamatan_id'],
-                'kelurahan_id' => strval($row['kelurahan_id']),
+                'provinsi_id' => $provinsiId,
+                'kabupaten_id' => $kabupatenId,
+                'kecamatan_id' => $kecamatanId,
+                'kelurahan_id' => $kelurahanId,
                 'alamat_ktp' => $row['alamat_ktp'],
                 'alamat_domisili' => $row['alamat_domisili'],
                 'rt' => $row['rt'],
