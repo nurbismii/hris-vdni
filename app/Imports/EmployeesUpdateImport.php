@@ -22,13 +22,16 @@ class EmployeesUpdateImport implements ToCollection, WithHeadingRow, WithValidat
 
     public function collection(Collection $collection)
     {
-        $dataToInsert = [];
+        $nikList = $collection->pluck('nik')->filter()->unique()->toArray();
+        $existingEmployees = $this->employee->whereIn('nik', $nikList)->pluck('nik')->all();
+
+        $dataToUpsert = [];
 
         foreach ($collection as $row) {
-            // Cek apakah employee dengan NIK ini sudah ada
-            $employee = $this->employee->where('nik', $row['nik'])->first();
+            if (empty($row['nik'])) {
+                continue; // Lewati baris tanpa NIK
+            }
 
-            // Ambil divisi_id
             $divisi = Divisi::where('nama_divisi', $row['divisi'])->first();
             $divisiId = optional($divisi)->id;
 
@@ -37,12 +40,11 @@ class EmployeesUpdateImport implements ToCollection, WithHeadingRow, WithValidat
             $kabupatenId = substr($kelurahanId, 0, 4);
             $kecamatanId = substr($kelurahanId, 0, 7);
 
-            // Helper date converter
             $toCarbon = fn($val) => is_numeric($val)
                 ? Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject((int)$val))
                 : null;
 
-            $preparedData = [
+            $data = [
                 'nik' => $row['nik'],
                 'no_sk_pkwtt' => $row['no_sk_pkwtt'],
                 'nama_karyawan' => $row['nama_karyawan'],
@@ -80,7 +82,7 @@ class EmployeesUpdateImport implements ToCollection, WithHeadingRow, WithValidat
                 'jam_kerja' => $row['jam_kerja'],
                 'posisi' => $row['posisi'],
                 'jabatan' => $row['jabatan'],
-                'divisi_id' => $divisiId ?? null,
+                'divisi_id' => $divisiId,
                 'tinggi' => $row['tinggi'],
                 'berat' => $row['berat'],
                 'hobi' => $row['hobi'],
@@ -98,16 +100,12 @@ class EmployeesUpdateImport implements ToCollection, WithHeadingRow, WithValidat
                 'sisa_cuti_covid' => $row['sisa_cuti_covid'],
             ];
 
-            if ($employee) {
-                $employee->update($preparedData);
-            } else {
-                $dataToInsert[] = $preparedData;
-            }
+            $dataToUpsert[] = $data;
         }
 
-        // Batch insert hanya jika ada data baru
-        if (!empty($dataToInsert)) {
-            $this->employee->insert($dataToInsert);
+        // Gunakan upsert agar insert/update dalam satu operasi
+        if (!empty($dataToUpsert)) {
+            $this->employee->upsert($dataToUpsert, ['nik']);
         }
     }
 
@@ -120,8 +118,9 @@ class EmployeesUpdateImport implements ToCollection, WithHeadingRow, WithValidat
     {
         return ['nik.required' => 'NIK Karyawan tidak boleh kosong'];
     }
+
     public function chunkSize(): int
     {
-        return 100; // Sesuaikan dengan kapasitas server
+        return 100;
     }
 }
