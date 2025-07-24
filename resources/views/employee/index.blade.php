@@ -170,8 +170,18 @@
                                 <label class="small mb-1">Departemen</label>
                                 <select class="form-select" id="departemen">
                                     <option value="">- Pilih departemen -</option>
-                                    @foreach($depts as $d)
-                                    <option value="{{ $d->id }}">{{ $d->departemen }}</option>
+                                    @php
+                                        $groupedDepts = [];
+                                        foreach ($depts as $d) {
+                                            $groupedDepts[$d->perusahaan['nama_perusahaan']][] = $d;
+                                        }
+                                    @endphp
+                                    @foreach($groupedDepts as $perusahaan => $departemens)
+                                        <optgroup label="{{ $perusahaan }}">
+                                            @foreach($departemens as $d)
+                                                <option value="{{ $d->id }}">{{ $d->departemen }}</option>
+                                            @endforeach
+                                        </optgroup>
                                     @endforeach
                                 </select>
                             </div>
@@ -198,9 +208,10 @@
                                 </select>
                             </div>
                             <div class="col-md-3 mb-2">
-                                <label class="small mb-1">Status karyawan</label>
+                                <label class="small mb-1">Status Keluar</label>
                                 <select class="form-select" id="status_resign">
-                                    <option value="Aktif" selected>AKTIF</option>
+                                    <option value="">- Pilih status keluar -</option>
+                                    <option value="Aktif">AKTIF</option>
                                     <option value="RESIGN SESUAI PROSEDUR">RESIGN SESUAI PROSEDUR</option>
                                     <option value="RESIGN TIDAK SESUAI PROSEDUR">RESIGN TIDAK SESUAI PROSEDUR</option>
                                     <option value="PHK">PHK</option>
@@ -292,8 +303,8 @@
                                     <th>NIK</th>
                                     <th>Nama</th>
                                     <th>Area</th>
-                                    <th>Dept</th>
-                                    <th>Div</th>
+                                    <th>Departemen</th>
+                                    <th>Divisi</th>
                                     <th>Posisi</th>
                                     <th>Jabatan</th>
                                     <th>Kontrak</th>
@@ -587,12 +598,18 @@
                         name: 'area_kerja',
                     },
                     {
-                        data: 'departemen',
-                        name: 'departemen',
+                        data: 'divisi.departemen.departemen',
+                        name: 'divisi.departemen.departemen',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
                     },
                     {
-                        data: 'nama_divisi',
-                        name: 'nama_divisi',
+                        data: 'divisi.nama_divisi',
+                        name: 'divisi.nama_divisi',
+                        render: function(data, type, row) {
+                            return data ? data : '-';
+                        }
                     },
                     {
                         data: 'posisi',
