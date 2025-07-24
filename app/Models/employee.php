@@ -23,6 +23,11 @@ class employee extends Model
         return $this->hasOne(Divisi::class, 'id', 'divisi_id');
     }
 
+    public function departemen()
+    {
+        return $this->hasOne(Departemen::class, 'id', 'departemen_id');
+    }
+
     public function detailAbsen()
     {
         return $this->hasMany(DetailAbsensi::class, 'nik_karyawan', 'nik')->orderBy('akhir_periode', 'ASC');

@@ -40,7 +40,7 @@ class EmployeeController extends Controller
 
     public function serverSideEmployee(Request $request)
     {
-        $data = employee::with('divisi', 'divisi.departemen')->whereNotNull('kode_area_kerja')->select(DB::raw('*, tgl_lahir, TIMESTAMPDIFF(YEAR, tgl_lahir, NOW()) AS umur'));
+        $data = employee::with('divisi', 'departemen')->whereNotNull('kode_area_kerja')->select(DB::raw('*, tgl_lahir, TIMESTAMPDIFF(YEAR, tgl_lahir, NOW()) AS umur'));
 
         return DataTables::of($data)
             ->addIndexColumn()

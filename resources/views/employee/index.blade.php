@@ -171,17 +171,17 @@
                                 <select class="form-select" id="departemen">
                                     <option value="">- Pilih departemen -</option>
                                     @php
-                                        $groupedDepts = [];
-                                        foreach ($depts as $d) {
-                                            $groupedDepts[$d->perusahaan['nama_perusahaan']][] = $d;
-                                        }
+                                    $groupedDepts = [];
+                                    foreach ($depts as $d) {
+                                    $groupedDepts[$d->perusahaan['nama_perusahaan']][] = $d;
+                                    }
                                     @endphp
                                     @foreach($groupedDepts as $perusahaan => $departemens)
-                                        <optgroup label="{{ $perusahaan }}">
-                                            @foreach($departemens as $d)
-                                                <option value="{{ $d->id }}">{{ $d->departemen }}</option>
-                                            @endforeach
-                                        </optgroup>
+                                    <optgroup label="{{ $perusahaan }}">
+                                        @foreach($departemens as $d)
+                                        <option value="{{ $d->id }}">{{ $d->departemen }}</option>
+                                        @endforeach
+                                    </optgroup>
                                     @endforeach
                                 </select>
                             </div>
@@ -598,8 +598,8 @@
                         name: 'area_kerja',
                     },
                     {
-                        data: 'divisi.departemen.departemen',
-                        name: 'divisi.departemen.departemen',
+                        data: 'departemen.departemen',
+                        name: 'departemen.departemen',
                         render: function(data, type, row) {
                             return data ? data : '-';
                         }
