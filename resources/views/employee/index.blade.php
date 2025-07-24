@@ -13,6 +13,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <!-- DataTables FixedHeader -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/fixedheader/3.4.0/css/fixedHeader.dataTables.min.css">
+    <script src="https://cdn.datatables.net/fixedheader/3.4.0/js/dataTables.fixedHeader.min.js"></script>
+
     <style>
         td {
             text-transform: uppercase
@@ -135,28 +139,8 @@
         <hr class="mt-0 mb-4" />
         <div class="row">
             <div class="col-lg-12">
-                <div class="card">
-                    <div class="card-header">
-                        <!-- <div class="pull-right">
-                            <div class="pull-left float-end">
-                                <nav role="navigation">
-                                    <ul class="ul-dropdown">
-                                        <li class="firstli">
-                                            <i class="material-icons">Export</i><a href="#">data tabel</a>
-                                            <ul>
-                                                <li><a href="#">Export CSV</a></li>
-                                                <li><a href="#">Export Excel</a></li>
-                                                <li><a href="#">Export PDF</a></li>
-                                                <li><a href="#">Print</a></li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </nav>
-                            </div>
-                        </div> -->
-                        <a href="{{ route('employees.export') }}" class="btn btn-success btn-sm float-end"><i class="me-1" data-feather="download"></i> | Excel</a>
-                    </div>
-                    <div class="card-body" style="overflow-x:auto;">
+                <div class="card mb-3">
+                    <div class="card-body">
                         <div class="row gx-3 mb-3">
                             <div class="col-md-3 mb-2">
                                 <label class="small mb-1">Area</label>
@@ -297,7 +281,33 @@
                                 </a>
                             </div>
                         </div>
-                        <table id="data-table-karyawan" class="table table-hover text-sm" style="width: 100%;">
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <!-- <div class="pull-right">
+                            <div class="pull-left float-end">
+                                <nav role="navigation">
+                                    <ul class="ul-dropdown">
+                                        <li class="firstli">
+                                            <i class="material-icons">Export</i><a href="#">data tabel</a>
+                                            <ul>
+                                                <li><a href="#">Export CSV</a></li>
+                                                <li><a href="#">Export Excel</a></li>
+                                                <li><a href="#">Export PDF</a></li>
+                                                <li><a href="#">Print</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div> -->
+                        <a href="{{ route('employees.export') }}" class="btn btn-success btn-sm float-end"><i class="me-1" data-feather="download"></i> | Excel</a>
+                    </div>
+
+                    <div class="card-body" style="overflow-x:auto;">
+
+                        <table id="data-table-karyawan" class="table table-hover text-sm nowrap" style="width: 100%;">
                             <thead>
                                 <tr>
                                     <th>NIK</th>
@@ -535,6 +545,8 @@
                 serverSide: true,
                 searching: true,
                 responsive: true,
+                fixedHeader: true, // ✅ Tambahkan ini
+                scrollX: true, // ✅ Tambahkan jika tabel melebar
                 dom: "Blfrtip",
                 buttons: [{
                         text: 'csv',
@@ -684,16 +696,25 @@
                                 case 'RESIGN SESUAI PROSEDUR':
                                     badge = '<span class="badge bg-warning">' + data + '</span>';
                                     break;
+                                case 'PUTUS KONTRAK':
+                                    badge = '<span class="badge bg-secondary">' + data + '</span>';
+                                    break;
                                 case 'PHK':
                                     badge = '<span class="badge bg-red">' + data + '</span>';
                                     break;
                                 case 'PB PHK':
                                     badge = '<span class="badge bg-red">' + data + '</span>';
                                     break;
-                                case 'PUTUS KONTRAK':
-                                    badge = '<span class="badge bg-secondary">' + data + '</span>';
-                                    break;
                                 case 'PB RESIGN':
+                                    badge = '<span class="badge bg-red">' + data + '</span>';
+                                    break;
+                                case 'PHK PENSIUN':
+                                    badge = '<span class="badge bg-red">' + data + '</span>';
+                                    break;
+                                case 'PHK MENINGGAL DUNIA':
+                                    badge = '<span class="badge bg-red">' + data + '</span>';
+                                    break;
+                                case 'PHK PIDANA':
                                     badge = '<span class="badge bg-red">' + data + '</span>';
                                     break;
                             }
