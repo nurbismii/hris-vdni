@@ -61,7 +61,7 @@ class EmployeesImport implements ToCollection, WithHeadingRow, WithChunkReading,
             $kabupatenId = substr($kelurahanId, 0, 4);
             $kecamatanId = substr($kelurahanId, 0, 7);
 
-            $kodePerusahaan = strtolower(trim($row['kode_perusahaan'] ?? ''));
+            $kodePerusahaan = strtolower(trim($row['area_kerja'] ?? ''));
             $perusahaanId = $this->allPerusahaan[$kodePerusahaan] ?? null;
 
             $namaDepartemen = strtolower(trim($row['departemen'] ?? ''));
