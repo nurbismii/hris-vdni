@@ -5,6 +5,7 @@ namespace App\Imports;
 use App\Models\Departemen;
 use App\Models\Divisi;
 use App\Models\employee;
+use App\Models\Perusahaan;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
@@ -18,13 +19,23 @@ class EmployeesImport implements ToCollection, WithHeadingRow, WithChunkReading,
 {
     protected $allDepartemen;
     protected $allDivisi;
+    protected $allPerusahaan;
 
     public function __construct()
     {
-        $this->allDepartemen = Departemen::pluck('id', 'departemen')->mapWithKeys(function ($id, $name) {
-            return [strtolower(trim($name)) => $id];
+        // Ambil mapping kode_perusahaan => perusahaan_id
+        $this->allPerusahaan = Perusahaan::pluck('id', 'kode_perusahaan')->mapWithKeys(function ($id, $kode) {
+            return [strtolower(trim($kode)) => $id];
         })->toArray();
 
+        // Ambil semua departemen, dan simpan dalam nested array: [perusahaan_id][nama_departemen] => id
+        $this->allDepartemen = Departemen::all()->groupBy('perusahaan_id')->map(function ($group) {
+            return $group->mapWithKeys(function ($item) {
+                return [strtolower(trim($item->departemen)) => $item->id];
+            });
+        })->toArray();
+
+        // Divisi tetap berdasarkan nama
         $this->allDivisi = Divisi::pluck('id', 'nama_divisi')->mapWithKeys(function ($id, $name) {
             return [strtolower(trim($name)) => $id];
         })->toArray();
@@ -50,7 +61,12 @@ class EmployeesImport implements ToCollection, WithHeadingRow, WithChunkReading,
             $kabupatenId = substr($kelurahanId, 0, 4);
             $kecamatanId = substr($kelurahanId, 0, 7);
 
-            $departemenId = $this->allDepartemen[strtolower(trim($row['departemen'] ?? ''))] ?? null;
+            $kodePerusahaan = strtolower(trim($row['kode_perusahaan'] ?? ''));
+            $perusahaanId = $this->allPerusahaan[$kodePerusahaan] ?? null;
+
+            $namaDepartemen = strtolower(trim($row['departemen'] ?? ''));
+            $departemenId = $this->allDepartemen[$perusahaanId][$namaDepartemen] ?? null;
+
             $divisiId = $this->allDivisi[strtolower(trim($row['divisi'] ?? ''))] ?? null;
 
             $newRows[] = [
