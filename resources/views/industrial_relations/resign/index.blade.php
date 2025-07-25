@@ -42,7 +42,7 @@
 					<div class="card-body" style="overflow-x:auto;">
 						<table id="data-table-resign" class="table table-hover" style="width: 100%;">
 							<div class="row gx-3 mb-3">
-								<div class="col-md-3 mb-2">
+								<div class="col-md-6 mb-2">
 									<label class="small mb-1">Status Keluar</label>
 									<select class="form-select" id="status_resign">
 										<option value="">- Pilih status keluar -</option>
