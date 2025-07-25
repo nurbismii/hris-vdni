@@ -74,6 +74,7 @@ class EmployeesUpdateImport implements ToCollection, WithHeadingRow, WithValidat
                 'status_resign' => $row['status_resign'],
                 'no_telp' => $row['no_telp'],
                 'tgl_lahir' => $toCarbon($row['tgl_lahir']),
+                'skill' => $row['skill'],
                 'provinsi_id' => $provinsiId,
                 'kabupaten_id' => $kabupatenId,
                 'kecamatan_id' => $kecamatanId,
