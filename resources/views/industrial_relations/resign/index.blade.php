@@ -42,13 +42,16 @@
 					<div class="card-body" style="overflow-x:auto;">
 						<table id="data-table-resign" class="table table-hover" style="width: 100%;">
 							<div class="row gx-3 mb-3">
-								<div class="col-md-6 mb-2">
-									<label class="small mb-1">Kategori keluar</label>
-									<select name="tipe" class="form-select" id="tipe">
-										<option value="" selected>- Pilih kategori -</option>
+								<div class="col-md-3 mb-2">
+									<label class="small mb-1">Status Keluar</label>
+									<select class="form-select" id="status_resign">
+										<option value="">- Pilih status keluar -</option>
 										<option value="RESIGN SESUAI PROSEDUR">RESIGN SESUAI PROSEDUR</option>
 										<option value="RESIGN TIDAK SESUAI PROSEDUR">RESIGN TIDAK SESUAI PROSEDUR</option>
 										<option value="PHK">PHK</option>
+										<option value="PHK PENSIUN">PHK PENSIUN</option>
+										<option value="PHK MENINGGAL DUNIA">PHK MENINGGAL DUNIA</option>
+										<option value="PHK PIDANA">PHK PIDANA</option>
 										<option value="PB PHK">PB PHK</option>
 										<option value="PB RESIGN">PB RESIGN</option>
 										<option value="PUTUS KONTRAK">PUTUS KONTRAK</option>
@@ -115,6 +118,7 @@
 				}
 			});
 
+			var searchTimeout;
 			var table = $('#data-table-resign').DataTable({
 				pageLength: 10,
 				processing: true,
@@ -136,15 +140,15 @@
 					},
 					{
 						data: 'employee.nama_karyawan',
-						name: 'employee.nama_karyawan',
+						name: 'employee.nama_karyawan'
 					},
 					{
 						data: 'tanggal_keluar',
-						name: 'tanggal_keluar',
+						name: 'tanggal_keluar'
 					},
 					{
 						data: 'tipe',
-						name: 'tipe',
+						name: 'tipe'
 					},
 					{
 						data: 'action',
@@ -165,6 +169,13 @@
 				table.draw();
 			});
 
+			// Delay search for 5 seconds after typing in search box
+			$('input[type="search"]').off('input').on('input', function() {
+				clearTimeout(searchTimeout);
+				searchTimeout = setTimeout(function() {
+					table.draw();
+				}, 5000);
+			});
 		});
 	</script>
 	@endpush
