@@ -14,6 +14,6 @@ class Resign extends Model
 
     public function employee()
     {
-        return $this->hasOne(Employee::class, 'nik', 'nik_karyawan')->select(['nik', 'nama_karyawan']);
+        return $this->hasOne(employee::class, 'nik', 'nik_karyawan')->select(['nik', 'nama_karyawan']);
     }
 }
