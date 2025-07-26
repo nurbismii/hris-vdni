@@ -146,8 +146,10 @@
                                 <label class="small mb-1">Area</label>
                                 <select class="form-select" id="area_kerja">
                                     <option value="">- Pilih area -</option>
-                                    <option value="VDNI">PT VDNI</option>
-                                    <option value="VDNIP">PT VDNIP</option>
+                                    <option value="VDNI">VDNI</option>
+                                    <option value="OSS">OSS</option>
+                                    <option value="VDNIP">VDNIP</option>
+                                    <option value="PMS-OSS">PMS-OSS</option>
                                 </select>
                             </div>
                             <div class="col-md-3 mb-2">

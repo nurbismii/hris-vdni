@@ -59,7 +59,7 @@ class EmployeeController extends Controller
                 }
 
                 if ($request->filled('departemen')) {
-                    $instance->whereHas('divisi.departemen', function ($q) use ($request) {
+                    $instance->whereHas('departemen', function ($q) use ($request) {
                         $q->where('id', $request->get('departemen'));
                     });
                 }
@@ -67,10 +67,11 @@ class EmployeeController extends Controller
                 if ($request->filled('jabatan')) {
                     $instance->where('jabatan', $request->get('jabatan'));
                 }
-
-                if ($request->filled('nama_divisi')) {
-                    $instance->whereHas('divisi', function ($q) use ($request) {
-                        $q->where('id', $request->get('nama_divisi'));
+                
+                $divisi = $request->get('nama_divisi');
+                if (!empty($divisi) && is_numeric($divisi)) {
+                    $instance->whereHas('divisi', function ($q) use ($divisi) {
+                        $q->where('id', $divisi);
                     });
                 }
 

@@ -152,6 +152,7 @@ class EmployeesImport implements ToCollection, WithHeadingRow, WithChunkReading,
     {
         return [
             'nik' => 'required',
+            'status_resign' => 'required'
         ];
     }
 
@@ -159,6 +160,7 @@ class EmployeesImport implements ToCollection, WithHeadingRow, WithChunkReading,
     {
         return [
             'nik.required' => 'NIK karyawan harus diisi',
+            'status_resign.required' => 'Status resign harus diisi'
         ];
     }
 
