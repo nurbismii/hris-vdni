@@ -15,13 +15,7 @@ use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Maatwebsite\Excel\Concerns\WithBatchInserts;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class SpreportImport implements
-    ToCollection,
-    WithValidation,
-    WithHeadingRow,
-    WithChunkReading,
-    WithBatchInserts,
-    ShouldQueue
+class SpreportImport implements ToCollection, WithValidation, WithHeadingRow, WithChunkReading, WithBatchInserts, ShouldQueue
 {
     use Importable;
 
@@ -47,8 +41,8 @@ class SpreportImport implements
             }
         }
 
-        if (!empty($datas)) {
-            SpReport::insert($datas); // will be chunked and batched
+        foreach (array_chunk($datas, 300) as $chunk) {
+            SpReport::insert($chunk);
         }
     }
 
