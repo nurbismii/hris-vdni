@@ -18,13 +18,12 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 class SpreportImport implements
     ToCollection,
     WithValidation,
-    SkipsOnFailure,
     WithHeadingRow,
     WithChunkReading,
     WithBatchInserts,
     ShouldQueue
 {
-    use Importable, SkipsFailures;
+    use Importable;
 
     public function collection(Collection $collection)
     {
