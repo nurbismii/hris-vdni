@@ -8,14 +8,9 @@ use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
-use Maatwebsite\Excel\Concerns\SkipsFailures;
-use Maatwebsite\Excel\Concerns\SkipsOnFailure;
 use Maatwebsite\Excel\Concerns\Importable;
-use Maatwebsite\Excel\Concerns\WithChunkReading;
-use Maatwebsite\Excel\Concerns\WithBatchInserts;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
-class SpreportImport implements ToCollection, WithValidation, WithHeadingRow, WithChunkReading, WithBatchInserts, ShouldQueue
+class SpreportImport implements ToCollection, WithValidation, WithHeadingRow
 {
     use Importable;
 
@@ -41,7 +36,7 @@ class SpreportImport implements ToCollection, WithValidation, WithHeadingRow, Wi
             }
         }
 
-        foreach (array_chunk($datas, 300) as $chunk) {
+        foreach (array_chunk($datas, 500) as $chunk) {
             SpReport::insert($chunk);
         }
     }
@@ -60,15 +55,5 @@ class SpreportImport implements ToCollection, WithValidation, WithHeadingRow, Wi
             'nik.required' => 'NIK karyawan harus wajib diisi',
             'no_sp.required' => 'Nomor SP harus diisi',
         ];
-    }
-
-    public function chunkSize(): int
-    {
-        return 1000;
-    }
-
-    public function batchSize(): int
-    {
-        return 1000;
     }
 }
