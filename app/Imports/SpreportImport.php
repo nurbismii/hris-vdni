@@ -2,20 +2,27 @@
 
 namespace App\Imports;
 
-use App\Models\employee;
 use App\Models\SpReport;
 use Carbon\Carbon;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
 use Maatwebsite\Excel\Concerns\SkipsFailures;
 use Maatwebsite\Excel\Concerns\SkipsOnFailure;
 use Maatwebsite\Excel\Concerns\Importable;
+use Maatwebsite\Excel\Concerns\WithChunkReading;
+use Maatwebsite\Excel\Concerns\WithBatchInserts;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
-class SpreportImport implements ToCollection, WithValidation, SkipsOnFailure, WithHeadingRow
+class SpreportImport implements
+    ToCollection,
+    WithValidation,
+    SkipsOnFailure,
+    WithHeadingRow,
+    WithChunkReading,
+    WithBatchInserts,
+    ShouldQueue
 {
     use Importable, SkipsFailures;
 
@@ -24,32 +31,25 @@ class SpreportImport implements ToCollection, WithValidation, SkipsOnFailure, Wi
         $datas = [];
 
         foreach ($collection as $collect) {
-
             $sp_exist = SpReport::where('nik_karyawan', $collect['nik'])
                 ->where('no_sp', $collect['no_sp'])
-                ->first();
+                ->exists();
 
             if (!$sp_exist) {
                 $datas[] = [
                     'nik_karyawan' => $collect['nik'],
                     'no_sp' => $collect['no_sp'],
                     'level_sp' => $collect['level_sp'],
-                    'tgl_mulai' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(intVal($collect['tgl_mulai']))),
-                    'tgl_berakhir' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject(intVal($collect['tgl_berakhir']))),
+                    'tgl_mulai' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject((int) $collect['tgl_mulai'])),
+                    'tgl_berakhir' => Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject((int) $collect['tgl_berakhir'])),
                     'keterangan' => $collect['keterangan'],
                     'pelapor' => $collect['pelapor'],
                 ];
-            } else {
-                Log::info($sp_exist);
             }
         }
 
-        if (count($datas) > 0) {
-            Log::info("Ready to import...");
-            Log::info($datas);
-            foreach (array_chunk($datas, 500) as $chunk) {
-                SpReport::insert($chunk);
-            }
+        if (!empty($datas)) {
+            SpReport::insert($datas); // will be chunked and batched
         }
     }
 
@@ -67,5 +67,15 @@ class SpreportImport implements ToCollection, WithValidation, SkipsOnFailure, Wi
             'nik.required' => 'NIK karyawan harus wajib diisi',
             'no_sp.required' => 'Nomor SP harus diisi',
         ];
+    }
+
+    public function chunkSize(): int
+    {
+        return 1000;
+    }
+
+    public function batchSize(): int
+    {
+        return 1000;
     }
 }
