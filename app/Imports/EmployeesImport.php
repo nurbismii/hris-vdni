@@ -84,7 +84,7 @@ class EmployeesImport implements ToCollection, WithHeadingRow, WithChunkReading,
                 'status_karyawan' => $row['status_karyawan'] ?? null,
                 'tgl_resign' => $this->parseDate($row['tgl_resign'] ?? null),
                 'alasan_resign' => $row['alasan_resign'] ?? null,
-                'status_resign' => $row['status_resign'] ?? null,
+                'status_resign' => strtoupper($row['status_resign']) ?? null,
                 'no_telp' => $row['no_telp'] ?? null,
                 'tgl_lahir' => $this->parseDate($row['tgl_lahir'] ?? null),
                 'provinsi_id' => $provinsiId,
@@ -152,7 +152,9 @@ class EmployeesImport implements ToCollection, WithHeadingRow, WithChunkReading,
     {
         return [
             'nik' => 'required',
-            'status_resign' => 'required'
+            'status_resign' => 'required',
+            'vaksin' => 'nullable|in:0,1,2,3',
+            'kode_area_kerja' => 'required',
         ];
     }
 
@@ -160,7 +162,9 @@ class EmployeesImport implements ToCollection, WithHeadingRow, WithChunkReading,
     {
         return [
             'nik.required' => 'NIK karyawan harus diisi',
-            'status_resign.required' => 'Status resign harus diisi'
+            'status_resign.required' => 'Status resign harus diisi',
+            'vaksin.in' => 'Vaksin harus bernilai 0, 1, 2, atau 3',
+            'kode_area_kerja.required' => 'Kode area kerja harus diisi',
         ];
     }
 
