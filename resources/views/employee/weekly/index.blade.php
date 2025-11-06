@@ -209,10 +209,14 @@
               <div class="col-md-3 mb-2">
                 <label class="small mb-1">Status keluar</label>
                 <select class="form-select" id="status_resign">
-                  <option value="Aktif" selected>AKTIF</option>
+                  <option value="">- Pilih status keluar -</option>
+                  <option value="AKTIF">AKTIF</option>
                   <option value="RESIGN SESUAI PROSEDUR">RESIGN SESUAI PROSEDUR</option>
                   <option value="RESIGN TIDAK SESUAI PROSEDUR">RESIGN TIDAK SESUAI PROSEDUR</option>
                   <option value="PHK">PHK</option>
+                  <option value="PHK PENSIUN">PHK PENSIUN</option>
+                  <option value="PHK MENINGGAL DUNIA">PHK MENINGGAL DUNIA</option>
+                  <option value="PHK PIDANA">PHK PIDANA</option>
                   <option value="PB PHK">PB PHK</option>
                   <option value="PB RESIGN">PB RESIGN</option>
                   <option value="PUTUS KONTRAK">PUTUS KONTRAK</option>
@@ -561,7 +565,7 @@
             render: function(data, type, row) {
               badge = '';
               switch (data) {
-                case 'Aktif':
+                case 'AKTIF':
                   badge = '<span class="badge bg-success">' + data + '</span>';
                   break;
                 case 'RESIGN TIDAK SESUAI PROSEDUR':
