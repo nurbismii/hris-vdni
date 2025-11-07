@@ -54,25 +54,25 @@ class DashboardController extends Controller
 
             $karyawan_resign = employee::select('area_kerja', 'tgl_resign', 'status_resign')
                 ->whereIn('area_kerja', ['VDNI', 'VDNIP'])
-                ->where('status_resign', '!=', 'Aktif')
+                ->where('status_resign', '!=', 'AKTIF')
                 ->get();
 
             $data_karyawan = employee::select('nik', 'area_kerja', 'status_resign', 'status_karyawan', 'provinsi_id', 'kabupaten_id', 'kecamatan_id', 'kelurahan_id', 'tgl_lahir')
                 ->whereIn('area_kerja', ['VDNI', 'VDNIP'])
-                ->where('status_resign', 'Aktif')
+                ->where('status_resign', 'AKTIF')
                 ->get();
 
-            $total_karyawan_vdni = employee::where('status_resign', 'Aktif')->where('area_kerja', 'VDNI')->count();
-            $total_karyawan_vdnip = employee::where('status_resign', 'Aktif')->where('area_kerja', 'VDNIP')->count();
-            $total_karyawan_laki = employee::where('status_resign', 'Aktif')->whereIn('area_kerja', ['VDNI', 'VDNIP'])->where('jenis_kelamin', 'L')->count();
-            $total_karyawan_perempuan = employee::where('status_resign', 'Aktif')->whereIn('area_kerja', ['VDNI', 'VDNIP'])->where('jenis_kelamin', 'P')->count();
-            $total_karyawan = employee::where('status_resign', 'Aktif')->whereIn('area_kerja', ['VDNI', 'VDNIP'])->count();
+            $total_karyawan_vdni = employee::where('status_resign', 'AKTIF')->where('area_kerja', 'VDNI')->count();
+            $total_karyawan_vdnip = employee::where('status_resign', 'AKTIF')->where('area_kerja', 'VDNIP')->count();
+            $total_karyawan_laki = employee::where('status_resign', 'AKTIF')->whereIn('area_kerja', ['VDNI', 'VDNIP'])->where('jenis_kelamin', 'L')->count();
+            $total_karyawan_perempuan = employee::where('status_resign', 'AKTIF')->whereIn('area_kerja', ['VDNI', 'VDNIP'])->where('jenis_kelamin', 'P')->count();
+            $total_karyawan = employee::where('status_resign', 'AKTIF')->whereIn('area_kerja', ['VDNI', 'VDNIP'])->count();
 
             $req_awal_prd = $request->mulai_periode != '' ? $request->mulai_periode : $tanggal_hari_ini;
             $req_akhir_prd = $request->akhir_periode != '' ? $request->akhir_periode : $bulan_depan;
 
             $status_karyawan = employee::select('tgl_resign', 'status_resign')
-                ->where('status_resign', '!=', 'Aktif')
+                ->where('status_resign', '!=', 'AKTIF')
                 ->whereBetween('tgl_resign', array($req_awal_prd, $req_akhir_prd))
                 ->get();
 
@@ -95,7 +95,7 @@ class DashboardController extends Controller
             $check_request = employee::select('provinsi_id', 'kabupaten_id', 'kecamatan_id', 'kelurahan_id')
                 ->where('kabupaten_id', $kabupaten_id)
                 ->where('kecamatan_id', $kecamatan_id)
-                ->where('status_resign', 'Aktif')
+                ->where('status_resign', 'AKTIF')
                 ->first();
 
             if (!$check_request) {
@@ -105,7 +105,7 @@ class DashboardController extends Controller
             $data_karyawan_by_kab = employee::join('master_kelurahan', 'master_kelurahan.id', '=', 'employees.kelurahan_id')
                 ->where('kabupaten_id', $kabupaten_id)
                 ->where('kecamatan_id', $kecamatan_id)
-                ->where('status_resign', 'Aktif')
+                ->where('status_resign', 'AKTIF')
                 ->where('area_kerja', $area_kerja)
                 ->select('employees.nik', 'employees.kelurahan_id', 'master_kelurahan.kelurahan')
                 ->get();
