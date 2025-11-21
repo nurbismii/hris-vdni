@@ -122,98 +122,50 @@ if (!function_exists('getAllPengingat')) {
 if (!function_exists('getDataResign')) {
     function getDataResign($karyawan_resign, $tahun_sekarang)
     {
-        $resign_record = [];
-        $validation1 = [];
-        $jan = [];
-        $feb = [];
-        $maret = [];
-        $april = [];
-        $mei = [];
-        $juni = [];
-        $juli = [];
-        $agust = [];
-        $sept = [];
-        $okt = [];
-        $nov = [];
-        $dec = [];
-        $chart_resign = '';
+        // Definisikan range periode resign
+        $ranges = [
+            ['12-16', '01-15'], // Jan
+            ['01-16', '02-15'], // Feb
+            ['02-16', '03-15'], // Mar
+            ['03-16', '04-15'], // Apr
+            ['04-16', '05-15'], // Mei
+            ['05-16', '06-15'], // Jun
+            ['06-16', '07-15'], // Jul
+            ['07-16', '08-15'], // Ags
+            ['08-16', '09-15'], // Sep
+            ['09-16', '10-15'], // Okt
+            ['10-16', '11-15'], // Nov
+            ['11-16', '12-15'], // Des
+        ];
+
+        // Siapkan array hasil default 12 bulan
+        $chart_resign = array_fill(0, 12, 0);
 
         foreach ($karyawan_resign as $ks) {
-            $validation1[] = date('Y', strtotime($ks->tgl_resign));
-        }
+            $year = date('Y', strtotime($ks->tgl_resign));
 
-        foreach ($karyawan_resign as $ks) {
-            $resign_record[] = date('m-d', strtotime($ks->tgl_resign));
-        }
+            // hanya proses data sesuai tahun
+            if ($year != $tahun_sekarang) continue;
 
+            $monthDay = date('m-d', strtotime($ks->tgl_resign));
 
-        for ($i = 0; $i < count($resign_record); $i++) :
-            if ($validation1[$i] == $tahun_sekarang) :
-                if ($resign_record[$i] >= '12-16' && $resign_record[$i] <= '01-15') {
-                    $jan[] = $resign_record[$i];
+            // cek masuk di range bulan mana
+            foreach ($ranges as $index => $range) {
+                [$start, $end] = $range;
+
+                // Handling rentang melintasi tahun (12-16 sampai 01-15)
+                if ($start > $end) {
+                    if ($monthDay >= $start || $monthDay <= $end) {
+                        $chart_resign[$index]++;
+                        break;
+                    }
+                } else {
+                    if ($monthDay >= $start && $monthDay <= $end) {
+                        $chart_resign[$index]++;
+                        break;
+                    }
                 }
-
-                if ($resign_record[$i] >= '01-16' && $resign_record[$i] <= '02-15') {
-                    $feb[] = $resign_record[$i];
-                }
-
-                if ($resign_record[$i] >= '02-16' && $resign_record[$i] <= '03-15') {
-                    $maret[] = $resign_record[$i];
-                }
-
-                if ($resign_record[$i] >= '03-16' && $resign_record[$i] <= '04-15') {
-                    $april[] = $resign_record[$i];
-                }
-
-                if ($resign_record[$i] >= '04-16' && $resign_record[$i] <= '05-15') {
-                    $mei[] = $resign_record[$i];
-                }
-
-                if ($resign_record[$i] >= '05-16' && $resign_record[$i] <= '06-15') {
-                    $juni[] = $resign_record[$i];
-                }
-
-                if ($resign_record[$i] >= '06-16' && $resign_record[$i] <= '07-15') {
-                    $juli[] = $resign_record[$i];
-                }
-
-                if ($resign_record[$i] >= '07-16' && $resign_record[$i] <= '08-15') {
-                    $agust[] = $resign_record[$i];
-                }
-
-                if ($resign_record[$i] >= '08-16' && $resign_record[$i] <= '09-15') {
-                    $sept[] = $resign_record[$i];
-                }
-
-                if ($resign_record[$i] >= '09-16' && $resign_record[$i] <= '10-15') {
-                    $okt[] = $resign_record[$i];
-                }
-
-                if ($resign_record[$i] >= '10-16' && $resign_record[$i] <= '11-15') {
-                    $nov[] = $resign_record[$i];
-                }
-
-                if ($resign_record[$i] >= '11-15' && $resign_record[$i] <= '12-15' && $tahun_sekarang == $validation1[$i]) {
-                    $dec[] = $resign_record[$i];
-                }
-            endif;
-        endfor;
-
-        if (count($resign_record) > 0) {
-            $chart_resign = [
-                count(array_filter($jan)),
-                count(array_filter($feb)),
-                count(array_filter($maret)),
-                count(array_filter($april)),
-                count(array_filter($mei)),
-                count(array_filter($juni)),
-                count(array_filter($juli)),
-                count(array_filter($agust)),
-                count(array_filter($sept)),
-                count(array_filter($okt)),
-                count(array_filter($nov)),
-                count(array_filter($dec))
-            ];
+            }
         }
 
         return $chart_resign;

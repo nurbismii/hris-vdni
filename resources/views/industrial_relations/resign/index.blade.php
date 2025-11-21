@@ -68,7 +68,6 @@
 							<thead>
 								<tr>
 									<th>NIK</th>
-									<th>Nama</th>
 									<th>Tanggal resign</th>
 									<th>Tipe</th>
 									<th>Aksi</th>
@@ -139,10 +138,6 @@
 						name: 'nik_karyawan'
 					},
 					{
-						data: 'employee.nama_karyawan',
-						name: 'employee.nama_karyawan'
-					},
-					{
 						data: 'tanggal_keluar',
 						name: 'tanggal_keluar'
 					},
@@ -157,7 +152,7 @@
 					},
 				],
 				order: [
-					[0, 'desc']
+					[1, 'desc']
 				]
 			});
 
