@@ -30,9 +30,9 @@
                 </a>
                 <div class="collapse {{ (request()->segment(1) == 'users' || request()->segment(1) == 'roles') ? 'show' : '' }}" id="collapseUsers" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav">
-                        <a class="nav-link {{ (request()->is('users', 'users')) ? 'active' : '' }}" href="/users">Data Pengguna</a>
-                        <a class="nav-link {{ (request()->segment(1) == 'roles') ? 'active' : '' }}" href="/roles">Peran dan akses</a>
-                        <a class="nav-link {{ (request()->segment(2) == 'last-login') ? 'active' : '' }}" href="/users/last-login">Riwayat masuk</a>
+                        <a class="nav-link {{ (request()->is('users', 'users')) ? 'active' : '' }}" href="{{ route('users.index') }}">Data Pengguna</a>
+                        <a class="nav-link {{ (request()->segment(1) == 'roles') ? 'active' : '' }}" href="{{ route('roles.index') }}">Peran dan akses</a>
+                        <a class="nav-link {{ (request()->segment(2) == 'last-login') ? 'active' : '' }}" href="{{ route('users.lastLogin') }}">Riwayat masuk</a>
                     </nav>
                 </div>
                 <a class="nav-link {{ (request()->segment(1) == 'employees') ? '' : 'collapsed' }}" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseEmployees" aria-expanded="false" aria-controls="collapseEmployees">

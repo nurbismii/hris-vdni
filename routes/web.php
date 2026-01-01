@@ -23,13 +23,14 @@ use App\Http\Controllers\{
     PerusahaanController,
     ReportSpController,
     ResignController,
-    Role\RoleController,
     SalaryController,
     SeverancepayController,
-    User\UserController,
     WaktuAbsenController,
     WilayahController
 };
+
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\RoleController;
 
 Route::get('/konfirmasi/{id}', [RegisterController::class, 'konfirmasiEmail'])->name('email.confirm');
 Route::get('/lupa-kata-sandi', [ForgotPasswordController::class, 'index']);
@@ -57,7 +58,7 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
     Route::post('/store/absen', [WaktuAbsenController::class, 'storeAbsen'])->name('store.absen');
     route::get('/lihat-pengingat', [KaryawanRosterController::class, 'pengingatPribadi']);
 
-    // ROUTE GROUP BAGIAN ADMIN
+    // ROUTE GROUP BAGIAN ADMIN DEPARTEMEN/DIVISI
     Route::group(['prefix' => 'admin/', 'middleware' => ['isAdminDivisi']], function () {
         route::get('/pengingat', [KaryawanRosterController::class, 'viewAdminDept']);
         route::get('/permohonan', [KaryawanRosterController::class, 'adminListPengajuan']);
@@ -195,26 +196,16 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
             route::delete('/destroy/pasal/{id}', [PasalController::class, 'destroy'])->name('destroy.pasal');
         });
 
+        // USER AND ROLE MANAGEMENT
         Route::group(['prefix' => 'users'], function () {
-            route::get('/', [UserController::class, 'index']);
-            route::get('/create', [UserController::class, 'create']);
-            route::post('/store', [UserController::class, 'store']);
-            route::get('/edit/{id}', [UserController::class, 'edit'])->name('edit.user');
-            route::patch('/update/{id}', [UserController::class, 'update'])->name('update.user');
-            route::delete('/destroy/{id}', [UserController::class, 'destroy'])->name('destroy.user');
-            route::get('/last-login', [UserController::class, 'lastLogin'])->name('last.login');
+            route::get('/last-login', [UserController::class, 'lastLogin'])->name('users.lastLogin');
             route::get('/server-side', [UserController::class, 'serverSide']);
         });
+        Route::resource('users', 'App\Http\Controllers\Admin\UserController');
+        Route::resource('roles', 'App\Http\Controllers\Admin\RoleController');
+        Route::post('roles/add-access', [RoleController::class, 'accessUser'])->name('access');
+        // END USER AND ROLE MANAGEMENT
 
-        Route::group(['prefix' => 'roles'], function () {
-            route::get('/', [RoleController::class, 'index']);
-            route::get('/create', [RoleController::class, 'create']);
-            route::post('/store', [RoleController::class, 'store'])->name('store.role');
-            route::get('/edit/{id}', [RoleController::class, 'edit'])->name('edit.role');
-            route::patch('/update/{id}', [RoleController::class, 'update'])->name('update.role');
-            route::delete('/destroy/{id}', [RoleController::class, 'destroy'])->name('destroy.role');
-            route::post('/add-access', [RoleController::class, 'accessUser'])->name('access');
-        });
 
         Route::group(['prefix' => 'employees'], function () {
             route::get('/', [EmployeeController::class, 'index'])->name('karyawan.index');
