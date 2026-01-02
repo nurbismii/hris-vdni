@@ -54,7 +54,6 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
         Route::get('fetch-kelurahan/{id}', [DashboardController::class, 'fetchKelurahan']);
     });
 
-
     Route::post('/store/absen', [WaktuAbsenController::class, 'storeAbsen'])->name('store.absen');
     route::get('/lihat-pengingat', [KaryawanRosterController::class, 'pengingatPribadi']);
 
@@ -154,6 +153,16 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
     Route::group(['middleware' => 'isAdmin'], function () {
 
         Route::get('/audit-trails', [DashboardController::class, 'auditTrails']);
+    
+        // USER AND ROLE MANAGEMENT
+        Route::group(['prefix' => 'users'], function () {
+            route::get('/last-login', [UserController::class, 'lastLogin'])->name('users.lastLogin');
+            route::get('/server-side', [UserController::class, 'serverSide']);
+        });
+        Route::resource('users', 'App\Http\Controllers\Admin\UserController');
+        Route::resource('roles', 'App\Http\Controllers\Admin\RoleController');
+        Route::post('roles/add-access', [RoleController::class, 'accessUser'])->name('access');
+        // END USER AND ROLE MANAGEMENT
 
         Route::group(['prefix' => 'kompensasi-dan-keuntungan', 'middleware' => ['sec.comben']], function () {
             route::get('/cuti-izin', [CutiIzinController::class, 'index']);
@@ -195,17 +204,6 @@ Route::group(['middleware' => ['auth', 'audit.trails', 'email.verify']], functio
             route::patch('/update/pasal/{id}', [PasalController::class, 'update'])->name('update.pasal');
             route::delete('/destroy/pasal/{id}', [PasalController::class, 'destroy'])->name('destroy.pasal');
         });
-
-        // USER AND ROLE MANAGEMENT
-        Route::group(['prefix' => 'users'], function () {
-            route::get('/last-login', [UserController::class, 'lastLogin'])->name('users.lastLogin');
-            route::get('/server-side', [UserController::class, 'serverSide']);
-        });
-        Route::resource('users', 'App\Http\Controllers\Admin\UserController');
-        Route::resource('roles', 'App\Http\Controllers\Admin\RoleController');
-        Route::post('roles/add-access', [RoleController::class, 'accessUser'])->name('access');
-        // END USER AND ROLE MANAGEMENT
-
 
         Route::group(['prefix' => 'employees'], function () {
             route::get('/', [EmployeeController::class, 'index'])->name('karyawan.index');
