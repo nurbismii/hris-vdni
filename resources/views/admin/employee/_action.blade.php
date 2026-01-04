@@ -1,0 +1,1 @@
+<a href="{{ $url_show }}" title="{{ $data->nama_karyawan }}" class="btn btn-primary btn-sm">Detail</a>
