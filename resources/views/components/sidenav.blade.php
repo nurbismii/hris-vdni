@@ -46,7 +46,7 @@
                         <a class="nav-link {{ (request()->segment(2) == 'import') ? 'active' : '' }}" href="/employees/import">Bulk karyawan</a>
                     </nav>
                 </div>
-                <a class="nav-link {{ (request()->segment(1) == 'perusahaan') ? 'active' : '' }}" href="/perusahaan">
+                <a class="nav-link {{ (request()->segment(1) == 'perusahaan') ? 'active' : '' }}" href="{{ route('perusahaan.index') }}">
                     <div class="nav-link-icon"><i data-feather="codepen"></i></div>
                     Perusahaan
                 </a>
@@ -68,7 +68,7 @@
                 @endif
 
                 @if(strtolower(Auth::user()->job->permission_role ?? '') == 'administrator' || strtolower(Auth::user()->job->permission_role ?? '') == 'keuntungan dan manfaat')
-                <a class="nav-link {{ (request()->segment(1) == 'salary' && request()->segment(2) == 'employee') ? '' : 'collapsed' }}" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapsePayroll" aria-expanded="false" aria-controls="collapsePayroll">
+                <a class="nav-link {{ (request()->segment(1) == 'kompensasi-dan-keuntungan') ? '' : 'collapsed' }}" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapsePayroll" aria-expanded="false" aria-controls="collapsePayroll">
                     <div class="nav-link-icon"><i data-feather="credit-card"></i></div>
                     Penggajian
                     <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -122,11 +122,11 @@
                 </a>
                 <div class="collapse" id="collapseSetting" data-bs-parent="#accordionSidenav">
                     <nav class="sidenav-menu-nested nav">
-                        <a class="nav-link" href="/setting/dashboard">Judul dashboard</a>
-                        <a class="nav-link" href="/setting/lokasi-absen">Lokasi absen</a></a>
-                        <a class="nav-link" href="/periode">Periode roster</a>
-                        <a class="nav-link" href="/setting/waktu-absen">Waktu absen</a>
-                        <a class="nav-link" href="/setting/pasal">Pasal</a>
+                        <a class="nav-link" href="{{ route('dashboard-widgets.index') }}">Judul dashboard</a>
+                        <a class="nav-link" href="{{ route('lokasi-absen.index') }}">Lokasi absen</a>
+                        <a class="nav-link" href="{{ route('periode-roster.index') }}">Periode roster</a>
+                        <a class="nav-link" href="{{ route('waktu-absen.index') }}">Waktu absen</a>
+                        <a class="nav-link" href="{{ route('pasal.index') }}">Pasal</a>
                     </nav>
                 </div>
                 @endif

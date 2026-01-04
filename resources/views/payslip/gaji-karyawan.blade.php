@@ -124,8 +124,8 @@
                     url: "/salary/server-side",
                     data: function(d) {
                         d.departemen = $('#departemen_search').val(),
-                        d.divisi = $('#divisi_search').val(),
-                        d.search = $('input[type="search"]').val()
+                            d.divisi = $('#divisi_search').val(),
+                            d.search = $('input[type="search"]').val()
                     }
                 },
                 columns: [{
@@ -176,7 +176,7 @@
                 table.draw();
             });
         });
-        
+
         var rupiah_makan = document.getElementById("rupiah_makan");
         rupiah_makan.addEventListener("keyup", function(e) {
             // tambahkan 'Rp.' pada saat form di ketik

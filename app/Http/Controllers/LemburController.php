@@ -93,12 +93,6 @@ class LemburController extends Controller
         return back()->with('success', 'Berhasil melakukan pengajuan SPL');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         //
@@ -118,24 +112,6 @@ class LemburController extends Controller
         return view('admin-dept.lembur.show', compact('data'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         //
@@ -143,62 +119,6 @@ class LemburController extends Controller
             'persetujuan_hod' => $request->persetujuan_hod
         ]);
         return back()->with('success', 'Berhasil memperbarui status pengajuan');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
-
-    public function karyawanLembur()
-    {
-        $data =  Lembur::with('karyawan')
-            ->leftJoin('employees', 'employees.nik', '=', 'lembur.nik_karyawan')
-            ->where('lembur.nik_karyawan', Auth::user()->nik_karyawan)
-            ->orderBy('lembur.created_at', 'desc')
-            ->select(
-                'lembur.*',
-                'employees.nama_karyawan',
-                'employees.no_telp',
-                'employees.divisi_id',
-                DB::raw('TIMESTAMPDIFF(HOUR, STR_TO_DATE(lembur.mulai_lembur, "%H:%i"), STR_TO_DATE(lembur.berakhir_lembur, "%H:%i")) as selisih_lembur')
-            )->get();
-
-
-        return view('account.lembur.index', compact('data'));
-    }
-
-    public function karyawanLemburShow($id)
-    {
-        $data = Lembur::with('karyawan')
-            ->leftJoin('employees', 'employees.nik', '=', 'lembur.nik_karyawan')
-            ->where('employees.divisi_id', Auth::user()->employee->divisi_id)
-            ->where('lembur.id', $id)
-            ->orderBy('lembur.created_at', 'desc')
-            ->select(
-                'lembur.*',
-                'employees.nama_karyawan',
-                'employees.no_telp',
-                'employees.divisi_id',
-                DB::raw('TIMESTAMPDIFF(HOUR, STR_TO_DATE(lembur.mulai_lembur, "%H:%i"), STR_TO_DATE(lembur.berakhir_lembur, "%H:%i")) as selisih_lembur')
-            )->first();
-
-        return view('account.lembur.show', compact('data'));
-    }
-
-    public function karyawanLemburUpdate(Request $request, $id)
-    {
-        //
-        Lembur::where('id', $id)->update([
-            'persetujuan_karyawan' => $request->persetujuan_karyawan
-        ]);
-        return back()->with('success', 'Kamu menyetujui permintaan lembur');
     }
 
     public function lembur()

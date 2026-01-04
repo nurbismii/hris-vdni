@@ -11,4 +11,8 @@ class SpReport extends Model
     protected $table = 'sp_report';
     protected $guarded = [];
 
+    public function employee()
+    {
+        return $this->belongsTo(Employee::class, 'nik_karyawan', 'nik');
+    }
 }
