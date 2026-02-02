@@ -321,7 +321,7 @@ class EmployeeController extends Controller
         $depts = Departemen::all();
         $provinsi = Provinsi::all();
 
-        return view('employee.weekly.index', compact('depts', 'provinsi'));
+        return view('admin.employee.weekly.index', compact('depts', 'provinsi'));
     }
 
     public function monthly(Request $request)
@@ -329,7 +329,7 @@ class EmployeeController extends Controller
         $depts = Departemen::all();
         $provinsi = Provinsi::all();
 
-        return view('employee.monthly.index', compact('depts', 'provinsi'));
+        return view('admin.employee.monthly.index', compact('depts', 'provinsi'));
     }
 
     public function employeesExport()

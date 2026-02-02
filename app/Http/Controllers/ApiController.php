@@ -99,9 +99,9 @@ class ApiController extends Controller
       return DataTables::of($data)
          ->addIndexColumn()
          ->addColumn('action', function ($data) {
-            return view('employee._action', [
+            return view('admin.employee._action', [
                'data' => $data,
-               'url_show' => route('employee.edit', $data->nik),
+               'url_show' => route('employees.edit', $data->nik),
             ]);
          })->filter(function ($instance) use ($request) {
             if ($request->get('status_karyawan') == 'PKWTT 固定工' || $request->get('status_karyawan') == 'PKWT 合同工' || $request->get('status_karyawan') == 'TRAINING') {
@@ -190,9 +190,9 @@ class ApiController extends Controller
       return DataTables::of($data)
          ->addIndexColumn()
          ->addColumn('action', function ($data) {
-            return view('employee._action', [
+            return view('admin.employee._action', [
                'data' => $data,
-               'url_show' => route('employee.edit', $data->nik),
+               'url_show' => route('employees.edit', $data->nik),
             ]);
          })->filter(function ($instance) use ($request) {
             if ($request->get('status_karyawan') == 'PKWTT 固定工' || $request->get('status_karyawan') == 'PKWT 合同工' || $request->get('status_karyawan') == 'TRAINING') {
