@@ -44,7 +44,7 @@ class DashboardController extends Controller
 
             $provinsi = Provinsi::all();
 
-            $data_contract = $data_karyawan = employee::select('nik', 'entry_date')->whereIn('area_kerja', ['VDNI', 'VDNIP'])->get();
+            $data_contract = employee::select('nik', 'entry_date')->whereIn('area_kerja', ['VDNI', 'VDNIP'])->get();
             $total_pwkt1_perbulan = Contract::where('tanggal_mulai_kontrak', 'like', '%' . $bulan_sekarang . '%')
                 ->count();
 

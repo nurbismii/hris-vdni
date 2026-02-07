@@ -122,48 +122,32 @@ if (!function_exists('getAllPengingat')) {
 if (!function_exists('getDataResign')) {
     function getDataResign($karyawan_resign, $tahun_sekarang)
     {
-        // Definisikan range periode resign
-        $ranges = [
-            ['12-16', '01-15'], // Jan
-            ['01-16', '02-15'], // Feb
-            ['02-16', '03-15'], // Mar
-            ['03-16', '04-15'], // Apr
-            ['04-16', '05-15'], // Mei
-            ['05-16', '06-15'], // Jun
-            ['06-16', '07-15'], // Jul
-            ['07-16', '08-15'], // Ags
-            ['08-16', '09-15'], // Sep
-            ['09-16', '10-15'], // Okt
-            ['10-16', '11-15'], // Nov
-            ['11-16', '12-15'], // Des
+        // Definisi periode resign (16 - 15)
+        $periode = [
+            [($tahun_sekarang - 1) . '-12-16', $tahun_sekarang . '-01-15'], // Jan
+            [$tahun_sekarang . '-01-16', $tahun_sekarang . '-02-15'], // Feb
+            [$tahun_sekarang . '-02-16', $tahun_sekarang . '-03-15'], // Mar
+            [$tahun_sekarang . '-03-16', $tahun_sekarang . '-04-15'], // Apr
+            [$tahun_sekarang . '-04-16', $tahun_sekarang . '-05-15'], // Mei
+            [$tahun_sekarang . '-05-16', $tahun_sekarang . '-06-15'], // Jun
+            [$tahun_sekarang . '-06-16', $tahun_sekarang . '-07-15'], // Jul
+            [$tahun_sekarang . '-07-16', $tahun_sekarang . '-08-15'], // Ags
+            [$tahun_sekarang . '-08-16', $tahun_sekarang . '-09-15'], // Sep
+            [$tahun_sekarang . '-09-16', $tahun_sekarang . '-10-15'], // Okt
+            [$tahun_sekarang . '-10-16', $tahun_sekarang . '-11-15'], // Nov
+            [$tahun_sekarang . '-11-16', $tahun_sekarang . '-12-15'], // Des
         ];
 
-        // Siapkan array hasil default 12 bulan
+        // default 12 bulan
         $chart_resign = array_fill(0, 12, 0);
 
         foreach ($karyawan_resign as $ks) {
-            $year = date('Y', strtotime($ks->tgl_resign));
+            $tanggal = date('Y-m-d', strtotime($ks->tgl_resign));
 
-            // hanya proses data sesuai tahun
-            if ($year != $tahun_sekarang) continue;
-
-            $monthDay = date('m-d', strtotime($ks->tgl_resign));
-
-            // cek masuk di range bulan mana
-            foreach ($ranges as $index => $range) {
-                [$start, $end] = $range;
-
-                // Handling rentang melintasi tahun (12-16 sampai 01-15)
-                if ($start > $end) {
-                    if ($monthDay >= $start || $monthDay <= $end) {
-                        $chart_resign[$index]++;
-                        break;
-                    }
-                } else {
-                    if ($monthDay >= $start && $monthDay <= $end) {
-                        $chart_resign[$index]++;
-                        break;
-                    }
+            foreach ($periode as $index => [$start, $end]) {
+                if ($tanggal >= $start && $tanggal <= $end) {
+                    $chart_resign[$index]++;
+                    break;
                 }
             }
         }
@@ -171,6 +155,7 @@ if (!function_exists('getDataResign')) {
         return $chart_resign;
     }
 }
+
 
 if (!function_exists('getDataStatus')) {
     function getDataStatus($status_karyawan)
@@ -221,102 +206,40 @@ if (!function_exists('getDataStatus')) {
 if (!function_exists('getDataRekrut')) {
     function getDataRekrut($data_contract, $tahun_sekarang)
     {
-        $rekrutmen_record = [];
-        $validation = [];
-        $jan = [];
-        $feb = [];
-        $maret = [];
-        $april = [];
-        $mei = [];
-        $juni = [];
-        $juli = [];
-        $agust = [];
-        $sept = [];
-        $okt = [];
-        $nov = [];
-        $dec = [];
-        $chart_rekrut = '';
+        $bulan = array_fill(0, 12, 0);
+
+        // Definisi periode rekrutmen (16 - 15)
+        $periode = [
+            // Januari: 16 Des (thn-1) - 15 Jan (thn)
+            [($tahun_sekarang - 1) . '-12-16', $tahun_sekarang . '-01-15'],
+            [$tahun_sekarang . '-01-16', $tahun_sekarang . '-02-15'],
+            [$tahun_sekarang . '-02-16', $tahun_sekarang . '-03-15'],
+            [$tahun_sekarang . '-03-16', $tahun_sekarang . '-04-15'],
+            [$tahun_sekarang . '-04-16', $tahun_sekarang . '-05-15'],
+            [$tahun_sekarang . '-05-16', $tahun_sekarang . '-06-15'],
+            [$tahun_sekarang . '-06-16', $tahun_sekarang . '-07-15'],
+            [$tahun_sekarang . '-07-16', $tahun_sekarang . '-08-15'],
+            [$tahun_sekarang . '-08-16', $tahun_sekarang . '-09-15'],
+            [$tahun_sekarang . '-09-16', $tahun_sekarang . '-10-15'],
+            [$tahun_sekarang . '-10-16', $tahun_sekarang . '-11-15'],
+            [$tahun_sekarang . '-11-16', $tahun_sekarang . '-12-15'],
+        ];
 
         foreach ($data_contract as $d) {
-            $validation[] = date('Y', strtotime($d->entry_date));
+            $tanggal = date('Y-m-d', strtotime($d->entry_date));
+
+            foreach ($periode as $index => [$start, $end]) {
+                if ($tanggal >= $start && $tanggal <= $end) {
+                    $bulan[$index]++;
+                    break;
+                }
+            }
         }
 
-        foreach ($data_contract as $d) {
-            $rekrutmen_record[] = date('m-d', strtotime($d->entry_date));
-        }
-
-        for ($i = 0; $i < count($rekrutmen_record); $i++) :
-
-            if ($validation[$i] == $tahun_sekarang) :
-                if ($rekrutmen_record[$i] >= '12-16' && $rekrutmen_record[$i] <= '02-15') {
-                    $jan[] = $rekrutmen_record[$i];
-                }
-
-                if ($rekrutmen_record[$i] >= '01-16' && $rekrutmen_record[$i] <= '02-15') {
-                    $feb[] = $rekrutmen_record[$i];
-                }
-
-                if ($rekrutmen_record[$i] >= '02-16' && $rekrutmen_record[$i] <= '03-15') {
-                    $maret[] = $rekrutmen_record[$i];
-                }
-
-                if ($rekrutmen_record[$i] >= '03-16' && $rekrutmen_record[$i] <= '04-15') {
-                    $april[] = $rekrutmen_record[$i];
-                }
-
-                if ($rekrutmen_record[$i] >= '04-16' && $rekrutmen_record[$i] <= '05-15') {
-                    $mei[] = $rekrutmen_record[$i];
-                }
-
-                if ($rekrutmen_record[$i] >= '05-16' && $rekrutmen_record[$i] <= '06-15') {
-                    $juni[] = $rekrutmen_record[$i];
-                }
-
-                if ($rekrutmen_record[$i] >= '06-16' && $rekrutmen_record[$i] <= '07-15') {
-                    $juli[] = $rekrutmen_record[$i];
-                }
-
-                if ($rekrutmen_record[$i] >= '07-16' && $rekrutmen_record[$i] <= '08-15') {
-                    $agust[] = $rekrutmen_record[$i];
-                }
-
-                if ($rekrutmen_record[$i] >= '08-16' && $rekrutmen_record[$i] <= '09-15') {
-                    $sept[] = $rekrutmen_record[$i];
-                }
-
-                if ($rekrutmen_record[$i] >= '09-16' && $rekrutmen_record[$i] <= '10-15') {
-                    $okt[] = $rekrutmen_record[$i];
-                }
-
-                if ($rekrutmen_record[$i] >= '10-16' && $rekrutmen_record[$i] <= '11-15') {
-                    $nov[] = $rekrutmen_record[$i];
-                }
-
-                if ($rekrutmen_record[$i] >= '11-16' && $rekrutmen_record[$i] <= '12-15' && $tahun_sekarang == $validation[$i]) {
-                    $dec[] = $rekrutmen_record[$i];
-                }
-            endif;
-        endfor;
-
-        if (count($rekrutmen_record) > 0) {
-            $chart_rekrut = [
-                count(array_filter($jan)),
-                count(array_filter($feb)),
-                count(array_filter($maret)),
-                count(array_filter($april)),
-                count(array_filter($mei)),
-                count(array_filter($juni)),
-                count(array_filter($juli)),
-                count(array_filter($agust)),
-                count(array_filter($sept)),
-                count(array_filter($okt)),
-                count(array_filter($nov)),
-                count(array_filter($dec))
-            ];
-        }
-        return $chart_rekrut;
+        return $bulan;
     }
 }
+
 
 if (!function_exists('getDataStatusKaryawan')) {
     function getDataStatusKaryawan($data_karyawan)
